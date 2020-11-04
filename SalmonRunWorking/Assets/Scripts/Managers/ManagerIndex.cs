@@ -13,6 +13,7 @@ public class ManagerIndex : MonoBehaviour
     [SerializeField] private MoneyManager moneyManager;
     [SerializeField] private MenuManager menuManager;
     [SerializeField] private TowerManager towerManager;
+    [SerializeField] private UpgradeManager upgradeManager;
 
     public GameManager GameManager => gameManager;
 
@@ -25,6 +26,8 @@ public class ManagerIndex : MonoBehaviour
     public MenuManager MenuManager => menuManager;
 
     public TowerManager TowerManager => towerManager;
+
+    public UpgradeManager UpgradeManager => upgradeManager;
 
     private void Awake()
     {

@@ -265,6 +265,12 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // set the layer back to whatever it was before
             Layers.MoveAllToLayer(spawnedObject, spawnedObjectLayer);
 
+            //if the spawnedObject is the salmon ladder, mark this as the first ladder for UpgradeManager
+            if (towerUI.TowerType == TowerType.Ladder)
+            {
+                ManagerIndex.MI.UpgradeManager.OriginalLadder = spawnedObject;
+            }
+
             //subtract the cost of the tower from your bank
             towerUI.Purchase();
         }
