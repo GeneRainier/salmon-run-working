@@ -8,8 +8,6 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private UpgradeType upgradeType;
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button originalLadderButton;
-    [SerializeField] private Button upgradeLadderOneButton;
-    [SerializeField] private Button upgradeLadderTwoButton;
 
     private float upgradeCost;
     
@@ -25,6 +23,26 @@ public class UpgradeUI : MonoBehaviour
         ManagerIndex.MI.MoneyManager.SpendMoney(upgradeCost);
     }
 
+    public void Update()
+    {
+        //ManagerIndex.MI.UpgradeManager.upgradeSmallCatchButton.interactable = ManagerIndex.MI.UpgradeManager.smallRateMax ? false : true;
+
+        if (ManagerIndex.MI.UpgradeManager.smallRateMax == true)
+        {
+            ManagerIndex.MI.UpgradeManager.upgradeSmallCatchButton.interactable = false;
+        }
+
+        if (ManagerIndex.MI.UpgradeManager.mediumRateMax == true)
+        {
+            ManagerIndex.MI.UpgradeManager.upgradeMediumCatchButton.interactable = false;
+        }
+
+        if (ManagerIndex.MI.UpgradeManager.largeRateMax == true)
+        {
+            ManagerIndex.MI.UpgradeManager.upgradeLargeCatchButton.interactable = false;
+        }
+    }
+
     public void UpdateButton()
     {
         upgradeButton.interactable = CanAfford ? true : false;
@@ -32,15 +50,14 @@ public class UpgradeUI : MonoBehaviour
         /*
         if (ManagerIndex.MI.UpgradeManager.firstPurchase1)
         {
-            upgradeLadderOneButton.interactable = CanAfford ? true : false;
+            ManagerIndex.MI.UpgradeManager.upgradeLadderOneButton.interactable = CanAfford ? true : false;
         }
 
         if (ManagerIndex.MI.UpgradeManager.firstPurchase2)
         {
-            upgradeLadderTwoButton.interactable = CanAfford ? true : false;
+            ManagerIndex.MI.UpgradeManager.upgradeLadderTwoButton.interactable = CanAfford ? true : false;
         }
         */
-       
     }
 
 }

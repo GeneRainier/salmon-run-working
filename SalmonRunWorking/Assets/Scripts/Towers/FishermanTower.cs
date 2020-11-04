@@ -66,6 +66,12 @@ public class FishermanTower : TowerBase
         currentMediumCatchRate = defaultCatchRate * defaultMediumCatchRate;
         currentLargeCatchRate = defaultCatchRate * defaultLargeCatchRate;
 
+        //this tells the upgrade manager what the small, medium, and large rates are that can be upgraded.
+        ManagerIndex.MI.UpgradeManager.SmallRate = currentSmallCatchRate;
+        ManagerIndex.MI.UpgradeManager.MediumRate = currentMediumCatchRate;
+        ManagerIndex.MI.UpgradeManager.LargeRate = currentLargeCatchRate;
+
+
         //Debug.Log("cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
@@ -93,6 +99,13 @@ public class FishermanTower : TowerBase
         {
             SetLinePos();
         }
+
+        Invoke("CheckCatchRate", 10f);
+    }
+
+    public void CheckCatchRate()
+    {
+        Debug.Log(currentSmallCatchRate);
     }
 
     /**

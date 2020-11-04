@@ -17,10 +17,15 @@ public class UpgradeManager : MonoBehaviour
 {
     public Button upgradeButtonTray;
 
-    //the three buttons
+    //the three ladder buttons
     public Button originalLadderButton;
     public Button upgradeLadderOneButton;
     public Button upgradeLadderTwoButton;
+
+    //the three fisherman catch rate buttons
+    public Button upgradeSmallCatchButton;
+    public Button upgradeMediumCatchButton;
+    public Button upgradeLargeCatchButton;
 
     private bool finalUpgrade => numberOfUpgrades >= 2;
 
@@ -43,6 +48,37 @@ public class UpgradeManager : MonoBehaviour
         set => originalLadder = value;
     }
 
+    //fisherman catch rate values
+    private float smallRate;
+    private float mediumRate;
+    private float largeRate;
+
+    public float SmallRate
+    {
+        get => smallRate;
+        set => smallRate = value;
+    }
+
+    public float MediumRate
+    {
+        get => mediumRate;
+        set => mediumRate = value;
+    }
+
+    public float LargeRate
+    {
+        get => largeRate;
+        set => largeRate = value;
+    }
+
+    //bool to see if maximum catch rate has been reached
+    public bool smallRateMax = false;
+    public bool mediumRateMax = false;
+    public bool largeRateMax = false;
+
+    //will be true if you have a fisherman
+    public bool isAFisherman = false;
+
     private GameObject firstLadder;
     
     [SerializeField] private List <Upgrade> upgrades;
@@ -64,17 +100,17 @@ public class UpgradeManager : MonoBehaviour
             if (ManagerIndex.MI.GameManager.PlaceState && !finalUpgrade)
             {
                 upgradeButtonTray.interactable = true;
-                //upgradeButtonColor.color = enabledColor;
             }
 
             UpdateButtons();
         }
-
-        if (firstPurchase1)
+        else if(isAFisherman)
         {
-            
+            if (ManagerIndex.MI.GameManager.PlaceState && (!smallRateMax || !mediumRateMax || !largeRateMax))
+            {
+                upgradeButtonTray.interactable = true;
+            }
         }
-
         
         if (finalUpgrade)
         {
@@ -160,17 +196,63 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
-    //Stuff to manage the upgrades
+    public void UpgradeButtonFisherman()
+    {
+        if (EventSystem.current.currentSelectedGameObject.name == upgradeSmallCatchButton.name)
+        {
+            //should be able to get rid of this first if statement if the UpgradeUI works properly and turns it off when max is hit
+            if (smallRate < 1.0f)
+            {
+                upgradeUI.Purchase();
+                smallRate += 0.1f;
+                if (smallRate == 1.0f)
+                {
+                    smallRateMax = true;
+                }
+                Debug.Log(smallRate);
+            }
+        }
+
+        if (EventSystem.current.currentSelectedGameObject.name == upgradeMediumCatchButton.name)
+        {
+            if (mediumRate < 1.0f)
+            {
+                upgradeUI.Purchase();
+                mediumRate += 0.1f;
+                if (mediumRate == 1.0f)
+                {
+                    mediumRateMax = true;
+                }
+            }
+        }
+
+        if (EventSystem.current.currentSelectedGameObject.name == upgradeLargeCatchButton.name)
+        {
+            if (largeRate < 1.0f)
+            {
+                upgradeUI.Purchase();
+                largeRate += 0.1f;
+                if (largeRate == 1.0f)
+                {
+                    largeRateMax = true;
+                }
+            }
+        }
+    }
+
+    //Stuff to manage the upgrades, WHAT IS FIRST????
     public Upgrade GetUpgrade(UpgradeType upgradeType)
     {
-        return upgrades.First(upgrade => upgrade.UpgradeType == upgradeType);
+        return upgrades.Find(upgrade => upgrade.UpgradeType == upgradeType);
     }
 
+    //upgrade type refers to the type of tower you are upgrading
     public float GetUpgradeCost(UpgradeType upgradeType)
     {
-        return upgrades.First(upgrade => upgrade.UpgradeType == upgradeType).Cost;
+        return upgrades.Find(upgrade => upgrade.UpgradeType == upgradeType).Cost;
     }
 
+    //this this is what is giving an error when I add other stuff.
     public void UpdateButtons()
     {
         upgrades.ForEach(upgrade => upgrade.UpgradeUI.UpdateButton());

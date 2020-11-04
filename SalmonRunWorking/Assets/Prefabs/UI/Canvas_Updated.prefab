@@ -443,8 +443,6 @@ MonoBehaviour:
   upgradeType: 1
   upgradeButton: {fileID: 5509574486574702696}
   originalLadderButton: {fileID: 0}
-  upgradeLadderOneButton: {fileID: 0}
-  upgradeLadderTwoButton: {fileID: 0}
 --- !u!1 &1342893182404297003
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,8 +988,6 @@ MonoBehaviour:
   upgradeType: 0
   upgradeButton: {fileID: 1457441327313875680}
   originalLadderButton: {fileID: 0}
-  upgradeLadderOneButton: {fileID: 0}
-  upgradeLadderTwoButton: {fileID: 0}
 --- !u!1 &3777684973643788005
 GameObject:
   m_ObjectHideFlags: 0
@@ -4401,6 +4397,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3007638503469235692, guid: 3d495cb149bee4e498872e7d3b23cb9b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_BoolArgument
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3007638503469235692, guid: 3d495cb149bee4e498872e7d3b23cb9b,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: SetActive
       objectReference: {fileID: 0}
     - target: {fileID: 5042053252990269821, guid: 3d495cb149bee4e498872e7d3b23cb9b,
         type: 3}

@@ -271,6 +271,11 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 ManagerIndex.MI.UpgradeManager.OriginalLadder = spawnedObject;
             }
 
+            if (towerUI.TowerType == TowerType.Angler)
+            {
+                ManagerIndex.MI.UpgradeManager.isAFisherman = true;
+            }
+
             //subtract the cost of the tower from your bank
             towerUI.Purchase();
         }
