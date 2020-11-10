@@ -837,6 +837,7 @@ MonoBehaviour:
     towerUI: {fileID: 5614493210049836169}
     enabled: 0
     cost: 10123
+  anglers: []
 --- !u!1 &297820837
 GameObject:
   m_ObjectHideFlags: 0
@@ -903,6 +904,7 @@ MonoBehaviour:
   - upgradeType: 1
     upgradeUI: {fileID: 1433475020}
     cost: 100
+  theTowerManager: {fileID: 268821878}
 --- !u!1 &323287615 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8724541982035350782, guid: 42b886822610e1a4a90b4950530ef19b,

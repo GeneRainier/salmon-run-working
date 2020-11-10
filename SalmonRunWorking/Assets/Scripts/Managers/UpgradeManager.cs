@@ -83,6 +83,9 @@ public class UpgradeManager : MonoBehaviour
     
     [SerializeField] private List <Upgrade> upgrades;
 
+    // Reference to the TowerManager
+    [SerializeField] private TowerManager theTowerManager;
+
     void Start()
     {
         upgradeButtonTray.interactable = false;
@@ -93,7 +96,7 @@ public class UpgradeManager : MonoBehaviour
 
     void Update()
     {
-
+        //Debug.Log("SmallRate: " + smallRate);
         // if the dam has a ladder and if its PlaceState and if there are more upgrades available, then the button appears
         if (originalLadder)
         {
@@ -196,18 +199,37 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
+    /* Note in regards to UpgradeButtonFisherman as it relates to GetUpgrade and GetUpgradeCost
+     * As of this moment, the syste is set up to upgrade ALL Fishermen towers at once as opposed to one at a time. The Manager is going to
+     * set the rate as needed when the player hits the upgrade button and then all Fishermen will have the new rate from then on. Changing
+     * it to an individual system may not be too difficult, but I am not going to change that until we come to an agreement on how we would
+     * like upgrades to work.
+     * 
+     * To fix this, I added a list of Anglers to the TowerManager and had the UpgradeManager loop through each of the towers in that list
+     * to directly change their currentRates as this code was not in any way changing the nature of the Angler towers / FishermanTower script.
+     * This code is not complete. It only affects EXISTING towers, so towers instantiated after this is called will NOT get the upgrade until
+     * the button is hit again. I will change this code further after we agree on whether we want to have individual or system wide upgrades.
+     */
+
     public void UpgradeButtonFisherman()
     {
         if (EventSystem.current.currentSelectedGameObject.name == upgradeSmallCatchButton.name)
         {
+            Debug.Log("Entered Fishermen Upgrade");
             //should be able to get rid of this first if statement if the UpgradeUI works properly and turns it off when max is hit
             if (smallRate < 1.0f)
             {
+                Debug.Log("If is good");
                 upgradeUI.Purchase();
                 smallRate += 0.1f;
                 if (smallRate == 1.0f)
                 {
                     smallRateMax = true;
+                }
+                foreach (FishermanTower towers in theTowerManager.GetAnglers())
+                {
+                    towers.SetSmallCatchRate(smallRate);
+                    Debug.Log("Set tower rate");
                 }
                 Debug.Log(smallRate);
             }
@@ -240,7 +262,21 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    //Stuff to manage the upgrades, WHAT IS FIRST????
+    /* General Note on GetUpgrade and GetUpgradeCost
+     * These two functions are using a C# lambda expression. Lambdas are costructed with a left-hand side input (which DOES NOT require an explicit type)
+     * and a right-hand side output statement. In these cases, the two lambdas are not being given an explicit type, so GetUpgrade is piecing together
+     * that GetUpgrade should return an Upgrade type item and GetUpgradeCost should return a float. These are both being stored in a local variable being
+     * given those corresponding types -- upgrade.
+     * 
+     * upgrades is a vector of items of type Upgrade, so they should be searching for upgrade, which is declared and initialized in these two functions, in upgrades
+     * and then returning the appropriate attribute of that item.
+     * 
+     * Originally, these used upgrades.First. First is a array library function which grabs the first item in the list (in this case upgrades). While that worked
+     * for the sake of testing, we want these functions to find the correct upgrade in upgrades, so we will use Find instead which finds the element that matches its
+     * input.
+     */
+
+    //Stuff to manage the upgrades
     public Upgrade GetUpgrade(UpgradeType upgradeType)
     {
         return upgrades.Find(upgrade => upgrade.UpgradeType == upgradeType);

@@ -13,6 +13,7 @@ public enum TowerType
 public class TowerManager : MonoBehaviour
 {
     [SerializeField] private List<Tower> towers;
+    [SerializeField] private List<FishermanTower> anglers;
 
     public Tower GetTower(TowerType towerType)
     {
@@ -27,6 +28,16 @@ public class TowerManager : MonoBehaviour
     public void UpdateColors()
     {
         towers.ForEach(tower => tower.TowerUI.UpdateColor());
+    }
+
+    public void AddAngler(FishermanTower angler)
+    {
+        anglers.Add(angler);
+    }
+
+    public List<FishermanTower> GetAnglers()
+    {
+        return anglers;
     }
 }
 

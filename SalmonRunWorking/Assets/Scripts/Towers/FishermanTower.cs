@@ -35,7 +35,7 @@ public class FishermanTower : TowerBase
     public float defaultLargeCatchRate = 0.1F;
 
     // current rate of success of fish catch attempt for small, medium, and large fish
-    private float currentSmallCatchRate;
+    [SerializeField] private float currentSmallCatchRate;
     private float currentMediumCatchRate;
     private float currentLargeCatchRate;
 
@@ -52,6 +52,9 @@ public class FishermanTower : TowerBase
     Animator fishing;
     public GameObject fisherman;
     private static readonly int Fishing = Animator.StringToHash("Fishing");
+
+    // Reference to the Tower Manager
+    [SerializeField] private TowerManager theTowerManager;
 
     /**
      * Start is called on object initialization
@@ -105,7 +108,7 @@ public class FishermanTower : TowerBase
 
     public void CheckCatchRate()
     {
-        Debug.Log(currentSmallCatchRate);
+        //Debug.Log(currentSmallCatchRate);
     }
 
     /**
@@ -153,6 +156,8 @@ public class FishermanTower : TowerBase
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         transform.position = primaryHitInfo.point;
+        theTowerManager = FindObjectOfType<TowerManager>();
+        theTowerManager.AddAngler(this);
     }
 
     /**
@@ -310,5 +315,13 @@ public class FishermanTower : TowerBase
         fishPos.z = startPos.z;
 
         catchAttemptLine.SetPositions(new []{ startPos, fishPos});
+    }
+
+    /* Sets the current small fish catch rate
+     *
+     */
+    public void SetSmallCatchRate(float newRate)
+    {
+        currentSmallCatchRate = newRate;
     }
 }
