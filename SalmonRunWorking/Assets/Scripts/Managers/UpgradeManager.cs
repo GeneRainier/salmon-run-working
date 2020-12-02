@@ -31,6 +31,8 @@ public class UpgradeManager : MonoBehaviour
 
     private int numberOfUpgrades;
 
+    private Button currentActiveLadder;
+
     //check to see if you have already bought them
     public bool firstPurchase1 = true;
     public bool firstPurchase2 = true;
@@ -86,12 +88,21 @@ public class UpgradeManager : MonoBehaviour
     // Reference to the TowerManager
     [SerializeField] private TowerManager theTowerManager;
 
+    [SerializeField] private GameObject Checkmark1;
+    [SerializeField] private GameObject Checkmark2;
+
     void Start()
     {
         upgradeButtonTray.interactable = false;
         upgradeLadderOne.SetActive(false);
         upgradeLadderTwo.SetActive(false);
         originalLadderButton.interactable = false;
+
+        currentActiveLadder = originalLadderButton;
+        currentActiveLadder.interactable = false;
+
+        Checkmark1.SetActive(false);
+        Checkmark2.SetActive(false);
     }
 
     void Update()
@@ -103,19 +114,45 @@ public class UpgradeManager : MonoBehaviour
             if (ManagerIndex.MI.GameManager.PlaceState && !finalUpgrade)
             {
                 upgradeButtonTray.interactable = true;
+
+                upgradeLadderOneButton.interactable = true;
+                originalLadderButton.interactable = true;
+                upgradeLadderTwoButton.interactable = true;
+
+                currentActiveLadder.interactable = false;
             }
 
-            UpdateButtons();
+            if (!isAFisherman)
+            {
+                upgradeSmallCatchButton.interactable = false;
+                upgradeMediumCatchButton.interactable = false;
+                upgradeLargeCatchButton.interactable = false;
+            }
+
+            //UpdateButtons();
         }
-        else if(isAFisherman)
+
+        if (isAFisherman)
         {
             if (ManagerIndex.MI.GameManager.PlaceState && (!smallRateMax || !mediumRateMax || !largeRateMax))
             {
                 upgradeButtonTray.interactable = true;
+
+                upgradeSmallCatchButton.interactable = true;
+                upgradeMediumCatchButton.interactable = true;
+                upgradeLargeCatchButton.interactable = true;
+            }
+
+            if (!originalLadder)
+            {
+                upgradeLadderOneButton.interactable = false;
+                originalLadderButton.interactable = false;
+                upgradeLadderTwoButton.interactable = false;
             }
         }
         
-        if (finalUpgrade)
+        //Think we can get rid of this cause we always need to interact with it since upgrades are sidgradable
+        if (finalUpgrade && (smallRateMax && mediumRateMax && largeRateMax))
         {
             upgradeButtonTray.interactable = false;
             //upgradeButtonColor.color = disabledColor;
@@ -157,7 +194,10 @@ public class UpgradeManager : MonoBehaviour
             {
                 upgradeUI.Purchase();
                 firstPurchase1 = false;
+                Checkmark1.SetActive(true);
             }
+
+            currentActiveLadder = upgradeLadderOneButton;
 
             //making the right buttons clickable
             upgradeLadderOneButton.interactable = false;
@@ -176,7 +216,10 @@ public class UpgradeManager : MonoBehaviour
             {
                 upgradeUI.Purchase();
                 firstPurchase2 = false;
+                Checkmark2.SetActive(true);
             }
+
+            currentActiveLadder = upgradeLadderTwoButton;
 
             //making the right buttons clickable
             upgradeLadderOneButton.interactable = true;
@@ -190,6 +233,8 @@ public class UpgradeManager : MonoBehaviour
             originalLadder.SetActive(true);
             upgradeLadderOne.SetActive(false);
             upgradeLadderTwo.SetActive(false);
+
+            currentActiveLadder = originalLadderButton;
 
             //making the right buttons clickable
             upgradeLadderOneButton.interactable = true;
@@ -289,6 +334,7 @@ public class UpgradeManager : MonoBehaviour
     }
 
     //this this is what is giving an error when I add other stuff.
+    //THIS FUNCTION DOESNT DO ANYTHING NOW
     public void UpdateButtons()
     {
         upgrades.ForEach(upgrade => upgrade.UpgradeUI.UpdateButton());

@@ -44,6 +44,11 @@ public class MoneyManager : MonoBehaviour
     public void SpendMoney(float amount)
     {
         bank -= amount;
+        if (bank < 0)
+        {
+            bank = 0;
+        }
+
         UpdateText();
     }
 

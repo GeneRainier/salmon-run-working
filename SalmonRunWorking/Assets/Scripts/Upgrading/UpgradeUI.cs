@@ -9,8 +9,10 @@ public class UpgradeUI : MonoBehaviour
     [SerializeField] private Button upgradeButton;
     [SerializeField] private Button originalLadderButton;
 
+    [SerializeField] private List<Button> button_list = new List<Button>();
+
     private float upgradeCost;
-    
+
     void Start()
     {
         upgradeCost = ManagerIndex.MI.UpgradeManager.GetUpgradeCost(upgradeType);
@@ -25,6 +27,12 @@ public class UpgradeUI : MonoBehaviour
 
     public void Update()
     {
+
+        foreach (Button upgradeButton in button_list)
+        {
+            upgradeButton.interactable = CanAfford ? true : false;
+        }
+
         //ManagerIndex.MI.UpgradeManager.upgradeSmallCatchButton.interactable = ManagerIndex.MI.UpgradeManager.smallRateMax ? false : true;
 
         if (ManagerIndex.MI.UpgradeManager.smallRateMax == true)
@@ -45,7 +53,7 @@ public class UpgradeUI : MonoBehaviour
 
     public void UpdateButton()
     {
-        upgradeButton.interactable = CanAfford ? true : false;
+        //upgradeButton.interactable = CanAfford ? true : false;
 
         /*
         if (ManagerIndex.MI.UpgradeManager.firstPurchase1)
