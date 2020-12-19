@@ -24,12 +24,34 @@ using UnityEngine;
 
 public class Node
 {
-    public bool walkable;
-    public Vector3 worldPosition;
+    public bool walkable;           ///< Is this Node a viable, accessible option for a path?
+    public Vector3 worldPosition;   ///< The world position of the Node in the game scene
+    public int gridX;               ///< The x position of the Node in the game scene
+    public int gridY;               ///< The y position of the node in the game scene
 
-    public Node(bool _walkable, Vector3 _worldPosition)
+    public int gCost;               ///< The distance of this Node from the starting Node
+    public int hCost;               ///< The distance of this Node from the ending Node
+    public Node parent;             ///< The node that this node derives its path from (i.e. the node before this one in the path)
+
+    /*
+     * Constructor
+     */
+    public Node(bool _walkable, Vector3 _worldPosition, int _gridX, int _gridY)
     {
         walkable = _walkable;
         worldPosition = _worldPosition;
+        gridX = _gridX;
+        gridY = _gridY;
+    }
+
+    /*
+     * Getter function for the fCost (We could have a general variable, but we never assign fCost. We just need to calculate it as we go)
+     */
+    public int fCost
+    {
+        get
+        {
+            return gCost + hCost;
+        }
     }
 }

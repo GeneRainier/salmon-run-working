@@ -23,6 +23,8 @@ public class AStarGrid : MonoBehaviour
         CreateGrid();
     }
 
+    public List<Node> path;
+    
     /*
      * This function is a built in Unity function to draw in Cubes where each Node is located in the grid
      * This is not necessary for the grid to be created, but it makes it much easier to visualize
@@ -37,6 +39,13 @@ public class AStarGrid : MonoBehaviour
             foreach(Node n in grid)
             {
                 Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                if (path != null)
+                {
+                    if (path.Contains(n))
+                    {
+                        Gizmos.color = Color.black;
+                    }
+                }
                 if (playerNode == n)
                 {
                     Gizmos.color = Color.cyan;
@@ -48,6 +57,7 @@ public class AStarGrid : MonoBehaviour
 
     /*
      * Takes an entities position in world space and determines where on the grid they are located
+     * \return Node The Node most closely associated with that world position
      */
     public Node GetNodeFromWorldPoint(Vector3 worldPosition)
     {
@@ -83,8 +93,40 @@ public class AStarGrid : MonoBehaviour
                 Vector3 worldPoint = worldBottemLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
                 // Should the Node be walkable by the A* Algorithm or not
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
-                grid[x, y] = new Node(walkable, worldPoint);
+                grid[x, y] = new Node(walkable, worldPoint, x, y);
             }
         }
+    }
+
+    /*
+     * Pass in a node and grab a list of all the neighboring nodes (potential paths to the endNode)
+     * \param node The node we want to check for neighbors
+     * \return List<Node> The list of neighboring nodes
+     */
+    public List<Node> GetNeighbors(Node node)
+    {
+        List<Node> neighbors = new List<Node>();
+
+        // Check the 3 x 3 square around the node. In this case (-1,-1) would be the lower left and (1,1) would be the upper right of the square
+        for (int x = -1; x <= 1; x++)
+        {
+            for (int y = -1; y <= 1; y++)
+            {
+                // (0,0) is not a neightbor. It is the node itself which we want to skip
+                if (x == 0 && y == 0)
+                {
+                    continue;
+                }
+                int checkX = node.gridX + x;
+                int checkY = node.gridY + y;
+
+                // Are we within the bounds of the grid?
+                if ((checkX >= 0 && checkX < gridSizeX) && (checkY >= 0 && checkY < gridSizeY))
+                {
+                    neighbors.Add(grid[checkX, checkY]);
+                }
+            }
+        }
+        return neighbors;
     }
 }
