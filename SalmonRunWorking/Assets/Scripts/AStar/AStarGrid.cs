@@ -55,6 +55,14 @@ public class AStarGrid : MonoBehaviour
         }
     }
 
+    public int MaxSize
+    {
+        get
+        {
+            return gridSizeX * gridSizeY;
+        }
+    }
+
     /*
      * Takes an entities position in world space and determines where on the grid they are located
      * \return Node The Node most closely associated with that world position

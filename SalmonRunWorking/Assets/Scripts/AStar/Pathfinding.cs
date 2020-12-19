@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
 /*
  * This is the script to actually calculate the pathfinding for the A* algorithm
@@ -20,7 +21,10 @@ public class Pathfinding : MonoBehaviour
 
     private void Update()
     {
-        FindPath(seeker.position, target.position);
+        if (Input.GetButtonDown("Jump"))
+        {
+            FindPath(seeker.position, target.position);
+        }
     }
 
     /*
@@ -30,36 +34,32 @@ public class Pathfinding : MonoBehaviour
      */
     void FindPath(Vector3 startPos, Vector3 endPos)
     {
+        Stopwatch sw = new Stopwatch();
+        sw.Start();
+
         // Initialize the start and end Nodes to be the closest Nodes to the starting and ending positions
         Node startNode = grid.GetNodeFromWorldPoint(startPos);
         Node endNode = grid.GetNodeFromWorldPoint(endPos);
 
-        // Nodes we have yet to evaluate
-        List<Node> openSet = new List<Node>();
+        // Nodes we have yet to evaluate. We are using a Heap for the sake of optimization since it will make comparisons FAR faster on a large scale
+        Heap<Node> openSet = new Heap<Node>(grid.MaxSize);
         /* Nodes we have evaluated. We are using a HashSet since we are checking this list often and HashSets have constant time complexity for 
            adding and removing items and checking current size is constant (Good news for large maps like ours) */
         HashSet<Node> closedSet = new HashSet<Node>();
         // Initialize the openSet list
-        openSet.Add(startNode);
+        openSet.AddItem(startNode);
 
         // While we are still searching Nodes to find the best path
         while (openSet.Count > 0)
         {
-            Node currentNode = openSet[0];
-            for (int i = 1; i < openSet.Count; i++)
-            {
-                // Compare the fCosts (or hCosts if the fCosts are tied)
-                if (openSet[i].fCost < currentNode.fCost || (openSet[i].fCost == currentNode.fCost && openSet[i].hCost < currentNode.hCost))
-                {
-                    currentNode = openSet[i];
-                }
-            }
-
-            openSet.Remove(currentNode);
+            Node currentNode = openSet.RemoveItem();
+            
             closedSet.Add(currentNode);
             // Have we found the endNode? If so, we are done and the path has been found
             if (currentNode == endNode)
             {
+                sw.Stop();
+                print("Path Found in " + sw.ElapsedMilliseconds + "ms");
                 RetracePath(startNode, endNode);
                 return;
             }
@@ -83,7 +83,7 @@ public class Pathfinding : MonoBehaviour
                     // Each of these neighbor nodes will need to be evaluated, so add them to the openSet
                     if (openSet.Contains(neighbor) == false)
                     {
-                        openSet.Add(neighbor);
+                        openSet.AddItem(neighbor);
                     }
                 }
             }

@@ -22,7 +22,7 @@ using UnityEngine;
  * intermediate nodes, etc.)
  */
 
-public class Node
+public class Node : IHeapItem<Node>
 {
     public bool walkable;           ///< Is this Node a viable, accessible option for a path?
     public Vector3 worldPosition;   ///< The world position of the Node in the game scene
@@ -32,6 +32,7 @@ public class Node
     public int gCost;               ///< The distance of this Node from the starting Node
     public int hCost;               ///< The distance of this Node from the ending Node
     public Node parent;             ///< The node that this node derives its path from (i.e. the node before this one in the path)
+    int heapIndex;                  ///< The index of this node within the Node Heap
 
     /*
      * Constructor
@@ -53,5 +54,41 @@ public class Node
         {
             return gCost + hCost;
         }
+    }
+
+    /*
+     * Implementation of HeapIndex from the Heap class interface
+     * 
+     * THIS MUST BE HERE! Implementing the Interface here means we need to give specific implementations for what HeapIndex and CompareTo look like in a specific context
+     * (remember that the Heap class is generic). Without providing that information here, there is no way for the compiler to understand how it should handle Nodes when
+     * we bring up .HeapIndex  or CompareTo in or code.
+     */
+    public int HeapIndex
+    {
+        get
+        {
+            return heapIndex;
+        }
+        set
+        {
+            heapIndex = value;
+        }
+    }
+
+    /*
+     * Implementation of CompareTo from the Heap class interface and the IComparable interface
+     * 
+     * THIS MUST BE HERE! Implementing the Interface here means we need to give specific implementations for what HeapIndex and CompareTo look like in a specific context
+     * (remember that the Heap class is generic). Without providing that information here, there is no way for the compiler to understand how it should handle Nodes when
+     * we bring up .HeapIndex  or CompareTo in or code.
+     */
+    public int CompareTo(Node nodeToCompare)
+    {
+        int compare = fCost.CompareTo(nodeToCompare.fCost);
+        if (compare == 0)
+        {
+            compare = hCost.CompareTo(nodeToCompare.hCost);
+        }
+        return -compare;
     }
 }
