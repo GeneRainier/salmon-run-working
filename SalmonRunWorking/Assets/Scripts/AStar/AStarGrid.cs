@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class AStarGrid : MonoBehaviour
 {
-    public Transform player;
+    public bool displayPath;            ///< Diagnostic boolean telling OnDrawGizmos to draw the path
+    public Transform player;            ///< The position of the player
     public LayerMask unwalkableMask;    ///< The Unwalkable layer mask to check for collisions with Unwalkable obstacles
     public Vector2 gridWorldSize;       ///< The size of the full grid in world space
     public float nodeRadius;            ///< The radius of a single node (we draw nodes as cubes here but check for collisions in a sphere)
@@ -13,7 +14,7 @@ public class AStarGrid : MonoBehaviour
     private float nodeDiameter;         ///< The diameter of the a single node which we use to calculate node spacing on the grid
     private int gridSizeX, gridSizeY;   ///< The size of the full grid in the X and Y driections to calculate node spacing on the grid
 
-    private void Start()
+    private void Awake()
     {
         // Initialize the diameter and grid sizes based on the Inspector variables
         nodeDiameter = nodeRadius * 2;
@@ -31,26 +32,17 @@ public class AStarGrid : MonoBehaviour
      */
     private void OnDrawGizmos()
     {
-        Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
-
-        if (grid != null)
+        if (displayPath == true)
         {
-            Node playerNode = GetNodeFromWorldPoint(player.position);
-            foreach(Node n in grid)
+            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+
+            if (grid != null)
             {
-                Gizmos.color = (n.walkable) ? Color.white : Color.red;
-                if (path != null)
+                foreach (Node n in grid)
                 {
-                    if (path.Contains(n))
-                    {
-                        Gizmos.color = Color.black;
-                    }
+                    Gizmos.color = (n.walkable) ? Color.white : Color.red;
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
                 }
-                if (playerNode == n)
-                {
-                    Gizmos.color = Color.cyan;
-                }
-                Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
             }
         }
     }
