@@ -97,6 +97,7 @@ public class FishermanTower : TowerBase
      */
     private void Update()
     {
+        Debug.Log(TowerActive);
         // update fish line position
         if (catchAttemptLine.enabled)
         {
@@ -165,6 +166,9 @@ public class FishermanTower : TowerBase
      */
     protected override void ApplyTowerEffect()
     {
+
+        Debug.Log("do Fisherman Stuff");
+
         // get all fish that aren't already being caught
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
             .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught??true).ToArray();

@@ -35,13 +35,22 @@ public class SealionSpawner : MonoBehaviour
         damPlacementLocation = GetComponent<DamPlacementLocation>();
     }
 
+    public void Update()
+    {
+        if (Input.GetKeyDown("m"))
+        {
+            sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(270, 0, 0));
+            locationInUse = true;
+        }
+    }
+
     private void SpawnSealion()
     {
         if (damPlacementLocation.inUse && GameManager.Instance.Turn >= damPlacementLocation.PlacementTurn + turnsBeforeShowing)
         {
             if (!locationInUse)
             {
-                sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(240, 0, 0));
+                sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(270, 0, 0));
                 locationInUse = true;
             }
         }

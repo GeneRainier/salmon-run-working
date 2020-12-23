@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 [RequireComponent(typeof(LineRenderer))]
-public class SealionTower : TowerBase
+public class SealionTowerTwo : TowerBase
 {
 
     // default rate of success of a fish catch attempt
@@ -26,15 +26,14 @@ public class SealionTower : TowerBase
     // fish that have been caught by this sealion
     private List<Fish> caughtFish;
 
+    // mesh renderer that will flash when the fisherman tower is affected by a ranger or another tower
+    public MeshRenderer flashRenderer;
 
     // material that will 
     public Material flashMaterial;
 
     // how many times the fish will flash in and out to show it is being caught
     public int numFlashesPerCatch;
-
-    // Reference to the Tower Manager
-    [SerializeField] private TowerManager theTowerManager;
 
 
     protected override void Awake()
@@ -54,15 +53,17 @@ public class SealionTower : TowerBase
     // Start is called before the first frame update
     protected override void Start()
     {
-        TowerActive = true;
-        paused = false;
-
         base.Start();
 
         caughtFish = new List<Fish>();
-
+        
     }
 
+    // Update is called once per frame
+    void Update()
+    {
+        
+    }
 
     //Catch rate effect stuff
     public void AffectCatchRate(float smallEffect, float mediumEffect, float largeEffect, float length)
@@ -72,9 +73,6 @@ public class SealionTower : TowerBase
 
     protected override void ApplyTowerEffect()
     {
-
-        Debug.Log("do Sealion Stuff");
-
         // get all fish that aren't already being caught
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
             .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught ?? true).ToArray();
@@ -87,7 +85,7 @@ public class SealionTower : TowerBase
 
         foreach (Collider fishCollider in fishColliders)
         {
-            Fish fish = fishCollider.GetComponent<Fish>();
+            Fish fish = GetComponent<Fish>();
 
             if (fish)
             {
@@ -185,7 +183,7 @@ public class SealionTower : TowerBase
     //THIS IS ALL JUST HERE BECAUSE TOWERBASE REQUIRES IT, IT DOESN'T ACTUALLY DO ANYTHING
     protected override bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        
+        /*
         int correctLayer = LayerMask.NameToLayer(Layers.TERRAIN_LAYER_NAME);
 
         // for placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
@@ -196,7 +194,7 @@ public class SealionTower : TowerBase
                                                             hitInfo.collider.gameObject.layer == correctLayer &&
                                                             Mathf.Abs(hitInfo.point.z - primaryHitInfo.point.z) < 1f);
         }
-        
+        */
 
         // if one of these conditions was not met, return false
         return false;
@@ -215,10 +213,10 @@ public class SealionTower : TowerBase
 
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        
+        /*
         transform.position = primaryHitInfo.point;
         theTowerManager = FindObjectOfType<TowerManager>();
         //theTowerManager.AddAngler(this);
-        
+        */
     }
 }

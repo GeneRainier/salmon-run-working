@@ -203,7 +203,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1886008069537272832}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.9160199, y: 1.9160199, z: 0.1013661}
@@ -330,20 +330,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1886008069537272832}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5540ac813412a345b4869f28cfc0621, type: 3}
+  m_Script: {fileID: 11500000, guid: 03fee7bd16fd2714f8e071a43d3c5c7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   effectRadius: 150
   timePerApplyEffect: 3
-  flashRenderer: {fileID: 1886008069537272839}
-  hitLineMaterial: {fileID: 2100000, guid: babc363db094c014497dd0ee086de570, type: 2}
-  missLineMaterial: {fileID: 2100000, guid: b26876ed0e685894a9b964eb35acb642, type: 2}
-  flashMaterial: {fileID: 2100000, guid: 15a1b3c7cd9cfcf4abef70e065f15150, type: 2}
   defaultCatchRate: 1
+  defaultSmallCatchRate: 0.1
+  defaultMediumCatchRate: 0.1
+  defaultLargeCatchRate: 0.1
+  currentSmallCatchRate: 0.1
+  currentMediumCatchRate: 0.1
+  currentLargeCatchRate: 0.1
+  flashMaterial: {fileID: 2100000, guid: 15a1b3c7cd9cfcf4abef70e065f15150, type: 2}
   numFlashesPerCatch: 3
-  defaultSmallCatchRate: 0.8
-  defaultMediumCatchRate: 0.8
-  defaultLargeCatchRate: 0.8
+  theTowerManager: {fileID: 0}
 --- !u!1001 &1886008068489973526
 PrefabInstance:
   m_ObjectHideFlags: 0

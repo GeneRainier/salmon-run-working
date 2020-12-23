@@ -333,7 +333,7 @@ public class UpgradeManager : MonoBehaviour
         return upgrades.Find(upgrade => upgrade.UpgradeType == upgradeType).Cost;
     }
 
-    //this this is what is giving an error when I add other stuff.
+    //this is what is giving an error when I add other stuff.
     //THIS FUNCTION DOESNT DO ANYTHING NOW
     public void UpdateButtons()
     {
