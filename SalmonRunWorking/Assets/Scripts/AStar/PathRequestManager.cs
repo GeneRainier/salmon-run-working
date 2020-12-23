@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Threading;
 
 /*
  * This script is dedicated to processing requests from individual units (in our case fish) to calculate a path from one end of the map to the other.
@@ -12,13 +13,10 @@ using UnityEngine;
 
 public class PathRequestManager : MonoBehaviour
 {
-    Queue<PathRequest> pathRequests = new Queue<PathRequest>();     ///< The queue of path requests
-    PathRequest currentPathRequest;                                 ///< The path request currently being processed
-
+    Queue<PathResult> results = new Queue<PathResult>();
+    
     static PathRequestManager instance;                             ///< The instance of the PathRequestManager script in the scene
     private Pathfinding pathfinding;                                ///< A reference to the Pathfinding script
-
-    bool isProcessing;                                              ///< Boolean tracking whether or not the path request (finding and setting path) is still being processed
 
     private void Awake()
     {
@@ -26,60 +24,87 @@ public class PathRequestManager : MonoBehaviour
         pathfinding = GetComponent<Pathfinding>();
     }
 
-    /*
-     * Add a request for a path from pathStart to pathEnd
-     * \param pathStart The start of the path to be found
-     * \param pathEnd The end of the path to be found
-     */
-    public static void RequestPath(Vector3 pathStart, Vector3 pathEnd, Action<Vector3[], bool> callback)
+    private void Update()
     {
-        PathRequest newRequest = new PathRequest(pathStart, pathEnd, callback);
-        instance.pathRequests.Enqueue(newRequest);
-        instance.TryProcessNext();
+        if (results.Count > 0)
+        {
+            int itemsInQueue = results.Count;
+            lock(results)
+            {
+                for (int i = 0; i < itemsInQueue; i++)
+                {
+                    PathResult result = results.Dequeue();
+                    result.callback(result.path, result.success);
+                }
+            }
+        }
     }
 
     /*
-     * Remove the path request from the queue and begin the process of finding the path in the Pathfinding script
+     * Add a request for a path from pathStart to pathEnd
+     * \param request The newest request from a GameObject for a path
      */
-    private void TryProcessNext()
+    public static void RequestPath(PathRequest request)
     {
-        if (isProcessing == false && pathRequests.Count > 0)
+        ThreadStart threadStart = delegate
         {
-            currentPathRequest = pathRequests.Dequeue();
-            isProcessing = true;
-            pathfinding.StartFindPath(currentPathRequest.pathStart, currentPathRequest.pathEnd);
-        }
+            instance.pathfinding.FindPath(request, instance.FinishedProcessing);
+        };
+        threadStart.Invoke();
     }
 
     /*
      * Notify the manager that the prior path in the queue is finished processing and start processing the next request
      * \param path An array of the full path
      * \param success Was there a path successfully found?
+     * \param originalRequest The PathRequest that was called in RequestPath to start the thread
      */
-    public void FinishedProcessing(Vector3[] path, bool success)
+    public void FinishedProcessing(PathResult result)
     {
-        currentPathRequest.callback(path, success);
-        isProcessing = false;
-        TryProcessNext();
+        lock (results)
+        {
+            results.Enqueue(result);
+        }
+        
     }
+}
+
+/*
+ * C# data structure to represent a PathResult (these will be placed into the queue)
+ */
+public struct PathResult
+{
+    public Vector3[] path;                      ///< The path that was found for a certain request
+    public bool success;                        ///< The success of finding a path for a certain request
+    public Action<Vector3[], bool> callback;    ///< System Action that reports pathfinding success and the path found as Vector 3 positions
 
     /*
-     * C# data structure to represent a PathRequest (these will be placed into the queue)
+     * Constructor for a PathResult
      */
-    struct PathRequest
+    public PathResult(Vector3[] path, bool success, Action<Vector3[], bool> callback)
     {
-        public Vector3 pathStart;                   ///< The beginning of the desired path
-        public Vector3 pathEnd;                     ///< The end of the desired path
-        public Action<Vector3[], bool> callback;    ///< System Action that reports pathfinding success and the path found as Vector 3 positions
+        this.path = path;
+        this.success = success;
+        this.callback = callback;
+    }
+}
 
-        /*
-         * Constructor for a PathRequest
-         */
-        public PathRequest(Vector3 _start, Vector3 _end, Action<Vector3[], bool> _callback)
-        {
-            pathStart = _start;
-            pathEnd = _end;
-            callback = _callback;
-        }
-    }    
+/*
+ * C# data structure to represent a PathRequest
+ */
+public struct PathRequest
+{
+    public Vector3 pathStart;                   ///< The beginning of the desired path
+    public Vector3 pathEnd;                     ///< The end of the desired path
+    public Action<Vector3[], bool> callback;    ///< System Action that reports pathfinding success and the path found as Vector 3 positions
+
+    /*
+     * Constructor for a PathRequest
+     */
+    public PathRequest(Vector3 _start, Vector3 _end, Action<Vector3[], bool> _callback)
+    {
+        pathStart = _start;
+        pathEnd = _end;
+        callback = _callback;
+    }
 }

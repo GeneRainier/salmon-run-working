@@ -10,24 +10,12 @@ using System.Diagnostics;
 
 public class Pathfinding : MonoBehaviour
 {
-    PathRequestManager requestManager;   ///< 
     AStarGrid grid;     ///< The grid created in the AStarScript which defines the bounds of our scene, where is walkable, where is unwalkable, etc.
 
     private void Awake()
     {
         // Grab the grid created by the AStarGrid script (Both scripts must be on the same object for this to work!)
         grid = GetComponent<AStarGrid>();
-        requestManager = GetComponent<PathRequestManager>();
-    }
-
-    /*
-     * Begin the process of finding a path for the calling entity
-     * \param startPos The position the path should start from
-     * \param endPos The position the path shoul end at
-     */
-    public void StartFindPath(Vector3 startPos, Vector3 endPos)
-    {
-        StartCoroutine(FindPath(startPos, endPos));
     }
 
     /*
@@ -35,7 +23,7 @@ public class Pathfinding : MonoBehaviour
      * \param startPos The starting position of the path
      * \param endPos The ending position of the path
      */
-    IEnumerator FindPath(Vector3 startPos, Vector3 endPos)
+    public void FindPath(PathRequest request, Action<PathResult> callback)
     {
         Stopwatch sw = new Stopwatch();
         sw.Start();
@@ -44,8 +32,8 @@ public class Pathfinding : MonoBehaviour
         bool pathSuccess = false;
 
         // Initialize the start and end Nodes to be the closest Nodes to the starting and ending positions
-        Node startNode = grid.GetNodeFromWorldPoint(startPos);
-        Node endNode = grid.GetNodeFromWorldPoint(endPos);
+        Node startNode = grid.GetNodeFromWorldPoint(request.pathStart);
+        Node endNode = grid.GetNodeFromWorldPoint(request.pathEnd);
 
         if (startNode.walkable == true && endNode.walkable == true)
         {
@@ -101,12 +89,12 @@ public class Pathfinding : MonoBehaviour
                 }
             }
         }
-        yield return null;
         if (pathSuccess == true)
         {
             waypoints = RetracePath(startNode, endNode);
+            pathSuccess = waypoints.Length > 0;
         }
-        requestManager.FinishedProcessing(waypoints, pathSuccess);
+        callback(new PathResult(waypoints, pathSuccess, request.callback));
     }
 
     /*
