@@ -89,6 +89,37 @@ public class Unit : MonoBehaviour
                 targetPosOld = target.position;
             }
         }
+        //else
+        //{
+        //    PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+
+        //    float squareMoveThreshold = pathUpdateThreshold * pathUpdateThreshold;
+        //    Vector3 targetPosOld = target.position;
+
+        //    while (true)
+        //    {
+        //        yield return new WaitForSeconds(minPathUpdateTime);
+        //        if ((target.position - targetPosOld).sqrMagnitude > squareMoveThreshold)
+        //        {
+        //            PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+        //            targetPosOld = target.position;
+        //        }
+        //    }
+        //}
+        //PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+
+        //float squareMoveThreshold = pathUpdateThreshold * pathUpdateThreshold;
+        //Vector3 targetPosOld = target.position;
+        
+        //while (true)
+        //{
+        //    yield return new WaitForSeconds(minPathUpdateTime);
+        //    if ((target.position - targetPosOld).sqrMagnitude > squareMoveThreshold)
+        //    {
+        //        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
+        //        targetPosOld = target.position;
+        //    }
+        //}
     }
 
     /*
@@ -120,7 +151,7 @@ public class Unit : MonoBehaviour
             {
                 Quaternion endRotation = Quaternion.LookRotation(path.lookPoints[pathIndex] - transform.position);
                 transform.rotation = Quaternion.Lerp(transform.rotation, endRotation, Time.deltaTime * turnSpeed);
-                transform.Translate(Vector3.up * Time.deltaTime * speed, Space.Self);
+                transform.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
             }
 
             yield return null;
