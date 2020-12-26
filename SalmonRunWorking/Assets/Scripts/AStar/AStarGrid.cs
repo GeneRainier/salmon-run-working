@@ -34,7 +34,7 @@ public class AStarGrid : MonoBehaviour
     {
         if (displayPath == true)
         {
-            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, 1));
 
             if (grid != null)
             {
@@ -82,7 +82,7 @@ public class AStarGrid : MonoBehaviour
     {
         grid = new Node[gridSizeX, gridSizeY];
         // Arbitrarily grabbing the bottem left as a starting position to create the rest of the grid (from bottem left to upper right)
-        Vector3 worldBottemLeft = transform.position - (Vector3.right * gridWorldSize.x / 2) - (Vector3.forward * gridWorldSize.y / 2);
+        Vector3 worldBottemLeft = transform.position - (Vector3.right * gridWorldSize.x / 2) - (Vector3.up * gridWorldSize.y / 2);
 
         // Loop through every position on the grid and create a Node there
         for (int x = 0; x < gridSizeX; x++)
@@ -90,7 +90,7 @@ public class AStarGrid : MonoBehaviour
             for (int y = 0; y < gridSizeY; y++)
             {
                 // Calculate the position of the new node
-                Vector3 worldPoint = worldBottemLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
+                Vector3 worldPoint = worldBottemLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
                 // Should the Node be walkable by the A* Algorithm or not
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
                 grid[x, y] = new Node(walkable, worldPoint, x, y);
