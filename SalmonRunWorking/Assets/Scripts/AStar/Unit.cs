@@ -89,37 +89,6 @@ public class Unit : MonoBehaviour
                 targetPosOld = target.position;
             }
         }
-        //else
-        //{
-        //    PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
-
-        //    float squareMoveThreshold = pathUpdateThreshold * pathUpdateThreshold;
-        //    Vector3 targetPosOld = target.position;
-
-        //    while (true)
-        //    {
-        //        yield return new WaitForSeconds(minPathUpdateTime);
-        //        if ((target.position - targetPosOld).sqrMagnitude > squareMoveThreshold)
-        //        {
-        //            PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
-        //            targetPosOld = target.position;
-        //        }
-        //    }
-        //}
-        //PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
-
-        //float squareMoveThreshold = pathUpdateThreshold * pathUpdateThreshold;
-        //Vector3 targetPosOld = target.position;
-        
-        //while (true)
-        //{
-        //    yield return new WaitForSeconds(minPathUpdateTime);
-        //    if ((target.position - targetPosOld).sqrMagnitude > squareMoveThreshold)
-        //    {
-        //        PathRequestManager.RequestPath(new PathRequest(transform.position, target.position, OnPathFound));
-        //        targetPosOld = target.position;
-        //    }
-        //}
     }
 
     /*
@@ -133,7 +102,7 @@ public class Unit : MonoBehaviour
         
         while (followingPath == true)
         {
-            Vector2 pos2D = new Vector2(transform.position.x, transform.position.z);
+            Vector2 pos2D = new Vector2(transform.position.x, transform.position.y);
             while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
             {
                 if (pathIndex == path.finishLineIndex)
@@ -149,7 +118,20 @@ public class Unit : MonoBehaviour
 
             if (followingPath)
             {
-                Quaternion endRotation = Quaternion.LookRotation(path.lookPoints[pathIndex] - transform.position);
+                // This is an artificate line from the first crack at this code prior to rotating the units. It is here for future reference
+                //Quaternion endRotation = Quaternion.LookRotation(path.lookPoints[pathIndex] - transform.position);
+                
+                /* TO DO: Clean up this explanation a bit
+                 * 
+                 * NOTE: The next two lines are what allows the unit to be rotated 90 degrees in the X axis and still utilize LookRotation
+                 * for the smooth pathing. Essentially, we are overriding LookRotations typical function with some clever Vector math.
+                 * We take our base rotation this frame, the direction of our target, and we compose them via multiplication.
+                 * The z axis is normalized so that it is following the lead of the Y axis (when we rotate in x the y and z axis are the 
+                 * "x and y" in global terms) rather than the other way around which is how LookRotation normally operates
+                 */ 
+                Vector3 lookDirection = path.lookPoints[pathIndex] - transform.position;
+                Quaternion endRotation = Quaternion.LookRotation(Vector3.forward.normalized, -lookDirection)
+                                    * Quaternion.AngleAxis(90f, Vector3.right);
                 transform.rotation = Quaternion.Lerp(transform.rotation, endRotation, Time.deltaTime * turnSpeed);
                 transform.Translate(Vector3.forward * Time.deltaTime * speed, Space.Self);
             }

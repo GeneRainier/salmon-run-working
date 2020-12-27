@@ -7,7 +7,7 @@ public class AStarGrid : MonoBehaviour
     public bool displayPath;            ///< Diagnostic boolean telling OnDrawGizmos to draw the path
     public Transform player;            ///< The position of the player
     public LayerMask unwalkableMask;    ///< The Unwalkable layer mask to check for collisions with Unwalkable obstacles
-    public Vector2 gridWorldSize;       ///< The size of the full grid in world space
+    public Vector3 gridWorldSize;       ///< The size of the full grid in world space
     public float nodeRadius;            ///< The radius of a single node (we draw nodes as cubes here but check for collisions in a sphere)
     Node[,] grid;                       ///< The actual 2D array of Nodes
 
@@ -34,7 +34,7 @@ public class AStarGrid : MonoBehaviour
     {
         if (displayPath == true)
         {
-            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, 1, gridWorldSize.y));
+            Gizmos.DrawWireCube(transform.position, new Vector3(gridWorldSize.x, gridWorldSize.y, gridWorldSize.z));
 
             if (grid != null)
             {
@@ -63,7 +63,7 @@ public class AStarGrid : MonoBehaviour
     {
         // Calculate how far along the X and Y directions of the grid the entity is
         float percentX = (worldPosition.x / gridWorldSize.x) + 0.5f;
-        float percentY = (worldPosition.z / gridWorldSize.y) + 0.5f;
+        float percentY = (worldPosition.y / gridWorldSize.y) + 0.5f;
         // These clamps ensure that the function always returns a valid grid position rather than one that is way outside of the grid
         percentX = Mathf.Clamp01(percentX);
         percentY = Mathf.Clamp01(percentY);
@@ -82,7 +82,7 @@ public class AStarGrid : MonoBehaviour
     {
         grid = new Node[gridSizeX, gridSizeY];
         // Arbitrarily grabbing the bottem left as a starting position to create the rest of the grid (from bottem left to upper right)
-        Vector3 worldBottemLeft = transform.position - (Vector3.right * gridWorldSize.x / 2) - (Vector3.forward * gridWorldSize.y / 2);
+        Vector3 worldBottemLeft = transform.position - (Vector3.right * gridWorldSize.x / 2) - (Vector3.up * gridWorldSize.y / 2);
 
         // Loop through every position on the grid and create a Node there
         for (int x = 0; x < gridSizeX; x++)
@@ -90,7 +90,7 @@ public class AStarGrid : MonoBehaviour
             for (int y = 0; y < gridSizeY; y++)
             {
                 // Calculate the position of the new node
-                Vector3 worldPoint = worldBottemLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
+                Vector3 worldPoint = worldBottemLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
                 // Should the Node be walkable by the A* Algorithm or not
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
                 grid[x, y] = new Node(walkable, worldPoint, x, y);

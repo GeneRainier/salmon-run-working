@@ -80,8 +80,8 @@ public struct Line
      */
     public void DrawWithGizmos(float length)
     {
-        Vector3 lineDir = new Vector3(1, 0, gradient).normalized;
-        Vector3 lineCenter = new Vector3(pointOnLine_1.x, 0, pointOnLine_1.y) + Vector3.up;
+        Vector3 lineDir = new Vector3(1, gradient, 0).normalized;
+        Vector3 lineCenter = new Vector3(pointOnLine_1.x, pointOnLine_1.y, 0) + Vector3.up;
         Gizmos.DrawLine(lineCenter - lineDir * length/2f, lineCenter + lineDir * length/2f);
     }
 }

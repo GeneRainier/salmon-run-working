@@ -37,7 +37,7 @@ public class Path
      */
     private Vector2 V3toV2(Vector3 v3)
     {
-        return new Vector2(v3.x, v3.z);
+        return new Vector2(v3.x, v3.y);
     }
     
     /*
