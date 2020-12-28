@@ -28,6 +28,7 @@ public class Node : IHeapItem<Node>
     public Vector3 worldPosition;   ///< The world position of the Node in the game scene
     public int gridX;               ///< The x position of the Node in the game scene
     public int gridY;               ///< The y position of the node in the game scene
+    public int movementPenalty;     ///< The cost of moving across a particular Node
 
     public int gCost;               ///< The distance of this Node from the starting Node
     public int hCost;               ///< The distance of this Node from the ending Node
@@ -37,12 +38,13 @@ public class Node : IHeapItem<Node>
     /*
      * Constructor
      */
-    public Node(bool _walkable, Vector3 _worldPosition, int _gridX, int _gridY)
+    public Node(bool _walkable, Vector3 _worldPosition, int _gridX, int _gridY, int _penalty)
     {
         walkable = _walkable;
         worldPosition = _worldPosition;
         gridX = _gridX;
         gridY = _gridY;
+        movementPenalty = _penalty;
     }
 
     /*

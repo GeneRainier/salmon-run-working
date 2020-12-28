@@ -905,6 +905,8 @@ MonoBehaviour:
     m_Bits: 4096
   gridWorldSize: {x: 100, y: 100, z: 0}
   nodeRadius: 0.5
+  walkableRegions: []
+  obstaclePenalty: 30
 --- !u!114 &855985307
 MonoBehaviour:
   m_ObjectHideFlags: 0

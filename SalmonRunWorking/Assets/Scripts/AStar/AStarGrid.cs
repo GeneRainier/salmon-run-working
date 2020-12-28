@@ -9,10 +9,17 @@ public class AStarGrid : MonoBehaviour
     public LayerMask unwalkableMask;    ///< The Unwalkable layer mask to check for collisions with Unwalkable obstacles
     public Vector3 gridWorldSize;       ///< The size of the full grid in world space
     public float nodeRadius;            ///< The radius of a single node (we draw nodes as cubes here but check for collisions in a sphere)
+    public TerrainType[] walkableRegions;   ///< An array of all the walkabale nodes in the grid
+    private LayerMask walkableMask;     ///< The LayerMask denoting a terrain type as walkable
+    private Dictionary<int, int> walkablePenalties = new Dictionary<int, int>();    ///< Dictionary for faster reference of Terrain Penalties
+    public int obstaclePenalty = 10;             ///< A general movement penalty applied for Nodes near an obstacle (we don't want units moving near obstacles)
     Node[,] grid;                       ///< The actual 2D array of Nodes
 
     private float nodeDiameter;         ///< The diameter of the a single node which we use to calculate node spacing on the grid
     private int gridSizeX, gridSizeY;   ///< The size of the full grid in the X and Y driections to calculate node spacing on the grid
+
+    private int penaltyMin = int.MaxValue;
+    private int penaltyMax = int.MinValue;
 
     private void Awake()
     {
@@ -20,6 +27,12 @@ public class AStarGrid : MonoBehaviour
         nodeDiameter = nodeRadius * 2;
         gridSizeX = Mathf.RoundToInt(gridWorldSize.x / nodeDiameter);
         gridSizeY = Mathf.RoundToInt(gridWorldSize.y / nodeDiameter);
+        foreach(TerrainType region in walkableRegions)
+        {
+            walkableMask.value = walkableMask | region.terrainMask.value;
+            walkablePenalties.Add((int) Mathf.Log(region.terrainMask.value, 2), region.terrainPenalty);
+        }
+
         // Create the actual NodeGrid
         CreateGrid();
     }
@@ -40,8 +53,10 @@ public class AStarGrid : MonoBehaviour
             {
                 foreach (Node n in grid)
                 {
-                    Gizmos.color = (n.walkable) ? Color.white : Color.red;
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - 0.1f));
+                    Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, n.movementPenalty));
+                    
+                    Gizmos.color = (n.walkable) ? Gizmos.color : Color.red;
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter));
                 }
             }
         }
@@ -93,9 +108,26 @@ public class AStarGrid : MonoBehaviour
                 Vector3 worldPoint = worldBottemLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.up * (y * nodeDiameter + nodeRadius);
                 // Should the Node be walkable by the A* Algorithm or not
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
-                grid[x, y] = new Node(walkable, worldPoint, x, y);
+                int movePenalty = 0;
+                // Raycasts which determine what each location in the scene should have as a movemrnt penalty
+                Ray ray = new Ray(worldPoint + Vector3.forward * 50, Vector3.back);
+                RaycastHit hit;
+                if (Physics.Raycast(ray, out hit, 100, walkableMask))
+                {
+                    walkablePenalties.TryGetValue(hit.collider.gameObject.layer, out movePenalty);
+                }
+
+                // Applies an additional penalty for being near an obstacle
+                if (walkable == false)
+                {
+                    movePenalty += obstaclePenalty;
+                }
+
+                grid[x, y] = new Node(walkable, worldPoint, x, y, movePenalty);
             }
         }
+
+        BlurPenaltyMap(5);
     }
 
     /*
@@ -128,5 +160,80 @@ public class AStarGrid : MonoBehaviour
             }
         }
         return neighbors;
+    }
+
+    /*
+     * Blurs the penalty between different terrains so movement between these terrains is smoother and less likely to end up with clipping / collisions
+     * For a more detailed look at how this block of code operates and how Movement Penalty Maps work, see here: https://www.youtube.com/watch?v=Tb-rM3wGwv4&list=PLFt_AvWsXl0cq5Umv3pMC9SPnKjfp9eGW&index=7
+     * \param blurSize The severity of the blur effect
+     */
+    private void BlurPenaltyMap(int blurSize)
+    {
+        int kernalSize = blurSize * 2 + 1;
+        int kernalExtents = (kernalSize - 1) / 2;
+
+        int[,] penaltiesHorizontalPass = new int[gridSizeX, gridSizeY];
+        int[,] penaltiesVerticalPass = new int[gridSizeX, gridSizeY];
+        
+        // Horizontal pass through the penalty map
+        for (int y = 0; y < gridSizeY; y++)
+        {
+            for (int x = -kernalExtents; x <= kernalExtents; x++)
+            {
+                int sampleX = Mathf.Clamp(x, 0, kernalExtents);
+                penaltiesHorizontalPass[0, y] += grid[sampleX, y].movementPenalty;
+            }
+
+            for (int x = 1; x < gridSizeX; x++)
+            {
+                int removeIndex = Mathf.Clamp(x - kernalExtents - 1, 0, gridSizeX);
+                int addIndex = Mathf.Clamp(x + kernalExtents, 0, gridSizeX - 1);
+
+                penaltiesHorizontalPass[x, y] = penaltiesHorizontalPass[x - 1, y] - grid[removeIndex, y].movementPenalty + grid[addIndex, y].movementPenalty;
+            }
+        }
+
+        // Vertical pass through the penalty map
+        for (int x = 0; x < gridSizeX; x++)
+        {
+            for (int y = -kernalExtents; y <= kernalExtents; y++)
+            {
+                int sampleY = Mathf.Clamp(y, 0, kernalExtents);
+                penaltiesVerticalPass[x, 0] += penaltiesHorizontalPass[x, sampleY];
+            }
+
+            int blurredPenalty = Mathf.RoundToInt((float)penaltiesVerticalPass[x, 0] / (kernalSize * kernalSize));
+            grid[x, 0].movementPenalty = blurredPenalty;
+
+            for (int y = 1; y < gridSizeY; y++)
+            {
+                int removeIndex = Mathf.Clamp(y - kernalExtents - 1, 0, gridSizeY);
+                int addIndex = Mathf.Clamp(y + kernalExtents, 0, gridSizeY - 1);
+
+                penaltiesVerticalPass[x, y] = penaltiesVerticalPass[x, y - 1] - penaltiesHorizontalPass[x, removeIndex] + penaltiesHorizontalPass[x, addIndex];
+                blurredPenalty = Mathf.RoundToInt((float) penaltiesVerticalPass[x, y] / (kernalSize * kernalSize));
+                grid[x, y].movementPenalty = blurredPenalty;
+
+                if (blurredPenalty > penaltyMax)
+                {
+                    penaltyMax = blurredPenalty;
+                }
+                if (blurredPenalty < penaltyMin)
+                {
+                    penaltyMin = blurredPenalty;
+                }
+            }
+        }
+    }
+
+    /*
+     * Class that defines a type of terrain and its corresponding penelty value
+     * This allows us to make more complex terrains (maybe rapids?) if we so choose that salmon may choose to navigate around
+     */
+    [System.Serializable]
+    public class TerrainType
+    {
+        public LayerMask terrainMask;   ///< The is the name of the terrain as a layer mask to be viewed by our raycasting
+        public int terrainPenalty;      ///< The movement penalty associated with that type of terrain
     }
 }
