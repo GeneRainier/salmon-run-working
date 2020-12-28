@@ -56,7 +56,7 @@ public class AStarGrid : MonoBehaviour
                     Gizmos.color = Color.Lerp(Color.white, Color.black, Mathf.InverseLerp(penaltyMin, penaltyMax, n.movementPenalty));
                     
                     Gizmos.color = (n.walkable) ? Gizmos.color : Color.red;
-                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter));
+                    Gizmos.DrawCube(n.worldPosition, Vector3.one * (nodeDiameter - .1f));
                 }
             }
         }
