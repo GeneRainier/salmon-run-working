@@ -5,7 +5,10 @@ using UnityEngine;
 public class AStarGrid : MonoBehaviour
 {
     public bool displayPath;            ///< Diagnostic boolean telling OnDrawGizmos to draw the path
-    public Transform player;            ///< The position of the player
+    public GameObject player;            ///< The unit following this grid
+    public Transform[] targets;         ///< An array of the possible end points a unit may choose to end at
+    public float offsetX;     ///< The amount to offset the x component of the target transform
+    public float offsetY;     ///< The amount to offset the x component of the target transform
     public LayerMask unwalkableMask;    ///< The Unwalkable layer mask to check for collisions with Unwalkable obstacles
     public Vector3 gridWorldSize;       ///< The size of the full grid in world space
     public float nodeRadius;            ///< The radius of a single node (we draw nodes as cubes here but check for collisions in a sphere)
@@ -35,6 +38,12 @@ public class AStarGrid : MonoBehaviour
 
         // Create the actual NodeGrid
         CreateGrid();
+
+        foreach(Transform endPos in targets)
+        {
+            endPos.position = new Vector3(endPos.position.x + offsetX, 
+                endPos.position.y + offsetY, endPos.position.z);
+        }
     }
 
     public List<Node> path;
