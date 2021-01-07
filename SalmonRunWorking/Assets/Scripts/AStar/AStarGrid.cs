@@ -2,6 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * General note regarding A* and implementation into Salmon Run: As of now (1-7-2020), A* does not seem to be the best solution to speeding
+ * up the pathfinding of the fish given the current status of the Columbia River map. All pathfinding algorithms are limited in their efficiency by
+ * A) The size of the viable space for pathfinding (Size of the map) and B) The granularity of the pathfinding within that space (Node Size). 
+ * Due to the size of the Columbia River map and the way in which it is constructed, the only viable A* solution would require either a complete
+ * redesign of the Columbia River map (currently unviable) to make it wider at certain locations to accomodate a consistent Node granularity. Additionally,
+ * it would also require a general adaptation of this code to operate in the XY plane rather than the XZ plane which has proven trickier than expected.
+ * 
+ * While this code will remain in the Pathfinding branch of the Salmon Run GitHub, the best path forward seems to be to take the existing Vector Field
+ * pathfinding implemented in the existing Columbia River game scene and optimize it by having fish paths be calculated prior to runtime as opposed to during.
+ * This should maintain the current operability of the Vector Field Pathfinding, but remove its biggest drawback in requiring so much time to calculate
+ * the iminent paths of each fish in the scene. Every fish should have an idea of where it needs to go upon spawning.
+ * 
+ * This code and the corresponding code contained in the A* script folder, will remain in this branch in the hopes that it might be adaptable for something 
+ * later down the line.
+ */
+
 public class AStarGrid : MonoBehaviour
 {
     public bool displayPath;            ///< Diagnostic boolean telling OnDrawGizmos to draw the path
