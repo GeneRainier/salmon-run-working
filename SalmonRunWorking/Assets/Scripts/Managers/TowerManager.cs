@@ -44,6 +44,9 @@ public class TowerManager : MonoBehaviour
 [Serializable]
 public class Tower
 {
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
+
     [SerializeField] private TowerType towerType;
     [SerializeField] private TowerUI towerUI;
     [SerializeField] private bool enabled;

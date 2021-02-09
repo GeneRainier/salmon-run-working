@@ -606,7 +606,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -277, y: -304}
+  m_AnchoredPosition: {x: -277.00006, y: -304}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &128178043
@@ -883,31 +883,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towers:
-  - towerType: 0
+  - initializationValues: {fileID: 0}
+    towerType: 0
     towerUI: {fileID: 5614493210049836175}
     enabled: 1
     cost: 10
-  - towerType: 1
+  - initializationValues: {fileID: 0}
+    towerType: 1
     towerUI: {fileID: 5614493210049836174}
     enabled: 1
     cost: 10
-  - towerType: 2
+  - initializationValues: {fileID: 0}
+    towerType: 2
     towerUI: {fileID: 5614493210049836173}
     enabled: 1
     cost: 100
-  - towerType: 3
+  - initializationValues: {fileID: 0}
+    towerType: 3
     towerUI: {fileID: 5614493210049836172}
     enabled: 1
     cost: 100
-  - towerType: 4
+  - initializationValues: {fileID: 0}
+    towerType: 4
     towerUI: {fileID: 5614493210049836171}
     enabled: 1
     cost: 10123
-  - towerType: 5
+  - initializationValues: {fileID: 0}
+    towerType: 5
     towerUI: {fileID: 5614493210049836170}
     enabled: 0
     cost: 10123
-  - towerType: 6
+  - initializationValues: {fileID: 0}
+    towerType: 6
     towerUI: {fileID: 5614493210049836169}
     enabled: 0
     cost: 10123
@@ -1551,6 +1558,21 @@ MonoBehaviour:
   menuManager: {fileID: 1139549159}
   towerManager: {fileID: 268821878}
   upgradeManager: {fileID: 297820839}
+  anglerRadius: 150
+  defaultSmallCatchRate: 0.5
+  defaultMediumCatchRate: 0.3
+  defaultLargeCatchRate: 0.1
+  rangerRadius: 450
+  defaultSmallModifier: -0.5
+  defaultMediumModifier: 0.1
+  defaultLargeModifier: 0.4
+  defaultSuccessRate: 1
+  defaultDamPassRate: 0.3
+  defaultLadderSmallPassRate: 0.2
+  defaultLadderMediumPassRate: 0.6
+  defaultLadderLargePassRate: 0.7
+  startingMoney: 1500
+  sealionAppearanceTime: 3
 --- !u!1 &570145545
 GameObject:
   m_ObjectHideFlags: 0
@@ -1974,7 +1996,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -277, y: -204}
+  m_AnchoredPosition: {x: -277.00006, y: -204}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &756515155
@@ -2237,6 +2259,7 @@ MonoBehaviour:
     type: 3}
   locationInUse: 0
   turnsBeforeShowing: 3
+  initializationValues: {fileID: 0}
 --- !u!114 &998475052 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 673693558861770511, guid: c0f8cb6cf525b8b4393317159fe255f3,
@@ -2842,6 +2865,7 @@ MonoBehaviour:
   startingFunds: 5010
   moneyText: {fileID: 416494729}
   catchTaxRate: 1
+  initializationValues: {fileID: 0}
 --- !u!1001 &1504386798
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -47830,7 +47854,7 @@ PrefabInstance:
     - target: {fileID: 410622127673598821, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 9.1
+      value: 9.099998
       objectReference: {fileID: 0}
     - target: {fileID: 430985152579701444, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -50690,6 +50714,11 @@ PrefabInstance:
       propertyPath: m_textInfo.pageCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4134498790456226782, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: gameManager
+      value: 
+      objectReference: {fileID: 998475052}
     - target: {fileID: 4142307956377329250, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -52907,12 +52936,12 @@ PrefabInstance:
     - target: {fileID: 5930893430237747355, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -9.1
+      value: -9.099998
       objectReference: {fileID: 0}
     - target: {fileID: 5930893430237747355, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 3.6
+      value: 3.5999985
       objectReference: {fileID: 0}
     - target: {fileID: 5989558479342052452, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
