@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class DamLadder : MonoBehaviour, IDragAndDropObject
 {
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
 
     // rate at which small, medium, and large fish should be able to pass a dam with a ladder installed
     [Range(0f, 1f)]
@@ -15,6 +17,12 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
     // initialized in Unity
     // Project -> Assets -> Prefabs -> Filters -> Dam -> DamLadder
     // (make sure to double click on DamLadder cube symbol. 
+
+    private void Awake()
+    {
+        // Get initialization values and set this towers basic values
+        initializationValues = FindObjectOfType<ManagerIndex>();
+    }
 
     #region IDragAndDropObject Implementation
 
@@ -28,6 +36,11 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
         if (placementLocation != null)
         {
             placementLocation.AttachLadder(this);
+
+            // Initialize the pass rates
+            smallCrossingRate = initializationValues.defaultLadderSmallPassRate;
+            mediumCrossingRate = initializationValues.defaultLadderMediumPassRate;
+            largeCrossingRate = initializationValues.defaultLadderLargePassRate;
         }
     }
 

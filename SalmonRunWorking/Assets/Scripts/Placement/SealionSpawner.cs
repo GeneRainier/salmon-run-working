@@ -14,6 +14,9 @@ public class SealionSpawner : MonoBehaviour
 
     private DamPlacementLocation damPlacementLocation;
 
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
+
     /*
     private void Update()
     {
@@ -31,8 +34,11 @@ public class SealionSpawner : MonoBehaviour
 
     private void Awake()
     {
+        // Get initialization values and set this towers basic values
+        initializationValues = FindObjectOfType<ManagerIndex>();
         GameEvents.onTurnUpdated.AddListener(SpawnSealion);
         damPlacementLocation = GetComponent<DamPlacementLocation>();
+        turnsBeforeShowing = initializationValues.sealionAppearanceTime;
     }
 
     public void Update()

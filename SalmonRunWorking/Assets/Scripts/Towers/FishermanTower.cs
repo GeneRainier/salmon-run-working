@@ -64,6 +64,12 @@ public class FishermanTower : TowerBase
         // bas class awake
         base.Awake();
 
+        // Set catch rates and radius based on Initialization values
+        effectRadius = initializationValues.anglerRadius;
+        defaultSmallCatchRate = initializationValues.defaultSmallCatchRate;
+        defaultMediumCatchRate = initializationValues.defaultMediumCatchRate;
+        defaultLargeCatchRate = initializationValues.defaultLargeCatchRate;
+
         // set current catch rates
         currentSmallCatchRate = defaultCatchRate * defaultSmallCatchRate;
         currentMediumCatchRate = defaultCatchRate * defaultMediumCatchRate;

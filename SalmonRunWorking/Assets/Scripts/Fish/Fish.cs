@@ -93,7 +93,7 @@ public class Fish : MonoBehaviour
 
         // attempt to rotate to face the direction of motion
         float angle = Mathf.Atan2(totalMovement.y, totalMovement.x) * Mathf.Rad2Deg;
-        Debug.DrawRay(transform.GetChild(1).position, totalMovement);
+        //Debug.DrawRay(transform.GetChild(1).position, totalMovement);
         Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation = Quaternion.Slerp(transform.rotation, q, rotateSpeed * Time.fixedDeltaTime);
 

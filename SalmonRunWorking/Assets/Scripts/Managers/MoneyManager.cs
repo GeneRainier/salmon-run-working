@@ -15,12 +15,18 @@ public class MoneyManager : MonoBehaviour
     [SerializeField] private float catchTaxRate = 1.0f;
     
     static private float bank;
-    
+
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
+
     // TODO: Buffer Transactions, Afford Calculations
     private bool transacting;
 
     private void Start()
     {
+        // Get initialization values and set this towers basic values
+        initializationValues = FindObjectOfType<ManagerIndex>();
+        startingFunds = initializationValues.startingMoney;
         bank = startingFunds;
         UpdateText();
     }

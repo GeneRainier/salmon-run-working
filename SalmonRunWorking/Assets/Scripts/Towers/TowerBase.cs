@@ -12,6 +12,9 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
     [SerializeField]
     protected int effectRadius;
 
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
+
     // whether the tower is currently activated or not
     public bool TowerActive { get; set; } = false;
 
@@ -32,7 +35,9 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      */
     protected virtual void Awake()
     {
-        // get component references
+        // Get initialization values and set this towers basic values
+        initializationValues = FindObjectOfType<ManagerIndex>();
+        // Get component references
         rangeEffect = GetComponent<TowerRangeEffect>();
     }
 
