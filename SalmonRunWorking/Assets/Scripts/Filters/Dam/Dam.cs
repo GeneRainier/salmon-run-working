@@ -8,6 +8,9 @@ using UnityEngine.Serialization;
  */
 public class Dam : FilterBase, IDragAndDropObject
 {
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
+
     // default crossing rate for all fish
     [Range(0f, 1f)]
     public float defaultCrossingRate;
@@ -31,6 +34,9 @@ public class Dam : FilterBase, IDragAndDropObject
      */
     void Start()
     {
+        // Get initialization values and set this towers basic values
+        initializationValues = FindObjectOfType<ManagerIndex>();
+        //defaultCrossingRate = initializationValues.defaultDamPassRate;
         // set all crossing rates to default rate on initialization
         smallCrossingRate = mediumCrossingRate = largeCrossingRate = defaultCrossingRate;
     }

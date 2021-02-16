@@ -61,6 +61,11 @@ public class RangerTower : TowerBase
      */
     protected override void Start()
     {
+        effectRadius = initializationValues.rangerRadius;
+        slowdownEffectSmall = initializationValues.defaultSmallModifier;
+        slowdownEffectMedium = initializationValues.defaultMediumModifier;
+        slowdownEffectLarge = initializationValues.defaultLargeModifier;
+        regulationSuccessRate = initializationValues.defaultSuccessRate;
         base.Start();
     }
 
