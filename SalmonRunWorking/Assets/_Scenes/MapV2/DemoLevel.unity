@@ -884,31 +884,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towers:
-  - towerType: 0
+  - initializationValues: {fileID: 0}
+    towerType: 0
     towerUI: {fileID: 5614493210049836175}
     enabled: 1
     cost: 10
-  - towerType: 1
+  - initializationValues: {fileID: 0}
+    towerType: 1
     towerUI: {fileID: 5614493210049836174}
     enabled: 1
     cost: 50
-  - towerType: 2
+  - initializationValues: {fileID: 0}
+    towerType: 2
     towerUI: {fileID: 5614493210049836173}
     enabled: 1
     cost: 1000
-  - towerType: 3
+  - initializationValues: {fileID: 0}
+    towerType: 3
     towerUI: {fileID: 5614493210049836172}
     enabled: 1
     cost: 1000
-  - towerType: 4
+  - initializationValues: {fileID: 0}
+    towerType: 4
     towerUI: {fileID: 5614493210049836171}
     enabled: 1
     cost: 1e+10
-  - towerType: 5
+  - initializationValues: {fileID: 0}
+    towerType: 5
     towerUI: {fileID: 5614493210049836170}
     enabled: 0
     cost: 10123
-  - towerType: 6
+  - initializationValues: {fileID: 0}
+    towerType: 6
     towerUI: {fileID: 5614493210049836169}
     enabled: 0
     cost: 10123
@@ -1636,6 +1643,21 @@ MonoBehaviour:
   menuManager: {fileID: 1139549159}
   towerManager: {fileID: 268821878}
   upgradeManager: {fileID: 297820839}
+  anglerRadius: 150
+  defaultSmallCatchRate: 0.5
+  defaultMediumCatchRate: 0.3
+  defaultLargeCatchRate: 0.1
+  rangerRadius: 450
+  defaultSmallModifier: -0.5
+  defaultMediumModifier: 0.1
+  defaultLargeModifier: 0.4
+  defaultSuccessRate: 1
+  defaultDamPassRate: 0.3
+  defaultLadderSmallPassRate: 0.2
+  defaultLadderMediumPassRate: 0.6
+  defaultLadderLargePassRate: 0.7
+  startingMoney: 1500
+  sealionAppearanceTime: 3
 --- !u!1 &570145545
 GameObject:
   m_ObjectHideFlags: 0
@@ -2820,6 +2842,7 @@ MonoBehaviour:
     type: 3}
   locationInUse: 0
   turnsBeforeShowing: 3
+  initializationValues: {fileID: 0}
 --- !u!114 &998475052 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 673693558861770511, guid: c0f8cb6cf525b8b4393317159fe255f3,
@@ -3731,6 +3754,7 @@ MonoBehaviour:
   startingFunds: 30
   moneyText: {fileID: 416494729}
   catchTaxRate: 1
+  initializationValues: {fileID: 0}
 --- !u!1001 &1504386798
 PrefabInstance:
   m_ObjectHideFlags: 0
