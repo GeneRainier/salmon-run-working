@@ -95,14 +95,6 @@ public class PostRunStatsPanelController : PanelController
                 parentSmallText.SetText(smallDescriptor, FindSmallGenomes(parentGenomes).Count);
                 parentMediumText.SetText(mediumDescriptor, FindMediumGenomes(parentGenomes).Count);
                 parentLargeText.SetText(largeDescriptor, FindLargeGenomes(parentGenomes).Count);
-
-                // Create a txt file for post run information
-                string infoText = "Turn Number: " + (previousTurn) + "\nSurviving Females: " + FindFemaleGenomes(parentGenomes).Count + "\nSurviving Males: " + FindMaleGenomes(parentGenomes).Count
-                    + "\nSurviving Short: " + FindSmallGenomes(parentGenomes).Count + "\nSurviving Mediums: " + FindMediumGenomes(parentGenomes) .Count
-                    + "\nSurviving Long: " + FindLargeGenomes(parentGenomes).Count + "\nOffspring Female: " + FindFemaleGenomes(offspringGenomes).Count 
-                    + "\nOffspring Males: " + FindMaleGenomes(offspringGenomes).Count + "\nOffspring Short: " + FindSmallGenomes(offspringGenomes).Count 
-                    + "\nOffspring Mediums: " + FindMediumGenomes(offspringGenomes).Count + "\nOffspring Long: " + FindLargeGenomes(offspringGenomes).Count;
-                System.IO.File.WriteAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
             }
             else
             {
@@ -114,6 +106,8 @@ public class PostRunStatsPanelController : PanelController
             offspringLargeText.SetText(largeDescriptor, FindLargeGenomes(offspringGenomes).Count);
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
+
+            AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
         // otherwise, do the first-turn specific update
         else if (previousTurn == 0)
@@ -128,11 +122,7 @@ public class PostRunStatsPanelController : PanelController
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
 
-            // Create a txt file for post run information
-            string infoText = "Turn Number: " + (previousTurn) + "\nOffspring Female: " + FindFemaleGenomes(offspringGenomes).Count + "\nOffspring Males: " 
-                + FindMaleGenomes(offspringGenomes).Count + "\nOffspring Short: " + FindSmallGenomes(offspringGenomes).Count
-                + "\nOffspring Mediums: " + FindMediumGenomes(offspringGenomes).Count + "\nOffspring Long: " + FindLargeGenomes(offspringGenomes).Count;
-            System.IO.File.WriteAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+            CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
     }
 
@@ -142,6 +132,36 @@ public class PostRunStatsPanelController : PanelController
     private void OnNoOffspring()
     {
         noOffspring = true;
+    }
+
+    /*
+     * Create the initial lines of the output table
+     */
+    private void CreateOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
+    {
+        // Create a txt file for post run information
+        string infoText = "Turn Number  |  Surviving Females  |  Surviving Males  |  Surviving Short  |  Surviving Mediums  |  Surviving Long  |  " +
+            "Offspring Females  |  Offspring Males  |  Offspring Short  |  Offspring Mediums  |  Offspring Long  |\n------------------------------" +
+            "-------------------------------------------------------------------------------------------------------------------------------------" +
+            "------------------------------------------------------------------------\n";
+        System.IO.File.WriteAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+        infoText = String.Format("{0, 11}  ,  {1, 17}  ,  {2, 15}  ,  {3, 15}  ,  {4, 17}  ,  {5, 14}  ,  {6, 17}  ,  {7, 15}  ,  {8, 15}  ,  {9, 17}  ,  {10, 14}\n", 
+            previousTurn, 0, 0, 0, 0, 0, FindMaleGenomes(offspringGenomes).Count, FindFemaleGenomes(offspringGenomes).Count, FindSmallGenomes(offspringGenomes).Count, 
+            FindMediumGenomes(offspringGenomes).Count, FindLargeGenomes(offspringGenomes).Count);
+        System.IO.File.AppendAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+    }
+
+    /*
+     * Append another line to the output file
+     */
+    private void AppendOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
+    {
+        // Create a txt file for post run information
+        string infoText = String.Format("{0, 11}  ,  {1, 17}  ,  {2, 15}  ,  {3, 15}  ,  {4, 17}  ,  {5, 14}  ,  {6, 17}  ,  {7, 15}  ,  {8, 15}  ,  {9, 17}  ,  {10, 14}\n",
+            previousTurn, FindFemaleGenomes(parentGenomes).Count, FindMaleGenomes(parentGenomes).Count, FindSmallGenomes(parentGenomes).Count, FindMediumGenomes(parentGenomes).Count, 
+            FindLargeGenomes(parentGenomes).Count, FindMaleGenomes(offspringGenomes).Count, FindFemaleGenomes(offspringGenomes).Count, FindSmallGenomes(offspringGenomes).Count,
+            FindMediumGenomes(offspringGenomes).Count, FindLargeGenomes(offspringGenomes).Count);
+        System.IO.File.AppendAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 }
 
