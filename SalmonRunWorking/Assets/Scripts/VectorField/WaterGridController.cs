@@ -74,6 +74,7 @@ public class WaterGridController : MonoBehaviour {
         // if flag set or the vector field doesn't match the tilemap, clear the vector field
         if (clearFieldOnStart || !vectorField.VectorFieldMatches(tilemap))
         {
+            Debug.Log("Not matching");
             vectorField.ResetVectorField(tilemap);
         }
     }

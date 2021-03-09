@@ -40,6 +40,8 @@ public class WaterGridVectorField : ScriptableObject {
      */
     public void ResetVectorField(Tilemap t)
     {
+        Debug.Log("Problem");
+
         // ensure that the tilemap's bounds have been updated
         t.CompressBounds();
 
@@ -97,6 +99,11 @@ public class WaterGridVectorField : ScriptableObject {
             WaterGridVectorField tempVF = ScriptableObject.CreateInstance<WaterGridVectorField>();
             JsonUtility.FromJsonOverwrite(dataAsJson, tempVF);
 
+            Debug.Log(tilemap.size.x);
+            Debug.Log(tilemap.size.y);
+            Debug.Log(tilemap.size.x * tilemap.size.y);
+            Debug.Log(tempVF.vectors.Length);
+
             // make sure that the tilemap size matches the saved data
             if (tilemap.size.x * tilemap.size.y == tempVF.vectors.Length)
             {
@@ -105,12 +112,14 @@ public class WaterGridVectorField : ScriptableObject {
             }
             else
             {
+                Debug.Log("Size of tilemap does not match saved data");
                 // if the data does not match, reset the vector field based on the tilemap
                 ResetVectorField(tilemap);
             }
         }
         else
         {
+            Debug.Log("File does not exist");
             // if the file does not exist, reset the vector field based on the tilemap
             ResetVectorField(tilemap);
         }
