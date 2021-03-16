@@ -97,7 +97,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
                 }
                 else
                 {
-                    iconImage.color = new Color32(108, 108, 108, 255);
+                    iconImage.color = new Color32(24, 24, 24, 255);
                 }
             }
         }
@@ -109,7 +109,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             }
             else
             {
-                iconImage.color = new Color32(108, 108, 108, 255);
+                iconImage.color = new Color32(24, 24, 24, 255);
             }
         }
     }
