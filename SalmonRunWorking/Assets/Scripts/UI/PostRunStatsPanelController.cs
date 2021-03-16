@@ -144,11 +144,11 @@ public class PostRunStatsPanelController : PanelController
             "Offspring Females  |  Offspring Males  |  Offspring Short  |  Offspring Mediums  |  Offspring Long  |\n------------------------------" +
             "-------------------------------------------------------------------------------------------------------------------------------------" +
             "------------------------------------------------------------------------\n";
-        System.IO.File.WriteAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+        System.IO.File.WriteAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
         infoText = String.Format("{0, 11}  ,  {1, 17}  ,  {2, 15}  ,  {3, 15}  ,  {4, 17}  ,  {5, 14}  ,  {6, 17}  ,  {7, 15}  ,  {8, 15}  ,  {9, 17}  ,  {10, 14}\n", 
             previousTurn, 0, 0, 0, 0, 0, FindMaleGenomes(offspringGenomes).Count, FindFemaleGenomes(offspringGenomes).Count, FindSmallGenomes(offspringGenomes).Count, 
             FindMediumGenomes(offspringGenomes).Count, FindLargeGenomes(offspringGenomes).Count);
-        System.IO.File.AppendAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+        System.IO.File.AppendAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 
     /*
@@ -161,7 +161,7 @@ public class PostRunStatsPanelController : PanelController
             previousTurn, FindFemaleGenomes(parentGenomes).Count, FindMaleGenomes(parentGenomes).Count, FindSmallGenomes(parentGenomes).Count, FindMediumGenomes(parentGenomes).Count, 
             FindLargeGenomes(parentGenomes).Count, FindMaleGenomes(offspringGenomes).Count, FindFemaleGenomes(offspringGenomes).Count, FindSmallGenomes(offspringGenomes).Count,
             FindMediumGenomes(offspringGenomes).Count, FindLargeGenomes(offspringGenomes).Count);
-        System.IO.File.AppendAllText(string.Format(@"E:\Misc\salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+        System.IO.File.AppendAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 }
 
