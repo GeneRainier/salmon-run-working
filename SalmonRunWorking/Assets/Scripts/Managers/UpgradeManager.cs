@@ -17,10 +17,19 @@ public class UpgradeManager : MonoBehaviour
 {
     public Button upgradeButtonTray;
 
-    //the three ladder buttons
+    //the three ladder swap buttons
     public Button originalLadderButton;
     public Button upgradeLadderOneButton;
     public Button upgradeLadderTwoButton;
+
+    //the two ladder upgrade buttons
+    public Button ladderUp1Button;
+    public Button ladderUp2Button;
+
+    public Image salmonLadder;
+    public Image salmonRamp;
+    public Image salmonElevator;
+
 
     //the three fisherman catch rate buttons
     public Button upgradeSmallCatchButton;
@@ -30,8 +39,6 @@ public class UpgradeManager : MonoBehaviour
     private bool finalUpgrade => numberOfUpgrades >= 2;
 
     private int numberOfUpgrades;
-
-    private Button currentActiveLadder;
 
     //check to see if you have already bought them
     public bool firstPurchase1 = true;
@@ -88,21 +95,22 @@ public class UpgradeManager : MonoBehaviour
     // Reference to the TowerManager
     [SerializeField] private TowerManager theTowerManager;
 
-    [SerializeField] private GameObject Checkmark1;
-    [SerializeField] private GameObject Checkmark2;
-
     void Start()
     {
         upgradeButtonTray.interactable = false;
+
         upgradeLadderOne.SetActive(false);
         upgradeLadderTwo.SetActive(false);
+
         originalLadderButton.interactable = false;
+        upgradeLadderOneButton.interactable = false;
+        upgradeLadderTwoButton.interactable = false;
 
-        currentActiveLadder = originalLadderButton;
-        currentActiveLadder.interactable = false;
+        ladderUp1Button.interactable = false;
+        ladderUp2Button.interactable = false;
 
-        Checkmark1.SetActive(false);
-        Checkmark2.SetActive(false);
+        //currentActiveLadder = originalLadderButton;
+        //currentActiveLadder.interactable = false;
     }
 
     void Update()
@@ -115,13 +123,17 @@ public class UpgradeManager : MonoBehaviour
             {
                 upgradeButtonTray.interactable = true;
 
-                upgradeLadderOneButton.interactable = true;
-                originalLadderButton.interactable = true;
-                upgradeLadderTwoButton.interactable = true;
+                ladderUp1Button.interactable = true;
+                ladderUp2Button.interactable = true;
 
-                currentActiveLadder.interactable = false;
+                //upgradeLadderOneButton.interactable = true;
+                //originalLadderButton.interactable = true;
+                //upgradeLadderTwoButton.interactable = true;
+
+                //currentActiveLadder.interactable = false;
             }
 
+            /*
             if (!isAFisherman)
             {
                 upgradeSmallCatchButton.interactable = false;
@@ -149,6 +161,7 @@ public class UpgradeManager : MonoBehaviour
                 originalLadderButton.interactable = false;
                 upgradeLadderTwoButton.interactable = false;
             }
+            */
         }
         
         //Think we can get rid of this cause we always need to interact with it since upgrades are sidgradable
@@ -182,51 +195,76 @@ public class UpgradeManager : MonoBehaviour
         Debug.Log(EventSystem.current.currentSelectedGameObject.name);
         Debug.Log(EventSystem.current.currentSelectedGameObject == upgradeLadderOneButton);
 
-        if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderOneButton.name)
+        if (EventSystem.current.currentSelectedGameObject.name == ladderUp1Button.name)
         {
             //sets the right later active
             originalLadder.SetActive(false);
             upgradeLadderTwo.SetActive(false);
             upgradeLadderOne.SetActive(true);
 
+            //tell upgrdeUI it was bought
+            upgradeUI.Ladder1Bought();
+
             //buys the ladder if not already bought
             if (firstPurchase1)
             {
                 upgradeUI.Purchase();
                 firstPurchase1 = false;
-                Checkmark1.SetActive(true);
+                ladderUp1Button.interactable = false;
             }
 
-            currentActiveLadder = upgradeLadderOneButton;
+            salmonRamp.enabled = true;
+            salmonElevator.enabled = false;
+            salmonLadder.enabled = false;
 
             //making the right buttons clickable
             upgradeLadderOneButton.interactable = false;
             originalLadderButton.interactable = true;
-            upgradeLadderTwoButton.interactable = true;
+            if (firstPurchase2)
+            {
+                upgradeLadderTwoButton.interactable = false;
+            }
+            else
+            {
+                upgradeLadderTwoButton.interactable = true;
+            }
+            
         }
-        else if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderTwoButton.name)
+        else if (EventSystem.current.currentSelectedGameObject.name == ladderUp2Button.name)
         {
             //sets the right later active
             originalLadder.SetActive(false);
             upgradeLadderOne.SetActive(false);
             upgradeLadderTwo.SetActive(true);
 
+            upgradeUI.Ladder2Bought();
+
             //buys the ladder if not already bought
             if (firstPurchase2)
             {
                 upgradeUI.Purchase();
                 firstPurchase2 = false;
-                Checkmark2.SetActive(true);
+                ladderUp2Button.interactable = false;
             }
 
-            currentActiveLadder = upgradeLadderTwoButton;
+            salmonRamp.enabled = false;
+            salmonElevator.enabled = true;
+            salmonLadder.enabled = false;
 
             //making the right buttons clickable
-            upgradeLadderOneButton.interactable = true;
             originalLadderButton.interactable = true;
             upgradeLadderTwoButton.interactable = false;
+            if (firstPurchase1)
+            {
+                upgradeLadderOneButton.interactable = false;
+            }
+            else
+            {
+                upgradeLadderOneButton.interactable = true;
+            }
 
         }
+        /*
         else if(EventSystem.current.currentSelectedGameObject.name == originalLadderButton.name)
         {
             //sets the right later active
@@ -241,7 +279,67 @@ public class UpgradeManager : MonoBehaviour
             originalLadderButton.interactable = false;
             upgradeLadderTwoButton.interactable = true;
         }
+        */
 
+    }
+
+    public void SwapLadderButtons()
+    {
+        if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderOneButton.name)
+        {
+            originalLadder.SetActive(false);
+            upgradeLadderTwo.SetActive(false);
+            upgradeLadderOne.SetActive(true);
+
+            salmonRamp.enabled = true;
+            salmonElevator.enabled = false;
+            salmonLadder.enabled = false;
+
+            if (!firstPurchase2)
+            {
+                upgradeLadderTwoButton.interactable = true;
+            }
+            upgradeLadderOneButton.interactable = false;
+            originalLadderButton.interactable = true;
+        }
+        else if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderTwoButton.name)
+        {
+            originalLadder.SetActive(false);
+            upgradeLadderTwo.SetActive(true);
+            upgradeLadderOne.SetActive(false);
+
+            salmonRamp.enabled = false;
+            salmonElevator.enabled = true;
+            salmonLadder.enabled = false;
+
+            if (!firstPurchase1)
+            {
+                upgradeLadderOneButton.interactable = true;
+            }
+            upgradeLadderTwoButton.interactable = false;
+            originalLadderButton.interactable = true;
+        }
+        else if (EventSystem.current.currentSelectedGameObject.name == originalLadderButton.name)
+        {
+            originalLadder.SetActive(true);
+            upgradeLadderTwo.SetActive(false);
+            upgradeLadderOne.SetActive(false);
+
+            salmonRamp.enabled = false;
+            salmonElevator.enabled = false;
+            salmonLadder.enabled = true;
+
+            if (!firstPurchase1)
+            {
+                upgradeLadderOneButton.interactable = true;
+            }
+            
+            if (!firstPurchase2)
+            {
+                upgradeLadderTwoButton.interactable = true;
+            }
+            originalLadderButton.interactable = false;
+        }
     }
 
     /* Note in regards to UpgradeButtonFisherman as it relates to GetUpgrade and GetUpgradeCost

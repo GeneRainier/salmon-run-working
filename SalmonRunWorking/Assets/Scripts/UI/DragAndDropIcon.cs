@@ -50,6 +50,10 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     private TowerUI towerUI;
 
+    public bool isOneTimePurcahse;
+    private bool hasBeenPurchased;
+
+
     /**
      * Initialization
      */
@@ -65,6 +69,8 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         mainCamera = Camera.main;
         gameManager = ManagerIndex.MI.GameManager;
+
+        hasBeenPurchased = false;
     }
 
     private void Update()
@@ -76,13 +82,35 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private void CanBuy()
     {
         if (!gameManager.Started) return;
-        if (gameManager.PlaceState && towerUI.CanAfford)
+
+        if (isOneTimePurcahse)
         {
-            iconImage.color = new Color32(233, 233, 233, 255);
+            if (hasBeenPurchased)
+            {
+                iconImage.color = new Color32(166, 255, 151, 255);
+            }
+            else
+            {
+                if (gameManager.PlaceState && towerUI.CanAfford)
+                {
+                    iconImage.color = new Color32(233, 233, 233, 255);
+                }
+                else
+                {
+                    iconImage.color = new Color32(108, 108, 108, 255);
+                }
+            }
         }
         else
         {
-            iconImage.color = new Color32(108, 108, 108, 255);
+            if (gameManager.PlaceState && towerUI.CanAfford)
+            {
+                iconImage.color = new Color32(233, 233, 233, 255);
+            }
+            else
+            {
+                iconImage.color = new Color32(108, 108, 108, 255);
+            }
         }
     }
 
@@ -278,6 +306,11 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
             //subtract the cost of the tower from your bank
             towerUI.Purchase();
+
+            if (isOneTimePurcahse)
+            {
+                hasBeenPurchased = true;
+            }
         }
         // if not in a valid place, destroy the spawned object
         else
