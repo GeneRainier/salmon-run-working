@@ -37,6 +37,8 @@ public class ManagerIndex : MonoBehaviour
     public float startingMoney;
     public int sealionAppearanceTime;       /// This int represents number of rounds until a sealion appears
 
+    public int nestingSites;    //< The number of nesting sites available at the fish destination
+
     // Costs
     //public float anglerCost;
     //public float rangerCost;

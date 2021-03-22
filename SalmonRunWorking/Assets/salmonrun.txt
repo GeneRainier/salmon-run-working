@@ -1,3 +1,4 @@
 Turn Number  |  Surviving Females  |  Surviving Males  |  Surviving Short  |  Surviving Mediums  |  Surviving Long  |  Offspring Females  |  Offspring Males  |  Offspring Short  |  Offspring Mediums  |  Offspring Long  |
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
           0  ,                  0  ,                0  ,                0  ,                  0  ,               0  ,                100  ,              100  ,               50  ,                100  ,              50
+          1  ,                 40  ,               40  ,               17  ,                 40  ,              23  ,                 68  ,               67  ,               26  ,                 78  ,              31

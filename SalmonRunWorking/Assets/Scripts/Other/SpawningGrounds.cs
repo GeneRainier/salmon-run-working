@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class SpawningGrounds : MonoBehaviour
 {
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
+
     // how many fish this spawning grounds has the capacity for
     public int numNestingSights;
     // initialized in Assets -> Prefabs -> Art -> Fish -> Old -> EndOfLevel
@@ -18,6 +21,11 @@ public class SpawningGrounds : MonoBehaviour
      */
     void Start()
     {
+        // Get initialization values and set this towers basic values
+        initializationValues = FindObjectOfType<ManagerIndex>();
+
+        numNestingSights = initializationValues.nestingSites;
+
         // subscribe to onEndRun event
         GameEvents.onEndRun.AddListener(Clear);
     }

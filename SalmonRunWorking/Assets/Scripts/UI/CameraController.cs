@@ -37,8 +37,15 @@ public class CameraController : MonoBehaviour {
     private Vector3 target;
     private bool moving;
     private float timeFactor;
-    
-	private void FixedUpdate ()
+
+    [SerializeField] private Vector3 initialPosition;
+
+    private void Awake()
+    {
+        initialPosition = this.gameObject.transform.position;
+    }
+
+    private void FixedUpdate ()
     {
         UpdateTarget();
 
@@ -107,6 +114,14 @@ public class CameraController : MonoBehaviour {
             }
             transform.SmoothMoveTowards(target, lerpSpeed);
         }
+    }
+
+    /*
+     * Set the camera position back to the start of the level when the end of round button is clicked
+     */
+    public void ResetCameraPosition()
+    {
+        this.gameObject.transform.position = initialPosition;
     }
 }
 
