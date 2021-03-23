@@ -198,6 +198,13 @@ public class Fish : MonoBehaviour
         DeactivateFish();
     }
 
+    public void Killed()
+    {
+        school.FishKilled(this);
+
+        DeactivateFish();
+    }
+
     /**
      * Handle the fish sucessfully reaching a spawning grounds
      */

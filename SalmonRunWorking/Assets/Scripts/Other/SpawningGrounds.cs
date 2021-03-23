@@ -63,6 +63,10 @@ public class SpawningGrounds : MonoBehaviour
                 fish.ReachSpawningGrounds();
                 females++;
             }
+            else
+            {
+                fish.Killed();
+            }
         }
     }
 
