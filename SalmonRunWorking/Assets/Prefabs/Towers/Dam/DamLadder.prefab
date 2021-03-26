@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae235f406fed0540ad70098871a76b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smallCrossingRate: 0.2
-  mediumCrossingRate: 0.6
+  initializationValues: {fileID: 0}
+  smallCrossingRate: 0.3
+  mediumCrossingRate: 0.4
   largeCrossingRate: 0.7

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 
 
 
@@ -94,6 +96,8 @@ public class UpgradeManager : MonoBehaviour
 
     // Reference to the TowerManager
     [SerializeField] private TowerManager theTowerManager;
+
+    public TextMeshProUGUI purchaseText;
 
     void Start()
     {
@@ -285,7 +289,7 @@ public class UpgradeManager : MonoBehaviour
 
     public void SwapLadderButtons()
     {
-        if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderOneButton.name)
+        if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderOneButton.name && ManagerIndex.MI.GameManager.PlaceState)
         {
             originalLadder.SetActive(false);
             upgradeLadderTwo.SetActive(false);
@@ -302,7 +306,7 @@ public class UpgradeManager : MonoBehaviour
             upgradeLadderOneButton.interactable = false;
             originalLadderButton.interactable = true;
         }
-        else if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderTwoButton.name)
+        else if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderTwoButton.name && ManagerIndex.MI.GameManager.PlaceState)
         {
             originalLadder.SetActive(false);
             upgradeLadderTwo.SetActive(true);
@@ -319,7 +323,7 @@ public class UpgradeManager : MonoBehaviour
             upgradeLadderTwoButton.interactable = false;
             originalLadderButton.interactable = true;
         }
-        else if (EventSystem.current.currentSelectedGameObject.name == originalLadderButton.name)
+        else if (EventSystem.current.currentSelectedGameObject.name == originalLadderButton.name && ManagerIndex.MI.GameManager.PlaceState)
         {
             originalLadder.SetActive(true);
             upgradeLadderTwo.SetActive(false);
@@ -405,21 +409,33 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    /* General Note on GetUpgrade and GetUpgradeCost
-     * These two functions are using a C# lambda expression. Lambdas are costructed with a left-hand side input (which DOES NOT require an explicit type)
-     * and a right-hand side output statement. In these cases, the two lambdas are not being given an explicit type, so GetUpgrade is piecing together
-     * that GetUpgrade should return an Upgrade type item and GetUpgradeCost should return a float. These are both being stored in a local variable being
-     * given those corresponding types -- upgrade.
-     * 
-     * upgrades is a vector of items of type Upgrade, so they should be searching for upgrade, which is declared and initialized in these two functions, in upgrades
-     * and then returning the appropriate attribute of that item.
-     * 
-     * Originally, these used upgrades.First. First is a array library function which grabs the first item in the list (in this case upgrades). While that worked
-     * for the sake of testing, we want these functions to find the correct upgrade in upgrades, so we will use Find instead which finds the element that matches its
-     * input.
-     */
+    //this makes the "purchased!" text pop up and then fade after a few seconds. Will throw in a particle effect in here as well.
+    public void PurchasedPopUp()
+    {
+        StartCoroutine(MyCoroutine());
+    }
 
-    //Stuff to manage the upgrades
+    IEnumerator MyCoroutine()
+    {
+        purchaseText.enabled = true;
+        yield return new WaitForSeconds(3f);
+        purchaseText.enabled = false;
+    }
+        /* General Note on GetUpgrade and GetUpgradeCost
+         * These two functions are using a C# lambda expression. Lambdas are costructed with a left-hand side input (which DOES NOT require an explicit type)
+         * and a right-hand side output statement. In these cases, the two lambdas are not being given an explicit type, so GetUpgrade is piecing together
+         * that GetUpgrade should return an Upgrade type item and GetUpgradeCost should return a float. These are both being stored in a local variable being
+         * given those corresponding types -- upgrade.
+         * 
+         * upgrades is a vector of items of type Upgrade, so they should be searching for upgrade, which is declared and initialized in these two functions, in upgrades
+         * and then returning the appropriate attribute of that item.
+         * 
+         * Originally, these used upgrades.First. First is a array library function which grabs the first item in the list (in this case upgrades). While that worked
+         * for the sake of testing, we want these functions to find the correct upgrade in upgrades, so we will use Find instead which finds the element that matches its
+         * input.
+         */
+
+        //Stuff to manage the upgrades
     public Upgrade GetUpgrade(UpgradeType upgradeType)
     {
         return upgrades.Find(upgrade => upgrade.UpgradeType == upgradeType);

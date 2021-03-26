@@ -334,6 +334,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectRadius: 150
+  initializationValues: {fileID: 0}
   timePerApplyEffect: 3
   defaultCatchRate: 1
   defaultSmallCatchRate: 0.1
@@ -342,7 +343,7 @@ MonoBehaviour:
   currentSmallCatchRate: 0.1
   currentMediumCatchRate: 0.1
   currentLargeCatchRate: 0.1
-  flashMaterial: {fileID: 2100000, guid: 15a1b3c7cd9cfcf4abef70e065f15150, type: 2}
+  flashMaterial: {fileID: 2100000, guid: 36889215b5455d44b91ee75ab2279392, type: 2}
   numFlashesPerCatch: 3
   theTowerManager: {fileID: 0}
 --- !u!1001 &1886008068489973526

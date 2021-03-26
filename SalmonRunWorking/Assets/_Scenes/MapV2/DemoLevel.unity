@@ -467,7 +467,7 @@ RectTransform:
   m_GameObject: {fileID: 51725894}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1.0751, z: 1}
+  m_LocalScale: {x: 1, y: 1.4754537, z: 1}
   m_Children:
   - {fileID: 658324263}
   m_Father: {fileID: 1069993058}
@@ -475,7 +475,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 27, y: -60}
+  m_AnchoredPosition: {x: 27, y: 135.50214}
   m_SizeDelta: {x: -0.5554199, y: -643.7778}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1001 &58530030
@@ -865,7 +865,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -277, y: -304}
+  m_AnchoredPosition: {x: -276.99994, y: -304}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &128178043
@@ -1484,6 +1484,7 @@ MonoBehaviour:
     upgradeUI: {fileID: 1433475020}
     cost: 500
   theTowerManager: {fileID: 268821878}
+  purchaseText: {fileID: 680147177}
 --- !u!1 &321492129
 GameObject:
   m_ObjectHideFlags: 0
@@ -1496,7 +1497,7 @@ GameObject:
   - component: {fileID: 321492132}
   - component: {fileID: 321492131}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: ImageElevator
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1511,14 +1512,14 @@ RectTransform:
   m_GameObject: {fileID: 321492129}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.6840968, y: 2.8072634, z: 3.699}
+  m_LocalScale: {x: 3.6840966, y: 3.8526537, z: 3.699}
   m_Children: []
   m_Father: {fileID: 1069993058}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 663, y: -134}
+  m_AnchoredPosition: {x: 663, y: 33.945465}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &321492131
@@ -2163,12 +2164,12 @@ PrefabInstance:
     - target: {fileID: 6340271510795049015, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 261.9126
+      value: 249
       objectReference: {fileID: 0}
     - target: {fileID: 6340271510795049015, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -534.6324
+      value: -525
       objectReference: {fileID: 0}
     - target: {fileID: 6340271510795049015, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
@@ -2188,12 +2189,12 @@ PrefabInstance:
     - target: {fileID: 6340271510795049015, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0.21897694
       objectReference: {fileID: 0}
     - target: {fileID: 6340271510795049015, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.97573
       objectReference: {fileID: 0}
     - target: {fileID: 6340271510795049015, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
@@ -2213,7 +2214,7 @@ PrefabInstance:
     - target: {fileID: 6340271510795049015, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 25.298
       objectReference: {fileID: 0}
     - target: {fileID: 6340271510795049016, guid: fb247d26aa00d9841b9f058d8f3ba7e0,
         type: 3}
@@ -2293,13 +2294,13 @@ MonoBehaviour:
   defaultMediumModifier: 0.1
   defaultLargeModifier: 0.4
   defaultSuccessRate: 1
-  defaultDamPassRate: 0.3
-  defaultLadderSmallPassRate: 0.2
-  defaultLadderMediumPassRate: 0.6
+  defaultDamPassRate: 0.4
+  defaultLadderSmallPassRate: 0.3
+  defaultLadderMediumPassRate: 0.4
   defaultLadderLargePassRate: 0.7
-  startingMoney: 30
+  startingMoney: 5000
   sealionAppearanceTime: 3
-  nestingSites: 40
+  nestingSites: 200
 --- !u!1 &564102371
 GameObject:
   m_ObjectHideFlags: 0
@@ -2679,7 +2680,7 @@ GameObject:
   - component: {fileID: 648606001}
   - component: {fileID: 648606000}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: ImageRamp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2694,14 +2695,14 @@ RectTransform:
   m_GameObject: {fileID: 648605998}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5752308, y: 2.2143, z: 2.2143}
+  m_LocalScale: {x: 2.897392, y: 3.0388775, z: 2.2143}
   m_Children: []
   m_Father: {fileID: 1069993058}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -541, y: -152.29944}
+  m_AnchoredPosition: {x: -552, y: 8.831665}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &648606000
@@ -2759,6 +2760,165 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 2321721659712829820}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &680147175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 680147176}
+  - component: {fileID: 680147178}
+  - component: {fileID: 680147177}
+  m_Layer: 5
+  m_Name: purchasedText
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &680147176
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680147175}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.1141784, y: 2.6957169, z: 1.54564}
+  m_Children: []
+  m_Father: {fileID: 1273747035}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 1758.4015, y: 302.2307}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &680147177
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680147175}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_text: 'Upgrade Purchased!
+
+'
+  m_isRightToLeft: 0
+  m_fontAsset: {fileID: 11400000, guid: c4dda781d56c63f46b1ee22c60b240d8, type: 2}
+  m_sharedMaterial: {fileID: -8220508173564230344, guid: c4dda781d56c63f46b1ee22c60b240d8,
+    type: 2}
+  m_fontSharedMaterials: []
+  m_fontMaterial: {fileID: 0}
+  m_fontMaterials: []
+  m_fontColor32:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
+  m_enableVertexGradient: 0
+  m_colorMode: 3
+  m_fontColorGradient:
+    topLeft: {r: 1, g: 1, b: 1, a: 1}
+    topRight: {r: 1, g: 1, b: 1, a: 1}
+    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+  m_fontColorGradientPreset: {fileID: 0}
+  m_spriteAsset: {fileID: 0}
+  m_tintAllSprites: 0
+  m_overrideHtmlColors: 0
+  m_faceColor:
+    serializedVersion: 2
+    rgba: 4294967295
+  m_outlineColor:
+    serializedVersion: 2
+    rgba: 4278190080
+  m_fontSize: 50
+  m_fontSizeBase: 50
+  m_fontWeight: 400
+  m_enableAutoSizing: 0
+  m_fontSizeMin: 18
+  m_fontSizeMax: 72
+  m_fontStyle: 1
+  m_textAlignment: 514
+  m_characterSpacing: 0
+  m_wordSpacing: 0
+  m_lineSpacing: 0
+  m_lineSpacingMax: 0
+  m_paragraphSpacing: 0
+  m_charWidthMaxAdj: 0
+  m_enableWordWrapping: 1
+  m_wordWrappingRatios: 0.4
+  m_overflowMode: 0
+  m_firstOverflowCharacterIndex: -1
+  m_linkedTextComponent: {fileID: 0}
+  m_isLinkedTextComponent: 0
+  m_isTextTruncated: 0
+  m_enableKerning: 1
+  m_enableExtraPadding: 0
+  checkPaddingRequired: 0
+  m_isRichText: 1
+  m_parseCtrlCharacters: 1
+  m_isOrthographic: 1
+  m_isCullingEnabled: 0
+  m_ignoreRectMaskCulling: 0
+  m_ignoreCulling: 1
+  m_horizontalMapping: 0
+  m_verticalMapping: 0
+  m_uvLineOffset: 0
+  m_geometrySortingOrder: 0
+  m_VertexBufferAutoSizeReduction: 1
+  m_firstVisibleCharacter: 0
+  m_useMaxVisibleDescender: 1
+  m_pageToDisplay: 1
+  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_textInfo:
+    textComponent: {fileID: 680147177}
+    characterCount: 0
+    spriteCount: 0
+    spaceCount: 0
+    wordCount: 0
+    linkCount: 0
+    lineCount: 0
+    pageCount: 0
+    materialCount: 1
+  m_isUsingLegacyAnimationComponent: 0
+  m_isVolumetricText: 0
+  m_spriteAnimator: {fileID: 0}
+  m_hasFontAssetChanged: 0
+  m_subTextObjects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  m_baseMaterial: {fileID: 0}
+  m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!222 &680147178
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 680147175}
+  m_CullTransparentMesh: 0
 --- !u!1 &680875277
 GameObject:
   m_ObjectHideFlags: 0
@@ -3414,7 +3574,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -277, y: -204.00006}
+  m_AnchoredPosition: {x: -276.99994, y: -204.00006}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &756515155
@@ -3880,14 +4040,14 @@ RectTransform:
   m_GameObject: {fileID: 935347753}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6413455, y: 0.78929, z: 0.78929}
+  m_LocalScale: {x: 0.64134544, y: 1.0832119, z: 0.78929}
   m_Children: []
   m_Father: {fileID: 1069993058}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -876, y: -455}
+  m_AnchoredPosition: {x: -876, y: -406.59097}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &935347755
@@ -4248,7 +4408,7 @@ RectTransform:
   m_GameObject: {fileID: 1069993057}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.0040452, y: 0.93237376, z: 1}
+  m_LocalScale: {x: 1.0040452, y: 0.6793808, z: 1}
   m_Children:
   - {fileID: 1458002936}
   - {fileID: 935347754}
@@ -4264,7 +4424,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -19}
+  m_AnchoredPosition: {x: 0, y: -167}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1069993059
@@ -5215,14 +5375,14 @@ RectTransform:
   m_GameObject: {fileID: 1420811631}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6413455, y: 0.78929, z: 0.78929}
+  m_LocalScale: {x: 0.64134544, y: 1.0832119, z: 0.78929}
   m_Children: []
   m_Father: {fileID: 1069993058}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 878, y: -477}
+  m_AnchoredPosition: {x: 878.00006, y: -436.78345}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1420811633
@@ -5549,14 +5709,14 @@ RectTransform:
   m_GameObject: {fileID: 1458002935}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6413455, y: 0.78929, z: 0.78929}
+  m_LocalScale: {x: 0.64134544, y: 1.0832119, z: 0.78929}
   m_Children: []
   m_Father: {fileID: 1069993058}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -860, y: 180.6}
+  m_AnchoredPosition: {x: -860, y: 465.6986}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1458002937
@@ -50730,14 +50890,14 @@ RectTransform:
   m_GameObject: {fileID: 1985274952}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.6413455, y: 0.78929, z: 0.78929}
+  m_LocalScale: {x: 0.64134544, y: 1.0832119, z: 0.78929}
   m_Children: []
   m_Father: {fileID: 1069993058}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 855, y: 173}
+  m_AnchoredPosition: {x: 855, y: 455.26846}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1985274954
@@ -50940,7 +51100,7 @@ RectTransform:
   m_GameObject: {fileID: 2001911177}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.3, y: 3.5, z: 1}
+  m_LocalScale: {x: 2.3, y: 4.803356, z: 1}
   m_Children:
   - {fileID: 1425988407}
   m_Father: {fileID: 1069993058}
@@ -50948,7 +51108,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 419, y: 123}
+  m_AnchoredPosition: {x: 419, y: 185.55978}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2001911179
@@ -51020,6 +51180,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 297820839}
         m_MethodName: UpgradeButtonLadder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 297820839}
+        m_MethodName: PurchasedPopUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -51129,7 +51300,7 @@ PrefabInstance:
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
       propertyPath: bounds.max.x
-      value: 5300
+      value: 7000
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bbd2b4f09bd08f448f24579485278e8, type: 3}
@@ -51365,7 +51536,7 @@ RectTransform:
   m_GameObject: {fileID: 2096975280}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2.5, y: 3.5, z: 1}
+  m_LocalScale: {x: 2.5, y: 4.803356, z: 1}
   m_Children:
   - {fileID: 1172553558}
   m_Father: {fileID: 1069993058}
@@ -51373,7 +51544,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -375, y: 130.99994}
+  m_AnchoredPosition: {x: -375, y: 196.53894}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2096975282
@@ -51445,6 +51616,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 297820839}
         m_MethodName: UpgradeButtonLadder
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 297820839}
+        m_MethodName: PurchasedPopUp
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -51666,7 +51848,7 @@ PrefabInstance:
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
       propertyPath: initialNumFish
-      value: 200
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
@@ -54830,6 +55012,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 7.0000296
       objectReference: {fileID: 0}
+    - target: {fileID: 3469543140311226938, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.86181
+      objectReference: {fileID: 0}
     - target: {fileID: 3559909240150324697, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_textInfo.characterCount
@@ -54871,6 +55058,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 7.0000296
+      objectReference: {fileID: 0}
+    - target: {fileID: 3579253624943540758, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.86181
       objectReference: {fileID: 0}
     - target: {fileID: 3633351375568884827, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -57194,12 +57386,12 @@ PrefabInstance:
     - target: {fileID: 5614493209245104436, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.007843138
+      value: 0.003921569
       objectReference: {fileID: 0}
     - target: {fileID: 5614493209245104436, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.85490197
+      value: 0.49411765
       objectReference: {fileID: 0}
     - target: {fileID: 5614493209254586409, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -57487,6 +57679,46 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836179, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: content
+      value: Salmon Ladder - eases fish movement over dams. Costs $1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836179, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: cantBuy
+      value: Can't Afford - Costs $1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836180, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: content
+      value: Dam - generates power, but limits fish movement. Costs $1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836180, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: cantBuy
+      value: Can't Afford - Costs $1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836181, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: content
+      value: Ranger - will regulate anglers. Costs $50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836181, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: cantBuy
+      value: Can't Afford - Costs $50
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836182, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: content
+      value: Angler - will catch fish in range. Costs $10
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614493210049836182, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: cantBuy
+      value: Can't Afford - Costs $10
+      objectReference: {fileID: 0}
     - target: {fileID: 5614493210143212351, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_IsActive
@@ -57555,12 +57787,12 @@ PrefabInstance:
     - target: {fileID: 5614493210348774751, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_Color.r
-      value: 0.0044324268
+      value: 0.0022607208
       objectReference: {fileID: 0}
     - target: {fileID: 5614493210348774751, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_Color.g
-      value: 0.851
+      value: 0.49056602
       objectReference: {fileID: 0}
     - target: {fileID: 5614493210348774751, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -57971,6 +58203,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 7.0000296
+      objectReference: {fileID: 0}
+    - target: {fileID: 5990741400725478793, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.86181
       objectReference: {fileID: 0}
     - target: {fileID: 6011364363295174820, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -60361,7 +60598,7 @@ PrefabInstance:
     - target: {fileID: 7014059106102651737, guid: b06c35f9301d72d4492c75bac11aa15b,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 433.3
+      value: 424
       objectReference: {fileID: 0}
     - target: {fileID: 7014059106102651737, guid: b06c35f9301d72d4492c75bac11aa15b,
         type: 3}
