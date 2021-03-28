@@ -12,7 +12,7 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     // controller through which vector field can be accessed
     public WaterGridController controller;
-
+    
     [Header("School Info")]
     // how big this school is
     public int initialNumFish;

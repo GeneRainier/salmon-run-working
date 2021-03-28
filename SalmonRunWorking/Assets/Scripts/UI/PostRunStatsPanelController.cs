@@ -107,7 +107,7 @@ public class PostRunStatsPanelController : PanelController
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
 
-            AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
+            //AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
         // otherwise, do the first-turn specific update
         else if (previousTurn == 0)
@@ -122,7 +122,7 @@ public class PostRunStatsPanelController : PanelController
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
 
-            CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
+           //CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
     }
 
