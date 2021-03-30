@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class MoneyManager : MonoBehaviour
 {
     [Header("Starting Funds")] 
-    [SerializeField] private float startingFunds = 30f;
+    [SerializeField] private float startingFunds = 30.0f;
     
     [Header("UI Components")]
     [SerializeField] private TextMeshProUGUI moneyText;
@@ -60,6 +60,6 @@ public class MoneyManager : MonoBehaviour
 
     public void UpdateText()
     {
-        moneyText.text = "Money: $ " + bank.ToString("F2");
+        moneyText.text = "Money: $ " + bank.ToString("F0");
     }
 }

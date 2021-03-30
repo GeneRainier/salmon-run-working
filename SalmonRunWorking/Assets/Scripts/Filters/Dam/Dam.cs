@@ -152,20 +152,28 @@ public class Dam : FilterBase, IDragAndDropObject
                  Debug.Log("BbCrossR=" + mediumCrossingRate);
             }
 
-            // based on the crossing rate we figured out, roll for a crossing
-            // if we pass, put the fish past the dam
-            if (Random.Range(0f, 1f) <= crossingRate)
+            while (!fish.IsStuck())
             {
-                fish.transform.position = GetRandomDropOff(fish.transform.position.z);
-                // Debug.Log("Crossed: crossingRate=" + crossingRate);
-            }
-            // if it didn't make it, make it permanently stuck (so it can't try repeated times)
-            else
-            {
-                fish.SetStuck(true);
+                // based on the crossing rate we figured out, roll for a crossing
+                // if we pass, put the fish past the dam
+                if (Random.Range(0f, 1f) <= crossingRate)
+                {
+                    fish.transform.position = GetRandomDropOff(fish.transform.position.z);
+                    // Debug.Log("Crossed: crossingRate=" + crossingRate);
+                }
+                // if we have not expended our total tries (based on damPassCounter in fish), increment, wait, and try again
+                else if (fish.damPassCounter < 3)
+                {
+                    fish.damPassCounter++;
+                    Invoke("DamPassCooldown", 6.0f);
+                }
+                // if it didn't make it, make it permanently stuck (so it can't try repeated times)
+                else
+                {
+                    fish.SetStuck(true);
+                }
             }
         }
-        
     }
 
     /**
@@ -180,6 +188,14 @@ public class Dam : FilterBase, IDragAndDropObject
             Random.Range(dropOffBox.bounds.min.y, dropOffBox.bounds.max.y),
             z
         );
+    }
+
+    /*
+     * An empty function used to act as a cooldown for the next time a fish can try to pass the dam
+     */
+    private void DamPassCooldown()
+    {
+
     }
 
     #endregion

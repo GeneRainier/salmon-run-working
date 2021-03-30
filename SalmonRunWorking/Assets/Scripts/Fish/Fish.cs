@@ -48,6 +48,9 @@ public class Fish : MonoBehaviour
     private Vector3 cachedVelocity;
     private Vector3 cachedAngularVelocity;
 
+    // Counter for attempts to pass the dam
+    public int damPassCounter = 0;
+
     #region Major Monobehaviour Functions
 
     /**

@@ -5849,7 +5849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd24cb7204278aa4db263cb0a1e14215, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startingFunds: 5000
+  startingFunds: 30
   moneyText: {fileID: 416494729}
   catchTaxRate: 1
   initializationValues: {fileID: 0}
