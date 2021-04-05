@@ -16,28 +16,51 @@ public class ManagerIndex : MonoBehaviour
     [SerializeField] private UpgradeManager upgradeManager;
 
     // Variables meant as initializations on start up
+    // Boolean tracking whether or not to make the output file
+    public bool makeOutputFile = false;
+
     // Angler
     public int anglerRadius;
-    public float defaultSmallCatchRate;
-    public float defaultMediumCatchRate;
-    public float defaultLargeCatchRate;
+    public float anglerSmallCatchRate;
+    public float anglerMediumCatchRate;
+    public float anglerLargeCatchRate;
 
     // Ranger
     public int rangerRadius;
-    public float defaultSmallModifier;
-    public float defaultMediumModifier;
-    public float defaultLargeModifier;
-    public float defaultSuccessRate;
+    public float rangerSmallModifier;
+    public float rangerMediumModifier;
+    public float rangerLargeModifier;
+    public float rangerSuccessRate;
 
     // Pass Rates and Money
     public float defaultDamPassRate;
-    public float defaultLadderSmallPassRate;
-    public float defaultLadderMediumPassRate;
-    public float defaultLadderLargePassRate;
+    public float ladderSmallPassRate;
+    public float ladderMediumPassRate;
+    public float ladderLargePassRate;
+
+    public float rampSmallPassRate;
+    public float rampMediumPassRate;
+    public float rampLargePassRate;
+
+    public float liftSmallPassRate;
+    public float liftMediumPassRate;
+    public float liftLargePassRate;
+
     public float startingMoney;
     public int sealionAppearanceTime;       /// This int represents number of rounds until a sealion appears
 
     public int nestingSites;    //< The number of nesting sites available at the fish destination
+
+    // Miscellaneous Output File Counters
+    public int upperAnglerCount = 0;
+    public int lowerAnglerCount = 0;
+    public int upperManagedAnglerCount = 0;
+    public int lowerManagedAnglerCount = 0;
+    
+    public int rangerCount = 0;
+
+    public int damPresent = 0;
+    public int ladderCode = 0;
 
     // Costs
     //public float anglerCost;

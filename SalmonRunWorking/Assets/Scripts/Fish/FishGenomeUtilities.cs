@@ -7,6 +7,11 @@ using UnityEngine;
  */
 public class FishGenomeUtilities : MonoBehaviour
 {
+    // End of Round Parent Size Counters
+    public static int smallParent = 0;
+    public static int mediumParent = 0;
+    public static int largeParent = 0;
+
     /**
      * Create a new, random generation of fish for the initial group of salmon
      * 
@@ -92,6 +97,11 @@ public class FishGenomeUtilities : MonoBehaviour
      */
     public static List<FishGenome> MakeNewGeneration(List<FishGenome> potentialParents, int minOffspring, int maxOffspring)
     {
+        // Reset parent counts for this generation
+        smallParent = 0;
+        mediumParent = 0;
+        largeParent = 0;
+        
         // create a list to put the new generation in
         List<FishGenome> newGeneration = new List<FishGenome>();
 
@@ -103,9 +113,17 @@ public class FishGenomeUtilities : MonoBehaviour
         // determine which list is shorter
         int shortestLength = Mathf.Min(females.Count, males.Count);
 
+        // Referencable gene pairs for the male and female parent fish for the sake of counting at the end of a round
+        List<FishGenome> smallMalePairs = FindSmallGenomes(males);
+        List<FishGenome> mediumMalePairs = FindMediumGenomes(males);
+        List<FishGenome> largeMalePairs = FindLargeGenomes(males);
+        List<FishGenome> smallFemalePairs = FindSmallGenomes(females);
+        List<FishGenome> mediumFemalePairs = FindMediumGenomes(females);
+        List<FishGenome> largeFemalePairs = FindLargeGenomes(females);
+
         // loop (shortest list of males and females) times
         // each time, generate a certain number of offspring from the ith male and ith female
-        for(int i = 0; i < shortestLength; i++)
+        for (int i = 0; i < shortestLength; i++)
         {
             // determine how many offspring this pairing will make
             int numOffspring = Random.Range(minOffspring, maxOffspring + 1);
@@ -113,6 +131,33 @@ public class FishGenomeUtilities : MonoBehaviour
             {
                 // add each fish to the new generation
                 newGeneration.Add(new FishGenome(females[i], males[i]));
+            }
+
+            // Count up the parents by size for the post run panel
+            if (smallMalePairs.Contains(males[i]))
+            {
+                smallParent++;
+            }
+            else if (mediumMalePairs.Contains(males[i]))
+            {
+                mediumParent++;
+            }
+            else
+            {
+                largeParent++;
+            }
+
+            if (smallFemalePairs.Contains(females[i]))
+            {
+                smallParent++;
+            }
+            else if (mediumFemalePairs.Contains(females[i]))
+            {
+                mediumParent++;
+            }
+            else
+            {
+                largeParent++;
             }
         }
 

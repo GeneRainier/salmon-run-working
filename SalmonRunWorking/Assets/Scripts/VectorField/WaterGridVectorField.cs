@@ -99,11 +99,6 @@ public class WaterGridVectorField : ScriptableObject {
             WaterGridVectorField tempVF = ScriptableObject.CreateInstance<WaterGridVectorField>();
             JsonUtility.FromJsonOverwrite(dataAsJson, tempVF);
 
-            Debug.Log(tilemap.size.x);
-            Debug.Log(tilemap.size.y);
-            Debug.Log(tilemap.size.x * tilemap.size.y);
-            Debug.Log(tempVF.vectors.Length);
-
             // make sure that the tilemap size matches the saved data
             if (tilemap.size.x * tilemap.size.y == tempVF.vectors.Length)
             {

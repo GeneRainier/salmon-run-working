@@ -17,6 +17,9 @@ public enum UpgradeType
 
 public class UpgradeManager : MonoBehaviour
 {
+    // The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initializationValues;
+
     public Button upgradeButtonTray;
 
     //the three ladder swap buttons
@@ -101,6 +104,9 @@ public class UpgradeManager : MonoBehaviour
 
     void Start()
     {
+        // Get initialization values and set this towers basic values
+        initializationValues = FindObjectOfType<ManagerIndex>();
+
         upgradeButtonTray.interactable = false;
 
         upgradeLadderOne.SetActive(false);
@@ -299,6 +305,8 @@ public class UpgradeManager : MonoBehaviour
             salmonElevator.enabled = false;
             salmonLadder.enabled = false;
 
+            initializationValues.ladderCode = 10;
+
             if (!firstPurchase2)
             {
                 upgradeLadderTwoButton.interactable = true;
@@ -316,6 +324,8 @@ public class UpgradeManager : MonoBehaviour
             salmonElevator.enabled = true;
             salmonLadder.enabled = false;
 
+            initializationValues.ladderCode = 100;
+
             if (!firstPurchase1)
             {
                 upgradeLadderOneButton.interactable = true;
@@ -332,6 +342,8 @@ public class UpgradeManager : MonoBehaviour
             salmonRamp.enabled = false;
             salmonElevator.enabled = false;
             salmonLadder.enabled = true;
+
+            initializationValues.ladderCode = 1;
 
             if (!firstPurchase1)
             {
@@ -422,7 +434,7 @@ public class UpgradeManager : MonoBehaviour
         purchaseText.enabled = false;
     }
         /* General Note on GetUpgrade and GetUpgradeCost
-         * These two functions are using a C# lambda expression. Lambdas are costructed with a left-hand side input (which DOES NOT require an explicit type)
+         * These two functions are using a C# lambda expression. Lambdas are constructed with a left-hand side input (which DOES NOT require an explicit type)
          * and a right-hand side output statement. In these cases, the two lambdas are not being given an explicit type, so GetUpgrade is piecing together
          * that GetUpgrade should return an Upgrade type item and GetUpgradeCost should return a float. These are both being stored in a local variable being
          * given those corresponding types -- upgrade.

@@ -62,10 +62,10 @@ public class RangerTower : TowerBase
     protected override void Start()
     {
         effectRadius = initializationValues.rangerRadius;
-        slowdownEffectSmall = initializationValues.defaultSmallModifier;
-        slowdownEffectMedium = initializationValues.defaultMediumModifier;
-        slowdownEffectLarge = initializationValues.defaultLargeModifier;
-        regulationSuccessRate = initializationValues.defaultSuccessRate;
+        slowdownEffectSmall = initializationValues.rangerSmallModifier;
+        slowdownEffectMedium = initializationValues.rangerMediumModifier;
+        slowdownEffectLarge = initializationValues.rangerLargeModifier;
+        regulationSuccessRate = initializationValues.rangerSuccessRate;
         base.Start();
     }
 
@@ -93,6 +93,20 @@ public class RangerTower : TowerBase
         {
             FishermanTower fishermanTower = fishermanCollider.GetComponent<FishermanTower>();
 
+            if (fishermanTower.anglerCounted == false)
+            {
+                if (fishermanTower.transform.position.y < -50)
+                {
+                    initializationValues.lowerManagedAnglerCount += 1;
+                    fishermanTower.anglerCounted = true;
+                }
+                else
+                {
+                    initializationValues.upperManagedAnglerCount += 1;
+                    fishermanTower.anglerCounted = true;
+                }
+            }
+
             RegulateFisherman(fishermanTower);
         }
     }
@@ -106,6 +120,7 @@ public class RangerTower : TowerBase
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         transform.position = primaryHitInfo.point;
+        initializationValues.rangerCount += 1;
     }
 
     /**

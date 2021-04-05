@@ -865,7 +865,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -276.99994, y: -304}
+  m_AnchoredPosition: {x: -277, y: -304}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &128178043
@@ -1455,6 +1455,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e0d28c8ac31a0942ac0011157244dbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initializationValues: {fileID: 0}
   upgradeButtonTray: {fileID: 140769729}
   originalLadderButton: {fileID: 680875280}
   upgradeLadderOneButton: {fileID: 1802727087}
@@ -2285,22 +2286,36 @@ MonoBehaviour:
   menuManager: {fileID: 1139549159}
   towerManager: {fileID: 268821878}
   upgradeManager: {fileID: 297820839}
+  makeOutputFile: 0
   anglerRadius: 150
-  defaultSmallCatchRate: 0.5
-  defaultMediumCatchRate: 0.3
-  defaultLargeCatchRate: 0.1
+  anglerSmallCatchRate: 0.5
+  anglerMediumCatchRate: 0.3
+  anglerLargeCatchRate: 0.1
   rangerRadius: 450
-  defaultSmallModifier: -0.5
-  defaultMediumModifier: 0.1
-  defaultLargeModifier: 0.4
-  defaultSuccessRate: 1
-  defaultDamPassRate: 0.4
-  defaultLadderSmallPassRate: 0.3
-  defaultLadderMediumPassRate: 0.4
-  defaultLadderLargePassRate: 0.7
+  rangerSmallModifier: -0.5
+  rangerMediumModifier: 0.1
+  rangerLargeModifier: 0.4
+  rangerSuccessRate: 1
+  defaultDamPassRate: 0.3
+  ladderSmallPassRate: 0.2
+  ladderMediumPassRate: 0.6
+  ladderLargePassRate: 0.7
+  rampSmallPassRate: 0.7
+  rampMediumPassRate: 0.2
+  rampLargePassRate: 0.6
+  liftSmallPassRate: 0.7
+  liftMediumPassRate: 0.6
+  liftLargePassRate: 0.2
   startingMoney: 5000
   sealionAppearanceTime: 3
   nestingSites: 200
+  upperAnglerCount: 0
+  lowerAnglerCount: 0
+  upperManagedAnglerCount: 0
+  lowerManagedAnglerCount: 0
+  rangerCount: 0
+  damPresent: 0
+  ladderCode: 0
 --- !u!1 &564102371
 GameObject:
   m_ObjectHideFlags: 0
@@ -3574,7 +3589,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -276.99994, y: -204.00006}
+  m_AnchoredPosition: {x: -277, y: -204.00006}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &756515155
@@ -55885,7 +55900,7 @@ PrefabInstance:
     - target: {fileID: 4218936098099905806, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -4.999998
+      value: -4.999996
       objectReference: {fileID: 0}
     - target: {fileID: 4218936098099905807, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -58776,7 +58791,7 @@ PrefabInstance:
     - target: {fileID: 6520078156854624338, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 45.999992
+      value: 46
       objectReference: {fileID: 0}
     - target: {fileID: 6535644041831206139, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
