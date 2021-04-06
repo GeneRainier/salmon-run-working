@@ -33,7 +33,9 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float zoomSpeed;
 
     [SerializeField] private float lerpSpeed;
-	
+
+    [SerializeField] private float cameraSetSpeed;
+
     private Vector3 target;
     private bool moving;
     private float timeFactor;
@@ -64,6 +66,8 @@ public class CameraController : MonoBehaviour {
         }
 
         timeFactor = Time.deltaTime / Time.timeScale;
+
+        float step = panSpeed * timeFactor;
         
         // get camera's current pos
         target = transform.position;
@@ -80,6 +84,11 @@ public class CameraController : MonoBehaviour {
 
         target.z += scroll * zoomSpeed * 100f * timeFactor;
 
+        if (scroll < 0)
+        {
+            transform.SmoothMoveTowards(initialPosition, cameraSetSpeed);
+        }
+
         // modulate the pan speed based on the current zoom level (smaller pan when more zoomed in)
         float zoomMultiplier = 1.1f - (target.z - bounds.Min.z) / (bounds.Max.z - bounds.Min.z);
 
@@ -91,7 +100,12 @@ public class CameraController : MonoBehaviour {
         if (Input.GetButton("Vertical") || panWithMouse && 
             (Input.mousePosition.y >= Screen.height - panBorderThickness || Input.mousePosition.y <= panBorderThickness))
         {
-            target.y += panDistance * Input.GetAxisRaw("Vertical");
+            if (target.z >= -800f)
+            {
+                Debug.Log("its reading");
+                target.y += panDistance * Input.GetAxisRaw("Vertical");
+            }
+            //target.y += panDistance * Input.GetAxisRaw("Vertical");
         }
         if (Input.GetButton("Horizontal") || panWithMouse && 
             (Input.mousePosition.x <= panBorderThickness || Input.mousePosition.x >= Screen.width - panBorderThickness))

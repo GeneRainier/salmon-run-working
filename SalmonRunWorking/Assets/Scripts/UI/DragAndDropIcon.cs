@@ -311,6 +311,8 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             {
                 hasBeenPurchased = true;
             }
+
+            spawnedObject = null;
         }
         // if not in a valid place, destroy the spawned object
         else

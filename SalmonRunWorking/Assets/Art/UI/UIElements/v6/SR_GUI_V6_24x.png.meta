@@ -53,8 +53,92 @@ TextureImporter:
   - first:
       213: 21300032
     second: SRGUI_Bumper
+  - first:
+      213: 7507452458438249958
+    second: Bottom_trey_right
+  - first:
+      213: -8367672827198785083
+    second: SR_GUI_V6_24x_1
+  - first:
+      213: 2504202014105671453
+    second: SR_GUI_V6_24x_2
+  - first:
+      213: 9124759848852516837
+    second: SR_GUI_V6_24x_3
+  - first:
+      213: 2680345742838996555
+    second: SR_GUI_V6_24x_4
+  - first:
+      213: 7970171722193345394
+    second: SR_GUI_V6_24x_5
+  - first:
+      213: 4853548818681945939
+    second: SR_GUI_V6_24x_6
+  - first:
+      213: -5515129407466933450
+    second: SR_GUI_V6_24x_7
+  - first:
+      213: -1638707954078651058
+    second: SR_GUI_V6_24x_8
+  - first:
+      213: -202847529595589945
+    second: SR_GUI_V6_24x_9
+  - first:
+      213: -7511443065628023936
+    second: SR_GUI_V6_24x_10
+  - first:
+      213: -4146753746364819067
+    second: SR_GUI_V6_24x_11
+  - first:
+      213: -2799694317244240792
+    second: SR_GUI_V6_24x_12
+  - first:
+      213: 8511103972864390799
+    second: SR_GUI_V6_24x_13
+  - first:
+      213: -4236406126894244042
+    second: SR_GUI_V6_24x_14
+  - first:
+      213: 2988094315341467719
+    second: SR_GUI_V6_24x_15
+  - first:
+      213: -2081460584720798473
+    second: SR_GUI_V6_24x_16
+  - first:
+      213: -6254679872678797285
+    second: SR_GUI_V6_24x_17
+  - first:
+      213: -7864044547426354336
+    second: SR_GUI_V6_24x_18
+  - first:
+      213: -6318873300672386446
+    second: SR_GUI_V6_24x_19
+  - first:
+      213: -4486997645296514407
+    second: SR_GUI_V6_24x_20
+  - first:
+      213: 6588944124230934696
+    second: SR_GUI_V6_24x_21
+  - first:
+      213: -7509109192454396966
+    second: SR_GUI_V6_24x_22
+  - first:
+      213: -7285037183439865686
+    second: SR_GUI_V6_24x_23
+  - first:
+      213: -1095547343549796107
+    second: SR_GUI_V6_24x_24
+  - first:
+      213: 2432581675271542022
+    second: SR_GUI_V6_24x_25
+  - first:
+      213: 7771702417358878795
+    second: SR_GUI_V6_24x_26
+  - first:
+      213: 816988906995719244
+    second: SR_GUI_V6_24x_27
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 0
@@ -108,6 +192,7 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  applyGammaDecoding: 1
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
@@ -373,7 +458,7 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 5460
+        width: 2730
         height: 295
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -489,6 +574,27 @@ TextureImporter:
       bones: []
       spriteID: 5615a92c37fcd64479b2e90e3aafdd18
       internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Bottom_trey_right
+      rect:
+        serializedVersion: 2
+        x: 2731
+        y: 0
+        width: 2729
+        height: 295
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ed48591c34df2860800000000000000
+      internalID: 7507452458438249958
       vertices: []
       indices: 
       edges: []

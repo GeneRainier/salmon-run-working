@@ -37,7 +37,7 @@ TextureImporter:
     second: SRGUI_PauseH
   - first:
       213: 21300022
-    second: SRGUI_BottomTray
+    second: SRGUI_BottomTray_Left
   - first:
       213: 21300024
     second: SRGUI_FastForward
@@ -53,6 +53,12 @@ TextureImporter:
   - first:
       213: 21300032
     second: SRGUI_Bumper
+  - first:
+      213: -3271309961576115262
+    second: SRGUI_BottomTray_Right
+  - first:
+      213: 1206437789770369235
+    second: SRGUI_Stump_Circle
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -369,13 +375,13 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: SRGUI_BottomTray
+      name: SRGUI_BottomTray_Left
       rect:
         serializedVersion: 2
         x: 0
-        y: 0
-        width: 5460
-        height: 295
+        y: 1
+        width: 2602
+        height: 299
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -490,6 +496,48 @@ TextureImporter:
       bones: []
       spriteID: 5615a92c37fcd64479b2e90e3aafdd18
       internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SRGUI_BottomTray_Right
+      rect:
+        serializedVersion: 2
+        x: 2858
+        y: 0
+        width: 2602
+        height: 299
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c31f0e0ce8f992d0800000000000000
+      internalID: -3271309961576115262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: SRGUI_Stump_Circle
+      rect:
+        serializedVersion: 2
+        x: 2613
+        y: 27
+        width: 235
+        height: 238
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d8cede17c02eb010800000000000000
+      internalID: 1206437789770369235
       vertices: []
       indices: 
       edges: []
