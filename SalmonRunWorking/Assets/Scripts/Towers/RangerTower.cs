@@ -95,7 +95,7 @@ public class RangerTower : TowerBase
 
             if (fishermanTower.anglerCounted == false)
             {
-                if (fishermanTower.transform.position.y < -50)
+                if (fishermanTower.transform.position.x < 1115)
                 {
                     initializationValues.lowerManagedAnglerCount += 1;
                     fishermanTower.anglerCounted = true;

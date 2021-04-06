@@ -168,7 +168,7 @@ public class FishermanTower : TowerBase
         transform.position = primaryHitInfo.point;
         theTowerManager = FindObjectOfType<TowerManager>();
         theTowerManager.AddAngler(this);
-        if (transform.position.y < -50)
+        if (transform.position.x < 1115)
         {
             initializationValues.lowerAnglerCount += 1;
         }
