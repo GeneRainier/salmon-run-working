@@ -56,6 +56,9 @@ public class FishermanTower : TowerBase
     // Reference to the Tower Manager
     [SerializeField] private TowerManager theTowerManager;
 
+    // Boolean for checking whether regulated angler has been counted yet or not
+    public bool anglerCounted = false;
+
     /**
      * Start is called on object initialization
      */
@@ -66,9 +69,9 @@ public class FishermanTower : TowerBase
 
         // Set catch rates and radius based on Initialization values
         effectRadius = initializationValues.anglerRadius;
-        defaultSmallCatchRate = initializationValues.defaultSmallCatchRate;
-        defaultMediumCatchRate = initializationValues.defaultMediumCatchRate;
-        defaultLargeCatchRate = initializationValues.defaultLargeCatchRate;
+        defaultSmallCatchRate = initializationValues.anglerSmallCatchRate;
+        defaultMediumCatchRate = initializationValues.anglerMediumCatchRate;
+        defaultLargeCatchRate = initializationValues.anglerLargeCatchRate;
 
         // set current catch rates
         currentSmallCatchRate = defaultCatchRate * defaultSmallCatchRate;
@@ -165,6 +168,14 @@ public class FishermanTower : TowerBase
         transform.position = primaryHitInfo.point;
         theTowerManager = FindObjectOfType<TowerManager>();
         theTowerManager.AddAngler(this);
+        if (transform.position.y < -50)
+        {
+            initializationValues.lowerAnglerCount += 1;
+        }
+        else
+        {
+            initializationValues.upperAnglerCount += 1;
+        }
     }
 
     /**

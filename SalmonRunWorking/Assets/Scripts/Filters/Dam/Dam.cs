@@ -19,9 +19,9 @@ public class Dam : FilterBase, IDragAndDropObject
     // (make sure to double click on Dam cube symbol. 
 
     // crossing rates for small, medium, and large fish
-    private float smallCrossingRate;
-    private float mediumCrossingRate;
-    private float largeCrossingRate;
+    [SerializeField] private float smallCrossingRate;
+    [SerializeField] private float mediumCrossingRate;
+    [SerializeField] private float largeCrossingRate;
 
     // is there a ladder currently attached to the dam?
     private bool hasLadder;
@@ -94,6 +94,7 @@ public class Dam : FilterBase, IDragAndDropObject
         if (placementLocation != null)
         {
             placementLocation.AttachDam(this);
+            initializationValues.damPresent = 1;
         }
 
     }
@@ -139,17 +140,17 @@ public class Dam : FilterBase, IDragAndDropObject
             if (sizeGenePair.momGene == FishGenome.b && sizeGenePair.dadGene == FishGenome.b)
             {
                 crossingRate = smallCrossingRate;
-                 Debug.Log("bbCrossR=" + smallCrossingRate);
+                // Debug.Log("bbCrossR=" + smallCrossingRate);
             }
             else if (sizeGenePair.momGene == FishGenome.B && sizeGenePair.dadGene == FishGenome.B)
             {
                 crossingRate = largeCrossingRate;
-                 Debug.Log("BBCrossR=" + largeCrossingRate);
+                // Debug.Log("BBCrossR=" + largeCrossingRate);
             }
             else
             {
                 crossingRate = mediumCrossingRate;
-                 Debug.Log("BbCrossR=" + mediumCrossingRate);
+                // Debug.Log("BbCrossR=" + mediumCrossingRate);
             }
 
             while (!fish.IsStuck())
@@ -159,10 +160,10 @@ public class Dam : FilterBase, IDragAndDropObject
                 if (Random.Range(0f, 1f) <= crossingRate)
                 {
                     fish.transform.position = GetRandomDropOff(fish.transform.position.z);
-                    // Debug.Log("Crossed: crossingRate=" + crossingRate);
+                    break;
                 }
                 // if we have not expended our total tries (based on damPassCounter in fish), increment, wait, and try again
-                else if (fish.damPassCounter < 3)
+                else if (fish.damPassCounter < 2)
                 {
                     fish.damPassCounter++;
                     Invoke("DamPassCooldown", 6.0f);
@@ -171,6 +172,7 @@ public class Dam : FilterBase, IDragAndDropObject
                 else
                 {
                     fish.SetStuck(true);
+                    break;
                 }
             }
         }

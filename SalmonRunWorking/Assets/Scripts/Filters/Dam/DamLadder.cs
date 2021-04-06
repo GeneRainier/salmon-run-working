@@ -38,9 +38,11 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
             placementLocation.AttachLadder(this);
 
             // Initialize the pass rates
-            smallCrossingRate = initializationValues.defaultLadderSmallPassRate;
-            mediumCrossingRate = initializationValues.defaultLadderMediumPassRate;
-            largeCrossingRate = initializationValues.defaultLadderLargePassRate;
+            smallCrossingRate = initializationValues.ladderSmallPassRate;
+            mediumCrossingRate = initializationValues.ladderMediumPassRate;
+            largeCrossingRate = initializationValues.ladderLargePassRate;
+
+            initializationValues.ladderCode = 1;
         }
     }
 
