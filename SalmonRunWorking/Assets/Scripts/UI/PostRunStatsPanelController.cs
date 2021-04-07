@@ -116,7 +116,9 @@ public class PostRunStatsPanelController : PanelController
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
 
-            //AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
+            //Comment out the line below before webGL build
+            //Update data file based on population data
+            AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
         // otherwise, do the first-turn specific update
         else if (previousTurn == 0)
@@ -131,7 +133,9 @@ public class PostRunStatsPanelController : PanelController
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
 
-           //CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
+            //Comment out the line below before webGL build
+            //Creates data file based on game parameters 
+            CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
     }
 
