@@ -22,3 +22,4 @@ Nesting Sites, 200
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, angB_, angU_, angBR, angUR, rang, dam, ladder
 0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 24, 83, 31, 70, 68, 17, 44, 23, 2, 0, 0, 0, 0, 0, 0
