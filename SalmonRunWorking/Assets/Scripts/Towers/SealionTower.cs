@@ -131,6 +131,7 @@ public class SealionTower : TowerBase
                 //Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
                 break;
         }
+        Debug.Log("SeaLionCatch: MaleCR=" + currentMaleCatchRate + "FemCR=" + currentFemaleCatchRate);
 
         // figure out whether the fish will be caught or not
         bool caught = Random.Range(0f, 1f) <= catchRate;

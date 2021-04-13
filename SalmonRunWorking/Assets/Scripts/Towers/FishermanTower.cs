@@ -83,7 +83,6 @@ public class FishermanTower : TowerBase
         ManagerIndex.MI.UpgradeManager.MediumRate = currentMediumCatchRate;
         ManagerIndex.MI.UpgradeManager.LargeRate = currentLargeCatchRate;
 
-
         Debug.Log("Awake cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
@@ -106,7 +105,7 @@ public class FishermanTower : TowerBase
      */
     private void Update()
     {
-        Debug.Log(TowerActive);
+        //Debug.Log("AnglerTower", TowerActive);
         // update fish line position
         if (catchAttemptLine.enabled)
         {
@@ -199,6 +198,7 @@ public class FishermanTower : TowerBase
         {
             transform.parent.LookAt(fish.transform, Vector3.back);
 
+            Debug.Log("before TryCatchFish");
             TryCatchFish(fish);
 
             fishing.SetBool(Fishing, true);
@@ -246,6 +246,8 @@ public class FishermanTower : TowerBase
                  Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
                 break;
         }
+        Debug.Log("TryCatchFishCoroutine: cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+
 
         // figure out whether the fish will be caught or not
         bool caught = Random.Range(0f, 1f) <= catchRate;
