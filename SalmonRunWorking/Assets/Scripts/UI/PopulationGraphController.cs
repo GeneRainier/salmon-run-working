@@ -3,6 +3,9 @@ using static FishGenomeUtilities;
 
 public class PopulationGraphController : BottomBarContentPage
 {
+    // Reference to the Post Run Stats Controller to update the output file
+    public PostRunStatsPanelController updatePanel;
+    
     // graph for successful vs. active vs. dead fish
     public HorizontalBarGraph populationGraph;
 
@@ -31,10 +34,15 @@ public class PopulationGraphController : BottomBarContentPage
         int numMales = FindMaleGenomes(successfulGenomes).Count + FindMaleGenomes(activeGenomes).Count;
         int numFemales = FindFemaleGenomes(successfulGenomes).Count + FindFemaleGenomes(activeGenomes).Count;
         sexGraph.UpdateGraph(numFemales, numMales);
+        updatePanel.survivingMaleDescriptor = numMales;
+        updatePanel.survivingFemaleDescriptor = numFemales;
 
         int numSmall = FindSmallGenomes(successfulGenomes).Count + FindSmallGenomes(activeGenomes).Count;
         int numMedium = FindMediumGenomes(successfulGenomes).Count + FindMediumGenomes(activeGenomes).Count;
         int numLarge = FindLargeGenomes(successfulGenomes).Count + FindLargeGenomes(activeGenomes).Count;
         sizeGraph.UpdateGraph(numSmall, numMedium, numLarge);
+        updatePanel.survivingSmallDescriptor = numSmall;
+        updatePanel.survivingMediumDescriptor = numMedium;
+        updatePanel.survivingLargeDescriptor = numLarge;
     }
 }

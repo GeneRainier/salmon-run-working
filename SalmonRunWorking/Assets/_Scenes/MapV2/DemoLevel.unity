@@ -212,6 +212,18 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: 5201ea432f859844e901bf1907ae08a1, type: 3}
+--- !u!114 &61449893 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4134498790456226782, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+    type: 3}
+  m_PrefabInstance: {fileID: 5614493210049836167}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee7e74ff9deedd54fa6a316cd29f4095, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &67485769 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7756044248118456680, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
@@ -944,6 +956,7 @@ MonoBehaviour:
   rangerCount: 0
   damPresent: 0
   ladderCode: 0
+  sealionPresent: 0
 --- !u!114 &564102374 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 564102374, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
@@ -47354,7 +47367,7 @@ PrefabInstance:
     - target: {fileID: 3415378294786989738, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -4.999998
+      value: -5
       objectReference: {fileID: 0}
     - target: {fileID: 3415378295004127998, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -48001,6 +48014,11 @@ PrefabInstance:
       propertyPath: m_LocalScale.x
       value: 0.36129582
       objectReference: {fileID: 0}
+    - target: {fileID: 5614493208572445555, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: updatePanel
+      value: 
+      objectReference: {fileID: 61449893}
     - target: {fileID: 5614493208596940666, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -48694,7 +48712,7 @@ PrefabInstance:
     - target: {fileID: 6451833684474610365, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -4.999998
+      value: -4.999996
       objectReference: {fileID: 0}
     - target: {fileID: 6466990555320054324, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}

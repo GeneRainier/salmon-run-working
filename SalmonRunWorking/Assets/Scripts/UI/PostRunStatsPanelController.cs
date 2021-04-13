@@ -20,6 +20,13 @@ public class PostRunStatsPanelController : PanelController
     public string femaleDescriptor;
     public string maleDescriptor;
 
+    // Counts for the surviving fish for the output file
+    public int survivingSmallDescriptor = 0;
+    public int survivingMediumDescriptor = 0;
+    public int survivingLargeDescriptor = 0;
+    public int survivingFemaleDescriptor = 0;
+    public int survivingMaleDescriptor = 0;
+
     // panel's title, which displays the turn number
     public TextMeshProUGUI titleText;
 
@@ -163,11 +170,16 @@ public class PostRunStatsPanelController : PanelController
             "\nRamp Large Pass Rate, " + initializationValues.rampLargePassRate + "\nLift Small Pass Rate, " + initializationValues.liftSmallPassRate +
             "\nLift Medium Pass Rate, " + initializationValues.liftMediumPassRate + "\nLift Large Pass Rate, " + initializationValues.liftLargePassRate +
             "\nStarting Money, " + initializationValues.startingMoney + "\nSealion Appearance Time, " + initializationValues.sealionAppearanceTime + 
+            "\nSealion Male Catch Rate, " + initializationValues.sealionMaleCatchRate + "\nSealion Female Catch Rate, " + initializationValues.sealionFemaleCatchRate +
             "\nNesting Sites, " + initializationValues.nestingSites + "\n" +
+            "\n" + "turn = Turn number\noffSh / offMd / offLg = Short / Medium / Large offspring\noffMa / offFe = Male / Female Offspring\n" +
+            "parSh / parMd / parLg = Short / Medium / Large Parents\nsurMa / surFe = Male / Female Survivors\nsurSh / surMd / surLg = Short / Medium / Large Survivors\n" +
+            "angB_ / angU_ = Angler Count Down / Upstream\nangBR / ang UR = Angler count Down / Upstream affected by Rangers\nrang = Number of Rangers\n" +
+            "dam = Dam Present\nladder = Ladder Present on Dam\nslPres = Sealion Present\n" +
             "\n" +
-            "turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, angB_, angU_, angBR, angUR, rang, dam, ladder\n" +
+            "turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres\n" +
             previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
-            ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n";
+            ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n";
         System.IO.File.WriteAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 
@@ -179,9 +191,11 @@ public class PostRunStatsPanelController : PanelController
         // Create a txt file for post run information
         string infoText = previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
             ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", " + FindSmallGenomes(parentGenomes).Count + ", " + 
-            FindMediumGenomes(parentGenomes).Count + ", " + FindLargeGenomes(parentGenomes).Count + ", " + initializationValues.lowerAnglerCount + ", " + 
-            initializationValues.upperAnglerCount + ", " + initializationValues.lowerManagedAnglerCount + ", " + initializationValues.upperManagedAnglerCount + 
-            ", " + initializationValues.rangerCount + ", " + initializationValues.damPresent + ", " + initializationValues.ladderCode + "\n";
+            FindMediumGenomes(parentGenomes).Count + ", " + FindLargeGenomes(parentGenomes).Count + ", " + survivingMaleDescriptor + ", " +
+            survivingFemaleDescriptor + ", " + survivingSmallDescriptor + ", " + survivingMediumDescriptor + ", " + survivingLargeDescriptor + ", "
+            + initializationValues.lowerAnglerCount + ", " + initializationValues.upperAnglerCount + ", " + initializationValues.lowerManagedAnglerCount + ", " + 
+            initializationValues.upperManagedAnglerCount + ", " + initializationValues.rangerCount + ", " + initializationValues.damPresent + ", " + 
+            initializationValues.ladderCode + ", " + initializationValues.sealionPresent + "\n";
         System.IO.File.AppendAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 }
