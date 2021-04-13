@@ -138,6 +138,8 @@ public class Dam : FilterBase, IDragAndDropObject
             // chance between fish getting past the dam and being caught/getting stuck depends on what size the fish is
             float crossingRate;
 
+            Debug.Log("Dam.ApplyFilterEffect: SMcr =" + smallCrossingRate + "; MDcr = " + mediumCrossingRate + "; LGcr = " + largeCrossingRate);
+
             FishGenePair sizeGenePair = fish.GetGenome()[FishGenome.GeneType.Size];
             if (sizeGenePair.momGene == FishGenome.b && sizeGenePair.dadGene == FishGenome.b)
             {
@@ -154,8 +156,6 @@ public class Dam : FilterBase, IDragAndDropObject
                 crossingRate = mediumCrossingRate;
                 // Debug.Log("BbCrossR=" + mediumCrossingRate);
             }
-
-            Debug.Log("Dam.ApplyFilterEffect: SMcr =" + smallCrossingRate + "; MDcr = " + mediumCrossingRate + "; LGcr = " + largeCrossingRate);
 
             while (!fish.IsStuck())
             {

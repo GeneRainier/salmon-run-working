@@ -927,14 +927,14 @@ MonoBehaviour:
   makeOutputFile: 0
   anglerRadius: 150
   anglerSmallCatchRate: 0.9
-  anglerMediumCatchRate: 0.2
+  anglerMediumCatchRate: 0.5
   anglerLargeCatchRate: 0
   rangerRadius: 450
   rangerSmallModifier: -0.9
-  rangerMediumModifier: -0.1
+  rangerMediumModifier: -0.3
   rangerLargeModifier: 0.9
   rangerSuccessRate: 1
-  defaultDamPassRate: 0.2
+  defaultDamPassRate: 0.25
   ladderSmallPassRate: 0.1
   ladderMediumPassRate: 0.3
   ladderLargePassRate: 0.5
