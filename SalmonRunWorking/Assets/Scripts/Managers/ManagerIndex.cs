@@ -49,6 +49,10 @@ public class ManagerIndex : MonoBehaviour
     public float startingMoney;
     public int sealionAppearanceTime;       /// This int represents number of rounds until a sealion appears
 
+    // Sealion Catch Rates
+    public float sealionFemaleCatchRate;
+    public float sealionMaleCatchRate;
+
     public int nestingSites;    //< The number of nesting sites available at the fish destination
 
     // Miscellaneous Output File Counters

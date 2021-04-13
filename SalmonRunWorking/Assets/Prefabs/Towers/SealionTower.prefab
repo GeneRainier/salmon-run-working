@@ -337,12 +337,10 @@ MonoBehaviour:
   initializationValues: {fileID: 0}
   timePerApplyEffect: 3
   defaultCatchRate: 1
-  defaultSmallCatchRate: 0.1
-  defaultMediumCatchRate: 0.1
-  defaultLargeCatchRate: 0.1
-  currentSmallCatchRate: 0.1
-  currentMediumCatchRate: 0.1
-  currentLargeCatchRate: 0.1
+  defaultFemaleCatchRate: 0.1
+  defaultMaleCatchRate: 0.1
+  currentFemaleCatchRate: 0
+  currentMaleCatchRate: 0
   flashMaterial: {fileID: 2100000, guid: 36889215b5455d44b91ee75ab2279392, type: 2}
   numFlashesPerCatch: 3
   theTowerManager: {fileID: 0}

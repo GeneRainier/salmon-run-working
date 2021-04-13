@@ -8,20 +8,17 @@ using TMPro;
 [RequireComponent(typeof(LineRenderer))]
 public class SealionTower : TowerBase
 {
-
     // default rate of success of a fish catch attempt
     [Range(0f, 1f)]
     public float defaultCatchRate;
 
     // default rate of success of fish catch attempt for small, medium and large fish
-    public float defaultSmallCatchRate = 0.5F;
-    public float defaultMediumCatchRate = 0.3F;
-    public float defaultLargeCatchRate = 0.1F;
+    public float defaultFemaleCatchRate = 0.5F;
+    public float defaultMaleCatchRate = 0.1F;
 
     // current rate of success of fish catch attempt for small, medium, and large fish
-    [SerializeField] private float currentSmallCatchRate;
-    [SerializeField] private float currentMediumCatchRate;
-    [SerializeField] private float currentLargeCatchRate;
+    [SerializeField] private float currentFemaleCatchRate;
+    [SerializeField] private float currentMaleCatchRate;
 
     // fish that have been caught by this sealion
     private List<Fish> caughtFish;
@@ -42,10 +39,12 @@ public class SealionTower : TowerBase
         // bas class awake
         base.Awake();
 
+        defaultFemaleCatchRate = initializationValues.sealionFemaleCatchRate;
+        defaultMaleCatchRate = initializationValues.sealionMaleCatchRate;
+
         // set current catch rates
-        currentSmallCatchRate = defaultCatchRate * defaultSmallCatchRate;
-        currentMediumCatchRate = defaultCatchRate * defaultMediumCatchRate;
-        currentLargeCatchRate = defaultCatchRate * defaultLargeCatchRate;
+        currentFemaleCatchRate = defaultCatchRate * defaultFemaleCatchRate;
+        currentMaleCatchRate = defaultCatchRate * defaultMaleCatchRate;
 
 
         //Debug.Log("cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
@@ -67,7 +66,7 @@ public class SealionTower : TowerBase
     //Catch rate effect stuff
     public void AffectCatchRate(float smallEffect, float mediumEffect, float largeEffect, float length)
     {
-        StartCoroutine(AffectCatchRateCoroutine(smallEffect, mediumEffect, largeEffect, length));
+        StartCoroutine(AffectCatchRateCoroutine(smallEffect, largeEffect, length));
     }
 
     protected override void ApplyTowerEffect()
@@ -115,20 +114,20 @@ public class SealionTower : TowerBase
         FishGenePair sizeGenePair = fish.GetGenome()[FishGenome.GeneType.Size];
         switch (sizeGenePair.momGene)
         {
-            case FishGenome.b when sizeGenePair.dadGene == FishGenome.b:
-                catchRate = currentSmallCatchRate;
+            case FishGenome.X when sizeGenePair.dadGene == FishGenome.X:
+                catchRate = currentFemaleCatchRate;
                 weight = 2f;  //4
                 Debug.Log("bbCatchR=" + catchRate + "; weight=" + weight);
                 break;
-            case FishGenome.B when sizeGenePair.dadGene == FishGenome.B:
-                catchRate = currentLargeCatchRate;
+            case FishGenome.X when sizeGenePair.dadGene == FishGenome.Y:
+                catchRate = currentMaleCatchRate;
                 weight = 9f;  //15
                 Debug.Log("BBCatchR=" + catchRate + "; weight=" + weight);
                 break;
             default:
-                catchRate = currentMediumCatchRate;
-                weight = 6f;  //9
-                Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
+                catchRate = currentMaleCatchRate;
+                //weight = 6f;  //9
+                //Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
                 break;
         }
 
@@ -167,17 +166,15 @@ public class SealionTower : TowerBase
         }
     }
 
-    private IEnumerator AffectCatchRateCoroutine(float smallEffect, float mediumEffect, float largeEffect, float length)
+    private IEnumerator AffectCatchRateCoroutine(float femaleEffect, float maleEffect, float length)
     {
-        currentSmallCatchRate += smallEffect;
-        currentMediumCatchRate += mediumEffect;
-        currentLargeCatchRate += largeEffect;
+        currentFemaleCatchRate += femaleEffect;
+        currentMaleCatchRate += maleEffect;
 
         yield return new WaitForSeconds(length);
 
-        currentSmallCatchRate -= smallEffect;
-        currentMediumCatchRate -= mediumEffect;
-        currentLargeCatchRate -= largeEffect;
+        currentFemaleCatchRate -= femaleEffect;
+        currentMaleCatchRate -= maleEffect;
     }
 
 
