@@ -30,8 +30,8 @@ public class FishermanTower : TowerBase
     public int numFlashesPerCatch;
 
     // default rate of success of fish catch attempt for small, medium and large fish
-    public float defaultSmallCatchRate = 0.5F;   
-    public float defaultMediumCatchRate = 0.3F;
+    public float defaultSmallCatchRate = 0.7F;   
+    public float defaultMediumCatchRate = 0.4F;
     public float defaultLargeCatchRate = 0.1F;
 
     // current rate of success of fish catch attempt for small, medium, and large fish
@@ -332,7 +332,7 @@ public class FishermanTower : TowerBase
 
         yield return new WaitForSeconds(length);
 */
-        Debug.Log("Ranger watching cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+        //Debug.Log("AffectCatchRateCoroutine cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
     /**

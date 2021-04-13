@@ -39,6 +39,7 @@ public class Dam : FilterBase, IDragAndDropObject
         //defaultCrossingRate = initializationValues.defaultDamPassRate;
         // set all crossing rates to default rate on initialization
         smallCrossingRate = mediumCrossingRate = largeCrossingRate = defaultCrossingRate;
+        Debug.Log("Dam Class: defaultCrossingRate=" + defaultCrossingRate);
     }
 
     #region Dam Operation
@@ -67,9 +68,9 @@ public class Dam : FilterBase, IDragAndDropObject
         //mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
         //largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
 
-        smallCrossingRate = defaultCrossingRate + 0.2F;
-        mediumCrossingRate = defaultCrossingRate + 0.7F;
-        largeCrossingRate = defaultCrossingRate + 0.7F;
+        //smallCrossingRate = defaultCrossingRate + 0.2F;
+        //mediumCrossingRate = defaultCrossingRate + 0.7F;
+        //largeCrossingRate = defaultCrossingRate + 0.7F;
 
         // set flag so we know we have a ladder
         hasLadder = true;
@@ -154,7 +155,7 @@ public class Dam : FilterBase, IDragAndDropObject
                 // Debug.Log("BbCrossR=" + mediumCrossingRate);
             }
 
-            Debug.Log("Dam: SMcr =" + smallCrossingRate + "; MDcr = " + mediumCrossingRate + "; LGcr = " + largeCrossingRate);
+            Debug.Log("Dam.ApplyFilterEffect: SMcr =" + smallCrossingRate + "; MDcr = " + mediumCrossingRate + "; LGcr = " + largeCrossingRate);
 
             while (!fish.IsStuck())
             {

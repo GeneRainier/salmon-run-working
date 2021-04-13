@@ -93,6 +93,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializationValues: {fileID: 0}
-  smallCrossingRate: 0.3
-  mediumCrossingRate: 0.4
-  largeCrossingRate: 0.7
+  smallCrossingRate: 0.1
+  mediumCrossingRate: 0.3
+  largeCrossingRate: 0.5

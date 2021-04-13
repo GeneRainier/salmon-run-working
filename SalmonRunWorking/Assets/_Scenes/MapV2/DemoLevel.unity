@@ -927,26 +927,26 @@ MonoBehaviour:
   makeOutputFile: 0
   anglerRadius: 150
   anglerSmallCatchRate: 0.9
-  anglerMediumCatchRate: 0.5
-  anglerLargeCatchRate: 0.1
+  anglerMediumCatchRate: 0.2
+  anglerLargeCatchRate: 0
   rangerRadius: 450
-  rangerSmallModifier: -0.8
+  rangerSmallModifier: -0.9
   rangerMediumModifier: -0.1
-  rangerLargeModifier: 0.8
+  rangerLargeModifier: 0.9
   rangerSuccessRate: 1
-  defaultDamPassRate: 0.00001
-  ladderSmallPassRate: 0.02
-  ladderMediumPassRate: 0.04
-  ladderLargePassRate: 0.08
-  rampSmallPassRate: 0.01
-  rampMediumPassRate: 0.5
-  rampLargePassRate: 0.01
-  liftSmallPassRate: 0.02
-  liftMediumPassRate: 0.05
-  liftLargePassRate: 0.08
-  startingMoney: 100
+  defaultDamPassRate: 0.2
+  ladderSmallPassRate: 0.1
+  ladderMediumPassRate: 0.3
+  ladderLargePassRate: 0.5
+  rampSmallPassRate: 0.1
+  rampMediumPassRate: 0.7
+  rampLargePassRate: 0.1
+  liftSmallPassRate: 0.5
+  liftMediumPassRate: 0.5
+  liftLargePassRate: 0.5
+  startingMoney: 1000
   sealionAppearanceTime: 3
-  sealionFemaleCatchRate: 0.4
+  sealionFemaleCatchRate: 0.8
   sealionMaleCatchRate: 0.1
   nestingSites: 200
   upperAnglerCount: 0
@@ -46276,7 +46276,7 @@ PrefabInstance:
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
       propertyPath: minOffspring
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}

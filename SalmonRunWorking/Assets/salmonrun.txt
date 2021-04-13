@@ -1,12 +1,12 @@
 Angler Radius, 150
-Angler Small Catch Rate, 0.9
-Angler Medium Catch Rate, 0.5
-Angler Large Catch Rate, 0.1
+Angler Small Catch Rate, 0.6
+Angler Medium Catch Rate, 0.4
+Angler Large Catch Rate, 0
 Ranger Radius, 450
-Ranger Small Catch Modifier, -0.8
+Ranger Small Catch Modifier, -0.7
 Ranger Medium Catch Modifier, -0.1
-Ranger Large Catch Modifier, 0.8
-Default Dam Pass Rate, 1E-05
+Ranger Large Catch Modifier, 0.9
+Default Dam Pass Rate, 0.2
 Ladder Small Pass Rate, 0.02
 Ladder Medium Pass Rate, 0.04
 Ladder Large Pass Rate, 0.08
@@ -16,10 +16,10 @@ Ramp Large Pass Rate, 0.01
 Lift Small Pass Rate, 0.02
 Lift Medium Pass Rate, 0.05
 Lift Large Pass Rate, 0.08
-Starting Money, 100
+Starting Money, 1000
 Sealion Appearance Time, 3
 Sealion Male Catch Rate, 0.1
-Sealion Female Catch Rate, 0.4
+Sealion Female Catch Rate, 0.8
 Nesting Sites, 200
 
 turn = Turn number
@@ -37,3 +37,9 @@ slPres = Sealion Present
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
 0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 27, 73, 23, 69, 54, 23, 43, 16, 42, 40, 23, 43, 16, 0, 0, 0, 0, 0, 0, 0, 0
+2, 44, 69, 39, 71, 81, 26, 71, 22, 66, 53, 26, 71, 22, 0, 0, 0, 0, 0, 0, 0, 0
+3, 52, 82, 35, 84, 85, 42, 63, 27, 59, 73, 42, 63, 27, 0, 0, 0, 0, 0, 0, 0, 0
+4, 57, 77, 24, 69, 89, 38, 56, 20, 53, 61, 38, 56, 20, 3, 0, 0, 0, 0, 0, 0, 0
+5, 55, 63, 21, 68, 71, 37, 54, 17, 44, 64, 37, 54, 17, 3, 0, 0, 0, 0, 0, 0, 0
+6, 66, 48, 18, 59, 73, 42, 41, 17, 46, 54, 42, 41, 17, 3, 0, 0, 0, 0, 0, 0, 0
