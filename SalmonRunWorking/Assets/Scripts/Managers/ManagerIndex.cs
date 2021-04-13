@@ -66,6 +66,8 @@ public class ManagerIndex : MonoBehaviour
     public int damPresent = 0;
     public int ladderCode = 0;
 
+    public int sealionPresent = 0;
+
     // Costs
     //public float anglerCost;
     //public float rangerCost;

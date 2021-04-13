@@ -18,7 +18,29 @@ Lift Medium Pass Rate, 0.2
 Lift Large Pass Rate, 0.1
 Starting Money, 5000
 Sealion Appearance Time, 6
+Sealion Male Catch Rate, 0.1
+Sealion Female Catch Rate, 0.4
 Nesting Sites, 200
 
-turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, angB_, angU_, angBR, angUR, rang, dam, ladder
-0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+turn = Turn number
+offSh / offMd / offLg = Short / Medium / Large offspring
+offMa / offFe = Male / Female Offspring
+parSh / parMd / parLg = Short / Medium / Large Parents
+surMa / surFe = Male / Female Survivors
+surSh / surMd / surLg = Short / Medium / Large Survivors
+angB_ / angU_ = Angler Count Down / Upstream
+angBR / ang UR = Angler count Down / Upstream affected by Rangers
+rang = Number of Rangers
+dam = Dam Present
+ladder = Ladder Present on Dam
+slPres = Sealion Present
+
+turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
+0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 30, 86, 34, 78, 72, 24, 48, 23, 47, 48, 24, 48, 23, 0, 0, 0, 0, 0, 1, 1, 0
+2, 51, 120, 72, 136, 107, 25, 81, 33, 73, 66, 25, 81, 33, 0, 0, 0, 0, 0, 1, 1, 0
+3, 80, 147, 122, 185, 164, 44, 113, 68, 123, 102, 44, 113, 68, 0, 0, 0, 0, 0, 1, 1, 0
+4, 64, 262, 185, 256, 255, 55, 125, 114, 153, 141, 55, 125, 114, 6, 0, 0, 0, 0, 1, 1, 0
+5, 91, 327, 307, 384, 341, 34, 212, 153, 199, 200, 34, 212, 153, 6, 0, 0, 0, 0, 1, 1, 0
+6, 47, 298, 350, 359, 336, 34, 163, 203, 200, 200, 34, 163, 203, 6, 0, 0, 0, 0, 1, 1, 1
+7, 44, 277, 395, 356, 360, 20, 157, 223, 200, 200, 20, 157, 223, 6, 0, 0, 0, 0, 1, 1, 1

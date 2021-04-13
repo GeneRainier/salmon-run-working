@@ -46,6 +46,7 @@ public class SealionTower : TowerBase
         currentFemaleCatchRate = defaultCatchRate * defaultFemaleCatchRate;
         currentMaleCatchRate = defaultCatchRate * defaultMaleCatchRate;
 
+        initializationValues.sealionPresent = 1;
 
         //Debug.Log("cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
