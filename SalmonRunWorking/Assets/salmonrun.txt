@@ -1,23 +1,23 @@
 Angler Radius, 150
-Angler Small Catch Rate, 0.5
-Angler Medium Catch Rate, 0.3
+Angler Small Catch Rate, 0.7
+Angler Medium Catch Rate, 0.4
 Angler Large Catch Rate, 0.1
 Ranger Radius, 450
-Ranger Small Catch Modifier, -0.5
-Ranger Medium Catch Modifier, 0.1
-Ranger Large Catch Modifier, 0.4
-Default Dam Pass Rate, 0.3
-Ladder Small Pass Rate, 0.2
-Ladder Medium Pass Rate, 0.6
-Ladder Large Pass Rate, 0.7
-Ramp Small Pass Rate, 0.7
-Ramp Medium Pass Rate, 0.2
-Ramp Large Pass Rate, 0.6
-Lift Small Pass Rate, 0.7
-Lift Medium Pass Rate, 0.6
-Lift Large Pass Rate, 0.2
+Ranger Small Catch Modifier, -0.6
+Ranger Medium Catch Modifier, -0.1
+Ranger Large Catch Modifier, 0.6
+Default Dam Pass Rate, 0.04
+Ladder Small Pass Rate, 0.05
+Ladder Medium Pass Rate, 0.15
+Ladder Large Pass Rate, 0.3
+Ramp Small Pass Rate, 0.05
+Ramp Medium Pass Rate, 0.5
+Ramp Large Pass Rate, 0.05
+Lift Small Pass Rate, 0.4
+Lift Medium Pass Rate, 0.2
+Lift Large Pass Rate, 0.1
 Starting Money, 5000
-Sealion Appearance Time, 3
+Sealion Appearance Time, 6
 Nesting Sites, 200
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, angB_, angU_, angBR, angUR, rang, dam, ladder

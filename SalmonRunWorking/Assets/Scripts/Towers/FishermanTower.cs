@@ -84,7 +84,7 @@ public class FishermanTower : TowerBase
         ManagerIndex.MI.UpgradeManager.LargeRate = currentLargeCatchRate;
 
 
-        //Debug.Log("cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+        Debug.Log("Awake cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
     /**
@@ -309,11 +309,15 @@ public class FishermanTower : TowerBase
         currentMediumCatchRate += mediumEffect;
         currentLargeCatchRate += largeEffect;
 
+        Debug.Log("before yield return cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+
         yield return new WaitForSeconds(length);
 
         currentSmallCatchRate -= smallEffect;
         currentMediumCatchRate -= mediumEffect;
         currentLargeCatchRate -= largeEffect;
+
+        Debug.Log("after yield return cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
     /**

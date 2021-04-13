@@ -922,18 +922,18 @@ MonoBehaviour:
   rangerMediumModifier: -0.1
   rangerLargeModifier: 0.6
   rangerSuccessRate: 1
-  defaultDamPassRate: 0.1
-  ladderSmallPassRate: 0.1
-  ladderMediumPassRate: 0.3
-  ladderLargePassRate: 0.5
-  rampSmallPassRate: 0.1
+  defaultDamPassRate: 0.04
+  ladderSmallPassRate: 0.05
+  ladderMediumPassRate: 0.15
+  ladderLargePassRate: 0.3
+  rampSmallPassRate: 0.05
   rampMediumPassRate: 0.5
-  rampLargePassRate: 0.1
-  liftSmallPassRate: 0.7
-  liftMediumPassRate: 0.4
+  rampLargePassRate: 0.05
+  liftSmallPassRate: 0.4
+  liftMediumPassRate: 0.2
   liftLargePassRate: 0.1
   startingMoney: 5000
-  sealionAppearanceTime: 3
+  sealionAppearanceTime: 6
   sealionFemaleCatchRate: 0.4
   sealionMaleCatchRate: 0.1
   nestingSites: 200
