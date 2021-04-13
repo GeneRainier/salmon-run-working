@@ -47,7 +47,7 @@ public class SealionTowerTwo : TowerBase
         currentLargeCatchRate = defaultCatchRate * defaultLargeCatchRate;
 
 
-        //Debug.Log("cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+        Debug.Log("Awake: cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
     // Start is called before the first frame update

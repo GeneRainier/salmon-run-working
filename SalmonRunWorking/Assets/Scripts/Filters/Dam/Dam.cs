@@ -62,15 +62,19 @@ public class Dam : FilterBase, IDragAndDropObject
      */
     public void AddLadder(DamLadder damLadder)
     {
-        Debug.Log("damLadder S=" + damLadder.smallCrossingRate + "; M=" + damLadder.mediumCrossingRate + "; L=" + damLadder.largeCrossingRate);
-        // set crossing rates for fish to ones supplied by the ladder
-        //smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
-        //mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
-        //largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
+        //set crossing rates for fish to ones supplied by the ladder
+
+        // if these lines are run  then I get an error in UpgradeManager line 132
+        // try 2
+        smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
+        mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
+        largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
 
         //smallCrossingRate = defaultCrossingRate + 0.2F;
         //mediumCrossingRate = defaultCrossingRate + 0.7F;
         //largeCrossingRate = defaultCrossingRate + 0.7F;
+
+        Debug.Log("damLadder S=" + damLadder.smallCrossingRate + "; M=" + damLadder.mediumCrossingRate + "; L=" + damLadder.largeCrossingRate);
 
         // set flag so we know we have a ladder
         hasLadder = true;

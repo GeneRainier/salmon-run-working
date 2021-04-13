@@ -7,20 +7,20 @@ Ranger Small Catch Modifier, -0.9
 Ranger Medium Catch Modifier, -0.5
 Ranger Large Catch Modifier, 0.9
 Default Dam Pass Rate, 0.25
-Ladder Small Pass Rate, 0.1
-Ladder Medium Pass Rate, 0.3
-Ladder Large Pass Rate, 0.5
+Ladder Small Pass Rate, 0.25
+Ladder Medium Pass Rate, 0.55
+Ladder Large Pass Rate, 0.75
 Ramp Small Pass Rate, 0.1
 Ramp Medium Pass Rate, 0.7
 Ramp Large Pass Rate, 0.1
 Lift Small Pass Rate, 0.5
 Lift Medium Pass Rate, 0.5
 Lift Large Pass Rate, 0.5
-Starting Money, 1000
+Starting Money, 200
 Sealion Appearance Time, 3
-Sealion Male Catch Rate, 0.1
+Sealion Male Catch Rate, 0.05
 Sealion Female Catch Rate, 0.5
-Nesting Sites, 200
+Nesting Sites, 500
 
 turn = Turn number
 offSh / offMd / offLg = Short / Medium / Large offspring
@@ -37,3 +37,8 @@ slPres = Sealion Present
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
 0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 25, 107, 30, 86, 76, 25, 48, 23, 48, 48, 25, 48, 23, 0, 0, 0, 0, 0, 0, 0, 0
+2, 64, 132, 69, 141, 124, 24, 106, 30, 85, 75, 24, 106, 30, 0, 0, 0, 0, 0, 0, 0, 0
+3, 101, 201, 104, 194, 212, 62, 120, 63, 124, 121, 62, 120, 63, 0, 0, 0, 0, 0, 0, 0, 0
+4, 120, 298, 161, 299, 280, 84, 174, 95, 169, 184, 84, 174, 95, 3, 0, 0, 0, 0, 0, 0, 0
+5, 180, 460, 287, 452, 475, 106, 269, 151, 267, 259, 106, 269, 151, 3, 0, 0, 0, 0, 0, 0, 0

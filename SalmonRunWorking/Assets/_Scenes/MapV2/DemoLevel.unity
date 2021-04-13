@@ -488,12 +488,12 @@ MonoBehaviour:
     towerType: 2
     towerUI: {fileID: 5614493210049836173}
     enabled: 1
-    cost: 1000
+    cost: 500
   - initializationValues: {fileID: 0}
     towerType: 3
     towerUI: {fileID: 5614493210049836172}
     enabled: 1
-    cost: 1000
+    cost: 200
   - initializationValues: {fileID: 0}
     towerType: 4
     towerUI: {fileID: 5614493210049836171}
@@ -926,28 +926,28 @@ MonoBehaviour:
   upgradeManager: {fileID: 297820839}
   makeOutputFile: 0
   anglerRadius: 150
-  anglerSmallCatchRate: 0.7
-  anglerMediumCatchRate: 0.4
+  anglerSmallCatchRate: 0.9
+  anglerMediumCatchRate: 0.6
   anglerLargeCatchRate: 0.1
   rangerRadius: 450
-  rangerSmallModifier: -0.6
-  rangerMediumModifier: -0.1
-  rangerLargeModifier: 0.6
+  rangerSmallModifier: -0.9
+  rangerMediumModifier: -0.5
+  rangerLargeModifier: 0.9
   rangerSuccessRate: 1
-  defaultDamPassRate: 0.01
-  ladderSmallPassRate: 0.05
-  ladderMediumPassRate: 0.15
-  ladderLargePassRate: 0.3
-  rampSmallPassRate: 0.05
-  rampMediumPassRate: 0.5
-  rampLargePassRate: 0.05
-  liftSmallPassRate: 0.4
-  liftMediumPassRate: 0.2
-  liftLargePassRate: 0.1
-  startingMoney: 5000
+  defaultDamPassRate: 0.25
+  ladderSmallPassRate: 0.25
+  ladderMediumPassRate: 0.55
+  ladderLargePassRate: 0.75
+  rampSmallPassRate: 0.1
+  rampMediumPassRate: 0.7
+  rampLargePassRate: 0.1
+  liftSmallPassRate: 0.5
+  liftMediumPassRate: 0.5
+  liftLargePassRate: 0.5
+  startingMoney: 200
   sealionAppearanceTime: 3
-  sealionFemaleCatchRate: 0.4
-  sealionMaleCatchRate: 0.1
+  sealionFemaleCatchRate: 0.5
+  sealionMaleCatchRate: 0.05
   nestingSites: 200
   upperAnglerCount: 0
   lowerAnglerCount: 0
@@ -48372,7 +48372,7 @@ PrefabInstance:
     - target: {fileID: 5614493210370573975, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 146.70001
+      value: 146.7002
       objectReference: {fileID: 0}
     - target: {fileID: 5614493210370573975, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
@@ -49143,6 +49143,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.x
       value: 32
+      objectReference: {fileID: 0}
+    - target: {fileID: 8546220787821133169, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -37
       objectReference: {fileID: 0}
     - target: {fileID: 8588697166822463079, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
