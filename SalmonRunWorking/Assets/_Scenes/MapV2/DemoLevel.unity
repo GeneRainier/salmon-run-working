@@ -922,7 +922,7 @@ MonoBehaviour:
   rangerMediumModifier: -0.1
   rangerLargeModifier: 0.6
   rangerSuccessRate: 1
-  defaultDamPassRate: 0.04
+  defaultDamPassRate: 0.01
   ladderSmallPassRate: 0.05
   ladderMediumPassRate: 0.15
   ladderLargePassRate: 0.3
