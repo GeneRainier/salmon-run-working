@@ -46587,6 +46587,14 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1409190096, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: offset.x
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1409190096, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: offset.y
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1548369316, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
       propertyPath: m_IsActive
       value: 0
