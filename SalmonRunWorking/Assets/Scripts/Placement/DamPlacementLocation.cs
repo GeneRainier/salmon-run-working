@@ -90,9 +90,9 @@ public class DamPlacementLocation : MonoBehaviour
             // keep track of the dam for use later
             currentDam = dam;
             
-            print("Turn attached");
+            //print("Turn attached");
 
-            placementTurn = GameManager.Instance.Turn;
+            //placementTurn = GameManager.Instance.Turn;
 
         }
         else
@@ -123,6 +123,10 @@ public class DamPlacementLocation : MonoBehaviour
 
         // this dam location now has a ladder attached to it
         HasLadder = true;
+
+        print("Turn attached");
+
+        placementTurn = GameManager.Instance.Turn;
     }
 
     #endregion

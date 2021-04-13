@@ -52,7 +52,7 @@ public class SealionSpawner : MonoBehaviour
 
     private void SpawnSealion()
     {
-        if (damPlacementLocation.inUse && GameManager.Instance.Turn >= damPlacementLocation.PlacementTurn + turnsBeforeShowing)
+        if (damPlacementLocation.HasLadder && GameManager.Instance.Turn >= damPlacementLocation.PlacementTurn + turnsBeforeShowing)
         {
             if (!locationInUse)
             {
