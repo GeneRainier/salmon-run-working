@@ -308,7 +308,7 @@ public class FishermanTower : TowerBase
     private IEnumerator AffectCatchRateCoroutine(float smallEffect, float mediumEffect, float largeEffect, float length)
     {
         // old way
-        /*
+
                 currentSmallCatchRate += smallEffect;
                 currentMediumCatchRate += mediumEffect;
                 currentLargeCatchRate += largeEffect;
@@ -320,17 +320,18 @@ public class FishermanTower : TowerBase
                 currentSmallCatchRate -= smallEffect;
                 currentMediumCatchRate -= mediumEffect;
                 currentLargeCatchRate -= largeEffect;
-        */
+
         // Should only need to do this once. 
         // Think of Effect as Fishing regulations rather than "effect"
 
         // this did not work WHY??
+/*
         currentSmallCatchRate = smallEffect;
         currentMediumCatchRate = mediumEffect;
         currentLargeCatchRate = largeEffect;
 
         yield return new WaitForSeconds(length);
-
+*/
         Debug.Log("Ranger watching cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 

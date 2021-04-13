@@ -123,6 +123,7 @@ public class FishGenomeUtilities : MonoBehaviour
 
         // loop (shortest list of males and females) times
         // each time, generate a certain number of offspring from the ith male and ith female
+        Debug.Log("Before Repro Loop: minOffspring=" + minOffspring + ";  maxOffspring=" + maxOffspring);
         for (int i = 0; i < shortestLength; i++)
         {
             // determine how many offspring this pairing will make
