@@ -927,11 +927,11 @@ MonoBehaviour:
   makeOutputFile: 0
   anglerRadius: 150
   anglerSmallCatchRate: 0.9
-  anglerMediumCatchRate: 0.5
-  anglerLargeCatchRate: 0
+  anglerMediumCatchRate: 0.6
+  anglerLargeCatchRate: 0.1
   rangerRadius: 450
   rangerSmallModifier: -0.9
-  rangerMediumModifier: -0.3
+  rangerMediumModifier: -0.5
   rangerLargeModifier: 0.9
   rangerSuccessRate: 1
   defaultDamPassRate: 0.25
@@ -946,7 +946,7 @@ MonoBehaviour:
   liftLargePassRate: 0.5
   startingMoney: 1000
   sealionAppearanceTime: 3
-  sealionFemaleCatchRate: 0.8
+  sealionFemaleCatchRate: 0.5
   sealionMaleCatchRate: 0.1
   nestingSites: 200
   upperAnglerCount: 0
