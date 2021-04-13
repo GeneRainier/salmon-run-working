@@ -30,7 +30,7 @@ public class FishermanTower : TowerBase
     public int numFlashesPerCatch;
 
     // default rate of success of fish catch attempt for small, medium and large fish
-    public float defaultSmallCatchRate = 0.5F;
+    public float defaultSmallCatchRate = 0.5F;   
     public float defaultMediumCatchRate = 0.3F;
     public float defaultLargeCatchRate = 0.1F;
 
@@ -183,7 +183,7 @@ public class FishermanTower : TowerBase
     protected override void ApplyTowerEffect()
     {
 
-        Debug.Log("do Fisherman Stuff");
+        //Debug.Log("do Fisherman Stuff");
 
         // get all fish that aren't already being caught
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
@@ -198,7 +198,7 @@ public class FishermanTower : TowerBase
         {
             transform.parent.LookAt(fish.transform, Vector3.back);
 
-            Debug.Log("before TryCatchFish");
+            //Debug.Log("before TryCatchFish");
             TryCatchFish(fish);
 
             fishing.SetBool(Fishing, true);
@@ -233,17 +233,17 @@ public class FishermanTower : TowerBase
             case FishGenome.b when sizeGenePair.dadGene == FishGenome.b:
                 catchRate = currentSmallCatchRate;
                 weight = 2f;  //4
-                 Debug.Log("bbCatchR=" + catchRate + "; weight=" + weight);
+                 //Debug.Log("bbCatchR=" + catchRate + "; weight=" + weight);
                 break;
             case FishGenome.B when sizeGenePair.dadGene == FishGenome.B:
                 catchRate = currentLargeCatchRate;
                 weight = 9f;  //15
-                 Debug.Log("BBCatchR=" + catchRate + "; weight=" + weight);
+                 //Debug.Log("BBCatchR=" + catchRate + "; weight=" + weight);
                 break;
             default:
                 catchRate = currentMediumCatchRate;
                 weight = 6f;  //9
-                 Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
+                 //Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
                 break;
         }
         Debug.Log("TryCatchFishCoroutine: cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
@@ -307,19 +307,31 @@ public class FishermanTower : TowerBase
      */
     private IEnumerator AffectCatchRateCoroutine(float smallEffect, float mediumEffect, float largeEffect, float length)
     {
-        currentSmallCatchRate += smallEffect;
-        currentMediumCatchRate += mediumEffect;
-        currentLargeCatchRate += largeEffect;
+        // old way
+        /*
+                currentSmallCatchRate += smallEffect;
+                currentMediumCatchRate += mediumEffect;
+                currentLargeCatchRate += largeEffect;
 
-        Debug.Log("before yield return cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+                //Debug.Log("before yield return cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+
+                yield return new WaitForSeconds(length);
+
+                currentSmallCatchRate -= smallEffect;
+                currentMediumCatchRate -= mediumEffect;
+                currentLargeCatchRate -= largeEffect;
+        */
+        // Should only need to do this once. 
+        // Think of Effect as Fishing regulations rather than "effect"
+
+        // this did not work WHY??
+        currentSmallCatchRate = smallEffect;
+        currentMediumCatchRate = mediumEffect;
+        currentLargeCatchRate = largeEffect;
 
         yield return new WaitForSeconds(length);
 
-        currentSmallCatchRate -= smallEffect;
-        currentMediumCatchRate -= mediumEffect;
-        currentLargeCatchRate -= largeEffect;
-
-        Debug.Log("after yield return cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+        Debug.Log("Ranger watching cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
     /**

@@ -13,7 +13,7 @@ public class SealionTower : TowerBase
     public float defaultCatchRate;
 
     // default rate of success of fish catch attempt for small, medium and large fish
-    public float defaultFemaleCatchRate = 0.5F;
+    public float defaultFemaleCatchRate = 0.1F;
     public float defaultMaleCatchRate = 0.1F;
 
     // current rate of success of fish catch attempt for small, medium, and large fish
@@ -73,7 +73,7 @@ public class SealionTower : TowerBase
     protected override void ApplyTowerEffect()
     {
 
-        Debug.Log("do Sealion Stuff");
+        //Debug.Log("do Sealion Stuff");
 
         // get all fish that aren't already being caught
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))

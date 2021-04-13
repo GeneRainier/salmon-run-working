@@ -108,7 +108,7 @@ public class StatsPanelManager : MonoBehaviour
      */
     public void UpdateFish(Fish fish)
     {
-        Debug.Log(fish);
+        //Debug.Log(fish);
         currentFish = fish;
     }
 

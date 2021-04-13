@@ -66,6 +66,7 @@ public class Dam : FilterBase, IDragAndDropObject
         //smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
         //mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
         //largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
+
         smallCrossingRate = defaultCrossingRate + 0.2F;
         mediumCrossingRate = defaultCrossingRate + 0.7F;
         largeCrossingRate = defaultCrossingRate + 0.7F;
@@ -152,6 +153,8 @@ public class Dam : FilterBase, IDragAndDropObject
                 crossingRate = mediumCrossingRate;
                 // Debug.Log("BbCrossR=" + mediumCrossingRate);
             }
+
+            Debug.Log("Dam: SMcr =" + smallCrossingRate + "; MDcr = " + mediumCrossingRate + "; LGcr = " + largeCrossingRate);
 
             while (!fish.IsStuck())
             {
