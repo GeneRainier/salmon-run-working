@@ -72,6 +72,7 @@ public class PostRunStatsPanelController : PanelController
         // deactivate the panel
         Deactivate();
 
+        Debug.Log("OnNextRunButton() noOffspring = " + noOffspring);
         // if there is fish in the next generation, just move on to place state
         if (!noOffspring) GameManager.Instance.SetState(new PlaceState());
 

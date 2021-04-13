@@ -154,4 +154,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebe229ced860a9346a947cb04910b1b1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  defaultCrossingRate: 0.3
+  initializationValues: {fileID: 0}
+  defaultCrossingRate: 0.25
+  smallCrossingRate: 0
+  mediumCrossingRate: 0
+  largeCrossingRate: 0

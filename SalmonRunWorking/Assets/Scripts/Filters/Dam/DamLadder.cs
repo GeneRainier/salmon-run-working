@@ -41,6 +41,7 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
             smallCrossingRate = initializationValues.ladderSmallPassRate;
             mediumCrossingRate = initializationValues.ladderMediumPassRate;
             largeCrossingRate = initializationValues.ladderLargePassRate;
+            Debug.Log("DamLadder.cs primaryHitInfo S=" + smallCrossingRate + "; M=" + mediumCrossingRate + "; L=" + largeCrossingRate);
 
             initializationValues.ladderCode = 1;
         }

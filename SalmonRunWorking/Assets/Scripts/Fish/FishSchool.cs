@@ -269,6 +269,8 @@ public class FishSchool : MonoBehaviour, IPausable {
         {
             // make new genomes
             parentGenomes = successfulFishList.Select(fish => fish.GetGenome()).ToList();
+
+            Debug.Log("in CreateNewGeneration: minOffspring=" + minOffspring + ";  maxOffspring=" + maxOffspring);
             nextGenerationGenomes = FishGenomeUtilities.MakeNewGeneration(parentGenomes, minOffspring, maxOffspring);
 
             // clean out old fish
