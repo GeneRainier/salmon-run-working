@@ -914,27 +914,27 @@ MonoBehaviour:
   upgradeManager: {fileID: 297820839}
   makeOutputFile: 0
   anglerRadius: 150
-  anglerSmallCatchRate: 0.5
-  anglerMediumCatchRate: 0.3
+  anglerSmallCatchRate: 0.7
+  anglerMediumCatchRate: 0.4
   anglerLargeCatchRate: 0.1
   rangerRadius: 450
-  rangerSmallModifier: -0.5
-  rangerMediumModifier: 0.1
-  rangerLargeModifier: 0.4
+  rangerSmallModifier: -0.6
+  rangerMediumModifier: -0.1
+  rangerLargeModifier: 0.6
   rangerSuccessRate: 1
-  defaultDamPassRate: 0.3
-  ladderSmallPassRate: 0.2
-  ladderMediumPassRate: 0.6
-  ladderLargePassRate: 0.7
-  rampSmallPassRate: 0.7
-  rampMediumPassRate: 0.2
-  rampLargePassRate: 0.6
+  defaultDamPassRate: 0.1
+  ladderSmallPassRate: 0.1
+  ladderMediumPassRate: 0.3
+  ladderLargePassRate: 0.5
+  rampSmallPassRate: 0.1
+  rampMediumPassRate: 0.5
+  rampLargePassRate: 0.1
   liftSmallPassRate: 0.7
-  liftMediumPassRate: 0.6
-  liftLargePassRate: 0.2
+  liftMediumPassRate: 0.4
+  liftLargePassRate: 0.1
   startingMoney: 5000
   sealionAppearanceTime: 3
-  sealionFemaleCatchRate: 0.1
+  sealionFemaleCatchRate: 0.4
   sealionMaleCatchRate: 0.1
   nestingSites: 200
   upperAnglerCount: 0
@@ -48354,7 +48354,7 @@ PrefabInstance:
     - target: {fileID: 5614493210370573975, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 146.7
+      value: 146.70001
       objectReference: {fileID: 0}
     - target: {fileID: 5614493210370573975, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
