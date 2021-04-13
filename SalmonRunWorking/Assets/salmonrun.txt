@@ -16,11 +16,11 @@ Ramp Large Pass Rate, 0.1
 Lift Small Pass Rate, 0.5
 Lift Medium Pass Rate, 0.5
 Lift Large Pass Rate, 0.5
-Starting Money, 200
+Starting Money, 100
 Sealion Appearance Time, 3
 Sealion Male Catch Rate, 0.05
 Sealion Female Catch Rate, 0.5
-Nesting Sites, 500
+Nesting Sites, 200
 
 turn = Turn number
 offSh / offMd / offLg = Short / Medium / Large offspring
@@ -37,10 +37,3 @@ slPres = Sealion Present
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
 0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-1, 25, 107, 30, 86, 76, 25, 48, 23, 48, 48, 25, 48, 23, 0, 0, 0, 0, 0, 0, 0, 0
-2, 64, 132, 69, 141, 124, 24, 106, 30, 85, 75, 24, 106, 30, 0, 0, 0, 0, 0, 0, 0, 0
-3, 101, 201, 104, 194, 212, 62, 120, 63, 124, 121, 62, 120, 63, 0, 0, 0, 0, 0, 0, 0, 0
-4, 120, 298, 161, 299, 280, 84, 174, 95, 169, 184, 84, 174, 95, 3, 0, 0, 0, 0, 0, 0, 0
-5, 180, 460, 287, 452, 475, 106, 269, 151, 267, 259, 106, 269, 151, 3, 0, 0, 0, 0, 0, 0, 0
-6, 302, 644, 487, 722, 711, 160, 418, 265, 407, 436, 160, 418, 265, 3, 0, 0, 0, 0, 0, 0, 0
-7, 246, 853, 685, 903, 881, 169, 433, 398, 500, 500, 169, 433, 398, 3, 0, 0, 0, 0, 0, 0, 0
