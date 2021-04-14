@@ -1,15 +1,15 @@
 Angler Radius, 150
 Angler Small Catch Rate, 0.9
-Angler Medium Catch Rate, 0.6
-Angler Large Catch Rate, 0.1
+Angler Medium Catch Rate, 0.7
+Angler Large Catch Rate, 0.3
 Ranger Radius, 450
-Ranger Small Catch Modifier, -0.9
-Ranger Medium Catch Modifier, -0.5
-Ranger Large Catch Modifier, 0.9
+Ranger Small Catch Modifier, -0.8
+Ranger Medium Catch Modifier, -0.3
+Ranger Large Catch Modifier, 0.6
 Default Dam Pass Rate, 0.25
-Ladder Small Pass Rate, 0.25
-Ladder Medium Pass Rate, 0.55
-Ladder Large Pass Rate, 0.75
+Ladder Small Pass Rate, 0.2
+Ladder Medium Pass Rate, 0.5
+Ladder Large Pass Rate, 0.7
 Ramp Small Pass Rate, 0.1
 Ramp Medium Pass Rate, 0.7
 Ramp Large Pass Rate, 0.1
@@ -37,3 +37,8 @@ slPres = Sealion Present
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
 0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 28, 100, 40, 87, 81, 24, 48, 24, 48, 48, 24, 48, 24, 0, 0, 0, 0, 0, 0, 0, 0
+2, 73, 141, 73, 131, 156, 28, 94, 40, 81, 81, 28, 94, 40, 0, 0, 0, 0, 0, 0, 0, 0
+3, 101, 231, 103, 225, 210, 68, 137, 67, 122, 150, 68, 137, 67, 0, 0, 0, 0, 0, 0, 0, 0
+4, 146, 359, 162, 325, 342, 83, 196, 92, 186, 185, 83, 196, 92, 3, 0, 0, 0, 0, 0, 0, 0
+5, 145, 323, 207, 338, 337, 70, 219, 111, 200, 200, 70, 219, 111, 3, 0, 0, 0, 0, 0, 0, 0

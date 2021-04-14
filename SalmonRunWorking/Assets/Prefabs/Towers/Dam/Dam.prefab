@@ -155,7 +155,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializationValues: {fileID: 0}
-  defaultCrossingRate: 0.25
+  defaultCrossingRate: 0.275
   smallCrossingRate: 0
   mediumCrossingRate: 0
   largeCrossingRate: 0

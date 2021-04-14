@@ -488,7 +488,7 @@ MonoBehaviour:
     towerType: 2
     towerUI: {fileID: 5614493210049836173}
     enabled: 1
-    cost: 100
+    cost: 500
   - initializationValues: {fileID: 0}
     towerType: 3
     towerUI: {fileID: 5614493210049836172}
@@ -927,17 +927,17 @@ MonoBehaviour:
   makeOutputFile: 0
   anglerRadius: 150
   anglerSmallCatchRate: 0.9
-  anglerMediumCatchRate: 0.6
-  anglerLargeCatchRate: 0.1
+  anglerMediumCatchRate: 0.7
+  anglerLargeCatchRate: 0.3
   rangerRadius: 450
-  rangerSmallModifier: -0.9
-  rangerMediumModifier: -0.5
-  rangerLargeModifier: 0.9
+  rangerSmallModifier: -0.8
+  rangerMediumModifier: -0.3
+  rangerLargeModifier: 0.6
   rangerSuccessRate: 1
   defaultDamPassRate: 0.25
-  ladderSmallPassRate: 0.25
-  ladderMediumPassRate: 0.55
-  ladderLargePassRate: 0.75
+  ladderSmallPassRate: 0.2
+  ladderMediumPassRate: 0.5
+  ladderLargePassRate: 0.7
   rampSmallPassRate: 0.1
   rampMediumPassRate: 0.7
   rampLargePassRate: 0.1
@@ -46273,6 +46273,11 @@ PrefabInstance:
       propertyPath: fishPerWave
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
+        type: 3}
+      propertyPath: maxOffspring
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2321721658432575646, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -48462,12 +48467,12 @@ PrefabInstance:
     - target: {fileID: 5614493210049836180, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: cantBuy
-      value: Can't Afford - Costs $100
+      value: Can't Afford - Costs $200
       objectReference: {fileID: 0}
     - target: {fileID: 5614493210049836180, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: content
-      value: Dam - generates power, but limits fish movement. Costs $100
+      value: Dam - generates power, but limits fish movement. Costs $200
       objectReference: {fileID: 0}
     - target: {fileID: 5614493210049836181, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
