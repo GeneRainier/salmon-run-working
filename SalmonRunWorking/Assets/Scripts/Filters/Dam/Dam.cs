@@ -64,9 +64,9 @@ public class Dam : FilterBase, IDragAndDropObject
     {
         Debug.Log("damLadder S=" + damLadder.smallCrossingRate + "; M=" + damLadder.mediumCrossingRate + "; L=" + damLadder.largeCrossingRate);
         // set crossing rates for fish to ones supplied by the ladder
-        //smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
-        //mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
-        //largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
+        smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
+        mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
+        largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
 
         //smallCrossingRate = defaultCrossingRate + 0.2F;
         //mediumCrossingRate = defaultCrossingRate + 0.7F;
