@@ -9,10 +9,14 @@ public class FishSchool : MonoBehaviour, IPausable {
     [Header("References")]
     // fish prefab config gameobject
     public FishPrefabConfig fishPrefabConfig;
+<<<<<<< Updated upstream
 
     // controller through which vector field can be accessed
     public WaterGridController controller;
 
+=======
+    
+>>>>>>> Stashed changes
     [Header("School Info")]
     // how big this school is
     public int initialNumFish;
@@ -105,11 +109,8 @@ public class FishSchool : MonoBehaviour, IPausable {
         // loop through all remaining fish for movement
         foreach (Fish fish in fishList)
         {
-            // get current vector field value at fish's position
-            Vector2 vectorFromField = controller.GetVectorAtWorldPosition(fish.transform.position);
-
             // make the fish move
-            fish.Swim(vectorFromField, randomMovementMultiplier, controller.grid.transform.localScale.x);
+            fish.Swim();
         }
     }
 

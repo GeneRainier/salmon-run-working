@@ -74,8 +74,9 @@ public class Fish : MonoBehaviour
      * @param randomInputMultiplier float Determines how impactful the random component of movement will be 
      * @param vectorFieldGridScale float Scale of the vector field grid, used in determining how much energy will be expended
      */
-    public void Swim(Vector3 vectorFieldInput, float randomInputMultiplier, float vectorFieldGridScale)
+    public void Swim()
     {
+<<<<<<< Updated upstream
         // generate some random movement to add to the force that will be applied
         Vector3 randomMovement = Random.insideUnitCircle;
 
@@ -99,6 +100,9 @@ public class Fish : MonoBehaviour
 
         // use energy
         ExpendEnergy(totalMovement.magnitude, vectorFieldGridScale);
+=======
+        
+>>>>>>> Stashed changes
     }
 
     /**
