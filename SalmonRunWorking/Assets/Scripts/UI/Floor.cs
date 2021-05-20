@@ -44,11 +44,5 @@ public class Floor : MonoBehaviour {
     {
         // generate a collider for the ground
         collider = gameObject.AddComponent<BoxCollider>();
-
-        // make the collider the same size as the tilemap
-        // we need to do this because the tilemap collider is 2d-only and we are using 3d everywhere else
-        Tilemap tilemap = WaterGridController.Instance.tilemap;
-        collider.center = Vector3.Scale(new Vector3(tilemap.origin.x + tilemap.size.x / 2f, tilemap.origin.y + tilemap.size.y / 2f), tilemap.transform.lossyScale);
-        collider.size = Vector3.Scale(tilemap.size, tilemap.transform.lossyScale);
     }
 }

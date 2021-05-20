@@ -72,36 +72,10 @@ public class Fish : MonoBehaviour
 
     /**
      * Make the fish swim by applying a force in a direction
-     * 
-     * @param vectorFieldInput Vector Direction in which vector field says the fish should go
-     * @param randomInputMultiplier float Determines how impactful the random component of movement will be 
-     * @param vectorFieldGridScale float Scale of the vector field grid, used in determining how much energy will be expended
      */
-    public void Swim(Vector3 vectorFieldInput, float randomInputMultiplier, float vectorFieldGridScale)
+    public void Swim()
     {
-        // generate some random movement to add to the force that will be applied
-        Vector3 randomMovement = Random.insideUnitCircle;
-
-        // make the random movement's magnitude a fraction of input from the vector field
-        randomMovement *= (vectorFieldInput.magnitude * randomInputMultiplier);
-
-        // combine the vector field and random components of movement
-        Vector3 totalMovement = vectorFieldInput + randomMovement;
-
-        // apply the force to the rigidbody
-        rigid.AddForce(totalMovement);
-
-        // make sure the fish cannot go over a certain top speed
-        rigid.velocity = Vector3.ClampMagnitude(rigid.velocity, maxSwimSpeed);
-
-        // attempt to rotate to face the direction of motion
-        float angle = Mathf.Atan2(totalMovement.y, totalMovement.x) * Mathf.Rad2Deg;
-        //Debug.DrawRay(transform.GetChild(1).position, totalMovement);
-        Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-        transform.rotation = Quaternion.Slerp(transform.rotation, q, rotateSpeed * Time.fixedDeltaTime);
-
-        // use energy
-        ExpendEnergy(totalMovement.magnitude, vectorFieldGridScale);
+        
     }
 
     /**
