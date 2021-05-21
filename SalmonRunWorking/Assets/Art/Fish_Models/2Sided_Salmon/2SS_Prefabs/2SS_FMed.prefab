@@ -339,6 +339,7 @@ MonoBehaviour:
   motionEnergyUsageRate: 1
   maxSwimSpeed: 100
   rotateSpeed: 1
+  damPassCounter: 0
 --- !u!136 &6635448885730447733
 CapsuleCollider:
   m_ObjectHideFlags: 0
