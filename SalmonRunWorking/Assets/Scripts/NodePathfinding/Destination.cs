@@ -10,6 +10,6 @@ public class Destination : MonoBehaviour
 
     void Awake()
     {
-        destinationPosition = this.gameObject.transform.position;
+        destinationPosition = this.transform.position;
     }
 }
