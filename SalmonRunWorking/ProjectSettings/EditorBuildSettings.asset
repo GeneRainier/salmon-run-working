@@ -5,7 +5,10 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_Scenes/MapV2/DemoLevel.unity
     guid: e7a4d55097d2ba34cacd233a6e1cdc6c
+  - enabled: 1
+    path: Assets/_Scenes/MapV2/NodePathfinding.unity
+    guid: ee67b91ab64a5b64f954dce24b905285
   m_configObjects: {}
