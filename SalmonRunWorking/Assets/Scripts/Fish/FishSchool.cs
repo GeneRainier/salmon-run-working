@@ -289,10 +289,10 @@ public class FishSchool : MonoBehaviour, IPausable {
     {
         // calculate spawn area corner coordinates
         var position = transform.position;
-        bottomLeft = new Vector3(position.x - spawnAreaWidth / 2f, position.y - spawnAreaHeight / 2f, 0);
-        bottomRight = new Vector3(position.x + spawnAreaWidth / 2f, position.y - spawnAreaHeight / 2f, 0);
-        topLeft = new Vector3(position.x - spawnAreaWidth / 2f, position.y + spawnAreaHeight / 2f, 0);
-        topRight = new Vector3(position.x + spawnAreaWidth / 2f, position.y + spawnAreaHeight / 2f, 0);
+        bottomLeft = new Vector3(position.x - spawnAreaWidth / 2f, position.z - spawnAreaHeight / 2f, 0);
+        bottomRight = new Vector3(position.x + spawnAreaWidth / 2f, position.z - spawnAreaHeight / 2f, 0);
+        topLeft = new Vector3(position.x - spawnAreaWidth / 2f, position.z + spawnAreaHeight / 2f, 0);
+        topRight = new Vector3(position.x + spawnAreaWidth / 2f, position.z + spawnAreaHeight / 2f, 0);
     }
 
     /**
