@@ -289,10 +289,10 @@ public class FishSchool : MonoBehaviour, IPausable {
     {
         // calculate spawn area corner coordinates
         var position = transform.position;
-        bottomLeft = new Vector3(position.x - spawnAreaWidth / 2f, position.z - spawnAreaHeight / 2f, 0);
-        bottomRight = new Vector3(position.x + spawnAreaWidth / 2f, position.z - spawnAreaHeight / 2f, 0);
-        topLeft = new Vector3(position.x - spawnAreaWidth / 2f, position.z + spawnAreaHeight / 2f, 0);
-        topRight = new Vector3(position.x + spawnAreaWidth / 2f, position.z + spawnAreaHeight / 2f, 0);
+        bottomLeft = new Vector3(position.x - spawnAreaWidth / 2f, 0, position.z - spawnAreaHeight / 2f);
+        bottomRight = new Vector3(position.x + spawnAreaWidth / 2f, 0, position.z - spawnAreaHeight / 2f);
+        topLeft = new Vector3(position.x - spawnAreaWidth / 2f, 0, position.z + spawnAreaHeight / 2f);
+        topRight = new Vector3(position.x + spawnAreaWidth / 2f, 0, position.z + spawnAreaHeight / 2f);
     }
 
     /**
@@ -302,7 +302,6 @@ public class FishSchool : MonoBehaviour, IPausable {
     {
         // loop until we've spawned enough fish
         int spawnedCount = 0;
-
         /*
             * 2020-05-12 @WRE
             * Game play with a fixed wave size gets interminable.
