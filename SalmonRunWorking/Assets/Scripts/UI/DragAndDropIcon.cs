@@ -145,10 +145,10 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // calculate the offsets needed to get the points at the corners of the spawned object's renderer's bounding box
             if (spawnedObjectDragAndDrop is MonoBehaviour mb && mb.GetComponent<MeshRenderer>().bounds is Bounds bounds)
             {
-                spawnedObjectOffsetTopLeft = new Vector3(-1 * bounds.extents.x, bounds.extents.y);
-                spawnedObjectOffsetTopRight = new Vector3(bounds.extents.x, bounds.extents.y);
-                spawnedObjectOffsetBottomLeft = new Vector3(-1 * bounds.extents.x, -1 * bounds.extents.y);
-                spawnedObjectOffsetBottomRight = new Vector3(bounds.extents.x, -1 * bounds.extents.y);
+                spawnedObjectOffsetTopLeft = new Vector3(-1 * bounds.extents.x, 0, bounds.extents.z);
+                spawnedObjectOffsetTopRight = new Vector3(bounds.extents.x, 0, bounds.extents.z);
+                spawnedObjectOffsetBottomLeft = new Vector3(-1 * bounds.extents.x, 0, -1 * bounds.extents.z);
+                spawnedObjectOffsetBottomRight = new Vector3(bounds.extents.x, 0, -1 * bounds.extents.z);
             }
             else
             {
@@ -221,14 +221,14 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // do some secondary raycasts to get more information
             // this gets a bit complicated...
 
-            // figure out the origin for a ray that originates on the camera's z plane
+            // figure out the origin for a ray that originates on the camera's y plane
             // and goes through the center of the drag and drop object at a 90 degree angle
-            float raycastOriginDepth = primaryHitInfo.point.z - cameraPosition.z;
+            float raycastOriginDepth = cameraPosition.y - primaryHitInfo.point.y;
             
             Vector3 raycastOrigin = mainCamera.ScreenToWorldPoint(new Vector3(data.position.x, data.position.y, raycastOriginDepth));
 
-            // want to raycast from the camera z, so reset the z value
-            raycastOrigin.z = cameraPosition.z;
+            // want to raycast from the camera y, so reset the y value
+            raycastOrigin.y = cameraPosition.y;
 
             // make modifications to this origin so that the new origins are at each corner of the drag and drop object's bounding box
             Vector3 raycastOriginTopLeft = raycastOrigin + spawnedObjectOffsetTopLeft;
@@ -241,16 +241,16 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             RaycastHit topRightHitInfo;
             RaycastHit bottomLeftHitInfo;
             RaycastHit bottomRightHitInfo;
-            Physics.Raycast(raycastOriginTopLeft, Vector3.forward, out topLeftHitInfo, Mathf.Infinity, raycastLayerMask);
-            Physics.Raycast(raycastOriginTopRight, Vector3.forward, out topRightHitInfo, Mathf.Infinity, raycastLayerMask);
-            Physics.Raycast(raycastOriginBottomLeft, Vector3.forward, out bottomLeftHitInfo, Mathf.Infinity, raycastLayerMask);
-            Physics.Raycast(raycastOriginBottomRight, Vector3.forward, out bottomRightHitInfo, Mathf.Infinity, raycastLayerMask);
+            Physics.Raycast(raycastOriginTopLeft, Vector3.down, out topLeftHitInfo, Mathf.Infinity, raycastLayerMask);
+            Physics.Raycast(raycastOriginTopRight, Vector3.down, out topRightHitInfo, Mathf.Infinity, raycastLayerMask);
+            Physics.Raycast(raycastOriginBottomLeft, Vector3.down, out bottomLeftHitInfo, Mathf.Infinity, raycastLayerMask);
+            Physics.Raycast(raycastOriginBottomRight, Vector3.down, out bottomRightHitInfo, Mathf.Infinity, raycastLayerMask);
 
             // draw these raycasts for debugging purposes
-            Debug.DrawRay(raycastOriginTopLeft, Vector3.forward * (topLeftHitInfo.point.z - cameraPosition.z), Color.blue);
-            Debug.DrawRay(raycastOriginTopRight, Vector3.forward * (topRightHitInfo.point.z - cameraPosition.z), Color.blue);
-            Debug.DrawRay(raycastOriginBottomLeft, Vector3.forward * (bottomLeftHitInfo.point.z - cameraPosition.z), Color.blue);
-            Debug.DrawRay(raycastOriginBottomRight, Vector3.forward * (bottomRightHitInfo.point.z - cameraPosition.z), Color.blue);
+            Debug.DrawRay(raycastOriginTopLeft, Vector3.down * (cameraPosition.y - topLeftHitInfo.point.y), Color.blue);
+            Debug.DrawRay(raycastOriginTopRight, Vector3.down * (cameraPosition.y - topRightHitInfo.point.y), Color.blue);
+            Debug.DrawRay(raycastOriginBottomLeft, Vector3.down * (cameraPosition.y - bottomLeftHitInfo.point.y), Color.blue);
+            Debug.DrawRay(raycastOriginBottomRight, Vector3.down * (cameraPosition.y - bottomRightHitInfo.point.y), Color.blue);
 
             // put the secondary raycasts in a list to send along to the drag and drop object
             secondaryHitInfo.Add(topLeftHitInfo);

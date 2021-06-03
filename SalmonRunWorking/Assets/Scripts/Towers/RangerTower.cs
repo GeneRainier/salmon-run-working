@@ -141,7 +141,7 @@ public class RangerTower : TowerBase
             {
                 return hitInfo.collider &&
                        hitInfo.collider.gameObject.layer == correctLayer &&
-                       Mathf.Abs(hitInfo.point.z - primaryHitInfo.point.z) < 0.1f;
+                       Mathf.Abs(hitInfo.point.y - primaryHitInfo.point.y) < 0.1f;
             });
         }
 

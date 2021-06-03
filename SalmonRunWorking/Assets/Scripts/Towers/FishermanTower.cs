@@ -146,12 +146,11 @@ public class FishermanTower : TowerBase
         // for placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
         if (primaryHitInfo.collider && primaryHitInfo.collider.gameObject.layer == correctLayer)
         {
-            // secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same z-pos as the primary raycast
+            // secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same y-pos as the primary raycast
             return secondaryHitInfo.TrueForAll(hitInfo => hitInfo.collider &&
                                                             hitInfo.collider.gameObject.layer == correctLayer &&
-                                                            Mathf.Abs(hitInfo.point.z - primaryHitInfo.point.z) < 1f);
+                                                            Mathf.Abs(hitInfo.point.y - primaryHitInfo.point.y) < 1f);
         }
-
         // if one of these conditions was not met, return false
         return false;
     }
