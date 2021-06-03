@@ -6521,22 +6521,22 @@ PrefabInstance:
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
       propertyPath: bounds.min.x
-      value: 0
+      value: -95
       objectReference: {fileID: 0}
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
       propertyPath: bounds.min.y
-      value: 0
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
       propertyPath: bounds.min.z
-      value: 0
+      value: -70
       objectReference: {fileID: 0}
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
       propertyPath: bounds.max.x
-      value: 0
+      value: 1375
       objectReference: {fileID: 0}
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
@@ -6546,12 +6546,17 @@ PrefabInstance:
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
       propertyPath: bounds.max.z
-      value: 0
+      value: -10
       objectReference: {fileID: 0}
     - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
         type: 3}
       propertyPath: initialPosition.x
-      value: 0
+      value: -10
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: initialPosition.y
+      value: 310
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bbd2b4f09bd08f448f24579485278e8, type: 3}

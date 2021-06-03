@@ -34,8 +34,6 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField] private float lerpSpeed;
 
-    [SerializeField] private float cameraSetSpeed;
-
     private Vector3 target;
     private bool moving;
     private float timeFactor;
@@ -47,7 +45,7 @@ public class CameraController : MonoBehaviour {
         initialPosition = this.gameObject.transform.position;
     }
 
-    private void FixedUpdate ()
+    private void Update ()
     {
         UpdateTarget();
 
@@ -82,7 +80,7 @@ public class CameraController : MonoBehaviour {
             scroll = 0.1f * Input.GetAxisRaw("Zoom");
         }
 
-        target.z += scroll * zoomSpeed * 100f * timeFactor;
+        target.y += scroll * zoomSpeed * 100f * timeFactor;
 
         /*
         if (scroll < 0)
@@ -92,7 +90,7 @@ public class CameraController : MonoBehaviour {
         */
 
         // modulate the pan speed based on the current zoom level (smaller pan when more zoomed in)
-        float zoomMultiplier = 1.1f - (target.z - bounds.Min.z) / (bounds.Max.z - bounds.Min.z);
+        float zoomMultiplier = 1.1f - ((target.y - bounds.Min.y) / (bounds.Max.y - bounds.Min.y));
 
         // figure out how much distance the pan should cover
         // dividing by timeScale so we always appear to pan at the same speed regardless of gameplay speed
@@ -102,15 +100,7 @@ public class CameraController : MonoBehaviour {
         if (Input.GetButton("Vertical") || panWithMouse && 
             (Input.mousePosition.y >= Screen.height - panBorderThickness || Input.mousePosition.y <= panBorderThickness))
         {
-            /*
-            if (target.z >= -800f)
-            {
-                Debug.Log("its reading");
-                target.y += panDistance * Input.GetAxisRaw("Vertical");
-            }
-            */
-
-            target.y += panDistance * Input.GetAxisRaw("Vertical");
+            target.z += panDistance * Input.GetAxisRaw("Vertical");
         }
         if (Input.GetButton("Horizontal") || panWithMouse && 
             (Input.mousePosition.x <= panBorderThickness || Input.mousePosition.x >= Screen.width - panBorderThickness))
@@ -118,7 +108,7 @@ public class CameraController : MonoBehaviour {
             target.x += panDistance * Input.GetAxisRaw("Horizontal");
         }
 
-        // Clamp Pan (XY) / Zoom (Z) within boundaries
+        // Clamp Pan (XZ) / Zoom (Y) within boundaries
         target = bounds.Clamp(target);
     }
 
