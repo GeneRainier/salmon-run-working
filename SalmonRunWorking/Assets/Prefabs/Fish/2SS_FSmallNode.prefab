@@ -74,9 +74,9 @@ GameObject:
   m_Component:
   - component: {fileID: 8489547932875081958}
   - component: {fileID: 8489547932875081959}
-  - component: {fileID: 1009200271}
   - component: {fileID: 1009200273}
   - component: {fileID: 1009200272}
+  - component: {fileID: 1288803314143957177}
   m_Layer: 8
   m_Name: 2SS_FSmallNode
   m_TagString: Untagged
@@ -119,20 +119,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &1009200271
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8489547932875081956}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 6
-  m_Height: 25
-  m_Direction: 0
-  m_Center: {x: 2.35, y: 0, z: 0}
 --- !u!54 &1009200273
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -169,6 +155,19 @@ MonoBehaviour:
   destination: {fileID: 0}
   path: []
   damPassCounter: 0
+--- !u!65 &1288803314143957177
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8489547932875081956}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 9, z: 30}
+  m_Center: {x: 0, y: 0, z: -5}
 --- !u!1 &8489547932919828009
 GameObject:
   m_ObjectHideFlags: 0

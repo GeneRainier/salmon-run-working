@@ -386,8 +386,8 @@ GameObject:
   - component: {fileID: 2570467533265043455}
   - component: {fileID: 2570467533265043448}
   - component: {fileID: 923233342}
-  - component: {fileID: 923233344}
   - component: {fileID: 923233343}
+  - component: {fileID: 7085069026129164258}
   m_Layer: 8
   m_Name: 2SS_MMedNode
   m_TagString: Untagged
@@ -446,20 +446,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 56
   m_CollisionDetection: 0
---- !u!136 &923233344
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2570467533265043449}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 6
-  m_Height: 40
-  m_Direction: 0
-  m_Center: {x: 2.49, y: 0, z: 0}
 --- !u!114 &923233343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -480,6 +466,19 @@ MonoBehaviour:
   destination: {fileID: 0}
   path: []
   damPassCounter: 0
+--- !u!65 &7085069026129164258
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2570467533265043449}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 9, z: 30}
+  m_Center: {x: 0, y: 0, z: -5}
 --- !u!1 &2570467533278676886
 GameObject:
   m_ObjectHideFlags: 0

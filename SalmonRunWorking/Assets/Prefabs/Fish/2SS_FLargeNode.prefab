@@ -514,9 +514,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5472292593619882045}
   - component: {fileID: 5472292593610014685}
-  - component: {fileID: 1588331831}
   - component: {fileID: 1588331832}
   - component: {fileID: 1588331833}
+  - component: {fileID: 448720191415233904}
   m_Layer: 8
   m_Name: 2SS_FLargeNode
   m_TagString: Untagged
@@ -559,20 +559,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!136 &1588331831
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5472292593619520541}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 6
-  m_Height: 45
-  m_Direction: 0
-  m_Center: {x: 8.23, y: 0, z: 0}
 --- !u!54 &1588331832
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -609,6 +595,19 @@ MonoBehaviour:
   destination: {fileID: 0}
   path: []
   damPassCounter: 0
+--- !u!65 &448720191415233904
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5472292593619520541}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 9, y: 9, z: 30}
+  m_Center: {x: 0, y: 0, z: -5}
 --- !u!1 &5472292593619520543
 GameObject:
   m_ObjectHideFlags: 0

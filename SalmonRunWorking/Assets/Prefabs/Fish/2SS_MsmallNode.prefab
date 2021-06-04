@@ -608,7 +608,7 @@ GameObject:
   - component: {fileID: 1565702066780044995}
   - component: {fileID: 132374568}
   - component: {fileID: 132374569}
-  - component: {fileID: 132374571}
+  - component: {fileID: 8000629761612973588}
   m_Layer: 8
   m_Name: 2SS_MsmallNode
   m_TagString: Untagged
@@ -687,8 +687,8 @@ MonoBehaviour:
   destination: {fileID: 0}
   path: []
   damPassCounter: 0
---- !u!136 &132374571
-CapsuleCollider:
+--- !u!65 &8000629761612973588
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -697,7 +697,6 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 6
-  m_Height: 25
-  m_Direction: 0
-  m_Center: {x: 2.14, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 9, y: 9, z: 30}
+  m_Center: {x: 0, y: 0, z: -5}
