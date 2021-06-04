@@ -18,10 +18,19 @@ public class Fish : MonoBehaviour
     public float motionEnergyUsageRate;
 
     // maximum speed for fish movement
-    public float maxSwimSpeed;
+    public float swimSpeed;
 
     // speed at which fish will rotate towards direction of motion
     public float rotateSpeed;
+
+    public Destination destination;     //< The destination this object is moving towards
+
+    private Quaternion destinationDirection;    //< The rotation the fish will begin to face over time
+
+    [SerializeField] private List<Destination> path;    //< A list of destinations that the fish will follow
+
+    private bool craftingPath = true;                   //< Whether or not this fish is still making a path to the end
+    private int currentIndex = 0;                       //< The index of the current node this fish is moving to
 
     // is this fish being caught?
     public bool beingCaught { get; private set; } = false;
@@ -61,6 +70,31 @@ public class Fish : MonoBehaviour
         // get refs
         rigid = GetComponent<Rigidbody>();
         fishAppearance = GetComponentInChildren<FishAppearance>();
+        school = FindObjectOfType<FishSchool>();
+
+        // Craft the path this fish will follow
+        // While the fish is waiting to have its school assigned by the Fish School script, we wait
+
+        destination = school.initialDestinations[Random.Range(0, 5)];
+        Vector3 lookPosition = destination.destinationPosition - transform.position;
+        destinationDirection = Quaternion.LookRotation(lookPosition);
+        path.Add(destination);
+        Destination currentNode = destination;
+
+        while (craftingPath)
+        {
+            Destination newNode = currentNode.destinations[Random.Range(0, 5)];
+            if (newNode.finalDestination == true)
+            {
+                path.Add(newNode);
+                craftingPath = false;
+            }
+            else
+            {
+                path.Add(newNode);
+                currentNode = newNode;
+            }
+        }
 
         // set up initial energy
         currentEnergy = startingEnergy;
@@ -75,7 +109,33 @@ public class Fish : MonoBehaviour
      */
     public void Swim()
     {
-        
+        if (transform.position == destination.destinationPosition)
+        {
+            if (destination.finalDestination != true)
+            {
+                currentIndex++;
+                destination = path[currentIndex];
+
+                Vector3 lookPosition = destination.destinationPosition - transform.position;
+                lookPosition.y = 0.0f;
+                destinationDirection = Quaternion.LookRotation(lookPosition);
+            }
+        }
+
+        // Move towards the destination at a constant speed
+        transform.position = Vector3.MoveTowards(transform.position, destination.destinationPosition, swimSpeed * Time.deltaTime);
+
+        // Determine if we are already facing towards the destination
+        float deltaAngle = Quaternion.Angle(transform.rotation, destinationDirection);
+
+        // Exit early if no update required
+        if (deltaAngle == 0.00F)
+        {
+            return;
+        }
+
+        // Turn the fish to face the target at a constant speed
+        transform.rotation = Quaternion.Slerp(transform.rotation, destinationDirection, rotateSpeed * Time.deltaTime / deltaAngle);
     }
 
     /**

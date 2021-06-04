@@ -11,7 +11,5 @@ public class Destination : MonoBehaviour
     void Awake()
     {
         destinationPosition = this.transform.position;
-    }
-
-    
+    }    
 }

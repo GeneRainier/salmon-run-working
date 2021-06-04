@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7854d1f760478604d88a3c70b78f578c, type: 3}
   m_Name: FishPrefabConfig
   m_EditorClassIdentifier: 
-  smallFemale: {fileID: 4393344068883168384, guid: ae4f9d82a5b989a4c9516b05bd8ef423,
+  smallFemale: {fileID: 5472292593619520541, guid: cad0b18c1cc87d842bdb2a3013e9a1b6,
     type: 3}
   mediumFemale: {fileID: 4393344068883168384, guid: ae4f9d82a5b989a4c9516b05bd8ef423,
     type: 3}
-  largeFemale: {fileID: 4393344068883168384, guid: ae4f9d82a5b989a4c9516b05bd8ef423,
+  largeFemale: {fileID: 8489547932875081956, guid: 3a4e4cb8ac90a9046a661d64575ad462,
     type: 3}
-  smallMale: {fileID: 4393344068883168384, guid: ae4f9d82a5b989a4c9516b05bd8ef423,
+  smallMale: {fileID: 8703597801045833717, guid: 9867587c70e786f428943aece09d25d3,
     type: 3}
-  mediumMale: {fileID: 4393344068883168384, guid: ae4f9d82a5b989a4c9516b05bd8ef423,
+  mediumMale: {fileID: 2570467533265043449, guid: e222f8ded6f811145ab1292153d20a3a,
     type: 3}
-  largeMale: {fileID: 4393344068883168384, guid: ae4f9d82a5b989a4c9516b05bd8ef423,
+  largeMale: {fileID: 1565702066780044992, guid: a28aaf7f5f7c0594390bd5e06959166a,
     type: 3}

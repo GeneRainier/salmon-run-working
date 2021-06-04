@@ -42,6 +42,9 @@ public class FishSchool : MonoBehaviour, IPausable {
     // value describining how large the random movement will be in comparison to the movement from the vector field
     public float randomMovementMultiplier;
 
+    [Header("Pathfinding")]
+    public List<Destination> initialDestinations;   //< List of the initial destinations pathing object can move towards
+
     // true if the fish are paused
     private bool paused = false;
 
@@ -341,7 +344,7 @@ public class FishSchool : MonoBehaviour, IPausable {
 
                     // create the fish at the given position and tell it what school it belongs to
                     fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>()); 
-                    fishList[fishList.Count - 1].SetSchool(this); 
+                    //fishList[fishList.Count - 1].SetSchool(this); 
                     fishList[fishList.Count - 1].SetGenome(genomes[fishList.Count - 1]);
  
                     // increment counters

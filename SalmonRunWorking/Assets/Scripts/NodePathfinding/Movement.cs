@@ -6,7 +6,7 @@ public class Movement : MonoBehaviour
 {
     public Destination destination;     //< The destination this object is moving towards
     public GenericSpawner spawner;      //< The spawner that created this object
-    Quaternion destinationDirection;    //< The rotation the fish will begin to face over time
+    private Quaternion destinationDirection;    //< The rotation the fish will begin to face over time
     [SerializeField] private float moveSpeed;   //< The speed this object is moving
     [SerializeField] private float turnSpeed;   //< The speed this object turns while moving
 
@@ -63,6 +63,7 @@ public class Movement : MonoBehaviour
         // Move towards the destination at a constant speed
         transform.position = Vector3.MoveTowards(transform.position, destination.destinationPosition, moveSpeed * Time.deltaTime);
 
+        // Determine if we are already facing towards the destination
         float deltaAngle = Quaternion.Angle(transform.rotation, destinationDirection);
 
         // Exit early if no update required

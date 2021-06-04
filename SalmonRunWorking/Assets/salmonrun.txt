@@ -37,3 +37,4 @@ slPres = Sealion Present
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
 0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 31, 99, 30, 75, 85, 25, 51, 24, 50, 50, 25, 51, 24, 0, 0, 0, 0, 0, 0, 0, 0
