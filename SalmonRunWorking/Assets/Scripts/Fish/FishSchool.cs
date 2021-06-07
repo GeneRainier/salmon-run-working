@@ -25,8 +25,8 @@ public class FishSchool : MonoBehaviour, IPausable {
     public float spawnAreaWidth;
     public float spawnAreaHeight;
 
-    // z plane on which fish should spawn
-    public float spawnZ;
+    // Y plane on which fish should spawn
+    public float spawnY;
 
     // how long it takes between groups of fish being spawned
     public float timeBetweenWaves;
@@ -340,7 +340,7 @@ public class FishSchool : MonoBehaviour, IPausable {
                 {
                     
                     // get a random position within the spawn area to instantiate the fish at
-                    Vector3 spawnPos = new Vector3(Random.Range(topLeft.x, topRight.x), Random.Range(bottomLeft.y, topLeft.y), spawnZ);
+                    Vector3 spawnPos = new Vector3(Random.Range(topLeft.x, topRight.x), spawnY, Random.Range(bottomLeft.z, topLeft.z));
 
                     // create the fish at the given position and tell it what school it belongs to
                     fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>()); 
@@ -374,7 +374,7 @@ public class FishSchool : MonoBehaviour, IPausable {
                 {
                     
                     // get a random position within the spawn area to instantiate the fish at
-                    Vector3 spawnPos = new Vector3(Random.Range(topLeft.x, topRight.x), Random.Range(bottomLeft.y, topLeft.y), spawnZ);
+                    Vector3 spawnPos = new Vector3(Random.Range(topLeft.x, topRight.x), spawnY, Random.Range(bottomLeft.z, topLeft.z));
 
                     // create the fish at the given position and tell it what school it belongs to^M
                     fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>());

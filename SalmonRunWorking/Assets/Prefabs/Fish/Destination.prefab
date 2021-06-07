@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 2326892671058043317}
   - component: {fileID: 2326892671058043314}
   - component: {fileID: 1856687625261624963}
-  - component: {fileID: 7332267774493868062}
   m_Layer: 0
   m_Name: Destination
   m_TagString: Untagged
@@ -50,7 +49,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2326892671058043315}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -115,17 +114,3 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   finalDestination: 0
---- !u!114 &7332267774493868062
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2326892671058043315}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: caef61ebe0c130f4b92d6559febe754b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initializationValues: {fileID: 0}
-  numNestingSights: 200

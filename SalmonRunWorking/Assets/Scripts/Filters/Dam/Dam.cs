@@ -167,7 +167,7 @@ public class Dam : FilterBase, IDragAndDropObject
                 // if we pass, put the fish past the dam
                 if (Random.Range(0f, 1f) <= crossingRate)
                 {
-                    fish.transform.position = GetRandomDropOff(fish.transform.position.z);
+                    fish.transform.position = GetRandomDropOff(fish.transform.position.y);
                     break;
                 }
                 // if we have not expended our total tries (based on damPassCounter in fish), increment, wait, and try again
@@ -189,14 +189,14 @@ public class Dam : FilterBase, IDragAndDropObject
     /**
      * Get a random point within the drop off collider
      * 
-     * @param z float The z value of the point -- don't want to change the object's z so just pass it in
+     * @param y float The y value of the point -- don't want to change the object's z so just pass it in
      */
-    private Vector3 GetRandomDropOff(float z)
+    private Vector3 GetRandomDropOff(float y)
     {
         return new Vector3(
             Random.Range(dropOffBox.bounds.min.x, dropOffBox.bounds.max.x),
-            Random.Range(dropOffBox.bounds.min.y, dropOffBox.bounds.max.y),
-            z
+            y,
+            Random.Range(dropOffBox.bounds.min.y, dropOffBox.bounds.max.z)
         );
     }
 

@@ -195,7 +195,7 @@ public class FishermanTower : TowerBase
 
         if (fish)
         {
-            transform.parent.LookAt(fish.transform, Vector3.back);
+            transform.parent.LookAt(fish.transform, Vector3.up);
 
             //Debug.Log("before TryCatchFish");
             TryCatchFish(fish);
@@ -349,9 +349,9 @@ public class FishermanTower : TowerBase
             return;
         }
         // Fish is not null, play on.
-        Vector3 startPos = new Vector3(position.x, position.y, position.z - 40);
+        Vector3 startPos = new Vector3(position.x, position.y, position.z);
         Vector3 fishPos = catchAttemptFish.transform.position;
-        fishPos.z = startPos.z;
+        fishPos.y = startPos.y;
 
         catchAttemptLine.SetPositions(new []{ startPos, fishPos});
     }
