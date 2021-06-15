@@ -189,14 +189,14 @@ public class Dam : FilterBase, IDragAndDropObject
     /**
      * Get a random point within the drop off collider
      * 
-     * @param y float The y value of the point -- don't want to change the object's z so just pass it in
+     * @param y float The y value of the point -- don't want to change the object's y so just pass it in
      */
     private Vector3 GetRandomDropOff(float y)
     {
         return new Vector3(
             Random.Range(dropOffBox.bounds.min.x, dropOffBox.bounds.max.x),
             y,
-            Random.Range(dropOffBox.bounds.min.y, dropOffBox.bounds.max.z)
+            Random.Range(dropOffBox.bounds.min.z, dropOffBox.bounds.max.z)
         );
     }
 

@@ -27,6 +27,10 @@ public class PostRunStatsPanelController : PanelController
     public int survivingFemaleDescriptor = 0;
     public int survivingMaleDescriptor = 0;
 
+    // Count for fish who died due to being stuck
+    // TO DO: Connect SetStuck Function in Fish to this
+    public int stuckFish = 0;
+
     // panel's title, which displays the turn number
     public TextMeshProUGUI titleText;
 

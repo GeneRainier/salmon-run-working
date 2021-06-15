@@ -103,10 +103,10 @@ public class FishSchool : MonoBehaviour, IPausable {
         }
 
         // loop through all remaining fish for movement
-        foreach (Fish fish in fishList)
-        {
-            fish.Swim();
-        }
+        //foreach (Fish fish in fishList)
+        //{
+        //    fish.Swim();
+        //}
     }
 
     /**

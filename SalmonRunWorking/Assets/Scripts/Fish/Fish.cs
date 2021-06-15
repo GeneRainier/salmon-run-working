@@ -100,14 +100,7 @@ public class Fish : MonoBehaviour
         currentEnergy = startingEnergy;
     }
 
-    #endregion
-
-    #region Movement
-
-    /**
-     * Make the fish swim by applying a force in a direction
-     */
-    public void Swim()
+    private void Update()
     {
         if (transform.position == destination.destinationPosition)
         {
@@ -136,6 +129,44 @@ public class Fish : MonoBehaviour
 
         // Turn the fish to face the target at a constant speed
         transform.rotation = Quaternion.Slerp(transform.rotation, destinationDirection, rotateSpeed * Time.deltaTime / deltaAngle);
+    }
+
+    #endregion
+
+    #region Movement
+
+    /**
+     * Make the fish swim by applying a force in a direction
+     */
+    public void Swim()
+    {
+        //if (transform.position == destination.destinationPosition)
+        //{
+        //    if (destination.finalDestination != true)
+        //    {
+        //        currentIndex++;
+        //        destination = path[currentIndex];
+
+        //        Vector3 lookPosition = destination.destinationPosition - transform.position;
+        //        lookPosition.y = 0.0f;
+        //        destinationDirection = Quaternion.LookRotation(lookPosition);
+        //    }
+        //}
+
+        //// Move towards the destination at a constant speed
+        //transform.position = Vector3.MoveTowards(transform.position, destination.destinationPosition, swimSpeed * Time.deltaTime);
+
+        //// Determine if we are already facing towards the destination
+        //float deltaAngle = Quaternion.Angle(transform.rotation, destinationDirection);
+
+        //// Exit early if no update required
+        //if (deltaAngle == 0.00F)
+        //{
+        //    return;
+        //}
+
+        //// Turn the fish to face the target at a constant speed
+        //transform.rotation = Quaternion.Slerp(transform.rotation, destinationDirection, rotateSpeed * Time.deltaTime / deltaAngle);
     }
 
     /**
@@ -202,6 +233,9 @@ public class Fish : MonoBehaviour
     public void SetStuck(bool stuck)
     {
         this.stuck = stuck;
+        school.FishKilled(this);
+
+        DeactivateFish();
     }
 
     /**
