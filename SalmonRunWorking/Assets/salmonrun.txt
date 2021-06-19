@@ -17,7 +17,7 @@ Lift Small Pass Rate, 0.5
 Lift Medium Pass Rate, 0.5
 Lift Large Pass Rate, 0.5
 Starting Money, 10000
-Sealion Appearance Time, 3
+Sealion Appearance Time, 1
 Sealion Male Catch Rate, 0.05
 Sealion Female Catch Rate, 0.5
 Nesting Sites, 200
