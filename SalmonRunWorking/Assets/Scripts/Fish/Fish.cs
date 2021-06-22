@@ -27,6 +27,11 @@ public class Fish : MonoBehaviour
 
     private Quaternion destinationDirection;    //< The rotation the fish will begin to face over time
 
+    //private float destinationDistance;          //< The distance between the initial location of the fish and its current destination
+    //private float lerpTime;                     //< The current percentage through the lerp this fish is
+    //private float timer = 0.0f;                        //< The current time this fish has been travelling to a destination
+    //private float travelTime = 0.0f;                   //< The amount of time it will take to lerp to the current destination
+
     [SerializeField] private List<Destination> path;    //< A list of destinations that the fish will follow
 
     private bool craftingPath = true;                   //< Whether or not this fish is still making a path to the end
@@ -78,6 +83,10 @@ public class Fish : MonoBehaviour
         destination = school.initialDestinations[Random.Range(0, 5)];
         Vector3 lookPosition = destination.destinationPosition - transform.position;
         destinationDirection = Quaternion.LookRotation(lookPosition);
+
+        //destinationDistance = Vector3.Distance(transform.position, destination.destinationPosition);
+        //travelTime = destinationDistance / swimSpeed;
+
         path.Add(destination);
         Destination currentNode = destination;
 
@@ -100,24 +109,49 @@ public class Fish : MonoBehaviour
         currentEnergy = startingEnergy;
     }
 
+    /* 
+     * IDEA NOTE: For Path smoothing: The fish simply move FORWARD. When they change destination nodes to the next one in the path
+     * the turning is all that will adjust. This makes it so the movement is kept simple and low cost, but the turning imitates a
+     * smooth path. No need for a complication Bezier calculation or A* path smoothing which would be longer code
+     */
+
+
     private void Update()
     {
-        if (transform.position == destination.destinationPosition)
+        if (Vector3.Distance(transform.position, destination.destinationPosition) <= 6.0f)
         {
             if (destination.finalDestination != true)
             {
                 currentIndex++;
                 destination = path[currentIndex];
 
-                Vector3 lookPosition = destination.destinationPosition - transform.position;
-                lookPosition.y = 0.0f;
-                destinationDirection = Quaternion.LookRotation(lookPosition);
+                //Vector3 lookPosition = destination.destinationPosition - transform.position;
+                //lookPosition.y = 0.0f;
+                //destinationDirection = Quaternion.LookRotation(lookPosition);
+
+                //destinationDistance = Vector3.Distance(transform.position, destination.destinationPosition);
+                //travelTime = destinationDistance / swimSpeed;
+                //timer = 0.0f;
             }
         }
 
-        // Move towards the destination at a constant speed
-        transform.position = Vector3.MoveTowards(transform.position, destination.destinationPosition, swimSpeed * Time.deltaTime);
+        Vector3 lookPosition = destination.destinationPosition - transform.position;
+        lookPosition.y = 0.0f;
+        destinationDirection = Quaternion.LookRotation(lookPosition);
 
+        // Update the current lerp time
+        //timer += Time.deltaTime;
+        //if (timer > travelTime)
+        //{
+        //    timer = travelTime;
+        //}
+        //lerpTime = timer / travelTime;
+        //// Apply a cosine ease out effect to the lerp
+        //lerpTime = (lerpTime * lerpTime) * (3f - 2f * lerpTime);
+
+        // Move towards the destination at a constant speed
+        //transform.position = Vector3.Lerp(transform.position, destination.destinationPosition, lerpTime);
+        transform.position += transform.forward * swimSpeed * Time.deltaTime;
         // Determine if we are already facing towards the destination
         float deltaAngle = Quaternion.Angle(transform.rotation, destinationDirection);
 
@@ -128,7 +162,7 @@ public class Fish : MonoBehaviour
         }
 
         // Turn the fish to face the target at a constant speed
-        transform.rotation = Quaternion.Slerp(transform.rotation, destinationDirection, rotateSpeed * Time.deltaTime / deltaAngle);
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, destinationDirection, rotateSpeed * Time.deltaTime);
     }
 
     #endregion
