@@ -4,16 +4,18 @@ using UnityEngine;
 
 /**
  * ScriptableObject containing references to all fish prefabs that can be used
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
  [CreateAssetMenu(fileName = "FishPrefabConfig", menuName = "Fish/Fish Prefab Config")]
 public class FishPrefabConfig : ScriptableObject
 {
-    // female fish prefabs of various sizes
+    // Female fish prefabs of various sizes
     public GameObject smallFemale;
     public GameObject mediumFemale;
     public GameObject largeFemale;
 
-    // male fish prefabs of various sizes
+    // Male fish prefabs of various sizes
     public GameObject smallMale;
     public GameObject mediumMale;
     public GameObject largeMale;
@@ -25,16 +27,16 @@ public class FishPrefabConfig : ScriptableObject
      */
     public GameObject GetFishPrefab(FishGenome genome)
     {
-        // gameobject we will return at end
+        // Gameobject we will return at end
         GameObject toReturn;
 
-        // get the size gene for the fish
+        // Get the size gene for the fish
         FishGenePair sizeGenePair = genome[FishGenome.GeneType.Size];
 
-        // different prefabs for each sex
+        // Different prefabs for each sex
         if (genome.IsMale())
         {
-            // different prefabs for each male size
+            // Different prefabs for each male size
             if (sizeGenePair.momGene == FishGenome.b && sizeGenePair.dadGene == FishGenome.b)
             {
                 toReturn = smallMale;
@@ -50,7 +52,7 @@ public class FishPrefabConfig : ScriptableObject
         }
         else
         {
-            // different prefabs for each female size
+            // Different prefabs for each female size
             if (sizeGenePair.momGene == FishGenome.b && sizeGenePair.dadGene == FishGenome.b)
             {
                 toReturn = smallFemale;

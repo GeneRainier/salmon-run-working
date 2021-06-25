@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Class that manages the immediate population of salmon using generation utility functions
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class Population : MonoBehaviour {
 
     public GameObject MemberPrefab;
@@ -10,7 +15,7 @@ public class Population : MonoBehaviour {
     private List<GameObject> Members;
     public float GenerationLength;
     
-	// Use this for initialization
+	// Start is called before the first frame update
 	void Start () {
         NewGeneration();
 	}
@@ -20,6 +25,9 @@ public class Population : MonoBehaviour {
 		
 	}
 
+    /*
+     * Takes the old generation of fish and creates a new generation based on the older one
+     */
     private void NewGeneration()
     {
         List<GameObject> OldMembers = Members;

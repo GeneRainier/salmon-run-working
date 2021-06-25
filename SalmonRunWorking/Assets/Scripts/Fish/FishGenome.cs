@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Authors: Benjamin Person (Editor 2020)
+ */
+
 /**
  * Struct representing a single gene pair in a genome
  */
@@ -28,7 +32,7 @@ public class FishGenome
         Size = 1
     }
 
-    // property for length of the genome
+    // Property for length of the genome
     public static int Length
     {
         get
@@ -37,8 +41,7 @@ public class FishGenome
         }
     }
 
-    // list of gene pairs
-    private FishGenePair[] genePairList = new FishGenePair[Length];
+    private FishGenePair[] genePairList = new FishGenePair[Length];     //< List of gene pairs
 
     /**
      * Constructor for situations when genome is provided directly

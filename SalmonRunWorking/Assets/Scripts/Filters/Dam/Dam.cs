@@ -5,29 +5,28 @@ using UnityEngine.Serialization;
 
 /**
  * A dam restricts fish access to upstream areas
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class Dam : FilterBase, IDragAndDropObject
 {
-    // The ManagerIndex with initialization values for a given tower
-    public ManagerIndex initializationValues;
+    public ManagerIndex initializationValues;       //< The ManagerIndex with initialization values for a given tower
 
-    // default crossing rate for all fish
+    // Default crossing rate for all fish
     [Range(0f, 1f)]
     public float defaultCrossingRate;
-    // initialized in Unity
+    // Initialized in Unity
     // Project -> Assets -> Prefabs -> Filters -> Dam -> DamLadder
     // (make sure to double click on Dam cube symbol. 
 
-    // crossing rates for small, medium, and large fish
+    // Crossing rates for small, medium, and large fish
     [SerializeField] private float smallCrossingRate;
     [SerializeField] private float mediumCrossingRate;
     [SerializeField] private float largeCrossingRate;
 
-    // is there a ladder currently attached to the dam?
-    private bool hasLadder;
+    private bool hasLadder;             //< Is there a ladder currently attached to the dam?
 
-    // box where fish will be dropped off if the successfully pass the dam
-    private BoxCollider dropOffBox;
+    private BoxCollider dropOffBox;     //< Box where fish will be dropped off if the successfully pass the dam
 
     /**
      * Start is called before the first frame update
@@ -37,7 +36,8 @@ public class Dam : FilterBase, IDragAndDropObject
         // Get initialization values and set this towers basic values
         initializationValues = FindObjectOfType<ManagerIndex>();
         //defaultCrossingRate = initializationValues.defaultDamPassRate;
-        // set all crossing rates to default rate on initialization
+
+        // Set all crossing rates to default rate on initialization
         smallCrossingRate = mediumCrossingRate = largeCrossingRate = defaultCrossingRate;
         Debug.Log("Dam Class: defaultCrossingRate=" + defaultCrossingRate);
     }
@@ -56,15 +56,15 @@ public class Dam : FilterBase, IDragAndDropObject
     }
 
     /**
-     * Add a ladder to this dam
+     * Add a ladder to this dam and set a flag so we can apply ladder effects later
      * 
-     * Set a flag so we can apply ladder effects later
+     * @param damLadder The Ladder being added to the dam
      */
     public void AddLadder(DamLadder damLadder)
     {
-        //set crossing rates for fish to ones supplied by the ladder
+        // Set crossing rates for fish to ones supplied by the ladder
 
-        // if these lines are run  then I get an error in UpgradeManager line 132
+        // If these lines are run then I get an error in UpgradeManager line 132
         // try 2
         smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
         mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
@@ -76,7 +76,7 @@ public class Dam : FilterBase, IDragAndDropObject
 
         Debug.Log("damLadder S=" + damLadder.smallCrossingRate + "; M=" + damLadder.mediumCrossingRate + "; L=" + damLadder.largeCrossingRate);
 
-        // set flag so we know we have a ladder
+        // Set flag so we know we have a ladder
         hasLadder = true;
     }
 
@@ -86,6 +86,9 @@ public class Dam : FilterBase, IDragAndDropObject
 
     /**
      * Place the dam onto the game map
+     * 
+     * @param primaryHitInfo The information from the raycast originating from the camera.
+     * @param secondaryHitInfo The information from the raycasts surrounding the tower being placed.
      */
     public void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
@@ -95,7 +98,7 @@ public class Dam : FilterBase, IDragAndDropObject
             return;
         }
         
-        // can only place if we are over a dam placement location
+        // Can only place if we are over a dam placement location
         DamPlacementLocation placementLocation = primaryHitInfo.collider.gameObject.GetComponent<DamPlacementLocation>();
         if (placementLocation != null)
         {
@@ -107,18 +110,21 @@ public class Dam : FilterBase, IDragAndDropObject
 
     /**
      * Figure out if we can place the dam at the location of a given raycast
+     * 
+     * @param primaryHitInfo The information from the raycast originating from the camera.
+     * @param secondaryHitInfo The information from the raycasts surrounding the tower being placed.
      */
     public bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        // must have hit something
+        // Must have hit something
         if (!primaryHitInfo.collider) return false;
         
         DamPlacementLocation placementLocation = primaryHitInfo.collider.gameObject.GetComponent<DamPlacementLocation>();
 
-        // thing we hit must be a dam placement location
+        // The thing we hit must be a dam placement location
         if (placementLocation != null)
         {
-            // only return true if the placement location is not already in use
+            // Only return true if the placement location is not already in use
             return !placementLocation.inUse;
         }
 
@@ -133,13 +139,15 @@ public class Dam : FilterBase, IDragAndDropObject
      * Apply the effect of the dam
      * 
      * Fish will attempt to cross the dam and may be able to pass or "get stuck" and die
+     * 
+     * @param fish The fish trying to pass by the dam
      */
     protected override void ApplyFilterEffect(Fish fish)
     {
-        // only let it through if it hasn't been flagged as stuck
+        // Only let it through if it hasn't been flagged as stuck
         if (!fish.IsStuck())
         {
-            // chance between fish getting past the dam and being caught/getting stuck depends on what size the fish is
+            // Chance between fish getting past the dam and being caught/getting stuck depends on what size the fish is
             float crossingRate;
 
             Debug.Log("Dam.ApplyFilterEffect: SMcr =" + smallCrossingRate + "; MDcr = " + mediumCrossingRate + "; LGcr = " + largeCrossingRate);
@@ -163,20 +171,20 @@ public class Dam : FilterBase, IDragAndDropObject
 
             while (!fish.IsStuck())
             {
-                // based on the crossing rate we figured out, roll for a crossing
-                // if we pass, put the fish past the dam
+                // Based on the crossing rate we figured out, roll for a crossing
+                // If we pass, put the fish past the dam
                 if (Random.Range(0f, 1f) <= crossingRate)
                 {
                     fish.transform.position = GetRandomDropOff(fish.transform.position.y);
                     break;
                 }
-                // if we have not expended our total tries (based on damPassCounter in fish), increment, wait, and try again
+                // If we have not expended our total tries (based on damPassCounter in fish), increment, wait, and try again
                 else if (fish.damPassCounter < 2)
                 {
                     fish.damPassCounter++;
                     Invoke("DamPassCooldown", 6.0f);
                 }
-                // if it didn't make it, make it permanently stuck (so it can't try repeated times)
+                // If it didn't make it, make it permanently stuck (so it can't try repeated times)
                 else
                 {
                     fish.SetStuck(true);

@@ -4,34 +4,35 @@ using UnityEngine;
 using UnityEngine.Tilemaps;
 using System.Linq;
 
+/*
+ * Class that handles the overall population of salmon from round to round including spawning, pathfinding, and population
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class FishSchool : MonoBehaviour, IPausable {
 
     [Header("References")]
-    // fish prefab config gameobject
-    public FishPrefabConfig fishPrefabConfig;
-    
+    public FishPrefabConfig fishPrefabConfig;   //< Fish prefab config gameobject
+
     [Header("School Info")]
-    // how big this school is
-    public int initialNumFish;
-    // initialized in Unity - Assets -> _scenes -> MapV2 -> DemoLevel
+    public int initialNumFish;      //< How big this school is
+    // Initialized in Unity - Assets -> _scenes -> MapV2 -> DemoLevel
     // Hierarchy -> DemoLevel -> School
 
-    // minimum and maximum number of children that a pair of salmon can generate during reproduction
+    // Minimum and maximum number of children that a pair of salmon can generate during reproduction
     public int minOffspring;
     public int maxOffspring;
 
     [Header("Spawning")]
-    // describe area in which fish can spawn
+    // Describe area in which fish can spawn
     public float spawnAreaWidth;
     public float spawnAreaHeight;
 
-    // Y plane on which fish should spawn
-    public float spawnY;
+    public float spawnY;        //< Y plane on which fish should spawn
 
-    // how long it takes between groups of fish being spawned
-    public float timeBetweenWaves;
+    public float timeBetweenWaves;      //< How long it takes between groups of fish being spawned
 
-    // how many fish should be spawned in each group
+    // How many fish should be spawned in each group
     // 2020-05-11 @WRE fishPerWave was defined as 5 by Jake C., bumped it to 10.
     // In game properties, DemoLevel -> Level -> Fishschool -> fishPerWave
     // See SpawnOverTime method for more on the appearance of fish at the start
@@ -39,28 +40,22 @@ public class FishSchool : MonoBehaviour, IPausable {
     public int fishPerWave;
 
     [Header("Movement Settings")]
-    // value describining how large the random movement will be in comparison to the movement from the vector field
-    public float randomMovementMultiplier;
+    public float randomMovementMultiplier;      //< Value describining how large the random movement will be in comparison to the movement from the vector field
 
     [Header("Pathfinding")]
     public List<Destination> initialDestinations;   //< List of the initial destinations pathing object can move towards
 
-    // true if the fish are paused
-    private bool paused = false;
+    private bool paused = false;                    //< True if the fish are paused
 
-    // all fish in the school
-    private List<Fish> fishList = new List<Fish>();
+    private List<Fish> fishList = new List<Fish>(); //< All fish in the school
 
-    // fish that have made it to the end of the level
-    private List<Fish> successfulFishList = new List<Fish>();
+    private List<Fish> successfulFishList = new List<Fish>();       //< Fish that have made it to the end of the level
 
-    // fish that have died
-    private List<Fish> deadFishList = new List<Fish>();
+    private List<Fish> deadFishList = new List<Fish>();     //< Fish that have died
 
-    // list of fish genomes that will be used in the next generation
-    private List<FishGenome> nextGenerationGenomes;
+    private List<FishGenome> nextGenerationGenomes;         //< List of fish genomes that will be used in the next generation
 
-    // corners of the spawn area, for drawing and calculating locations
+    // Corners of the spawn area, for drawing and calculating locations
     private Vector3 bottomLeft;
     private Vector3 bottomRight;
     private Vector3 topLeft;
@@ -69,20 +64,20 @@ public class FishSchool : MonoBehaviour, IPausable {
     #region Major Monobehaviour Functions
 
     /**
-     * Initialization function
+     * Start is called prior to the first fram update. Initialization function
      */
     private void Start () {
-        // make sure the spawn area is set up
+        // Make sure the spawn area is set up
         CalculateSpawnAreaBoundaries();
         
-        // register with time manager
+        // Register with time manager
         ManagerIndex.MI.TimeManager.RegisterPausable(this);
 
-        // register listeners with game manager events
+        // Register listeners with game manager events
         GameEvents.onEndRun.AddListener(CreateNewGeneration);
         GameEvents.onStartRun.AddListener(Spawn);
 
-        // create initial generation of fish
+        // Create initial generation of fish
         CreateNewGeneration();
     }
 	
@@ -91,22 +86,16 @@ public class FishSchool : MonoBehaviour, IPausable {
 	 */
 	private void FixedUpdate ()
     {
-        // only do update stuff if the school is not paused
+        // Only do update stuff if the school is not paused
         if (paused) return;
         
-        // cull all fish who have used up all of their energy
+        // Cull all fish who have used up all of their energy
         List<Fish> fishToCull = fishList.FindAll(fish => fish.OutOfEnergy());
 
         foreach (Fish fish in fishToCull)
         {
             fish.Catch();
         }
-
-        // loop through all remaining fish for movement
-        //foreach (Fish fish in fishList)
-        //{
-        //    fish.Swim();
-        //}
     }
 
     /**
@@ -134,6 +123,8 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     /**
      * Remove a fish from the school (presumably because it has died/been caught/etc.)
+     * 
+     * @param f The fish being killed
      */
     public void FishKilled(Fish f)
     {
@@ -147,6 +138,8 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     /**
      * Called when a fish has succeeded in reaching the end of the level
+     * 
+     * @param f The fish that has succeeded
      */
     public void FishSucceeded(Fish f)
     {
@@ -187,7 +180,7 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     private void DeleteOldFish()
     {
-        // destroy gameobjects
+        // Destroy gameobjects
         foreach (Fish deadFish in deadFishList)
         {
             Destroy(deadFish.transform.root.gameObject);
@@ -197,7 +190,7 @@ public class FishSchool : MonoBehaviour, IPausable {
             Destroy(successfulFish.transform.root.gameObject);
         }
 
-        // clear out lists
+        // Clear out lists
         deadFishList.Clear();
         successfulFishList.Clear();
         fishList.Clear();
@@ -223,10 +216,10 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     public void Pause()
     {
-        // pause all the fish
+        // Pause all the fish
         fishList.ForEach(fish => fish.CacheAndPauseMotion());
 
-        // pause the school
+        // Pause the school
         paused = true;
     }
 
@@ -235,10 +228,10 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     public void Resume()
     {
-        // resume all the fish
+        // Resume all the fish
         fishList.ForEach(fish => fish.RestoreAndResumeMotion());
 
-        // resume the school
+        // Resume the school
         paused = false;
     }
 
@@ -251,29 +244,29 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     public void CreateNewGeneration()
     {
-        // make variable for holding parent genomes
+        // Make variable for holding parent genomes
         List<FishGenome> parentGenomes = null;
 
-        // if it's the 0th turn, generate a full set of genomes from nothing
+        // If it's the 0th turn, generate a full set of genomes from nothing
         if (GameManager.Instance.Turn == 1)
         {
             nextGenerationGenomes = FishGenomeUtilities.MakeNewGeneration(initialNumFish, true, true);
         }
-        // otherwise, need to make new genomes from the succesful fish's genomes
-        // also need to clean out the old fish
+        // Otherwise, need to make new genomes from the succesful fish's genomes
+        // Also need to clean out the old fish
         else
         {
-            // make new genomes
+            // Make new genomes
             parentGenomes = successfulFishList.Select(fish => fish.GetGenome()).ToList();
 
             Debug.Log("in CreateNewGeneration: minOffspring=" + minOffspring + ";  maxOffspring=" + maxOffspring);
             nextGenerationGenomes = FishGenomeUtilities.MakeNewGeneration(parentGenomes, minOffspring, maxOffspring);
 
-            // clean out old fish
+            // Clean out old fish
             DeleteOldFish();
         }
 
-        // send out notice that new generation has been created
+        // Send out notice that new generation has been created
         GameEvents.onNewGeneration.Invoke(parentGenomes, nextGenerationGenomes);
     }
 
@@ -290,7 +283,7 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     private void CalculateSpawnAreaBoundaries()
     {
-        // calculate spawn area corner coordinates
+        // Calculate spawn area corner coordinates
         var position = transform.position;
         bottomLeft = new Vector3(position.x - spawnAreaWidth / 2f, 0, position.z - spawnAreaHeight / 2f);
         bottomRight = new Vector3(position.x + spawnAreaWidth / 2f, 0, position.z - spawnAreaHeight / 2f);
@@ -303,9 +296,9 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     private IEnumerator SpawnOverTime(List<FishGenome> genomes)
     {
-        // loop until we've spawned enough fish
+        // Loop until we've spawned enough fish
         int spawnedCount = 0;
-        /*
+            /*
             * 2020-05-12 @WRE
             * Game play with a fixed wave size gets interminable.
             * Fixing to yield a fixed number of 'waves' with a Gaussian distribution
@@ -330,31 +323,31 @@ public class FishSchool : MonoBehaviour, IPausable {
             while (spawnedCount < genomes.Count && ManagerIndex.MI.GameManager.CompareState(typeof(RunState))) 
             {
                 
-                // only spawn when we're not paused^M
+                // Only spawn when we're not paused^M
                 yield return new WaitUntil(() => !paused);
 
-                // spawn a wave of fish
-                // stop if we reach the number of fish that should be in a wave or if we hit the total number of fish mid-wave
+                // Spawn a wave of fish
+                // Stop if we reach the number of fish that should be in a wave or if we hit the total number of fish mid-wave
                 int spawnedThisWave = 0; 
                 while (spawnedThisWave < fishPerWave && spawnedCount < genomes.Count) 
                 {
                     
-                    // get a random position within the spawn area to instantiate the fish at
+                    // Get a random position within the spawn area to instantiate the fish at
                     Vector3 spawnPos = new Vector3(Random.Range(topLeft.x, topRight.x), spawnY, Random.Range(bottomLeft.z, topLeft.z));
 
-                    // create the fish at the given position and tell it what school it belongs to
+                    // Create the fish at the given position and tell it what school it belongs to
                     fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>()); 
                     //fishList[fishList.Count - 1].SetSchool(this); 
                     fishList[fishList.Count - 1].SetGenome(genomes[fishList.Count - 1]);
  
-                    // increment counters
+                    // Increment counters
                     spawnedThisWave++; 
                     spawnedCount++; 
                 }
-                // after each wave is spawned, inform the UI & other listeners that the population has changed
+                // After each wave is spawned, inform the UI & other listeners that the population has changed
                 PopulationChanged();
 
-                // wait between waves
+                // Wait between waves
                 yield return new WaitForSeconds(timeBetweenWaves); 
             }
         }
@@ -363,35 +356,35 @@ public class FishSchool : MonoBehaviour, IPausable {
             while (spawnedCount < genomes.Count && ManagerIndex.MI.GameManager.CompareState(typeof(RunState))) 
             {
                 
-                // only spawn when we're not paused^M
+                // Only spawn when we're not paused^M
                 yield return new WaitUntil(() => !paused);
 
-                // spawn a wave of fish
-                // stop if we reach the number of fish that should be in a wave or if we hit the total number of fish mid-wave
+                // Spawn a wave of fish
+                // Stop if we reach the number of fish that should be in a wave or if we hit the total number of fish mid-wave
                 int spawnedThisWave = 0; 
                 fishPerWaveGauss = (int)Mathf.Round(genomes.Count * gaussProp20[spawnGaussCount]); 
                 while (spawnedThisWave < fishPerWaveGauss && spawnedCount < genomes.Count) 
                 {
                     
-                    // get a random position within the spawn area to instantiate the fish at
+                    // Get a random position within the spawn area to instantiate the fish at
                     Vector3 spawnPos = new Vector3(Random.Range(topLeft.x, topRight.x), spawnY, Random.Range(bottomLeft.z, topLeft.z));
 
-                    // create the fish at the given position and tell it what school it belongs to^M
+                    // Create the fish at the given position and tell it what school it belongs to^M
                     fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>());
                     fishList[fishList.Count - 1].SetSchool(this); 
                     fishList[fishList.Count - 1].SetGenome(genomes[fishList.Count - 1]); 
  
-                    // increment counters
+                    // Increment counters
                     spawnedThisWave++; 
                     spawnedCount++; 
                 }
                 // Next wave.
                 spawnGaussCount++;
 
-                // after each wave is spawned, inform the UI & other listeners that the population has changed
+                // After each wave is spawned, inform the UI & other listeners that the population has changed
                 PopulationChanged();
 
-                // wait between waves
+                // Wait between waves
                 yield return new WaitForSeconds(timeBetweenWaves); 
             }
 

@@ -4,6 +4,8 @@ using UnityEngine;
 
 /**
  * Provides functionality for creating a new generation of fish from the old generation
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class FishGenomeUtilities : MonoBehaviour
 {
@@ -21,40 +23,40 @@ public class FishGenomeUtilities : MonoBehaviour
      */
     public static List<FishGenome> MakeNewGeneration(int generationSize, bool lockSexRatio, bool lockSizeRatio)
     {
-        // create a list to hold the new genomes
+        // Create a list to hold the new genomes
         List<FishGenome> newGeneration = new List<FishGenome>();
 
         for (int i = 0; i < generationSize; i++)
         {
             FishGenePair[] genes = new FishGenePair[FishGenome.Length];
 
-            // figure out the sex gene pair
+            // Figure out the sex gene pair
             FishGenePair sexPair;
 
-            // the mom gene will always be an x
+            // The mom gene will always be an x
             sexPair.momGene = FishGenome.X;
 
-            // how we determine the dad gene depends on whether we want equal number of males and females or if we want it to be random
+            // How we determine the dad gene depends on whether we want equal number of males and females or if we want it to be random
             if (lockSexRatio)
             {
-                // want to lock sex ratio, so odd fish will be one sex and even fish will be the other
+                // Want to lock sex ratio, so odd fish will be one sex and even fish will be the other
                 sexPair.dadGene = i % 2 == 0 ? FishGenome.X : FishGenome.Y;
             }
             else
             {
-                // dad gene determined by pseudorandom chance
+                // Dad gene determined by pseudorandom chance
                 sexPair.dadGene = Random.Range(0, 2) == 0 ? FishGenome.X : FishGenome.Y;
             }
 
-            // add the sex gene to our list of genomes
+            // Add the sex gene to our list of genomes
             genes[(int)FishGenome.GeneType.Sex] = sexPair;
 
-            // figure out the size gene pair
+            // Figure out the size gene pair
             FishGenePair sizePair;
 
-            // how we determine the size genes is dependant on whether we want to lock to specific ratios or do random
-            // if we're locking values, we use i % 4 to get 25% big, 50% medium, 25% small
-            // if we aren't just do a random value
+            // How we determine the size genes is dependant on whether we want to lock to specific ratios or do random
+            // If we're locking values, we use i % 4 to get 25% big, 50% medium, 25% small
+            // If we aren't just do a random value
             int value = lockSizeRatio ? i % 4 : Random.Range(0, 4);
             switch (value)
             {
@@ -77,10 +79,10 @@ public class FishGenomeUtilities : MonoBehaviour
                     break;
             }
 
-            // add the size gene to our list of genomes
+            // Add the size gene to our list of genomes
             genes[(int)FishGenome.GeneType.Size] = sizePair;
 
-            // create a genome out of our genes and add it to the list
+            // Create a genome out of our genes and add it to the list
             FishGenome genome = new FishGenome(genes);
             newGeneration.Add(genome);
         }
@@ -102,15 +104,15 @@ public class FishGenomeUtilities : MonoBehaviour
         mediumParent = 0;
         largeParent = 0;
         
-        // create a list to put the new generation in
+        // Create a list to put the new generation in
         List<FishGenome> newGeneration = new List<FishGenome>();
 
-        // find all the females
+        // Find all the females
         List<FishGenome> females = FindFemaleGenomes(potentialParents);
-        // find all the males
+        // Find all the males
         List<FishGenome> males = FindMaleGenomes(potentialParents);
 
-        // determine which list is shorter
+        // Determine which list is shorter
         int shortestLength = Mathf.Min(females.Count, males.Count);
 
         // Referencable gene pairs for the male and female parent fish for the sake of counting at the end of a round
@@ -121,16 +123,16 @@ public class FishGenomeUtilities : MonoBehaviour
         List<FishGenome> mediumFemalePairs = FindMediumGenomes(females);
         List<FishGenome> largeFemalePairs = FindLargeGenomes(females);
 
-        // loop (shortest list of males and females) times
-        // each time, generate a certain number of offspring from the ith male and ith female
+        // Loop (shortest list of males and females) times
+        // Each time, generate a certain number of offspring from the ith male and ith female
         Debug.Log("Before Repro Loop: minOffspring=" + minOffspring + ";  maxOffspring=" + maxOffspring);
         for (int i = 0; i < shortestLength; i++)
         {
-            // determine how many offspring this pairing will make
+            // Determine how many offspring this pairing will make
             int numOffspring = Random.Range(minOffspring, maxOffspring + 1);
             for (int offspring = 0; offspring < numOffspring; offspring++)
             {
-                // add each fish to the new generation
+                // Add each fish to the new generation
                 newGeneration.Add(new FishGenome(females[i], males[i]));
             }
 

@@ -4,24 +4,21 @@ using UnityEngine;
 
 /**
  * Class that controls a single fish
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 [RequireComponent(typeof(Rigidbody))]
 public class Fish : MonoBehaviour
 {
-    // amount of energy the fish has when they spawn
-    public float startingEnergy;
+    public float startingEnergy;        //< Amount of energy the fish has when they spawn
 
-    // baseline amount of energy that is expended by the fish if they are not moving
-    public float baselineEnergyUsageRate;
+    public float baselineEnergyUsageRate;   //< Baseline amount of energy that is expended by the fish if they are not moving
 
-    // rate at which the fish expends energy
-    public float motionEnergyUsageRate;
+    public float motionEnergyUsageRate;     //< Rate at which the fish expends energy
 
-    // maximum speed for fish movement
-    public float swimSpeed;
+    public float swimSpeed;                 //< Maximum speed for fish movement
 
-    // speed at which fish will rotate towards direction of motion
-    public float rotateSpeed;
+    public float rotateSpeed;               //< Speed at which fish will rotate towards direction of motion
 
     public Destination destination;     //< The destination this object is moving towards
 
@@ -37,33 +34,25 @@ public class Fish : MonoBehaviour
     private bool craftingPath = true;                   //< Whether or not this fish is still making a path to the end
     private int currentIndex = 0;                       //< The index of the current node this fish is moving to
 
-    // is this fish being caught?
-    public bool beingCaught { get; private set; } = false;
+    public bool beingCaught { get; private set; } = false;  //< Is this fish being caught?
 
-    // fish school the fish belongs to
-    private FishSchool school;
+    private FishSchool school;          //< Fish school the fish belongs to
 
-    // the fish's genome
-    private FishGenome genome;
+    private FishGenome genome;          //< The fish's genome
 
-    // fish appearance controller
-    private FishAppearance fishAppearance;
+    private FishAppearance fishAppearance;      //< Fish appearance controller
 
-    // fish's rigidbody
-    private Rigidbody rigid;
+    private Rigidbody rigid;            //< Fish's rigidbody
 
-    // amount of energy the fish currently has
-    private float currentEnergy;
+    private float currentEnergy;        //< Amount of energy the fish currently has
 
-    // is this fish currently stuck from moving on (because it failed to get across a dam or something like that)
-    private bool stuck = false;
+    private bool stuck = false;         //< Is this fish currently stuck from moving on (because it failed to get across a dam or something like that)
 
-    // cached velocity & angular velocity for resume from pause
+    // Cached velocity & angular velocity for resume from pause
     private Vector3 cachedVelocity;
     private Vector3 cachedAngularVelocity;
 
-    // Counter for attempts to pass the dam
-    public int damPassCounter = 0;
+    public int damPassCounter = 0;      //< Counter for attempts to pass the dam
 
     #region Major Monobehaviour Functions
 
@@ -72,7 +61,7 @@ public class Fish : MonoBehaviour
      */
     private void OnEnable()
     {
-        // get refs
+        // Get References
         rigid = GetComponent<Rigidbody>();
         fishAppearance = GetComponentInChildren<FishAppearance>();
         school = FindObjectOfType<FishSchool>();
@@ -105,7 +94,7 @@ public class Fish : MonoBehaviour
             }
         }
 
-        // set up initial energy
+        // Set up initial energy
         currentEnergy = startingEnergy;
     }
 
@@ -115,7 +104,9 @@ public class Fish : MonoBehaviour
      * smooth path. No need for a complication Bezier calculation or A* path smoothing which would be longer code
      */
 
-
+    /*
+     * Update is called every frame update. This is mainly used for fish movement and energy degradation.
+     */
     private void Update()
     {
         if (Vector3.Distance(transform.position, destination.destinationPosition) <= 6.0f)
@@ -170,40 +161,6 @@ public class Fish : MonoBehaviour
     #region Movement
 
     /**
-     * Make the fish swim by applying a force in a direction
-     */
-    public void Swim()
-    {
-        //if (transform.position == destination.destinationPosition)
-        //{
-        //    if (destination.finalDestination != true)
-        //    {
-        //        currentIndex++;
-        //        destination = path[currentIndex];
-
-        //        Vector3 lookPosition = destination.destinationPosition - transform.position;
-        //        lookPosition.y = 0.0f;
-        //        destinationDirection = Quaternion.LookRotation(lookPosition);
-        //    }
-        //}
-
-        //// Move towards the destination at a constant speed
-        //transform.position = Vector3.MoveTowards(transform.position, destination.destinationPosition, swimSpeed * Time.deltaTime);
-
-        //// Determine if we are already facing towards the destination
-        //float deltaAngle = Quaternion.Angle(transform.rotation, destinationDirection);
-
-        //// Exit early if no update required
-        //if (deltaAngle == 0.00F)
-        //{
-        //    return;
-        //}
-
-        //// Turn the fish to face the target at a constant speed
-        //transform.rotation = Quaternion.Slerp(transform.rotation, destinationDirection, rotateSpeed * Time.deltaTime / deltaAngle);
-    }
-
-    /**
      * Returns true if the fish has used up all of its energy
      */
     public bool OutOfEnergy()
@@ -233,6 +190,8 @@ public class Fish : MonoBehaviour
 
     /**
      * Set the school that the fish belongs to
+     * 
+     * @param school The FishSchool this fish is from
      */
     public void SetSchool(FishSchool school)
     {  
@@ -249,12 +208,14 @@ public class Fish : MonoBehaviour
 
     /**
      * Set the genome of the fish
+     * 
+     * @param genome The genome belonging to this fish
      */
     public void SetGenome(FishGenome genome)
     {
         this.genome = genome;
 
-        // if the appearance script can be found, set the appearance based on the genome
+        // If the appearance script can be found, set the appearance based on the genome
         if (fishAppearance)
         {
             fishAppearance.SetAppearance(genome);
@@ -263,6 +224,8 @@ public class Fish : MonoBehaviour
 
     /**
      * Set whether this fish is stuck from moving on past obstacles in the level
+     * 
+     * @param stuck Is the fish currently stuck or not
      */
     public void SetStuck(bool stuck)
     {
@@ -297,7 +260,7 @@ public class Fish : MonoBehaviour
      */
     public void Catch()
     {
-        // remove the fish from the school
+        // Remove the fish from the school
         school.FishKilled(this);
 
         DeactivateFish();
@@ -315,7 +278,7 @@ public class Fish : MonoBehaviour
      */
     public void ReachSpawningGrounds()
     {
-        // tell the school that this fish succeeded
+        // Tell the school that this fish succeeded
         school.FishSucceeded(this);
 
         DeactivateFish();
@@ -326,8 +289,8 @@ public class Fish : MonoBehaviour
      */
     private void DeactivateFish()
     {
-        // disable the whole fish
-        // have to go to the root because the fish component may not be on the outermost gameobject
+        // Disable the whole fish
+        // Have to go to the root because the fish component may not be on the outermost gameobject
         // and therefore disabling it might not disable the renderer or other fish parts
         transform.root.gameObject.SetActive(false);
     }

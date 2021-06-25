@@ -2,22 +2,31 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * A type of Salmon Ladder to attach to a dam (a type of filter) to allow fish to pass by more easily.
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class DamLadder : MonoBehaviour, IDragAndDropObject
 {
     // The ManagerIndex with initialization values for a given tower
     public ManagerIndex initializationValues;
 
-    // rate at which small, medium, and large fish should be able to pass a dam with a ladder installed
+    // Rates at which small, medium, and large fish should be able to pass a dam with a ladder installed
     [Range(0f, 1f)]
     public float smallCrossingRate = 0.3F;
     [Range(0f, 1f)]
     public float mediumCrossingRate = 0.9F;
     [Range(0f, 1f)]
     public float largeCrossingRate= 0.99F;
-    // initialized in Unity
-    // Project -> Assets -> Prefabs -> Filters -> Dam -> DamLadder
-    // (make sure to double click on DamLadder cube symbol. 
+    /* Initialized in Unity
+     * Project -> Assets -> Prefabs -> Filters -> Dam -> DamLadder
+     * (make sure to double click on DamLadder cube symbol. 
+     */
 
+    /**
+     * Awake is called after all gameObjects in the scene are initialized prior to the game starting
+     */
     private void Awake()
     {
         // Get initialization values and set this towers basic values
@@ -31,7 +40,7 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
      */
     public void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        // can only place if we are there is a dam placement location somewhere in the hit object's hierarchy
+        // Can only place if we are there is a dam placement location somewhere in the hit object's hierarchy
         DamPlacementLocation placementLocation = primaryHitInfo.collider.transform.root.GetComponentInChildren<DamPlacementLocation>();
         if (placementLocation != null)
         {
@@ -52,16 +61,16 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
      */
     public bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        // must have hit something
+        // Must have hit something
         if (primaryHitInfo.collider)
         {
-            // can only place if we are there is a dam placement location somewhere in the hit object's hierarchy
+            // Can only place if we are there is a dam placement location somewhere in the hit object's hierarchy
             DamPlacementLocation placementLocation = primaryHitInfo.collider.transform.root.GetComponentInChildren<DamPlacementLocation>();
 
-            // thing we hit must be a dam placement location
+            // Thing we hit must be a dam placement location
             if (placementLocation != null)
             {
-                // only return true if the placement location is not already in use
+                // Only return true if the placement location is not already in use
                 return (placementLocation.inUse && !placementLocation.HasLadder);
             }
         }

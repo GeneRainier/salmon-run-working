@@ -4,22 +4,22 @@ using UnityEngine;
 
 /**
  * A filter is an object in the game that applies an effect to a fish as it passes through.
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 [RequireComponent(typeof(Collider))]
 public abstract class FilterBase : MonoBehaviour
 {
-    // is this filter currently active
-    protected bool active = false;
+    protected bool active = false;      //< Is this filter currently active
 
-    // the collider on the filter object
-    private Collider myCollider;
+    private Collider myCollider;        //< The collider on the filter object
 
     /**
-     * Initialization function
+     * Awake is called after all gameObjects in the scene are initialized prior to the game starting
      */
     private void Awake()
     {
-        // get component refs
+        // Get component refs
         myCollider = GetComponent<Collider>();
     }
 
@@ -28,11 +28,11 @@ public abstract class FilterBase : MonoBehaviour
      */
     private void OnTriggerEnter(Collider other)
     {
-        // only care about triggers if the filter is active
+        // Only care about triggers if the filter is active
         if (active)
         {
-            // check what hit us
-            // only care if it's a fish
+            // Check what hit us
+            // Only care if it's a fish
             Fish f = other.gameObject.GetComponentInChildren<Fish>();
             if (f != null)
             {
