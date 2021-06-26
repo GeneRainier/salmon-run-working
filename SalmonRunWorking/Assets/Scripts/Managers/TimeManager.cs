@@ -3,10 +3,12 @@ using UnityEngine;
 
 /**
  * Manages pace the game runs at
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class TimeManager : MonoBehaviour
 {
-    // states representing each possible time rate the game can run at
+    // States representing each possible time rate the game can run at
     public enum TimeState
     {
         Paused,
@@ -15,28 +17,24 @@ public class TimeManager : MonoBehaviour
         FastestSpeed
     }
 
-    // time rate the game is currently running at
-    private TimeState timeState;
+    private TimeState timeState;            //< Time rate the game is currently running at
 
-    // list of pausable objects in the game
-    private List<IPausable> pausableObjects;
+    private List<IPausable> pausableObjects;    //< List of pausable objects in the game
 
-    // slightly sped up time scale
     [Range(0f, 10f)]
-    public float fasterTimeScale;
+    public float fasterTimeScale;           //< Slightly sped up time scale
 
-    // majorly sped up time scale
     [Range(0f, 10f)]
-    public float fastestTimeScale;
+    public float fastestTimeScale;          //< Majorly sped up time scale
 
     #region Major Monobehaviour Functions
 
     /**
-     * Initialization function
+     * Awake is called after the initialization of every gameObject prior to the game Starting. Used as an Initialization function
      */
     private void Awake()
     {
-        // init list of pausables
+        // Initialize list of pausables
         pausableObjects = new List<IPausable>();
     }
 
@@ -46,6 +44,8 @@ public class TimeManager : MonoBehaviour
 
     /**
      * Register a pausable object with the manager
+     * 
+     * @param pausable The object being paused
      */
     public void RegisterPausable(IPausable pausable)
     {
@@ -126,6 +126,11 @@ public class TimeManager : MonoBehaviour
         }
     }
 
+    /*
+     * Checks if the current state matches with a particular checked state
+     * 
+     * @param timeState The speed of the game we are comparing against
+     */
     public bool IsState(TimeState timeState)
     {
         return this.timeState == timeState;

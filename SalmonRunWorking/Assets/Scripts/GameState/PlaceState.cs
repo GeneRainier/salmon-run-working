@@ -4,15 +4,19 @@ using UnityEngine;
 
 /**
  * Game state during the phase designated for users to place towers
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class PlaceState : GameState
 {
     /**
      * Handle entry into the Place state
+     * 
+     * @param oldState The game state we are exiting
      */
     public override void Enter(GameState oldState)
     {
-        // pause the game
+        // Pause the game
         GameManager.Instance.PauseButton();
     }
 

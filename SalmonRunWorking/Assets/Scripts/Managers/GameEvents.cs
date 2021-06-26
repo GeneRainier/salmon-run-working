@@ -3,31 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/*
+ * Class that defines the various states the game can be in
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class GameEvents : MonoBehaviour
 {
-    // event for starting a "run" state
-    public static UnityEvent onStartRun = new UnityEvent();
+    public static UnityEvent onStartRun = new UnityEvent();     //< Event for starting a "run" state
 
-    // event for ending a "run" state
-    public static UnityEvent onEndRun = new UnityEvent();
+    public static UnityEvent onEndRun = new UnityEvent();       //< Event for ending a "run" state
 
-    // event for beginning the "run stats" state
-    public static UnityEvent onStartRunStats = new UnityEvent();
+    public static UnityEvent onStartRunStats = new UnityEvent();    //< Event for beginning the "run stats" state
 
-    // event for ending the game
+    // Event for ending the game
     [System.Serializable]
     public class EndGameEvent : UnityEvent<EndGame.Reason> { };
     public static EndGameEvent onEndGame = new EndGameEvent();
 
-    // called when turn gets changed
-    public static UnityEvent onTurnUpdated = new UnityEvent();
+    public static UnityEvent onTurnUpdated = new UnityEvent();      //< Called when turn gets changed
 
-    // called when a new generation of fish has been created
+    // Called when a new generation of fish has been created
     [System.Serializable]
     public class NewGenerationEvent : UnityEvent<List<FishGenome>, List<FishGenome>> { };
     public static NewGenerationEvent onNewGeneration = new NewGenerationEvent();
 
-    // called when a change in fish population has occurred
+    // Called when a change in fish population has occurred
     [System.Serializable]
     public class PopulationEvent : UnityEvent<List<FishGenome>, List<FishGenome>, List<FishGenome>> { };
     public static PopulationEvent onFishPopulationChanged = new PopulationEvent();

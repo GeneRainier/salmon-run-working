@@ -4,18 +4,19 @@ using UnityEngine;
 
 /**
  * Handles fish evolution over generations
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class EvolutionManager : MonoBehaviour
 {
-    // singleton instance
-    public static EvolutionManager Instance { get; private set; }
+    public static EvolutionManager Instance { get; private set; }       //< Singleton instance
 
     /**
-     * Initialization function
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization function
      */
     private void Awake()
     {
-        // handle singleton instance
+        // Handle singleton instance
         if (Instance == null)
         {
             Instance = this;

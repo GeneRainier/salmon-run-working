@@ -3,8 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Manager script to handle the various UI elements such as buttons and panels
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class MenuManager : MonoBehaviour
 {
+    // The buttons along the tower panel in the UI
     [Header("Tower Buttons")] 
     [SerializeField] private Button anglerButton;
     [SerializeField] private Button rangerButton;
@@ -14,16 +20,32 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private Button truckButton;
     [SerializeField] private Button tunnelButton;
 
+    /*
+     * Enables the towers of a particular type
+     * 
+     * @param tower The type of tower we are enabling
+     */
     public void Enable(TowerType tower)
     {
         Toggle(tower, true);
     }
 
+    /*
+     * Disables the towers of a particular type
+     * 
+     * @param tower The type of tower we are enabling
+     */
     public void Disable(TowerType tower)
     {
         Toggle(tower, false);
     }
 
+    /*
+     * Toggles the button for a type of tower based on whether it is enabled currently
+     * 
+     * @param tower The type of tower we are enabling the buttons for
+     * @param toggle Whether we are enabling or disabling
+     */
     public void Toggle(TowerType tower, bool toggle)
     {
         switch (tower)

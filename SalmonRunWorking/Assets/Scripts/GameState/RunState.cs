@@ -1,17 +1,21 @@
 ﻿/**
  * Game state during the actual running of the salmon
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class RunState : GameState
 {
     /**
      * Handle entry into the Run state
+     * 
+     * @param oldState The game state we are exiting from
      */
     public override void Enter(GameState oldState)
     {
-        // set to normal speed by default
+        // Set to normal speed by default
         GameManager.Instance.NormalSpeed();
 
-        // fire event to inform that run has started
+        // Fire event to inform that run has started
         GameEvents.onStartRun.Invoke();
     }
 
@@ -20,10 +24,10 @@ public class RunState : GameState
      */
     public override void ExitState()
     {
-        // increment turn
+        // Increment turn
         GameManager.Instance.Turn++;
 
-        // fire event to inform that run has ended
+        // Fire event to inform that run has ended
         GameEvents.onEndRun.Invoke();
     }
 

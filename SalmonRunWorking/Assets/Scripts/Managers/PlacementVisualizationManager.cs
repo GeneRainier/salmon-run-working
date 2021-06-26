@@ -4,18 +4,19 @@ using UnityEngine;
 
 /**
  * Managers visualization of placement locations for placeable objects in the game.
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class PlacementVisualizationManager : MonoBehaviour
 {
-    // singleton instance
-    public static PlacementVisualizationManager Instance { get; private set; }
+    public static PlacementVisualizationManager Instance { get; private set; }      //< Singleton instance
 
     /**
-     * Initialization function
+     * Awake is called after the initialization of every gameObject prior to the game Starting. Used as an Initialization function
      */
     private void Awake()
     {
-        // manage singleton
+        // Manage singleton
         if (Instance == null)
         {
             Instance = this;
@@ -35,15 +36,15 @@ public class PlacementVisualizationManager : MonoBehaviour
      */
     public void DisplayVisualization(System.Type type, bool activate)
     {
-        // look through different types to figure out which visualizations to turn on and off
+        // Look through different types to figure out which visualizations to turn on and off
         if (type == typeof(Dam))
         {
-            // show placement locations for dams
+            // Show placement locations for dams
             DamPlacementLocation.SetDamVisualizations(activate);
         }
         else if (type == typeof(DamLadder))
         {
-            // show placement locations for dam ladders
+            // Show placement locations for dam ladders
             DamPlacementLocation.SetLadderVisualizations(activate);
         }
     }

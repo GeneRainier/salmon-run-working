@@ -3,10 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * A manager class that tracks the actions of the other manager scripts and tracks values for printing output files
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class ManagerIndex : MonoBehaviour
 {
-    public static ManagerIndex MI;
+    public static ManagerIndex MI;          //< Reference to the ManagerIndex
 
+    // References to the other manager scripts
     [SerializeField] private GameManager gameManager;
     [SerializeField] private ColorManager colorManager;
     [SerializeField] private TimeManager timeManager;
@@ -47,7 +53,7 @@ public class ManagerIndex : MonoBehaviour
     public float liftLargePassRate;
 
     public float startingMoney;
-    public int sealionAppearanceTime;       /// This int represents number of rounds until a sealion appears
+    public int sealionAppearanceTime;       //< This int represents number of rounds until a sealion appears
 
     // Sealion Catch Rates
     public float sealionFemaleCatchRate;

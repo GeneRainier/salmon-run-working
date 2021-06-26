@@ -7,51 +7,56 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
+/*
+ * Authors: Benjamin Person (Editor 2020)
+ */
 
-
-//types of upgrades
+// Types of upgrades
 public enum UpgradeType
 {
     SalmonLadderUp, FisherUp
 }
 
+/*
+ * The operating manager script for providing upgrades for towers
+ */
 public class UpgradeManager : MonoBehaviour
 {
-    // The ManagerIndex with initialization values for a given tower
-    public ManagerIndex initializationValues;
+    public ManagerIndex initializationValues;           //< The ManagerIndex with initialization values for a given tower
 
-    public Button upgradeButtonTray;
+    public Button upgradeButtonTray;            //< The UI button used to open the upgrade menu
 
-    //the three ladder swap buttons
+    // The three ladder swap buttons
     public Button originalLadderButton;
     public Button upgradeLadderOneButton;
     public Button upgradeLadderTwoButton;
 
-    //the two ladder upgrade buttons
+    // The two ladder upgrade buttons
     public Button ladderUp1Button;
     public Button ladderUp2Button;
 
+    // Images to represent each of the Salmon Ladders in the Ladder submenu
     public Image salmonLadder;
     public Image salmonRamp;
     public Image salmonElevator;
 
 
-    //the three fisherman catch rate buttons
+    // The three fisherman catch rate buttons
     public Button upgradeSmallCatchButton;
     public Button upgradeMediumCatchButton;
     public Button upgradeLargeCatchButton;
 
-    private bool finalUpgrade => numberOfUpgrades >= 2;
+    private bool finalUpgrade => numberOfUpgrades >= 2;         //< Bool tracking if an upgrade has been purchased for a tower
 
-    private int numberOfUpgrades;
+    private int numberOfUpgrades;           //< The number of upgrades that can be purchased for a tower
 
-    //check to see if you have already bought them
+    // Check to see if you have already bought them
     public bool firstPurchase1 = true;
     public bool firstPurchase2 = true;
 
-    public UpgradeUI upgradeUI;
+    public UpgradeUI upgradeUI;         //< Reference to the UpgradeUI script
 
-    //upgrade prefabs
+    // Upgrade prefabs
     private GameObject originalLadder;
     public GameObject upgradeLadderOne;
     public GameObject upgradeLadderTwo;
@@ -62,7 +67,7 @@ public class UpgradeManager : MonoBehaviour
         set => originalLadder = value;
     }
 
-    //fisherman catch rate values
+    // Fisherman catch rate values
     private float smallRate;
     private float mediumRate;
     private float largeRate;
@@ -85,23 +90,24 @@ public class UpgradeManager : MonoBehaviour
         set => largeRate = value;
     }
 
-    //bool to see if maximum catch rate has been reached
+    // Bool to see if maximum catch rate has been reached
     public bool smallRateMax = false;
     public bool mediumRateMax = false;
     public bool largeRateMax = false;
 
-    //will be true if you have a fisherman
-    public bool isAFisherman = false;
+    public bool isAFisherman = false;       //< Will be true if you have a fisherman
 
-    private GameObject firstLadder;
+    private GameObject firstLadder;         //< The initial ladder a player places into the game scene
     
-    [SerializeField] private List <Upgrade> upgrades;
+    [SerializeField] private List <Upgrade> upgrades;       //< List of Upgrades that can be purchased
 
-    // Reference to the TowerManager
-    [SerializeField] private TowerManager theTowerManager;
+    [SerializeField] private TowerManager theTowerManager;  //< Reference to the TowerManager
 
-    public TextMeshProUGUI purchaseText;
+    public TextMeshProUGUI purchaseText;        //< The text associated with purchasing an upgrade
 
+    /*
+     * Start is called prior to the first frame update
+     */
     void Start()
     {
         // Get initialization values and set this towers basic values
@@ -123,10 +129,13 @@ public class UpgradeManager : MonoBehaviour
         //currentActiveLadder.interactable = false;
     }
 
+    /*
+     * Update is called every frame update
+     */
     void Update()
     {
         //Debug.Log("SmallRate: " + smallRate);
-        // if the dam has a ladder and if its PlaceState and if there are more upgrades available, then the button appears
+        // If the dam has a ladder and if its PlaceState and if there are more upgrades available, then the button appears
         if (originalLadder)
         {
             if (ManagerIndex.MI.GameManager.PlaceState && !finalUpgrade)
@@ -183,6 +192,9 @@ public class UpgradeManager : MonoBehaviour
         
     }
 
+    /*
+     * Upgrades the Salmon Ladder to whatever variant the player has selected
+     */
     public void UpgradeButtonLadder()
     {
         /*
@@ -207,15 +219,15 @@ public class UpgradeManager : MonoBehaviour
 
         if (EventSystem.current.currentSelectedGameObject.name == ladderUp1Button.name)
         {
-            //sets the right later active
+            // Sets the right later active
             originalLadder.SetActive(false);
             upgradeLadderTwo.SetActive(false);
             upgradeLadderOne.SetActive(true);
 
-            //tell upgrdeUI it was bought
+            // Tell upgrdeUI it was bought
             upgradeUI.Ladder1Bought();
 
-            //buys the ladder if not already bought
+            // Buys the ladder if not already bought
             if (firstPurchase1)
             {
                 upgradeUI.Purchase();
@@ -227,7 +239,7 @@ public class UpgradeManager : MonoBehaviour
             salmonElevator.enabled = false;
             salmonLadder.enabled = false;
 
-            //making the right buttons clickable
+            // Making the right buttons clickable
             upgradeLadderOneButton.interactable = false;
             originalLadderButton.interactable = true;
             if (firstPurchase2)
@@ -242,14 +254,14 @@ public class UpgradeManager : MonoBehaviour
         }
         else if (EventSystem.current.currentSelectedGameObject.name == ladderUp2Button.name)
         {
-            //sets the right later active
+            // Sets the right later active
             originalLadder.SetActive(false);
             upgradeLadderOne.SetActive(false);
             upgradeLadderTwo.SetActive(true);
 
             upgradeUI.Ladder2Bought();
 
-            //buys the ladder if not already bought
+            // Buys the ladder if not already bought
             if (firstPurchase2)
             {
                 upgradeUI.Purchase();
@@ -261,7 +273,7 @@ public class UpgradeManager : MonoBehaviour
             salmonElevator.enabled = true;
             salmonLadder.enabled = false;
 
-            //making the right buttons clickable
+            // Making the right buttons clickable
             originalLadderButton.interactable = true;
             upgradeLadderTwoButton.interactable = false;
             if (firstPurchase1)
@@ -293,6 +305,9 @@ public class UpgradeManager : MonoBehaviour
 
     }
 
+    /*
+     * Switches out a Salmon Ladder for for another variant the player has purchased before
+     */
     public void SwapLadderButtons()
     {
         if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderOneButton.name && ManagerIndex.MI.GameManager.PlaceState)
@@ -370,12 +385,15 @@ public class UpgradeManager : MonoBehaviour
      * the button is hit again. I will change this code further after we agree on whether we want to have individual or system wide upgrades.
      */
 
+    /*
+     * Upgrades the catch rates for all the fishermen in the scene
+     */
     public void UpgradeButtonFisherman()
     {
         if (EventSystem.current.currentSelectedGameObject.name == upgradeSmallCatchButton.name)
         {
             Debug.Log("Entered Fishermen Upgrade");
-            //should be able to get rid of this first if statement if the UpgradeUI works properly and turns it off when max is hit
+            // Should be able to get rid of this first if statement if the UpgradeUI works properly and turns it off when max is hit
             if (smallRate < 1.0f)
             {
                 Debug.Log("If is good");
@@ -421,12 +439,17 @@ public class UpgradeManager : MonoBehaviour
         }
     }
 
-    //this makes the "purchased!" text pop up and then fade after a few seconds. Will throw in a particle effect in here as well.
+    /*
+     * This makes the "purchased!" text pop up and then fade after a few seconds. Will throw in a particle effect in here as well.
+     */
     public void PurchasedPopUp()
     {
         StartCoroutine(MyCoroutine());
     }
 
+    /*
+     * Coroutine to enable the purchased upgrade menu text
+     */
     IEnumerator MyCoroutine()
     {
         purchaseText.enabled = true;
@@ -447,39 +470,55 @@ public class UpgradeManager : MonoBehaviour
          * input.
          */
 
-        //Stuff to manage the upgrades
+    /*
+     * Retrieves an upgrade from the list of potential upgrades
+     * 
+     * @param upgradeType The kind of upgrade we are searching for
+     * @return Upgrade The upgrade we are searching for
+     */
     public Upgrade GetUpgrade(UpgradeType upgradeType)
     {
         return upgrades.Find(upgrade => upgrade.UpgradeType == upgradeType);
     }
 
-    //upgrade type refers to the type of tower you are upgrading
+    /*
+     * Retrieves the cost of a given upgrade type
+     * 
+     * @param upgradeType The kind of upgrade we are searching for
+     * @return float The cost of the kind of upgrade
+     */
     public float GetUpgradeCost(UpgradeType upgradeType)
     {
         return upgrades.Find(upgrade => upgrade.UpgradeType == upgradeType).Cost;
     }
 
-    //this is what is giving an error when I add other stuff.
+    // This is what is giving an error when I add other stuff.
     //THIS FUNCTION DOESNT DO ANYTHING NOW
+    /*
+     * Updates each of the buttons associated with upgrading a tower
+     */
     public void UpdateButtons()
     {
         upgrades.ForEach(upgrade => upgrade.UpgradeUI.UpdateButton());
     }
 }
 
+/*
+ * Class that describes an actual upgrade rather than a collection of an UpgradeType
+ */
 [Serializable]
 public class Upgrade
 {
-    [SerializeField] private UpgradeType upgradeType;
-    [SerializeField] private UpgradeUI upgradeUI;
+    [SerializeField] private UpgradeType upgradeType;       //< What kind of Upgrade this is
+    [SerializeField] private UpgradeUI upgradeUI;           //< The UI associated with this singular upgrade
     //[SerializeField] private bool enabled;
-    [SerializeField] private float cost;
+    [SerializeField] private float cost;                    //< The cost of this upgrade
 
-    public UpgradeType UpgradeType => upgradeType;
+    public UpgradeType UpgradeType => upgradeType;          //< A reference to the upgradeType of this Upgrade
 
-    public UpgradeUI UpgradeUI => upgradeUI;
+    public UpgradeUI UpgradeUI => upgradeUI;                //< A reference to the UpgradeUI of this Upgrade
 
-    public float Cost => cost;
+    public float Cost => cost;                              //< A reference to the cost of this Upgrade
 
     /*
     public void Enable()

@@ -4,11 +4,15 @@ using UnityEngine;
 
 /**
  * Game state where statistics are displayed (presumably following the Run state)
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class RunStatsState : GameState
 {
     /**
      * Handle entry into the RunStats state
+     * 
+     * @param oldState The game state we are exiting from
      */
     public override void Enter(GameState oldState)
     {

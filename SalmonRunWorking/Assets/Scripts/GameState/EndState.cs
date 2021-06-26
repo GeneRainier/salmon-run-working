@@ -4,11 +4,12 @@ using UnityEngine;
 
 /**
  * Game state during the phase designated for ending of the game
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class EndState : GameState
 {
-    // reason why we are quitting
-    private EndGame.Reason reason;
+    private EndGame.Reason reason;          //< Reason why we are quitting
 
     /**
      * Constructor
@@ -22,13 +23,15 @@ public class EndState : GameState
 
     /**
      * Handle entry into the Place state
+     * 
+     * @param oldState The game state we are exiting from
      */
     public override void Enter(GameState oldState)
     {
-        // pause the game
+        // Pause the game
         GameManager.Instance.PauseButton();
 
-        // fire game end event
+        // Fire game end event
         GameEvents.onEndGame.Invoke(reason);
     }
 

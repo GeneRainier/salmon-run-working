@@ -3,14 +3,14 @@ using UnityEngine;
 
 /**
  * Script that controls the overall game flow.
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public partial class GameManager : MonoBehaviour
 {
-    // singleton instance of the manager
-    public static GameManager Instance { get; private set; }
+    public static GameManager Instance { get; private set; }        //< Singleton instance of the manager
 
-    // what turn of the game we are currently on
-    private int m_turn;
+    private int m_turn;         //< What turn of the game we are currently on
     public int Turn
     {
         get { return m_turn; }
@@ -21,26 +21,22 @@ public partial class GameManager : MonoBehaviour
         }
     }
 
-    // current state of the game
-    private GameState currentState;
+    private GameState currentState;         //< Current state of the game
 
-    // name of the previous game state
-    private GameState prevState;
+    private GameState prevState;            //< Name of the previous game state
 
-    // fish school in the game
-    public FishSchool school;
+    public FishSchool school;               //< Fish school in the game
 
-    // time manager script
-    private TimeManager timeManager;
+    private TimeManager timeManager;        //< Time manager script
 
     #region Major MonoBehavior Functions
 
     /**
-     * Initialization function
+     * Awake is called after the initialization of the gameObjects prior to the game start. This is used as an Initialization function
      */
     private void Awake()
     {
-        // set as singleton or delete if there's already a singleton
+        // Set as singleton or delete if there's already a singleton
         if (!Instance) Instance = this;
         else
         {
@@ -54,10 +50,10 @@ public partial class GameManager : MonoBehaviour
      */
     private void Start()
     {
-        // get refs to other components
+        // Get refs to other components
         timeManager = ManagerIndex.MI.TimeManager;
 
-        // set to initial state
+        // Set to initial state
         Turn = 1;
         timeManager.Pause();
     }
@@ -67,15 +63,15 @@ public partial class GameManager : MonoBehaviour
      */
     private void Update()
     {
-        // do any update-level operations required in the current state
+        // Do any update-level operations required in the current state
         currentState?.UpdateState();
 
-        // check for keyboard input
+        // Check for keyboard input
         if (!Application.isEditor || !Input.GetKeyDown(KeyCode.K)) return;
         switch (currentState?.GetType().Name)
         {
             case nameof(RunState):
-                // for now, this will skip to the run stats state (in case one of the fish gets stuck or something like that
+                // For now, this will skip to the run stats state (in case one of the fish gets stuck or something like that
                 school.KillAllActive();
                 break;
         }
@@ -89,19 +85,21 @@ public partial class GameManager : MonoBehaviour
 
     /**
      * Change from one state to another
+     * 
+     * @param newState The state we are entering into
      */
     public void SetState(GameState newState)
     {
-        // if there is a previous state, exit it properly
+        // If there is a previous state, exit it properly
         currentState?.ExitState();
 
-        // hold on to old state
+        // Hold on to old state
         prevState = currentState;
 
-        // update the state
+        // Update the state
         currentState = newState;
 
-        // enter the new state
+        // Enter the new state
         currentState.Enter(prevState);
 
         Debug.Log($"Game State -> {currentState.GetType().Name}");
@@ -120,10 +118,15 @@ public partial class GameManager : MonoBehaviour
      */
     public string CurrentStateName => currentState.GetType().Name;
 
-    public bool Started => currentState != null;
-    public bool Running => CompareState(typeof(RunState));
-    public bool PlaceState => CompareState(typeof(PlaceState));
+    public bool Started => currentState != null;        //< Has the game started yet and entered its first state
+    public bool Running => CompareState(typeof(RunState));  //< Checks if the game is in a certain state
+    public bool PlaceState => CompareState(typeof(PlaceState)); //< Checks to see if the game is in the place state for tower placement
 
+    /*
+     * Checks whether the game is in the given state
+     * 
+     * @param type The state type the game is currently in
+     */
     public bool CompareState(Type type)
     {
         return Started && currentState.GetType() == type;
@@ -138,8 +141,8 @@ public partial class GameManager : MonoBehaviour
      */
     public void StartButton()
     {
-        // only does anything if we're at the very beginning
-        // if so, enter the place state
+        // Only does anything if we're at the very beginning
+        // If so, enter the place state
         if (currentState != null) return;
 
         SetState(new RunStatsState());
@@ -151,10 +154,10 @@ public partial class GameManager : MonoBehaviour
      */
     public void PauseButton()
     {
-        // can only pause during the run itself
+        // Can only pause during the run itself
         if (!CompareState(typeof(RunState))) return;
 
-        // pause the game
+        // Pause the game
         Pause();
     }
 
@@ -163,7 +166,7 @@ public partial class GameManager : MonoBehaviour
      */
     public void PlayButton()
     {
-        // what the play button should do is based on what the current state is
+        // What the play button should do is based on what the current state is
         // but first, make sure there is a current state
         if (currentState == null) return;
         switch (CurrentStateName)
@@ -210,7 +213,7 @@ public partial class GameManager : MonoBehaviour
      */
     public void FasterSpeed()
     {
-        // only make diff speed available during the run
+        // Only make diff speed available during the run
         if (!CompareState(typeof(RunState))) return;
         timeManager.FasterTime();
     }
@@ -220,7 +223,7 @@ public partial class GameManager : MonoBehaviour
      */
     public void FastestSpeed()
     {
-        // only make diff speed available during the run
+        // Only make diff speed available during the run
         if (!CompareState(typeof(RunState))) return;
         timeManager.FastestTime();
     }
