@@ -5,46 +5,47 @@ using UnityEngine;
  * RTS-style camera controller script.
  * 
  * Based on tutorial by Brackeys: https://www.youtube.com/watch?v=cfjLQrMGEb4
+ * NOTE: As of 2021, this has been adjusted substantially to better fit our new 2021 design documentation and direction
+ * 
+ * Authors: Benjamin Person (Rewrite in 2021)
  */
 public class CameraController : MonoBehaviour {
 
     [Header("Pan Properties")]
-    // can the mouse be used to pan as well as the arrow keys?
-    [SerializeField] private bool panWithMouse;
+    [SerializeField] private bool panWithMouse;     //< Can the mouse be used to pan as well as the arrow keys?
 
-    // how fast the camera pans
-    [SerializeField] private float panSpeed;
+    [SerializeField] private float panSpeed;        //< How fast the camera pans
 
-    // lowest speed the camera can pan at, expressed in terms of a fraction of the default pan speed
     [Range(0f, 1f)]
-    [SerializeField] private float minPanSpeedRatio;
+    [SerializeField] private float minPanSpeedRatio;    //< Lowest speed the camera can pan at, expressed in terms of a fraction of the default pan speed
 
-    // size of borders around edge of screen which will start panning when the mouse enters the area
-    [SerializeField] private float panBorderThickness;
+    [SerializeField] private float panBorderThickness;  //< Size of borders around edge of screen which will start panning when the mouse enters the area
 
     [Header("Camera Bounds")]
-    // farthest / closest the camera can zoom out
-    // min and max values for x and y
-    [SerializeField] private MinMax bounds;
-    
+    [SerializeField] private MinMax bounds;     //< Farthest / closest the camera can zoom out. Min and Max values for x and y
+
     [Header("Speeds")]
+    [SerializeField] private float zoomSpeed;   //< The speed at which you can zoom in or out
 
-    // how speed at which you can zoom in or out
-    [SerializeField] private float zoomSpeed;
+    [SerializeField] private float lerpSpeed;   //< The speed at which the camera pans
 
-    [SerializeField] private float lerpSpeed;
+    private Vector3 target;     //< The position the camera is aimed at
+    private bool moving;        //< Is the camera moving?
+    private float timeFactor;   //< What time scale is the game in?
 
-    private Vector3 target;
-    private bool moving;
-    private float timeFactor;
+    [SerializeField] private Vector3 initialPosition;       //< The location the camera is at when the level begins
 
-    [SerializeField] private Vector3 initialPosition;
-
+    /*
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
+     */
     private void Awake()
     {
         initialPosition = this.gameObject.transform.position;
     }
 
+    /**
+     * Update is called once per frame
+     */
     private void Update ()
     {
         UpdateTarget();
@@ -67,14 +68,14 @@ public class CameraController : MonoBehaviour {
 
         float step = panSpeed * timeFactor;
         
-        // get camera's current pos
+        // Get camera's current pos
         target = transform.position;
 
-        // figure out new zoom
+        // Figure out new zoom
         // TODO: SCROLL MORE WHEN YOU ARE CLOSE TO THE EDGE
         float scroll = 12f * Input.GetAxis("Mouse ScrollWheel");
 
-        // look for keyboard inputs as well
+        // Look for keyboard inputs as well
         if (Input.GetButton("Zoom")|| Input.GetButton("Zoom"))
         {
             scroll = 0.1f * Input.GetAxisRaw("Zoom");
@@ -89,14 +90,14 @@ public class CameraController : MonoBehaviour {
         }
         */
 
-        // modulate the pan speed based on the current zoom level (smaller pan when more zoomed in)
+        // Modulate the pan speed based on the current zoom level (smaller pan when more zoomed in)
         float zoomMultiplier = 1.1f - ((target.y - bounds.Min.y) / (bounds.Max.y - bounds.Min.y));
 
-        // figure out how much distance the pan should cover
-        // dividing by timeScale so we always appear to pan at the same speed regardless of gameplay speed
+        // Figure out how much distance the pan should cover
+        // Dividing by timeScale so we always appear to pan at the same speed regardless of gameplay speed
         float panDistance = Mathf.Min(panSpeed * zoomMultiplier * timeFactor, panSpeed * timeFactor);
         
-        // pan depending on which keys have been pressed (or which borders the mouse is currently in)
+        // Pan depending on which keys have been pressed (or which borders the mouse is currently in)
         if (Input.GetButton("Vertical") || panWithMouse && 
             (Input.mousePosition.y >= Screen.height - panBorderThickness || Input.mousePosition.y <= panBorderThickness))
         {
@@ -112,6 +113,9 @@ public class CameraController : MonoBehaviour {
         target = bounds.Clamp(target);
     }
 
+    /*
+     * Updates the position of the camera
+     */
     private void UpdatePosition()
     {
         if (moving)
@@ -134,16 +138,24 @@ public class CameraController : MonoBehaviour {
     }
 }
 
+/*
+ * The minimum and maximum values the camera may utilize in zooming and panning
+ */
 [Serializable]
 public class MinMax
 {
-    [SerializeField] private Vector3 min;
-    [SerializeField] private Vector3 max;
+    [SerializeField] private Vector3 min;       //< The minimum location
+    [SerializeField] private Vector3 max;       //< The maximum location
 
     public Vector3 Min => min;
 
     public Vector3 Max => max;
 
+    /*
+     * Clamps the given value between the given minimum float and maximum float values.
+     * 
+     * @param target The location value to clamp values from
+     */
     public Vector3 Clamp(Vector3 target)
     {
         float x = Mathf.Clamp(target.x, min.x, max.x);

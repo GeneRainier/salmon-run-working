@@ -5,66 +5,62 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/*
+ * Class that describes a fisherman
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 [RequireComponent(typeof(LineRenderer))]
 public class FishermanTower : TowerBase
 {
-    // mesh renderer that will flash when the fisherman tower is affected by a ranger or another tower
-    public MeshRenderer flashRenderer;
+    public MeshRenderer flashRenderer;      //< Mesh renderer that will flash when the fisherman tower is affected by a ranger or another tower
 
-    // materials for line renderer that indicates whether a fish has been hit or missed
+    // Materials for line renderer that indicates whether a fish has been hit or missed
     public Material hitLineMaterial;
     public Material missLineMaterial;
 
-    // material that will 
-    public Material flashMaterial;
+    public Material flashMaterial;      //< Material that will 
 
-    // default rate of success of a fish catch attempt
     [Range(0f, 1f)]
-    public float defaultCatchRate;
-    // initalized in Unity interface:
-    //Project -> Assets -> Prefabs -> Towers -> FishermanTower
+    public float defaultCatchRate;      //< Default rate of success of a fish catch attempt
+    // Initalized in Unity interface:
+    // Project -> Assets -> Prefabs -> Towers -> FishermanTower
     // then look at Hierarchy
-    //Hierarchy -> FishermanTower -> TokenBase
+    // Hierarchy -> FishermanTower -> TokenBase
 
-    // how many times the fish will flash in and out to show it is being caught
-    public int numFlashesPerCatch;
+    public int numFlashesPerCatch;      //< How many times the fish will flash in and out to show it is being caught
 
-    // default rate of success of fish catch attempt for small, medium and large fish
+    // Default rates of success of fish catch attempt for small, medium and large fish
     public float defaultSmallCatchRate = 0.7F;   
     public float defaultMediumCatchRate = 0.4F;
     public float defaultLargeCatchRate = 0.1F;
 
-    // current rate of success of fish catch attempt for small, medium, and large fish
+    // Current rates of success of fish catch attempt for small, medium, and large fish
     [SerializeField] private float currentSmallCatchRate;
     private float currentMediumCatchRate;
     private float currentLargeCatchRate;
 
-    // fish that have been caught by this fisherman
-    private List<Fish> caughtFish;
+    private List<Fish> caughtFish;      //< Fish that have been caught by this fisherman
 
-    // fish that the catch attempt line is pointing at
-    private Fish catchAttemptFish;
+    private Fish catchAttemptFish;      //< Fish that the catch attempt line is pointing at
 
-    // LineRenderer component used to display a catch or catch attempt
-    private LineRenderer catchAttemptLine;
+    private LineRenderer catchAttemptLine;      //< LineRenderer component used to display a catch or catch attempt
 
-    //gameobject and animator to start the fishing animation
+    // GameObject and Animator to start the fishing animation
     Animator fishing;
     public GameObject fisherman;
     private static readonly int Fishing = Animator.StringToHash("Fishing");
 
-    // Reference to the Tower Manager
-    [SerializeField] private TowerManager theTowerManager;
+    [SerializeField] private TowerManager theTowerManager;      // Reference to the Tower Manager
 
-    // Boolean for checking whether regulated angler has been counted yet or not
-    public bool anglerCounted = false;
+    public bool anglerCounted = false;      // Boolean for checking whether regulated angler has been counted yet or not
 
     /**
      * Start is called on object initialization
      */
     protected override void Awake()
     {
-        // bas class awake
+        // Base class awake
         base.Awake();
 
         // Set catch rates and radius based on Initialization values
@@ -73,12 +69,12 @@ public class FishermanTower : TowerBase
         defaultMediumCatchRate = initializationValues.anglerMediumCatchRate;
         defaultLargeCatchRate = initializationValues.anglerLargeCatchRate;
 
-        // set current catch rates
+        // Set current catch rates
         currentSmallCatchRate = defaultCatchRate * defaultSmallCatchRate;
         currentMediumCatchRate = defaultCatchRate * defaultMediumCatchRate;
         currentLargeCatchRate = defaultCatchRate * defaultLargeCatchRate;
 
-        //this tells the upgrade manager what the small, medium, and large rates are that can be upgraded.
+        // This tells the upgrade manager what the small, medium, and large rates are that can be upgraded.
         ManagerIndex.MI.UpgradeManager.SmallRate = currentSmallCatchRate;
         ManagerIndex.MI.UpgradeManager.MediumRate = currentMediumCatchRate;
         ManagerIndex.MI.UpgradeManager.LargeRate = currentLargeCatchRate;
@@ -106,7 +102,7 @@ public class FishermanTower : TowerBase
     private void Update()
     {
         //Debug.Log("AnglerTower", TowerActive);
-        // update fish line position
+        // Update fish line position
         if (catchAttemptLine.enabled)
         {
             SetLinePos();
@@ -138,20 +134,21 @@ public class FishermanTower : TowerBase
      * 
      * @param primaryHitInfo RaycastHit The results of the raycast that was done
      * @param secondaryHitInfo List RaycastHit The results of any secondary raycasts that were done
+     * @return bool Whether or not the placement location of the tower is valid
      */
     protected override bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         int correctLayer = LayerMask.NameToLayer(Layers.TERRAIN_LAYER_NAME);
 
-        // for placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
+        // For placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
         if (primaryHitInfo.collider && primaryHitInfo.collider.gameObject.layer == correctLayer)
         {
-            // secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same y-pos as the primary raycast
+            // Secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same y-pos as the primary raycast
             return secondaryHitInfo.TrueForAll(hitInfo => hitInfo.collider &&
                                                             hitInfo.collider.gameObject.layer == correctLayer &&
                                                             Mathf.Abs(hitInfo.point.y - primaryHitInfo.point.y) < 1f);
         }
-        // if one of these conditions was not met, return false
+        // If one of these conditions was not met, return false
         return false;
     }
 
@@ -184,11 +181,11 @@ public class FishermanTower : TowerBase
 
         //Debug.Log("do Fisherman Stuff");
 
-        // get all fish that aren't already being caught
+        // Get all fish that aren't already being caught
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
             .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught??true).ToArray();
 
-        // select one of the fish
+        // Select one of the fish
         if (fishColliders.Length <= 0) return;
         
         Fish fish = fishColliders[Random.Range(0, fishColliders.Length)].GetComponent<Fish>();
@@ -211,6 +208,8 @@ public class FishermanTower : TowerBase
 
     /**
      * Attempt to catch a fish
+     * 
+     * @param f The fish being caught
      */
     private void TryCatchFish(Fish f)
     {
@@ -219,11 +218,13 @@ public class FishermanTower : TowerBase
 
     /**
      * Display attempt to catch fish
+     * 
+     * @param fish The fish the fisherman is trying to catch
      */
     private IEnumerator TryCatchFishCoroutine(Fish fish)
     {
-        // how likely we are to catch fish is dependent on what size the fish is
-        // determine that now
+        // How likely we are to catch fish is dependent on what size the fish is
+        // Determine that now
         float catchRate;
         float weight;
         FishGenePair sizeGenePair = fish.GetGenome()[FishGenome.GeneType.Size];
@@ -248,10 +249,10 @@ public class FishermanTower : TowerBase
         Debug.Log("TryCatchFishCoroutine: cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
 
 
-        // figure out whether the fish will be caught or not
+        // Figure out whether the fish will be caught or not
         bool caught = Random.Range(0f, 1f) <= catchRate;
 
-        // do setup for catch attempt line visualizer
+        // Do setup for catch attempt line visualizer
         catchAttemptFish = fish;
 
         Destroy(catchAttemptLine.material);
@@ -259,15 +260,15 @@ public class FishermanTower : TowerBase
 
         catchAttemptLine.enabled = true;
 
-        // handle fish being caught
+        // Handle fish being caught
         if (caught)
         {
-            // tell the fish that it is being caught
+            // Tell the fish that it is being caught
             fish.StartCatch();
 
             float timeToWait = (float) timePerApplyEffect / numFlashesPerCatch / 2f;
 
-            // make the fish flash  for a bit
+            // Make the fish flash  for a bit
             SkinnedMeshRenderer fishRenderer = fish.GetComponentInChildren<SkinnedMeshRenderer>();
             for (int i = 0; i < numFlashesPerCatch; i++)
             {
@@ -279,20 +280,20 @@ public class FishermanTower : TowerBase
                 yield return new WaitForSeconds(timeToWait);
             }
 
-            // actually catch the fish
+            // Actually catch the fish
             fish.Catch();
             caughtFish.Add(fish);
             
             // Add Appropriate Funds to Bank
             ManagerIndex.MI.MoneyManager.AddCatch(weight);
         }
-        // fish escaped -- just wait for end of action
+        // Fish escaped -- just wait for end of action
         else
         {
             yield return new WaitForSeconds(timePerApplyEffect);
         }
 
-        // end the catch attempt line
+        // End the catch attempt line
         catchAttemptLine.enabled = false;
     }
 
@@ -306,19 +307,19 @@ public class FishermanTower : TowerBase
      */
     private IEnumerator AffectCatchRateCoroutine(float smallEffect, float mediumEffect, float largeEffect, float length)
     {
-        // old way
+        // Old way
 
-                currentSmallCatchRate += smallEffect;
-                currentMediumCatchRate += mediumEffect;
-                currentLargeCatchRate += largeEffect;
+        currentSmallCatchRate += smallEffect;
+        currentMediumCatchRate += mediumEffect;
+        currentLargeCatchRate += largeEffect;
 
-                //Debug.Log("before yield return cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
+        //Debug.Log("before yield return cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
 
-                yield return new WaitForSeconds(length);
+        yield return new WaitForSeconds(length);
 
-                currentSmallCatchRate -= smallEffect;
-                currentMediumCatchRate -= mediumEffect;
-                currentLargeCatchRate -= largeEffect;
+        currentSmallCatchRate -= smallEffect;
+        currentMediumCatchRate -= mediumEffect;
+        currentLargeCatchRate -= largeEffect;
 
         // Should only need to do this once. 
         // Think of Effect as Fishing regulations rather than "effect"
@@ -356,8 +357,10 @@ public class FishermanTower : TowerBase
         catchAttemptLine.SetPositions(new []{ startPos, fishPos});
     }
 
-    /* Sets the current small fish catch rate
-     *
+    /* 
+     * Sets the current small fish catch rate
+     * 
+     * @param newRate The new catch rate the fisherman should use
      */
     public void SetSmallCatchRate(float newRate)
     {

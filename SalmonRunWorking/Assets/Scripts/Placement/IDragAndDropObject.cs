@@ -4,6 +4,8 @@ using UnityEngine;
 
 /**
  * Interface for all towers in the game. Provides shared variables and functions.
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public interface IDragAndDropObject
 {
@@ -12,6 +14,7 @@ public interface IDragAndDropObject
      * 
      * @param primaryHitInfo RaycastHit The information from a raycast, used to determine whether the placement is valid
      * @param secondaryHitInfo List RaycastHit The results of any secondary raycasts that were done
+     * @return bool Whether or not the placement location is valid
      */
     bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo);
 

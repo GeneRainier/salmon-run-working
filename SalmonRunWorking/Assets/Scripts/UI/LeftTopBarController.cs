@@ -5,22 +5,24 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Script that controls the upper left UI bar which includes money and turn timers
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class LeftTopBarController : MonoBehaviour
 {
-    // turn counter text
-    public TextMeshProUGUI turnCounterText;
+    public TextMeshProUGUI turnCounterText;         //< Turn counter text
 
-    // coin text
-    public TextMeshProUGUI coinText;
+    public TextMeshProUGUI coinText;                //< Coin text
 
-    //to trigger the sealion spawning
-    public SealionSpawner triggerSpawn;
+    public SealionSpawner triggerSpawn;             //< To trigger the sealion spawning
 
-    [SerializeField] private TextMeshProUGUI timerText;
-    private int timer;
+    [SerializeField] private TextMeshProUGUI timerText;     //< Text that lists the current time in the round
+    private int timer;                              //< The timer value of the current round
 
     /**
-     * Initialization function
+     * Called when a GameObject is enabled. This is used as an Initialization function
      */
     private void OnEnable()
     {
@@ -29,6 +31,9 @@ public class LeftTopBarController : MonoBehaviour
         GameEvents.onStartRun.AddListener(StartTimer);
     }
 
+    /*
+     * Called when a GameObject is disabled
+     */
     private void OnDisable()
     {
         GameEvents.onTurnUpdated.RemoveListener(UpdateTopBarUI);
@@ -46,17 +51,26 @@ public class LeftTopBarController : MonoBehaviour
         turnCounterText.text = $"Turn: {GameManager.Instance.Turn}";
     }
 
+    /*
+     * Begins the round timer
+     */
     public void StartTimer()
     {
         timer = 0;
         StartCoroutine(Timer());
     }
 
+    /*
+     * Stops the round timer
+     */
     public void StopTimer()
     {
         StopAllCoroutines();
     }
 
+    /*
+     * Increments the round timer after being started, until the coroutine is halted
+     */
     private IEnumerator Timer()
     {
         while (true)

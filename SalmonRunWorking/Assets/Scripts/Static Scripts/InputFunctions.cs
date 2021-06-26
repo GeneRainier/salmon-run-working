@@ -2,11 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Functions that are involved with user input such as mouse / cursor movement
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public static class InputFunctions
 {
-    /// <summary>
-    /// Returns true if mouse moves, false otherwise
-    /// </summary>
+    /*
+     * Checks for whether the mouse is moving
+     * 
+     * @return bool True if the mouse is currently moving
+     */
     public static bool CheckForMouseMvt()
     {
         if (Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
@@ -16,11 +23,12 @@ public static class InputFunctions
         return false;
     }
 
-    /// <summary>
-    /// Gets the mouses position relative to the origin, as a point in Unity space
-    /// </summary>
-    /// <param name="origin"></param>
-    /// <returns></returns>
+    /*
+     * Gets the mouses position relative to the origin, as a point in Unity space
+     * 
+     * @param origin The location of the mouse
+     * @return Vector3 The location of the mouse in Unity space
+     */
     public static Vector3 GetMouseVector(GameObject origin)
     {
         Vector3 target = Input.mousePosition;
@@ -34,6 +42,11 @@ public static class InputFunctions
         return target;
     }
     
+    /*
+     * Checks if an object in the scene is moving
+     * 
+     * @return bool True if the object is currently moving
+     */
     public static bool IsMoving()
     {
         if (Input.GetAxisRaw("Horizontal") != 0 || Input.GetAxisRaw("Vertical") != 0)
@@ -43,6 +56,11 @@ public static class InputFunctions
         return false;
     }
 
+    /*
+     * Turns the cursor on or off depending on the bool input
+     * 
+     * @param cursorOn Whether or not the cursor should be on (True) or off (False)
+     */
     public static void ToggleCursor(bool cursorOn)
     {
         Cursor.visible = cursorOn;

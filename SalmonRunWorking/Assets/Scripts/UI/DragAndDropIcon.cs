@@ -6,8 +6,7 @@ using UnityEngine.UI;
 /**
  * Script that controls a drag and drop icon for dragging towers onto the play area.
  * 
- * Original Author: Jacob Cousineau
- * Subsequent Authors: Benjamin Person
+ * Authors: Jacob Cousineau (Original Writer), Benjamin Person (Editor 2020)
  */
 [RequireComponent(typeof(RectTransform))]
 public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler {
@@ -51,7 +50,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private bool hasBeenPurchased;
 
     /**
-     * Initialization
+     * Start is called prior to the first frame update
      */
     void Start ()
     {
@@ -115,6 +114,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     /**
      * Handle beginning of a drag action on this object
+     * 
      * @param eventData The PointerEventData for the drag which allows us to reference the pointer position for UpdateDrag
      */
     public void OnBeginDrag(PointerEventData eventData)
@@ -167,6 +167,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     /**
      * Handle middle of drag action on this object
+     * 
      * @param eventData The PointerEventData for the drag which allows us to reference the pointer position for UpdateDrag
      */
     public void OnDrag(PointerEventData eventData)
@@ -177,6 +178,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     /**
      * Handle end of drag action on this object
+     * 
      * @param eventData The PointerEventData for the drag which allows us to reference the pointer position for UpdateDrag
      */
     public void OnEndDrag(PointerEventData eventData)

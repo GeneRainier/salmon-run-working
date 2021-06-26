@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/*
+ * Class that manages when the player is exiting the application
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class EndGame : MonoBehaviour
 {
     /**

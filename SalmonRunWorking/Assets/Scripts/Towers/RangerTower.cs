@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/*
+ * Class that describes a ranger
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class RangerTower : TowerBase
 {
     /**
@@ -14,47 +19,37 @@ public class RangerTower : TowerBase
         Slowdown
     }
 
-    // current mode that the ranger is in
-    public Mode mode;
+    public Mode mode;           //< Current mode that the ranger is in
 
-    // materials for lines that show what angler the ranger is affecting
+    // Materials for lines that show what angler the ranger is affecting
     public Material hitLineMaterial;
     public Material missLineMaterial;
 
-    // material for making an angler flash to show it is being affected
-    public Material flashMaterial;
+    public Material flashMaterial;      //< Material for making an angler flash to show it is being affected
 
-    // prefab for line renderer
-    public GameObject lineRendererPrefab;
+    public GameObject lineRendererPrefab;   //< Prefab for line renderer
 
-    // float representing how much of an effect the ranger should have if it regulates an angler in slowdown mode for small fish
     [Range(-1f, 1f)]
-    public float slowdownEffectSmall;
+    public float slowdownEffectSmall;   //< Float representing how much of an effect the ranger should have if it regulates an angler in slowdown mode for small fish
 
-    // float representing how much of an effect the ranger should have if it regulates an angler in slowdown mode for medium fish
     [Range(-1f, 1f)]
-    public float slowdownEffectMedium;
+    public float slowdownEffectMedium;  //< Float representing how much of an effect the ranger should have if it regulates an angler in slowdown mode for medium fish
 
-    // float representing how much of an effect the ranger should have if it regulates an angler in slowdown mode for large fish
     [Range(-1f, 1f)]
-    public float slowdownEffectLarge;
+    public float slowdownEffectLarge;   //< Float representing how much of an effect the ranger should have if it regulates an angler in slowdown mode for large fish
 
-    // float representing how likely the ranger is to successfully regulate an angler
     [Range(0f, 1f)]
-    public float regulationSuccessRate;
-    // initialized in Unity
+    public float regulationSuccessRate; //< Float representing how likely the ranger is to successfully regulate an angler
+    // Initialized in Unity
     // Project -> Assets -> Prefabs -> Towers -> RangerTower
-    //   then look at Hierarchy
+    // then look at Hierarchy
     // Hierarchy -> RangerTower -> TokenBase
 
-    // how many times the fish will flash in and out to show it is being caught
-    public int numFlashesPerCatch;
+    public int numFlashesPerCatch;      //< How many times the fish will flash in and out to show it is being caught
 
-    // list of linerenderers used to show effects
-    private List<LineRenderer> towerEffectLineRenderers = new List<LineRenderer>();
+    private List<LineRenderer> towerEffectLineRenderers = new List<LineRenderer>();     //< List of linerenderers used to show effects
 
-    // list of linerenderer pos
-    private List<Vector3> towerEffectPositions = new List<Vector3>();
+    private List<Vector3> towerEffectPositions = new List<Vector3>();       //< List of linerenderer pos
 
     /**
      * Start is called before the first frame update
@@ -74,7 +69,7 @@ public class RangerTower : TowerBase
      */
     void Update()
     {
-        // update fishermen line positions
+        // Update fishermen line positions
         SetLinePositions();
     }
 
@@ -128,15 +123,16 @@ public class RangerTower : TowerBase
      * 
      * @param primaryHitInfo RaycastHit The results of the raycast that was done
      * @param secondaryHitInfo List RaycastHit The results of any secondary raycasts that were done
+     * @return bool Whether or not the placement location of the tower is valid
      */
     protected override bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         int correctLayer = LayerMask.NameToLayer(Layers.TERRAIN_LAYER_NAME);
 
-        // for placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
+        // For placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
         if (primaryHitInfo.collider && primaryHitInfo.collider.gameObject.layer == correctLayer)
         {
-            // secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same z-pos as the primary raycast
+            // Secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same z-pos as the primary raycast
             return secondaryHitInfo.TrueForAll((hitInfo) =>
             {
                 return hitInfo.collider &&
@@ -145,12 +141,14 @@ public class RangerTower : TowerBase
             });
         }
 
-        // if one of these conditions was not met, return false
+        // If one of these conditions was not met, return false
         return false;
     }
 
     /**
      * Attempt to regulate an angler
+     * 
+     * @param fishermanTower The tower the ranger is regulating
      */
     private void RegulateFisherman(FishermanTower fishermanTower)
     {
@@ -159,10 +157,12 @@ public class RangerTower : TowerBase
 
     /**
      * Display attempt to catch fish
+     * 
+     * @param fishermanTower The tower the ranger is regulating
      */
     private IEnumerator RegulateFishermanCoroutine(FishermanTower fishermanTower)
     {
-        // figure out whether the fisherman will be stopped or not
+        // Figure out whether the fisherman will be stopped or not
         bool caught = Random.Range(0f, 1f) <= regulationSuccessRate;
 
         GameObject g = Instantiate(lineRendererPrefab, transform);
@@ -177,20 +177,20 @@ public class RangerTower : TowerBase
         Vector3 towerEffectPosition = fishermanTower.transform.position;
         towerEffectPositions.Add(towerEffectPosition);
 
-        // handle fish being caught
+        // Handle fish being caught
         if (caught)
         {
-            // want this variable so we can make the fisherman flash, regardless of what mode we're in
+            // Want this variable so we can make the fisherman flash, regardless of what mode we're in
             MeshRenderer fishermanTowerRenderer = fishermanTower.flashRenderer;
 
-            // how we handle this depends on what mode the ranger is in
+            // How we handle this depends on what mode the ranger is in
             switch (mode)
             {
                 case Mode.Kill:
-                    // make the fisherman inactive
+                    // Make the fisherman inactive
                     fishermanTower.TowerActive = false;
 
-                    // make the fisherman flash for a bit
+                    // Make the fisherman flash for a bit
                     for (int i = 0; i < numFlashesPerCatch; i++)
                     {
                         Material oldMaterial = null;
@@ -209,17 +209,17 @@ public class RangerTower : TowerBase
                         yield return new WaitForSeconds((float)timePerApplyEffect / numFlashesPerCatch / 2f);
                     }
 
-                    // remove the fisherman tower
+                    // Remove the fisherman tower
                     if (fishermanTower != null)
                     {
                         Destroy(fishermanTower.transform.root.gameObject);
                     }
                     break;
                 case Mode.Slowdown:
-                    // apply the affect to the angler
+                    // Apply the affect to the angler
                     fishermanTower.AffectCatchRate(slowdownEffectSmall, slowdownEffectMedium, slowdownEffectLarge, timePerApplyEffect);
 
-                    // make the fisherman flash  for a bit
+                    // Make the fisherman flash  for a bit
                     for (int i = 0; i < numFlashesPerCatch; i++)
                     {
                         Material oldMaterial = null;
@@ -239,13 +239,13 @@ public class RangerTower : TowerBase
                     break;
             }
         }
-        // fish escaped -- just wait for end of action
+        // Fish escaped -- just wait for end of action
         else
         {
             yield return new WaitForSeconds(timePerApplyEffect);
         }
 
-        // end the catch attempt line
+        // End the catch attempt line
         towerEffectPositions.Remove(towerEffectPosition);
         towerEffectLineRenderers.Remove(lr);
         Destroy(g);

@@ -7,56 +7,53 @@ using UnityEngine.UI;
 
 /**
  * Controls the Stats Panel portion of the UI
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public class StatsPanelManager : MonoBehaviour
 {
-    // singleton instance
-    public static StatsPanelManager Instance { get; private set; }
+    public static StatsPanelManager Instance { get; private set; }      //< Singleton instance
 
-    // states the stats panel can be in
+    // States the stats panel can be in
     public enum StatsPanelState
     {
         Population,
         Fish
     }
 
-    // refs to each of the content panels
+    // Refs to each of the content panels
     public GameObject popStatsContent;
     public GameObject fishStatsContent;
 
-    // refs to the button image for each sub-panel
+    // Refs to the button image for each sub-panel
     public Image popStatsButtonImage;
     public Image fishStatsButtonImage;
 
-    // refs for selected and not-selected button sprites
+    // Refs for selected and not-selected button sprites
     public Sprite selectedButtonSprite;
     public Sprite notSelectedButtonSprite;
 
-    // refs for pop stats sub-panel
+    // Refs for pop stats sub-panel
     public Image sexGraphFemale;
     public Image sexGraphMale;
     public Image sizeGraphSmall;
     public Image sizeGraphMedium;
     public Image sizeGraphLarge;
 
-    // state that the stats panel will start in
-    public StatsPanelState initialState;
+    public StatsPanelState initialState;        //< State that the stats panel will start in
 
-    // dictionary mapping panel states to the content those states should display
-    private Dictionary<StatsPanelState, GameObject> stateContentDict;
+    private Dictionary<StatsPanelState, GameObject> stateContentDict;       //< Dictionary mapping panel states to the content those states should display
 
-    // the fish displayed by the fish section
-    private Fish currentFish;
+    private Fish currentFish;           //< The fish displayed by the fish section
 
-    // current state of the panel
-    private StatsPanelState state;
+    private StatsPanelState state;      //< Current state of the panel
 
     /**
-     * Initialization function
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization function
      */
     private void Awake()
     {
-        // set up and/or check for issues with singleton instance
+        // Set up and/or check for issues with singleton instance
         if (Instance == null)
         {
             Instance = this;
@@ -73,12 +70,12 @@ public class StatsPanelManager : MonoBehaviour
      */
     private void Start()
     {
-        // initialize the state/content dict
+        // Initialize the state/content dict
         stateContentDict = new Dictionary<StatsPanelState, GameObject>();
         stateContentDict.Add(StatsPanelState.Population, popStatsContent);
         stateContentDict.Add(StatsPanelState.Fish, fishStatsContent);
 
-        // ensure there aren't any null refs in content
+        // Ensure there aren't any null refs in content
         foreach (GameObject content in stateContentDict.Values)
         {
             if (content == null)
@@ -87,7 +84,7 @@ public class StatsPanelManager : MonoBehaviour
             }
         }
 
-        // set initial state
+        // Set initial state
         SetState(initialState);
 
 
@@ -97,6 +94,8 @@ public class StatsPanelManager : MonoBehaviour
      * Button-visible function for calling SetState, using the index in the enum
      * 
      * This is because button functions can't use enum params
+     * 
+     * @param stateIndex The index of whichever whichever enum value we want to access
      */
     public void SetState(int stateIndex)
     {
@@ -105,6 +104,8 @@ public class StatsPanelManager : MonoBehaviour
 
     /**
      * Update which fish is currently being displayed by the Fish panel
+     * 
+     * @param fish The fish being updated
      */
     public void UpdateFish(Fish fish)
     {
@@ -114,13 +115,15 @@ public class StatsPanelManager : MonoBehaviour
 
     /**
      * Set the state of the panel
+     * 
+     * @param state The stat panel state we are entering
      */
     private void SetState(StatsPanelState state)
     {
-        // set the state
+        // Set the state
         this.state = state;
 
-        // update the panel content by enabling the correct content and disabling everything else
+        // Update the panel content by enabling the correct content and disabling everything else
         foreach (StatsPanelState possibleState in stateContentDict.Keys)
         {
             stateContentDict[possibleState].SetActive(possibleState == state);

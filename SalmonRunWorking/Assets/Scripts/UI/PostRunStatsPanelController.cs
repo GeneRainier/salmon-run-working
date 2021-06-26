@@ -4,16 +4,18 @@ using TMPro;
 using UnityEngine;
 using static FishGenomeUtilities;
 
-
+/*
+ * Class that manages the end of run information that appears at the end of each wave
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class PostRunStatsPanelController : PanelController
 {
-    // The Game Manager
-    [SerializeField] private GameManager gameManager;
+    [SerializeField] private GameManager gameManager;       //< The Game Manager
 
-    // The ManagerIndex with initialization values for a given tower
-    public ManagerIndex initializationValues;
+    public ManagerIndex initializationValues;               //< The ManagerIndex with initialization values for a given tower
 
-    // descriptor text for each field on the panel
+    // Descriptor text for each field on the panel
     public string smallDescriptor;
     public string mediumDescriptor;
     public string largeDescriptor;
@@ -27,28 +29,28 @@ public class PostRunStatsPanelController : PanelController
     public int survivingFemaleDescriptor = 0;
     public int survivingMaleDescriptor = 0;
 
-    // Count for fish who died due to being stuck
     // TO DO: Connect SetStuck Function in Fish to this
-    public int stuckFish = 0;
+    public int stuckFish = 0;                   //< Count for fish who died due to being stuck
 
-    // panel's title, which displays the turn number
-    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI titleText;           //< Panel's title, which displays the turn number
 
-    // text for parent data
+    // Text for parent data
     public UIElement parentSmallText;
     public UIElement parentMediumText;
     public UIElement parentLargeText;
 
-    // text for offspring data
+    // Text for offspring data
     public UIElement offspringSmallText;
     public UIElement offspringMediumText;
     public UIElement offspringLargeText;
     public UIElement offspringFemaleText;
     public UIElement offspringMaleText;
 
-    // flag for case where there are no offspring left and we have to do something different when leaving the panel
-    private bool noOffspring;
+    private bool noOffspring;               //< Flag for case where there are no offspring left and we have to do something different when leaving the panel
 
+    /*
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization function
+     */
     private void Awake()
     {
         // Get initialization values and set this towers basic values
@@ -60,11 +62,11 @@ public class PostRunStatsPanelController : PanelController
      */
     private void Start()
     {
-        // subscribe to events
+        // Subscribe to events
         GameEvents.onNewGeneration.AddListener(OnNewGeneration);
         GameEvents.onStartRunStats.AddListener(Activate);
 
-        // set inactive by default
+        // Set inactive by default
         Deactivate();
     }
 
@@ -73,44 +75,50 @@ public class PostRunStatsPanelController : PanelController
      */
     public void OnNextRunButton()
     {
-        // deactivate the panel
+        // Deactivate the panel
         Deactivate();
 
         Debug.Log("OnNextRunButton() noOffspring = " + noOffspring);
-        // if there is fish in the next generation, just move on to place state
+        // If there is fish in the next generation, just move on to place state
         if (!noOffspring) GameManager.Instance.SetState(new PlaceState());
 
-        // otherwise, go to end panel
+        // Otherwise, go to end panel
         else GameManager.Instance.SetState(new EndState(EndGame.Reason.NoOffspring));
     }
 
     /**
      * Handle event of a new generation
+     * 
+     * @param parentGenomes The list of genomes associated with the parent generation of salmon
+     * @param offspringGenome The list of genomes associated with the children generation of salmon
      */
     private void OnNewGeneration(List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
         UpdatePanelData(parentGenomes, offspringGenomes);
 
         // TODO: this probably should not be handled here in this way
-        // something else should have the responsibility of checking if the game should be over -- I'm just trying to work quickly
+        // Something else should have the responsibility of checking if the game should be over -- I'm just trying to work quickly
         if (offspringGenomes.Count == 0) OnNoOffspring();
     }
 
     /**
      * Update the data that will be displayed on the panel
+     * 
+     * @param parentGenomes The list of genomes associated with the parent generation of salmon
+     * @param offspringGenome The list of genomes associated with the children generation of salmon
      */
     private void UpdatePanelData(List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
         int previousTurn = GameManager.Instance.Turn - 1;
         
-        // display the previous turn (because that's what
+        // Display the previous turn (because that's what
         titleText.text = $"Turn {previousTurn} Summary";
 
-        // if a full turn has been done, do the typical update
+        // If a full turn has been done, do the typical update
         if (previousTurn > 0)
         {
-            // parent genome can be null if this is the initial generation and there are no parents
-            // have to treat these two cases differently
+            // Parent genome can be null if this is the initial generation and there are no parents
+            // Have to treat these two cases differently
             if (parentGenomes != null)
             {
                 parentSmallText.SetText(smallDescriptor, FishGenomeUtilities.smallParent);
@@ -128,11 +136,11 @@ public class PostRunStatsPanelController : PanelController
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
 
-            //Comment out the line below before webGL build
-            //Update data file based on population data
+            // Comment out the line below before webGL build
+            // Update data file based on population data
             AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
-        // otherwise, do the first-turn specific update
+        // Otherwise, do the first-turn specific update
         else if (previousTurn == 0)
         {
             parentSmallText.SetText();
@@ -145,8 +153,8 @@ public class PostRunStatsPanelController : PanelController
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
 
-            //Comment out the line below before webGL build  
-            //Creates data file based on game parameters 
+            // Comment out the line below before webGL build  
+            // Creates data file based on game parameters 
             CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
     }
@@ -161,6 +169,10 @@ public class PostRunStatsPanelController : PanelController
 
     /*
      * Create the initial lines of the output table
+     * 
+     * @param previousTurn The turn number we are on
+     * @param parentGenomes The list of genomes associated with the parent generation of salmon
+     * @param offspringGenome The list of genomes associated with the children generation of salmon
      */
     private void CreateOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
@@ -190,6 +202,10 @@ public class PostRunStatsPanelController : PanelController
 
     /*
      * Append another line to the output file
+     * 
+     * @param previousTurn The turn number we are on
+     * @param parentGenomes The list of genomes associated with the parent generation of salmon
+     * @param offspringGenome The list of genomes associated with the children generation of salmon
      */
     private void AppendOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
@@ -205,14 +221,23 @@ public class PostRunStatsPanelController : PanelController
     }
 }
 
+/*
+ * Class to describe a singular UI element in the post run panel
+ */
 [Serializable]
 public class UIElement
 {
-    [SerializeField] private TextMeshProUGUI label;
-    [SerializeField] private TextMeshProUGUI value;
+    [SerializeField] private TextMeshProUGUI label;     //< The title label of the UI element
+    [SerializeField] private TextMeshProUGUI value;     //< The content of the UI element
     
-    public const string divider = ": ";
+    public const string divider = ": ";         //< A simple text divider to separate values in the post run panel
 
+    /*
+     * Sets the text in the UI element to be equal to the necessary label and value
+     * 
+     * @param lable The title of this section of the panel
+     * @param value The content of this panel section
+     */
     public void SetText(string label = "N/A", int value = -1)
     {
         if (label != "N/A") label += divider;

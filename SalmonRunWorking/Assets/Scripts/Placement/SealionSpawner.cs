@@ -2,20 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script that handles the spawning of sealions after a dam or other river filter has been placed
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class SealionSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] spawnLocations;
-    [SerializeField] private GameObject sealionPrefab;
-    [SerializeField] private GameObject sealionClone;
+    [SerializeField] private Transform[] spawnLocations;        //< List of locations for the sealion to spawn at
+    [SerializeField] private GameObject sealionPrefab;          //< The prefab for the sealion tower
+    [SerializeField] private GameObject sealionClone;           //< GameObject sealion to instantiate
 
-    [SerializeField] private bool locationInUse;
+    [SerializeField] private bool locationInUse;                //< Trait of each location sealions can spawn for whether it has spawned sealions or not
     
-    [SerializeField] private int turnsBeforeShowing = 3;
+    [SerializeField] private int turnsBeforeShowing = 3;        //< How long the sealion takes before appearing after a filter is placed
 
-    private DamPlacementLocation damPlacementLocation;
+    private DamPlacementLocation damPlacementLocation;          //< The location a dam can be placed in the level
 
-    // The ManagerIndex with initialization values for a given tower
-    public ManagerIndex initializationValues;
+    public ManagerIndex initializationValues;                   //< The ManagerIndex with initialization values for a given tower
 
     /*
     private void Update()
@@ -32,6 +36,9 @@ public class SealionSpawner : MonoBehaviour
     }
     */
 
+    /*
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
+     */
     private void Awake()
     {
         // Get initialization values and set this towers basic values
@@ -41,8 +48,12 @@ public class SealionSpawner : MonoBehaviour
         turnsBeforeShowing = initializationValues.sealionAppearanceTime;
     }
 
+    /*
+     * Update is called every frame update
+     */
     public void Update()
     {
+        // Pressing m spawns a sealion for testing purposes
         if (Input.GetKeyDown("m"))
         {
             sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(270, 0, 0));
@@ -50,6 +61,9 @@ public class SealionSpawner : MonoBehaviour
         }
     }
 
+    /*
+     * Spawns a sealion at any of the potential spawn locations in the level
+     */
     private void SpawnSealion()
     {
         if (damPlacementLocation.HasLadder && GameManager.Instance.Turn >= damPlacementLocation.PlacementTurn + turnsBeforeShowing)

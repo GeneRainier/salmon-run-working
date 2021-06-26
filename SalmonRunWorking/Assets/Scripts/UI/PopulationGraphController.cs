@@ -1,31 +1,36 @@
 ﻿using System.Collections.Generic;
 using static FishGenomeUtilities;
 
+/*
+ * Controller script to adjust the population UI counter graphs on the fly as the salmon population changes
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class PopulationGraphController : BottomBarContentPage
 {
-    // Reference to the Post Run Stats Controller to update the output file
-    public PostRunStatsPanelController updatePanel;
-    
-    // graph for successful vs. active vs. dead fish
-    public HorizontalBarGraph populationGraph;
+    public PostRunStatsPanelController updatePanel;         //< Reference to the Post Run Stats Controller to update the output file
 
-    // graph for female vs male fish
-    public HorizontalBarGraph sexGraph;
+    public HorizontalBarGraph populationGraph;              //< Graph for successful vs. active vs. dead fish
 
-    // graph for small vs medium vs large fish
-    public HorizontalBarGraph sizeGraph;
+    public HorizontalBarGraph sexGraph;                     // Graph for female vs male fish
+
+    public HorizontalBarGraph sizeGraph;                    //< Graph for small vs medium vs large fish
 
     /**
      * Start is called before the first frame update
      */
     void Start()
     {
-        // set up event calls
+        // Set up event calls
         GameEvents.onFishPopulationChanged.AddListener(UpdatePopulationData);
     }
 
     /**
      * Update UI to match updated population data
+     * 
+     * @param activeGenomes The fish in the scene who are still running
+     * @param successfulGenomes The fish that have finished a run
+     * @param deadGenomes The fish which have been caught by a tower or stuck by a filter
      */
     private void UpdatePopulationData(List<FishGenome> activeGenomes, List<FishGenome> successfulGenomes, List<FishGenome> deadGenomes)
     {

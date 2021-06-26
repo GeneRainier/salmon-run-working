@@ -2,17 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Attached to final destination nodes in a fish path to despawn the fish and track the traits of the fish that have succeeded in their run
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class SpawningGrounds : MonoBehaviour
 {
-    // The ManagerIndex with initialization values for a given tower
-    public ManagerIndex initializationValues;
+    public ManagerIndex initializationValues;       //< The ManagerIndex with initialization values for a given tower
 
-    // how many fish this spawning grounds has the capacity for
-    public int numNestingSights;
+    public int numNestingSights;        //< How many fish this spawning grounds has the capacity for
     // initialized in Assets -> Prefabs -> Art -> Fish -> Old -> EndOfLevel
     // if you don't want to initialize in Unity, make it private
 
-    // how many males and females have been taken in
+    // How many males and females have been taken in
     private int males;
     private int females;
 
@@ -26,7 +29,7 @@ public class SpawningGrounds : MonoBehaviour
 
         numNestingSights = initializationValues.nestingSites;
 
-        // subscribe to onEndRun event
+        // Subscribe to onEndRun event
         GameEvents.onEndRun.AddListener(Clear);
     }
 
@@ -43,15 +46,15 @@ public class SpawningGrounds : MonoBehaviour
      */
     private void OnTriggerEnter(Collider other)
     {
-        // figure out if the thing that hit us is actually a fish
+        // Figure out if the thing that hit us is actually a fish
         Fish fish = other.GetComponentInChildren<Fish>();
         if (fish != null)
         {
-            // need to check if this is a male or female
+            // Need to check if this is a male or female
             bool isMale = fish.GetGenome().IsMale();
 
-            // check if there is a nesting sight available for this fish
-            // if so, tell the fish it has reached the spawning grounds
+            // Check if there is a nesting sight available for this fish
+            // If so, tell the fish it has reached the spawning grounds
             if (isMale && males < numNestingSights)
             {
                 fish.ReachSpawningGrounds();
@@ -59,7 +62,7 @@ public class SpawningGrounds : MonoBehaviour
             }
             else if (!isMale && females < numNestingSights)
             {
-                // if so, it has officially reached the spawning grounds
+                // If so, it has officially reached the spawning grounds
                 fish.ReachSpawningGrounds();
                 females++;
             }

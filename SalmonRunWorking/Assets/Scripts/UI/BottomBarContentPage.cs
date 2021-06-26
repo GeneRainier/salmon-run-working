@@ -2,13 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Class for the bottom UI bar
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class BottomBarContentPage : MonoBehaviour
 {
-    // title of the page
-    public string pageTitle;
+    public string pageTitle;        //< Title of the page
 
-    // true if this content page is currently active
-    private bool active;
+    private bool active;        //< True if this content page is currently active
+    
+    /*
+     * Getters and Setters for the Bottom UI bar activation
+     */
     public bool Active
     {
         get
@@ -19,7 +26,7 @@ public class BottomBarContentPage : MonoBehaviour
         {
             active = value;
 
-            // set all children to the setter value
+            // Set all children to the setter value
             SetActiveUtils.SetChildrenActiveRecursively(gameObject, active);
         }
     }

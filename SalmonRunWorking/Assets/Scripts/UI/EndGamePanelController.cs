@@ -4,10 +4,18 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-//so far this method does nothing but declare stuff. Someday it will write a data file.
-//Method to collect data about the version and data at the end of each turn. 
+// NOTE: So far this method does nothing but declare stuff. Someday it will write a data file.
+ 
+/*
+ * Method to collect data about the version and data at the end of each turn. 
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class SalmonRunStats : Object
 {
+    /*
+     * Struct that denotes all of the values to track for a data file
+     */
     public struct endOfTurnStatisticsStructure
     {
         List<int> parentSmall;
@@ -29,6 +37,10 @@ public class SalmonRunStats : Object
         List<int> numDam;
         List<int> numLadder;
     }
+
+    /*
+     * Struct for the parameters set in the ManagerIndex to note in the data file
+     */
     public struct versionParameterStructure
     {
         string Version;           //DemoLevel>Canvas_Updated>StartPanel>Text2
@@ -62,52 +74,45 @@ public class SalmonRunStats : Object
         int schoolFishPerWave;
     }
 
-    public versionParameterStructure versionData;
-    public endOfTurnStatisticsStructure endOfTurnStats;
+    public versionParameterStructure versionData;           //< Declared versionParameterStructure object
+    public endOfTurnStatisticsStructure endOfTurnStats;     //< Declared endOfTurnStats object
 }
-
-
 
 /**
  * Controls panel that pops up when ending the game
  */
 public class EndGamePanelController : PanelController
 {
-    // panel title text
-    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI titleText;       //< Panel title text
 
-    // panel turn text
-    public TextMeshProUGUI turnText;
+    public TextMeshProUGUI turnText;        //< Panel turn text
 
-    // panel message text
-    public TextMeshProUGUI messageText;
+    public TextMeshProUGUI messageText;     //< Panel message text
 
-    // affirmative button
-    public GameObject confirmButton;
+    public GameObject confirmButton;        //< Affirmative button
 
-    // cancel button
-    public GameObject cancelButton;
+    public GameObject cancelButton;         //< Cancel button
 
-    // affirmative button text
-    public TextMeshProUGUI confirmButtonText;
+    public TextMeshProUGUI confirmButtonText;   //< Affirmative button text
 
-    // cancel button text
-    public TextMeshProUGUI cancelButtonText;
+    public TextMeshProUGUI cancelButtonText;    //< Cancel button text
 
     /**
      * Start is called before the first frame update
      */
     private void Start()
     {
-        // subscribe to events
+        // Subscribe to events
         GameEvents.onEndGame.AddListener(OnEndOfGameEvent);
 
-        // deactivated on start
+        // Deactivated on start
         Deactivate();
     }
 
     /**
      * Handle end of game event
+     * 
+     * @param reason The reason the game is ending (extinction, quitting, etc.)
      */
     private void OnEndOfGameEvent(EndGame.Reason reason)
     {
@@ -117,13 +122,15 @@ public class EndGamePanelController : PanelController
 
     /**
      * Update panel text/data based on what the reason for ending the game is
+     * 
+     * @param reason The reason the game is ending (extinction, quitting, etc.)
      */
     private void UpdatePanel(EndGame.Reason reason)
     {
-        // do all common updates
+        // Do all common updates
         UpdatePanelCommon();
 
-        // do anything specific to the reason for ending the game
+        // Do anything specific to the reason for ending the game
         switch(reason)
         {
             case EndGame.Reason.ManualQuit:

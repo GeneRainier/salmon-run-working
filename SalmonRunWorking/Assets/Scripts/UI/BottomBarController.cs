@@ -3,41 +3,38 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * Script that controls the bottom UI tower selection bar
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 [RequireComponent(typeof(RectTransform))]
 public class BottomBarController : MonoBehaviour
 {
     [Header("Expand/Contract")]
-    // the distance up and down the bar will move when the user presses the expand/contract button
-    public float expandContractDistance;
+    public float expandContractDistance;        //< The distance up and down the bar will move when the user presses the expand/contract button
 
     [Header("Content Page Buttons")]
-    // prefab for buttons that will be used to switch between content pages
-    public Button contentPageButtonPrefab;
+    public Button contentPageButtonPrefab;      //< Prefab for buttons that will be used to switch between content pages
 
-    // initial position of the first button
-    public Vector2 initialButtonPosition;
+    public Vector2 initialButtonPosition;       //< Initial position of the first button
 
-    // spacing between buttons
-    public Vector2 distanceBetweenButtons;
+    public Vector2 distanceBetweenButtons;      //< Spacing between buttons
 
-    // bottom bar's rect transform
-    private RectTransform rectTransform;
+    private RectTransform rectTransform;        //< Bottom bar's rect transform
 
-    // is the bottom bar currently expanded?
-    private bool expanded = true;
+    private bool expanded = true;               //< Is the bottom bar currently expanded?
 
-    // list of all content pages that can be shown in the bottom bar
-    private BottomBarContentPage[] contentPages;
+    private BottomBarContentPage[] contentPages;    //< List of all content pages that can be shown in the bottom bar
 
-    // index of currently active content page
-    private int activeContentPageIndex;
+    private int activeContentPageIndex;         //< Index of currently active content page
 
     /**
-     * Initialization function
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
      */
     private void Awake()
     {
-        // get component refs
+        // Get component refs
         rectTransform = GetComponent<RectTransform>();
     }
 
@@ -46,13 +43,13 @@ public class BottomBarController : MonoBehaviour
      */
     private void Start()
     {
-        // get all content pages
+        // Get all content pages
         contentPages = GetComponentsInChildren<BottomBarContentPage>();
 
-        // set up the content pages
+        // Set up the content pages
         SetupContentPageButtons();
 
-        // activate the first one
+        // Activate the first one
         SetActivePage(0);
     }
 
@@ -61,11 +58,11 @@ public class BottomBarController : MonoBehaviour
      */
     public void ExpandContractButtonPressed()
     {
-        // move the panel up or down, depending on whether we want to expand or "contract"
+        // Move the panel up or down, depending on whether we want to expand or "contract"
         float moveDistance = expanded ? -1 * expandContractDistance: expandContractDistance;
         rectTransform.anchoredPosition = new Vector2(rectTransform.anchoredPosition.x, rectTransform.anchoredPosition.y + moveDistance);
 
-        // toggle our flag in code for whether we're expaned or not
+        // Toggle our flag in code for whether we're expaned or not
         expanded = !expanded;
     }
 
@@ -74,21 +71,21 @@ public class BottomBarController : MonoBehaviour
      */
     private void SetupContentPageButtons()
     {
-        // make a button for each content page
+        // Make a button for each content page
         for (int i = 0; i < contentPages.Length; i++)
         {
-            // instantiate the button
+            // Instantiate the button
             Button button = Instantiate(contentPageButtonPrefab, transform);
 
-            // place the button in the correct position
+            // Place the button in the correct position
             RectTransform buttonRectTransform = button.GetComponent<RectTransform>();
             buttonRectTransform.anchoredPosition = initialButtonPosition + (i * distanceBetweenButtons);
 
-            // set the button text
+            // Set the button text
             button.GetComponentInChildren<Text>().text = contentPages[i].pageTitle;
 
-            // tell the button what to do when it is clicked on
-            int temp = i; // need a temp var because i will always end up evaluating to the last value in the for loop
+            // Tell the button what to do when it is clicked on
+            int temp = i; // Need a temp var because i will always end up evaluating to the last value in the for loop
             button.onClick.AddListener(() => SetActivePage(temp));
 
         }
@@ -96,20 +93,22 @@ public class BottomBarController : MonoBehaviour
 
     /**
      * Handle one of the buttons being clicked
+     * 
+     * @param index Page index of the page we want to set active
      */
     private void SetActivePage(int index)
     {
-        // set our index so we can keep track of which page is active
+        // Set our index so we can keep track of which page is active
         activeContentPageIndex = index;
 
-        // loop through all content page
-        // turn on the newly activated page and deactivate all others
+        // Loop through all content page
+        // Turn on the newly activated page and deactivate all others
         for(int i = 0; i < contentPages.Length; i++)
         {
             contentPages[i].Active = (activeContentPageIndex == i);
         }
 
-        // make sure the bar is expanded
+        // Make sure the bar is expanded
         if (!expanded)
         {
             ExpandContractButtonPressed();

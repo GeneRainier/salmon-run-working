@@ -5,44 +5,45 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/*
+ * Class that describes a sealion
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 [RequireComponent(typeof(LineRenderer))]
 public class SealionTower : TowerBase
 {
-    // default rate of success of a fish catch attempt
     [Range(0f, 1f)]
-    public float defaultCatchRate;
+    public float defaultCatchRate;          //< Default rate of success of a fish catch attempt
 
-    // default rate of success of fish catch attempt for small, medium and large fish
+    // Default rates of success of fish catch attempt for small, medium and large fish
     public float defaultFemaleCatchRate = 0.1F;
     public float defaultMaleCatchRate = 0.1F;
 
-    // current rate of success of fish catch attempt for small, medium, and large fish
+    // Current rates of success of fish catch attempt for small, medium, and large fish
     [SerializeField] private float currentFemaleCatchRate;
     [SerializeField] private float currentMaleCatchRate;
 
-    // fish that have been caught by this sealion
-    private List<Fish> caughtFish;
+    private List<Fish> caughtFish;          //< Fish that have been caught by this sealion
 
+    public Material flashMaterial;          //< Material that will enable when a fish is caught by the sealion
 
-    // material that will 
-    public Material flashMaterial;
+    public int numFlashesPerCatch;          //< How many times the fish will flash in and out to show it is being caught
 
-    // how many times the fish will flash in and out to show it is being caught
-    public int numFlashesPerCatch;
+    [SerializeField] private TowerManager theTowerManager;      // Reference to the Tower Manager
 
-    // Reference to the Tower Manager
-    [SerializeField] private TowerManager theTowerManager;
-
-
+    /*
+     * Awake is called after the initialization of gameobjects prior to the start of the game
+     */
     protected override void Awake()
     {
-        // bas class awake
+        // Base class awake
         base.Awake();
 
         defaultFemaleCatchRate = initializationValues.sealionFemaleCatchRate;
         defaultMaleCatchRate = initializationValues.sealionMaleCatchRate;
 
-        // set current catch rates
+        // Set current catch rates
         currentFemaleCatchRate = defaultCatchRate * defaultFemaleCatchRate;
         currentMaleCatchRate = defaultCatchRate * defaultMaleCatchRate;
 
@@ -51,7 +52,9 @@ public class SealionTower : TowerBase
         //Debug.Log("cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
-    // Start is called before the first frame update
+    /*
+     * Start is called before the first frame update
+     */
     protected override void Start()
     {
         TowerActive = true;
@@ -64,22 +67,32 @@ public class SealionTower : TowerBase
     }
 
 
-    //Catch rate effect stuff
+    /*
+     * Triggers the coroutine to alter the sealion catch rates
+     * 
+     * @param smallEffect The effect on the small catch rate
+     * @param mediumEffect The effect on the medium catch rate
+     * @param largeEffect The effect on the large catch rate
+     * @param length The amount of time it takes for the catch to trigger
+     */
     public void AffectCatchRate(float smallEffect, float mediumEffect, float largeEffect, float length)
     {
         StartCoroutine(AffectCatchRateCoroutine(smallEffect, largeEffect, length));
     }
 
+    /*
+     * Enacts the effect of a tower over the area within range
+     */
     protected override void ApplyTowerEffect()
     {
 
         //Debug.Log("do Sealion Stuff");
 
-        // get all fish that aren't already being caught
+        // Get all fish that aren't already being caught
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
             .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught ?? true).ToArray();
 
-        // select one of the fish
+        // Select one of the fish
         if (fishColliders.Length <= 0) return;
 
         //Fish fish = fishColliders[Random.Range(0, fishColliders.Length)].GetComponent<Fish>();
@@ -101,15 +114,25 @@ public class SealionTower : TowerBase
         }
     }
 
+    /*
+     * Triggers the coroutine for a sealion to attempt to catch a given fish
+     * 
+     * @param f The fish being caught
+     */
     private void TryCatchFish(Fish f)
     {
         StartCoroutine(TryCatchFishCoroutine(f));
     }
 
+    /*
+     * The sealion attempts to catch a given fish
+     * 
+     * @param fish The fish the sealion is catching
+     */
     private IEnumerator TryCatchFishCoroutine(Fish fish)
     {
-        // how likely we are to catch fish is dependent on what size the fish is
-        // determine that now
+        // How likely we are to catch fish is dependent on what size the fish is
+        // Determine that now
         float catchRate;
         float weight;
         FishGenePair sizeGenePair = fish.GetGenome()[FishGenome.GeneType.Size];
@@ -133,18 +156,18 @@ public class SealionTower : TowerBase
         }
         Debug.Log("SeaLionCatch: MaleCR=" + currentMaleCatchRate + "FemCR=" + currentFemaleCatchRate);
 
-        // figure out whether the fish will be caught or not
+        // Figure out whether the fish will be caught or not
         bool caught = Random.Range(0f, 1f) <= catchRate;
 
-        // handle fish being caught
+        // Handle fish being caught
         if (caught)
         {
-            // tell the fish that it is being caught
+            // Tell the fish that it is being caught
             fish.StartCatch();
 
             float timeToWait = (float)timePerApplyEffect / numFlashesPerCatch / 2f;
 
-            // make the fish flash  for a bit
+            // Make the fish flash  for a bit
             SkinnedMeshRenderer fishRenderer = fish.GetComponentInChildren<SkinnedMeshRenderer>();
             for (int i = 0; i < numFlashesPerCatch; i++)
             {
@@ -156,18 +179,26 @@ public class SealionTower : TowerBase
                 yield return new WaitForSeconds(timeToWait);
             }
 
-            // actually catch the fish
+            // Actually catch the fish
             fish.Catch();
             caughtFish.Add(fish);
 
         }
-        // fish escaped -- just wait for end of action
+        // Fish escaped -- just wait for end of action
         else
         {
             yield return new WaitForSeconds(timePerApplyEffect);
         }
     }
 
+    /*
+     * Triggers the coroutine to alter the sealion catch rates
+     * 
+     * @param smallEffect The effect on the small catch rate
+     * @param mediumEffect The effect on the medium catch rate
+     * @param largeEffect The effect on the large catch rate
+     * @param length The amount of time it takes for the catch to trigger
+     */
     private IEnumerator AffectCatchRateCoroutine(float femaleEffect, float maleEffect, float length)
     {
         currentFemaleCatchRate += femaleEffect;
@@ -179,30 +210,26 @@ public class SealionTower : TowerBase
         currentMaleCatchRate -= maleEffect;
     }
 
-
-
-    //THIS IS ALL JUST HERE BECAUSE TOWERBASE REQUIRES IT, IT DOESN'T ACTUALLY DO ANYTHING
+    /*
+     * TowerBase abstract function implementation
+     * THIS IS ALL JUST HERE BECAUSE TOWERBASE REQUIRES IT, IT DOESN'T ACTUALLY DO ANYTHING
+     */
     protected override bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        
         int correctLayer = LayerMask.NameToLayer(Layers.TERRAIN_LAYER_NAME);
 
-        // for placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
+        // For placement to be valid, primary raycast must have hit a gameobject on the Terrain layer
         if (primaryHitInfo.collider && primaryHitInfo.collider.gameObject.layer == correctLayer)
         {
-            // secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same z-pos as the primary raycast
+            // Secondary raycasts must also hit gameobjects on the Terrain layer at approximately the same z-pos as the primary raycast
             return secondaryHitInfo.TrueForAll(hitInfo => hitInfo.collider &&
                                                             hitInfo.collider.gameObject.layer == correctLayer &&
                                                             Mathf.Abs(hitInfo.point.z - primaryHitInfo.point.z) < 1f);
         }
         
-
-        // if one of these conditions was not met, return false
+        // If one of these conditions was not met, return false
         return false;
-
     }
-
-
 
     /**
      * Position the fisherman at the correct location using the information from a raycast
@@ -210,14 +237,10 @@ public class SealionTower : TowerBase
      * @param primaryHitInfo RaycastHit The results of the primary raycast that was done
      * @param secondaryHitInfo List RaycastHit The results of any secondary raycasts that were done
      */
-
-
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        
         transform.position = primaryHitInfo.point;
         theTowerManager = FindObjectOfType<TowerManager>();
         //theTowerManager.AddAngler(this);
-        
     }
 }

@@ -2,11 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * The class which describes the abilities of a tower regarding range and appearance
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 [RequireComponent(typeof(TowerBase))]
 public class TowerRangeEffect : MonoBehaviour
 {
-    // currently selected tower effect
-    public static TowerRangeEffect currentlySelectedRangeEffect { get; private set; }
+    public static TowerRangeEffect currentlySelectedRangeEffect { get; private set; }       //< Currently selected tower effect
 
     /**
      * Enum representing states the range effect can be in
@@ -19,27 +23,24 @@ public class TowerRangeEffect : MonoBehaviour
         Valid
     }
 
-    // materials to be applied for each non-off state
+    // Materials to be applied for each non-off state
     public Material neutralMaterial;
     public Material invalidMaterial;
     public Material validMaterial;
 
-    // object that actually holds the effect object/sprite
     [SerializeField]
-    private GameObject rangeVisualizationObj;
+    private GameObject rangeVisualizationObj;       //< Object that actually holds the effect object/sprite
 
-    // the current state of this range effect
-    public EffectState State { get; private set; } = EffectState.Off;
+    public EffectState State { get; private set; } = EffectState.Off;       //< The current state of this range effect
 
-    // the actual tower component this effect is for
-    private TowerBase tower;
+    private TowerBase tower;        //< The actual tower component this effect is for
 
     /**
      * Start is called before the first frame update
      */
     private void Start()
     {
-        // get component reference
+        // Get component reference
         tower = GetComponent<TowerBase>();
 
         UpdateRadius();
@@ -51,43 +52,45 @@ public class TowerRangeEffect : MonoBehaviour
      */
     private void OnMouseDown()
     {
-        // make sure the tower is on
+        // Make sure the tower is on
         if (tower.isActiveAndEnabled)
         {
-            // if a tower effect is already on and it's not this one, turn it off
+            // If a tower effect is already on and it's not this one, turn it off
             if (currentlySelectedRangeEffect != null && currentlySelectedRangeEffect != this)
             {
                 currentlySelectedRangeEffect.UpdateEffect(EffectState.Off);
             }
 
-            // update currently selected range effect
+            // Update currently selected range effect
             currentlySelectedRangeEffect = this;
 
-            // toggle the selected range effect
+            // Toggle the selected range effect
             UpdateEffect(State == EffectState.Off ? EffectState.Neutral : EffectState.Off);
         }
     }
 
     /**
      * Update the tower range effect's state
+     * 
+     * @param effectState The state a tower is currently in
      */
     public void UpdateEffect(EffectState effectState)
     {
-        // update the state
+        // Update the state
         State = effectState;
 
-        // special case for turning it off
+        // Special case for turning it off
         if (State == EffectState.Off)
         {
-            // turn off the range visualizer object
+            // Turn off the range visualizer object
             rangeVisualizationObj.SetActive(false);
         }
         else
         {
-            // make sure the range visualizer object is on
+            // Make sure the range visualizer object is on
             rangeVisualizationObj.SetActive(true);
 
-            // get the correct material to apply using switch statement
+            // Get the correct material to apply using switch statement
             Material m = neutralMaterial;
             switch (State)
             {
@@ -103,13 +106,13 @@ public class TowerRangeEffect : MonoBehaviour
                     break;
             }
 
-            // get the visualizer's mesh renderer
+            // Get the visualizer's mesh renderer
             MeshRenderer mr = rangeVisualizationObj.GetComponent<MeshRenderer>();
 
-            // destroy the old material instance to prevent memory leak
+            // Destroy the old material instance to prevent memory leak
             Destroy(mr.material);
 
-            // set the material to the correct one
+            // Set the material to the correct one
             mr.material = m;       
          }
 

@@ -3,37 +3,35 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/*
+ * Class that handles the placement of the dam in the level including potential dam locations and visualizations for the player to see
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class DamPlacementLocation : MonoBehaviour
 {
-    // list of all dam placement locations on the map
-    private static List<DamPlacementLocation> allLocations = new List<DamPlacementLocation>();
+    private static List<DamPlacementLocation> allLocations = new List<DamPlacementLocation>();  //< List of all dam placement locations on the map
 
-    // mesh renderer for the dam placement visual
-    public MeshRenderer mainMeshRenderer;
+    public MeshRenderer mainMeshRenderer;           //< meshRenderer for the dam placement visual
 
-    // meshRenderer for the ladder placement visual
-    public MeshRenderer ladderMeshRenderer;
+    public MeshRenderer ladderMeshRenderer;         //< meshRenderer for the ladder placement visual
 
-    // drop off box for fish used by the dam once it is actually placed
-    // since the dam is being dropped in, we need to hold onto this until the dam is actually placed
+    // Drop off box for fish used by the dam once it is actually placed
+    // Since the dam is being dropped in, we need to hold onto this until the dam is actually placed
     public BoxCollider dropOffBox;
 
-    // is this location currently being used?
-    public bool inUse { get; private set; } = false;
+    public bool inUse { get; private set; } = false;        //< Is this location currently being used?
 
-    // does this location currently have a ladder attached?
-    public bool HasLadder { get; private set; } = false;
+    public bool HasLadder { get; private set; } = false;    //< Does this location currently have a ladder attached?
 
-    //get and set can be defined here or we can defaults
+    // get and set can be defined here or we can defaults
     // do not have write getter and setter, 
     // bool so get public, and set private in this case. 
     // get; set; would have both as public
 
-    // Dam component currently being used at this location (if any)
-    private Dam currentDam;
+    private Dam currentDam;             //< Dam component currently being used at this location (if any)
 
-    // Keeping track of the turn the Dam is placed
-    private int placementTurn = -1;
+    private int placementTurn = -1;     //< Keeping track of the turn the Dam is placed
 
     public int PlacementTurn => placementTurn;
 
@@ -41,23 +39,23 @@ public class DamPlacementLocation : MonoBehaviour
     #region Major Monobehaviour functions
 
     /**
-     * Initialization function
+     * Awake is called after initialization of gameobjects prior to the start of the game. Used as an Initialization function
      */
     private void Awake()
     {
-        // add each placement location to our list as it initializes
+        // Add each placement location to our list as it initializes
         allLocations.Add(this);
 
-        // location will not be in use at the beginning
+        // Location will not be in use at the beginning
         inUse = false;
 
-        // ensure that we have visualizers for the dam and the ladder
+        // Ensure that we have visualizers for the dam and the ladder
         if (mainMeshRenderer == null || ladderMeshRenderer == null)
         {
             Debug.LogError("A MeshRenderer on a DamPlacementLocation is missing!");
         }
 
-        // turn the meshRenderers off by default
+        // Turn the meshRenderers off by default
         mainMeshRenderer.enabled = false;
         ladderMeshRenderer.enabled = false;
     }
@@ -68,13 +66,15 @@ public class DamPlacementLocation : MonoBehaviour
 
     /**
      * Attach a dam to this location
+     * 
+     * @param dam The dam being placed in the level
      */
     public void AttachDam(Dam dam)
     {
         if (!inUse)
         {
 
-            // position the dam within hierarchy and game space to match the dam location
+            // Position the dam within hierarchy and game space to match the dam location
             Transform transform1;
             (transform1 = dam.transform).SetParent(transform.parent);
             var transform2 = transform;
@@ -84,10 +84,10 @@ public class DamPlacementLocation : MonoBehaviour
 
             dam.Activate(dropOffBox);
 
-            // the location is now in use and cannot be used by any other dam
+            // The location is now in use and cannot be used by any other dam
             inUse = true;
 
-            // keep track of the dam for use later
+            // Keep track of the dam for use later
             currentDam = dam;
             
             //print("Turn attached");
@@ -104,13 +104,15 @@ public class DamPlacementLocation : MonoBehaviour
 
     /**
      * Attach a ladder to the dam at this location (if there is one)
+     * 
+     * @param damLadder The dam ladder being placed in the level
      */
     public void AttachLadder(DamLadder damLadder)
     {
-        // can only attach if there is a dam here with no ladder
+        // Can only attach if there is a dam here with no ladder
         if (!inUse || currentDam == null || HasLadder) return;
         
-        // put the ladder in the correct location and parent it to the current dam
+        // Put the ladder in the correct location and parent it to the current dam
         Transform transform2;
         (transform2 = damLadder.transform).SetParent(currentDam.transform);
         var transform1 = ladderMeshRenderer.transform;
@@ -118,10 +120,10 @@ public class DamPlacementLocation : MonoBehaviour
         transform2.localRotation = transform1.localRotation;
         transform2.localScale = transform1.localScale;
 
-        // tell the dam that a ladder is being attached
+        // Tell the dam that a ladder is being attached
         currentDam.AddLadder(damLadder);
 
-        // this dam location now has a ladder attached to it
+        // This dam location now has a ladder attached to it
         HasLadder = true;
 
         print("Turn attached");
@@ -142,7 +144,7 @@ public class DamPlacementLocation : MonoBehaviour
     {
         foreach (DamPlacementLocation placementLocation in allLocations)
         {
-            // if the placement location is in use and we're trying to activate it, don't do so
+            // If the placement location is in use and we're trying to activate it, don't do so
             // because you shouldn't be able to place anything there
             if (!activate || !placementLocation.inUse)
             {
@@ -161,7 +163,7 @@ public class DamPlacementLocation : MonoBehaviour
     {
         foreach (DamPlacementLocation placementLocation in allLocations)
         {
-            // only show visualizations where the placement location is in use but there is no ladder
+            // Only show visualizations where the placement location is in use but there is no ladder
             if (!activate || (placementLocation.inUse && !placementLocation.HasLadder))
             {
                 placementLocation.ladderMeshRenderer.enabled = activate;

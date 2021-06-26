@@ -4,34 +4,30 @@ using UnityEngine;
 
 /**
  * Base class for towers
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 [RequireComponent(typeof(TowerRangeEffect))]
 public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
 {
-    // effect radius of the tower
     [SerializeField]
-    protected int effectRadius;
+    protected int effectRadius;             //< Effect radius of the tower
 
-    // The ManagerIndex with initialization values for a given tower
-    public ManagerIndex initializationValues;
+    public ManagerIndex initializationValues;   //< The ManagerIndex with initialization values for a given tower
 
-    // whether the tower is currently activated or not
-    public bool TowerActive { get; set; } = false;
+    public bool TowerActive { get; set; } = false;      //< Whether the tower is currently activated or not
 
-    // whether the tower is paused or not
-    protected bool paused = true;
+    protected bool paused = true;               //< Whether the tower is paused or not
 
-    // time between each application of tower effects
     [SerializeField]
-    protected int timePerApplyEffect;
+    protected int timePerApplyEffect;           //< Time between each application of tower effects
 
-    // tower range effect script
-    private TowerRangeEffect rangeEffect;
+    private TowerRangeEffect rangeEffect;       //< Tower range effect script
 
     #region Major Monobehaviour Functions
 
     /**
-     * Handle initialization tasks common to all towers
+     * Awake is called after initialization of gameobjects prior to the start of the game. Handle initialization tasks common to all towers
      */
     protected virtual void Awake()
     {
@@ -54,10 +50,10 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      */
     private void OnMouseOver()
     {
-        // check for RMB
+        // Check for RMB
         if (Input.GetMouseButtonDown(1))
         {
-            // if RMB down, delete the tower from the root
+            // If RMB down, delete the tower from the root
             Destroy(transform.root.gameObject);
         }
     }
@@ -68,6 +64,8 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
 
     /**
      * Get the radius of the area the tower effects
+     * 
+     * @return float The radius of the tower effect
      */
     public float GetEffectRadius()
     {
@@ -79,10 +77,7 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
     #region Game Loop
 
     /**
-     * Coroutine that will loop until the script is disabled or the object is
-     * deactivated
-     * 
-     * Applies to    
+     * Coroutine that will loop until the script is disabled or the object is deactivated and runs the tower's effect
      */
     protected IEnumerator StartTowerEffectLoop()
     {
@@ -134,6 +129,10 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      * generic actions common to all towers and then rely on each class's
      * TowerPlacementValid implementation for actually determining if the
      * location is valid.
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
+     * @return bool Whether or not the placement of the tower is valid
      */
     public bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
@@ -159,6 +158,9 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      * This is the outwardly-facing function, which will take care of any
      * generic actions common to all towers and then rely on each class's
      * PlaceTower implementation for actually placing the tower.
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
      */
     public void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
@@ -175,6 +177,9 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      * Abstract function that each tower will implement
      * 
      * Determines whether a tower placement is valid
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
      */
     protected abstract bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo);
 
@@ -182,6 +187,9 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      * Abstract function that each tower will implement
      *
      * Places a tower into the environment   
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
      */
     protected abstract void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo);
 

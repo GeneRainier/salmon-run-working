@@ -3,23 +3,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * UI behavior script for the Upgrade menus
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class UpgradeUI : MonoBehaviour
 {
-    [SerializeField] private UpgradeType upgradeType;
-    [SerializeField] private Button upgradeButton;
+    [SerializeField] private UpgradeType upgradeType;       //< The type of upgrade whose UI we are interacting with
+    [SerializeField] private Button upgradeButton;          //< The button for this upgrade
     //[SerializeField] private Button originalLadderButton;
 
     //[SerializeField] private List<Button> button_list = new List<Button>();
+    
+    // The buttons for when each of the Salmon Ladders are active
     [SerializeField] private Button LadderUp1;
     [SerializeField] private Button LadderUp2;
 
-    //checks UpgradeManager to see if the ladders are bought
+    // Checks UpgradeManager to see if the ladders are bought
     public bool ladder1Bought;
     public bool ladder2Bought;
 
+    private float upgradeCost;          //< The cost of the Upgrade
 
-    private float upgradeCost;
-
+    /*
+     * Start is called prior to the first frame update
+     */
     void Start()
     {
         upgradeCost = ManagerIndex.MI.UpgradeManager.GetUpgradeCost(upgradeType);
@@ -29,24 +38,36 @@ public class UpgradeUI : MonoBehaviour
 
     public bool CanAfford => ManagerIndex.MI.MoneyManager.CanAfford(upgradeCost);
 
+    /*
+     * Indicates that the first Salmon Ladder variant has been purchased
+     */
     public void Ladder1Bought()
     {
         ladder1Bought = true;
     }
 
+    /*
+     * Indicates that the second Salmon Ladder variant has been purchased
+     */
     public void Ladder2Bought()
     {
         ladder2Bought = true;
     }
 
+    /*
+     * Has the Manager Index tell the MoneyManager to spend the amount of money needed to purchase the Upgrade
+     */
     public void Purchase()
     {
         ManagerIndex.MI.MoneyManager.SpendMoney(upgradeCost);
     }
 
+    /*
+     * Update is called every frame update
+     */
     public void Update()
     {
-        //checks to see if you can afford the upgrade, and if its already been bought its turned off
+        // Checks to see if you can afford the upgrade, and if its already been bought its turned off
         if (!ladder1Bought)
         {
             LadderUp1.interactable = CanAfford ? true : false;
@@ -64,7 +85,6 @@ public class UpgradeUI : MonoBehaviour
         {
             LadderUp2.interactable = false;
         }
-
 
         //ManagerIndex.MI.UpgradeManager.upgradeSmallCatchButton.interactable = ManagerIndex.MI.UpgradeManager.smallRateMax ? false : true;
 
@@ -84,6 +104,9 @@ public class UpgradeUI : MonoBehaviour
         }
     }
 
+    /*
+     * Sets a button as interactable based on if the player can afford an Upgrade or not
+     */
     public void UpdateButton()
     {
         //upgradeButton.interactable = CanAfford ? true : false;

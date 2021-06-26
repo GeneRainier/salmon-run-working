@@ -2,6 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Script for testing movement methods for Fish Pathfinding. This can be attached to moveing objects (fish) for testing prior to moving the 
+ * body of the script over to the Fish script.
+ * 
+ * Authors: Benjamin Person
+ */
 public class Movement : MonoBehaviour
 {
     public Destination destination;     //< The destination this object is moving towards
@@ -14,6 +20,9 @@ public class Movement : MonoBehaviour
     private bool craftingPath = true;                   //< Whether or not this fish is still making a path to the end
     private int currentIndex = 0;                       //< The index of the current node this fish is moving to
 
+    /*
+     * Start is called prior to the first frame update
+     */
     private void Start()
     {
         spawner = FindObjectOfType<GenericSpawner>();

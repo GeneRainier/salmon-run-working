@@ -5,38 +5,37 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/*
+ * Class that contains the content and appearance of a tooltip message
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class Tooltip : MonoBehaviour
 {
-    // singleton instance for the tooltip
-    public static Tooltip Instance { get; private set; }
+    public static Tooltip Instance { get; private set; }        //< Singleton instance for the tooltip
 
-    // amount of padding around the text
-    public Vector2 paddingSize;
+    public Vector2 paddingSize;             //< Amount of padding around the text
 
-    // offset of tooltip from mouse pos
-    public Vector2 offset;
+    public Vector2 offset;                  //< Offset of tooltip from mouse pos
 
-    // canvas that the tooltip is on
-    [SerializeField] private Canvas canvas;
+    [SerializeField] private Canvas canvas;     //< Canvas that the tooltip is on
 
-    // background image for tooltip
-    [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image backgroundImage;     //< Background image for tooltip
 
-    // text for the tooltip
-    [SerializeField] private TextMeshProUGUI text;
+    [SerializeField] private TextMeshProUGUI text;      //< Text for the tooltip
 
-    [SerializeField] private RectTransform rectTransform;
+    [SerializeField] private RectTransform rectTransform;       //< The transform information for the tooltip
     
-    [SerializeField] private RectTransform childRectTransform;
+    [SerializeField] private RectTransform childRectTransform;  //< The transform information of any children objects to this tooltip
 
     #region Major Monobehaviour Functions
 
     /**
-     * Initialization function
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
      */
     private void Awake()
     {
-        // setup for singleton
+        // Setup for singleton
         if (Instance == null)
         {
             Instance = this;
@@ -67,17 +66,17 @@ public class Tooltip : MonoBehaviour
      */
     public void ShowTooltip(string message)
     {
-        // make the tooltip appear and make sure it appears over everything else
+        // Make the tooltip appear and make sure it appears over everything else
         gameObject.SetActive(true);
         transform.SetAsLastSibling();
 
-        // set the text to match the text we've gotten
+        // Set the text to match the text we've gotten
         text.text = message;
 
-        // size the tooltip's background to the text
+        // Size the tooltip's background to the text
         //backgroundImage.rectTransform.sizeDelta = new Vector2(text.preferredWidth + (2 * paddingSize), text.preferredHeight + (2 * paddingSize));
 
-        // offset the text for the padding size
+        // Offset the text for the padding size
         //text.rectTransform.anchoredPosition = new Vector2(paddingSize, paddingSize);
     }
 
@@ -96,20 +95,23 @@ public class Tooltip : MonoBehaviour
     {
         Vector2 localMousePos;
 
-        // turn the screen-space position of the mouse into a point local to the UI canvas
-        // for reference, see https://stackoverflow.com/questions/43802207/position-ui-to-mouse-position-make-tooltip-panel-follow-cursor
+        // Turn the screen-space position of the mouse into a point local to the UI canvas
+        // For reference, see https://stackoverflow.com/questions/43802207/position-ui-to-mouse-position-make-tooltip-panel-follow-cursor
         RectTransformUtility.ScreenPointToLocalPointInRectangle(
             canvas.transform as RectTransform,
             Input.mousePosition, canvas.worldCamera,
             out localMousePos);
 
-        // use TransformPoint to get the actual correct position for the tooltip
+        // Use TransformPoint to get the actual correct position for the tooltip
         transform.position = canvas.transform.TransformPoint(localMousePos) + (Vector3)offset;
         
         UpdateSize();
 
     }
 
+    /*
+     * Updates the size of the tooltip message based on the size of its children
+     */
     public void UpdateSize()
     {
         Vector2 size = childRectTransform.sizeDelta;

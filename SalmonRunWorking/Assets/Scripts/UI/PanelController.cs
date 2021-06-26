@@ -4,6 +4,8 @@ using UnityEngine;
 
 /**
  * Abstract base class for a panel in the game
+ * 
+ * Authors: Benjamin Person (Editor 2020)
  */
 public abstract class PanelController : MonoBehaviour
 {

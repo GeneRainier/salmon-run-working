@@ -5,8 +5,20 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
+/*
+ * A series of utility functions to make certain calculation processes easier throughout the project
+ * 
+ * Authors: Benjamin Person (Editor 2020)
+ */
 public class UtilityFunctions
 {
+    /*
+     * Clamps a value, but instead of returning a min or max it returns up to a max or 0 otherwise
+     * 
+     * @param n The value we wish to clamp
+     * @param min The minimum value to compare against
+     * @param max The maximum value that n may equal
+     */
     public static int WrappedClamp (int n, int min, int max)
     {
         if (n > max) 
@@ -16,11 +28,25 @@ public class UtilityFunctions
         return n;
     }
     
+    /*
+     * Linearly interpolates between two values
+     * 
+     * @param a The start value
+     * @param b The end value
+     * @param t The percentage value between those values
+     */
     public static float LerpNegative (float a, float b, float t)
     {
         return a + (b - a) * t;
     }
 
+    /*
+     * Linearly interpolates between two Vector3s by interpolating each component
+     * 
+     * @param a The start position
+     * @param b The end position
+     * @param t The percentage between those two positions
+     */
     public static Vector3 Vector3LerpNegative (Vector3 a, Vector3 b, float t)
     {
         Vector3 c = Vector3.zero;
@@ -30,6 +56,12 @@ public class UtilityFunctions
         return c;
     }
 
+    /*
+     * The delta between two given angles
+     * 
+     * @param angle1 The first angle
+     * @param angle2 The second angle
+     */
     public static float AngleDifference (float angle1, float angle2)
     {
         float diff = ( angle2 - angle1 + 180 ) % 360 - 180;
