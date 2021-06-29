@@ -16,13 +16,11 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField] private float panSpeed;        //< How fast the camera pans
 
-    [Range(0f, 1f)]
-    [SerializeField] private float minPanSpeedRatio;    //< Lowest speed the camera can pan at, expressed in terms of a fraction of the default pan speed
-
     [SerializeField] private float panBorderThickness;  //< Size of borders around edge of screen which will start panning when the mouse enters the area
 
     [Header("Camera Bounds")]
     [SerializeField] private MinMax bounds;     //< Farthest / closest the camera can zoom out. Min and Max values for x and y
+    public float height;                        //< The difference between the max and min y values of bounds for calculating rotational interpolation
 
     [Header("Speeds")]
     [SerializeField] private float zoomSpeed;   //< The speed at which you can zoom in or out
@@ -30,10 +28,13 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float lerpSpeed;   //< The speed at which the camera pans
 
     private Vector3 target;     //< The position the camera is aimed at
+    private Vector3 targetRotation;   //< The rotation the camera is currently at
     private bool moving;        //< Is the camera moving?
     private float timeFactor;   //< What time scale is the game in?
 
     [SerializeField] private Vector3 initialPosition;       //< The location the camera is at when the level begins
+    [SerializeField] private Vector3 initialRotation;       //< The rotation the camera is at when the level begins
+    [SerializeField] private Vector3 zoomedRotation;        //< The rotation the camera has when it is fully zoomed in
 
     /*
      * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
@@ -41,7 +42,10 @@ public class CameraController : MonoBehaviour {
     private void Awake()
     {
         initialPosition = this.gameObject.transform.position;
-    }
+        initialRotation = this.gameObject.transform.rotation.eulerAngles;
+        zoomedRotation = new Vector3(30.0f, 0.0f, 0.0f);
+        height = bounds.Max.y - bounds.Min.y;
+}
 
     /**
      * Update is called once per frame
@@ -64,9 +68,8 @@ public class CameraController : MonoBehaviour {
             target = transform.position;
         }
 
+        // Calculates the current speed of the game for movement and rotation adjustments
         timeFactor = Time.deltaTime / Time.timeScale;
-
-        float step = panSpeed * timeFactor;
         
         // Get camera's current pos
         target = transform.position;
@@ -83,28 +86,22 @@ public class CameraController : MonoBehaviour {
 
         target.y += scroll * zoomSpeed * 100f * timeFactor;
 
-        /*
-        if (scroll < 0)
-        {
-            transform.SmoothMoveTowards(initialPosition, cameraSetSpeed);
-        }
-        */
-
-        // Modulate the pan speed based on the current zoom level (smaller pan when more zoomed in)
-        float zoomMultiplier = 1.1f - ((target.y - bounds.Min.y) / (bounds.Max.y - bounds.Min.y));
+        // Calculate the interpolation factor for the camera rotation
+        float interpolation = (transform.position.y - bounds.Min.y) / (height);
+        transform.rotation = Quaternion.Euler(Vector3.Slerp(zoomedRotation, initialRotation, interpolation));
 
         // Figure out how much distance the pan should cover
         // Dividing by timeScale so we always appear to pan at the same speed regardless of gameplay speed
-        float panDistance = Mathf.Min(panSpeed * zoomMultiplier * timeFactor, panSpeed * timeFactor);
+        float panDistance = Mathf.Min(panSpeed * timeFactor, panSpeed * timeFactor);
         
         // Pan depending on which keys have been pressed (or which borders the mouse is currently in)
-        if (Input.GetButton("Vertical") || panWithMouse && 
-            (Input.mousePosition.y >= Screen.height - panBorderThickness || Input.mousePosition.y <= panBorderThickness))
+        if (Input.GetButton("Vertical") || (panWithMouse && 
+            (Input.mousePosition.y >= Screen.height - panBorderThickness || Input.mousePosition.y <= panBorderThickness)))
         {
             target.z += panDistance * Input.GetAxisRaw("Vertical");
         }
-        if (Input.GetButton("Horizontal") || panWithMouse && 
-            (Input.mousePosition.x <= panBorderThickness || Input.mousePosition.x >= Screen.width - panBorderThickness))
+        if (Input.GetButton("Horizontal") || (panWithMouse && 
+            (Input.mousePosition.x <= panBorderThickness || Input.mousePosition.x >= Screen.width - panBorderThickness)))
         {
             target.x += panDistance * Input.GetAxisRaw("Horizontal");
         }
@@ -130,11 +127,12 @@ public class CameraController : MonoBehaviour {
     }
 
     /*
-     * Set the camera position back to the start of the level when the end of round button is clicked
+     * Set the camera position and rotation back to the start of the level when the end of round button is clicked
      */
     public void ResetCameraPosition()
     {
         this.gameObject.transform.position = initialPosition;
+        this.gameObject.transform.rotation = Quaternion.Euler(initialRotation);
     }
 }
 
