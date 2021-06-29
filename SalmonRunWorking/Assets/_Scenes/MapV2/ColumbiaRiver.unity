@@ -354,6 +354,11 @@ PrefabInstance:
       propertyPath: spawnY
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
+        type: 3}
+      propertyPath: timeBetweenWaves
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2321721658432575646, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
       propertyPath: m_LocalPosition.x

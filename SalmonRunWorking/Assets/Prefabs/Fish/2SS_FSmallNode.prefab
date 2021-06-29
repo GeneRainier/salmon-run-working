@@ -151,7 +151,7 @@ MonoBehaviour:
   baselineEnergyUsageRate: 1
   motionEnergyUsageRate: 1
   swimSpeed: 10
-  rotateSpeed: 45
+  rotateSpeed: 70
   destination: {fileID: 0}
   path: []
   damPassCounter: 0

@@ -109,20 +109,12 @@ public class Fish : MonoBehaviour
      */
     private void Update()
     {
-        if (Vector3.Distance(transform.position, destination.destinationPosition) <= 6.0f)
+        if (Vector3.Distance(transform.position, destination.destinationPosition) <= 10.0f)
         {
             if (destination.finalDestination != true)
             {
                 currentIndex++;
                 destination = path[currentIndex];
-
-                //Vector3 lookPosition = destination.destinationPosition - transform.position;
-                //lookPosition.y = 0.0f;
-                //destinationDirection = Quaternion.LookRotation(lookPosition);
-
-                //destinationDistance = Vector3.Distance(transform.position, destination.destinationPosition);
-                //travelTime = destinationDistance / swimSpeed;
-                //timer = 0.0f;
             }
         }
 
@@ -130,18 +122,7 @@ public class Fish : MonoBehaviour
         lookPosition.y = 0.0f;
         destinationDirection = Quaternion.LookRotation(lookPosition);
 
-        // Update the current lerp time
-        //timer += Time.deltaTime;
-        //if (timer > travelTime)
-        //{
-        //    timer = travelTime;
-        //}
-        //lerpTime = timer / travelTime;
-        //// Apply a cosine ease out effect to the lerp
-        //lerpTime = (lerpTime * lerpTime) * (3f - 2f * lerpTime);
-
         // Move towards the destination at a constant speed
-        //transform.position = Vector3.Lerp(transform.position, destination.destinationPosition, lerpTime);
         transform.position += transform.forward * swimSpeed * Time.deltaTime;
         // Determine if we are already facing towards the destination
         float deltaAngle = Quaternion.Angle(transform.rotation, destinationDirection);
