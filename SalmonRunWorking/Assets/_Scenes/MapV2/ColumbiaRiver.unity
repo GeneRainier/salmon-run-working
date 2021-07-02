@@ -39282,11 +39282,11 @@ MonoBehaviour:
   towerManager: {fileID: 1397721658}
   upgradeManager: {fileID: 1195333500}
   makeOutputFile: 0
-  anglerRadius: 150
+  anglerRadius: 40
   anglerSmallCatchRate: 0.9
   anglerMediumCatchRate: 0.7
   anglerLargeCatchRate: 0.3
-  rangerRadius: 450
+  rangerRadius: 120
   rangerSmallModifier: -0.8
   rangerMediumModifier: -0.3
   rangerLargeModifier: 0.6

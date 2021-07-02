@@ -257,12 +257,12 @@ public class RangerTower : TowerBase
      */
     private void SetLinePositions()
     {
-        Vector3 startPos = new Vector3(transform.position.x, transform.position.y, transform.position.z - 40);
+        Vector3 startPos = new Vector3(transform.position.x, transform.position.y, transform.position.z);
 
         for (int i = 0; i < towerEffectLineRenderers.Count; i++)
         {
             Vector3 endPos = towerEffectPositions[i];
-            endPos.z = startPos.z;
+            endPos.y = startPos.y;
 
             towerEffectLineRenderers[i].SetPositions(new Vector3[] { startPos, endPos });
         }

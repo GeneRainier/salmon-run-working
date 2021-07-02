@@ -1,8 +1,8 @@
-Angler Radius, 150
+Angler Radius, 40
 Angler Small Catch Rate, 0.9
 Angler Medium Catch Rate, 0.7
 Angler Large Catch Rate, 0.3
-Ranger Radius, 450
+Ranger Radius, 120
 Ranger Small Catch Modifier, -0.8
 Ranger Medium Catch Modifier, -0.3
 Ranger Large Catch Modifier, 0.6
