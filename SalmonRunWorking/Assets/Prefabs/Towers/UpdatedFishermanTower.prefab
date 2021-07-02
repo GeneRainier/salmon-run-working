@@ -377,6 +377,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 3664615036418573041, guid: 343d7c16392829a49881e029a9c0e196,
+        type: 3}
+      propertyPath: m_CullingMode
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3664615036428071041, guid: 343d7c16392829a49881e029a9c0e196,
         type: 3}
       propertyPath: m_Layer

@@ -23,7 +23,7 @@ public enum TowerType
 public class TowerManager : MonoBehaviour
 {
     [SerializeField] private List<Tower> towers = null;            //< A list of all the towers in the scene
-    [SerializeField] private List<FishermanTower> anglers = null;  //< A list of all the fishermen in the scene
+    [SerializeField] private List<AnglerTower> anglers = null;  //< A list of all the fishermen in the scene
 
     /*
      * Gets the first tower in the list of towers with a given type
@@ -60,7 +60,7 @@ public class TowerManager : MonoBehaviour
      * 
      * @param angler The fisherman that has just been placed in the scene which needs to be added to the list
      */
-    public void AddAngler(FishermanTower angler)
+    public void AddAngler(AnglerTower angler)
     {
         anglers.Add(angler);
     }
@@ -70,7 +70,7 @@ public class TowerManager : MonoBehaviour
      * 
      * @return List<FishermentTower> A list of scripts for each of the existing fishermen
      */
-    public List<FishermanTower> GetAnglers()
+    public List<AnglerTower> GetAnglers()
     {
         return anglers;
     }

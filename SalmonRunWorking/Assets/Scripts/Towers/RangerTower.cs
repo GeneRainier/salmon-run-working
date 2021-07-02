@@ -78,15 +78,15 @@ public class RangerTower : TowerBase
      */
     protected override void ApplyTowerEffect()
     {
-        Collider[] fishermenColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.PLACED_OBJECTS))
+        Collider[] anglerColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.PLACED_OBJECTS))
             .Where((collider) => {
-                return collider.GetComponentInChildren<FishermanTower>() != null && collider.GetComponentInChildren<FishermanTower>().TowerActive;
+                return collider.GetComponentInChildren<AnglerTower>() != null && collider.GetComponentInChildren<AnglerTower>().TowerActive;
             }).ToArray();
 
         
-        foreach (Collider fishermanCollider in fishermenColliders)
+        foreach (Collider anglerCollider in anglerColliders)
         {
-            FishermanTower fishermanTower = fishermanCollider.GetComponent<FishermanTower>();
+            AnglerTower fishermanTower = anglerCollider.GetComponent<AnglerTower>();
 
             if (fishermanTower.anglerCounted == false)
             {
@@ -150,9 +150,9 @@ public class RangerTower : TowerBase
      * 
      * @param fishermanTower The tower the ranger is regulating
      */
-    private void RegulateFisherman(FishermanTower fishermanTower)
+    private void RegulateFisherman(AnglerTower anglerTower)
     {
-        StartCoroutine(RegulateFishermanCoroutine(fishermanTower));
+        StartCoroutine(RegulateFishermanCoroutine(anglerTower));
     }
 
     /**
@@ -160,7 +160,7 @@ public class RangerTower : TowerBase
      * 
      * @param fishermanTower The tower the ranger is regulating
      */
-    private IEnumerator RegulateFishermanCoroutine(FishermanTower fishermanTower)
+    private IEnumerator RegulateFishermanCoroutine(AnglerTower anglerTower)
     {
         // Figure out whether the fisherman will be stopped or not
         bool caught = Random.Range(0f, 1f) <= regulationSuccessRate;
@@ -174,21 +174,21 @@ public class RangerTower : TowerBase
 
         towerEffectLineRenderers.Add(lr);
 
-        Vector3 towerEffectPosition = fishermanTower.transform.position;
+        Vector3 towerEffectPosition = anglerTower.transform.position;
         towerEffectPositions.Add(towerEffectPosition);
 
         // Handle fish being caught
         if (caught)
         {
             // Want this variable so we can make the fisherman flash, regardless of what mode we're in
-            MeshRenderer fishermanTowerRenderer = fishermanTower.flashRenderer;
+            MeshRenderer fishermanTowerRenderer = anglerTower.flashRenderer;
 
             // How we handle this depends on what mode the ranger is in
             switch (mode)
             {
                 case Mode.Kill:
                     // Make the fisherman inactive
-                    fishermanTower.TowerActive = false;
+                    anglerTower.TowerActive = false;
 
                     // Make the fisherman flash for a bit
                     for (int i = 0; i < numFlashesPerCatch; i++)
@@ -210,14 +210,14 @@ public class RangerTower : TowerBase
                     }
 
                     // Remove the fisherman tower
-                    if (fishermanTower != null)
+                    if (anglerTower != null)
                     {
-                        Destroy(fishermanTower.transform.root.gameObject);
+                        Destroy(anglerTower.transform.root.gameObject);
                     }
                     break;
                 case Mode.Slowdown:
                     // Apply the affect to the angler
-                    fishermanTower.AffectCatchRate(slowdownEffectSmall, slowdownEffectMedium, slowdownEffectLarge, timePerApplyEffect);
+                    anglerTower.AffectCatchRate(slowdownEffectSmall, slowdownEffectMedium, slowdownEffectLarge, timePerApplyEffect);
 
                     // Make the fisherman flash  for a bit
                     for (int i = 0; i < numFlashesPerCatch; i++)

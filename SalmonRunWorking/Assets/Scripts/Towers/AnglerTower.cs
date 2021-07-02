@@ -11,7 +11,7 @@ using TMPro;
  * Authors: Benjamin Person (Editor 2020)
  */
 [RequireComponent(typeof(LineRenderer))]
-public class FishermanTower : TowerBase
+public class AnglerTower : TowerBase
 {
     public MeshRenderer flashRenderer;      //< Mesh renderer that will flash when the fisherman tower is affected by a ranger or another tower
 
