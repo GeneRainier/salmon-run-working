@@ -70,12 +70,6 @@ public class Tooltip : MonoBehaviour
 
         // Set the text to match the text we've gotten
         text.text = message;
-
-        // Size the tooltip's background to the text
-        //backgroundImage.rectTransform.sizeDelta = new Vector2(text.preferredWidth + (2 * paddingSize), text.preferredHeight + (2 * paddingSize));
-
-        // Offset the text for the padding size
-        //text.rectTransform.anchoredPosition = new Vector2(paddingSize, paddingSize);
     }
 
     /**
@@ -102,9 +96,8 @@ public class Tooltip : MonoBehaviour
 
         // Use TransformPoint to get the actual correct position for the tooltip
         transform.position = canvas.transform.TransformPoint(localMousePos) + (Vector3)offset;
-        
-        UpdateSize();
 
+        UpdateSize();
     }
 
     /*
