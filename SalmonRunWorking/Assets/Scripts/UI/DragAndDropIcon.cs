@@ -41,7 +41,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
     private GameManager gameManager;
     private MoneyManager moneyManager;
     
-    [SerializeField] private Image iconImage;   //< We find the icon image to set its color
+    [SerializeField] private Image iconImage = null;   //< We find the icon image to set its color
 
     private TowerUI towerUI;            //< Reference to the TowerUI script for necessary functions
 

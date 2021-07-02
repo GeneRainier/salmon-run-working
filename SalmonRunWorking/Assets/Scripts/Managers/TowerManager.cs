@@ -22,8 +22,8 @@ public enum TowerType
  */
 public class TowerManager : MonoBehaviour
 {
-    [SerializeField] private List<Tower> towers;            //< A list of all the towers in the scene
-    [SerializeField] private List<FishermanTower> anglers;  //< A list of all the fishermen in the scene
+    [SerializeField] private List<Tower> towers = null;            //< A list of all the towers in the scene
+    [SerializeField] private List<FishermanTower> anglers = null;  //< A list of all the fishermen in the scene
 
     /*
      * Gets the first tower in the list of towers with a given type
@@ -84,10 +84,10 @@ public class Tower
 {
     public ManagerIndex initializationValues;           //< The ManagerIndex with initialization values for a given tower
 
-    [SerializeField] private TowerType towerType;       //< The type of tower this is
-    [SerializeField] private TowerUI towerUI;           //< The UI functions this tower can take use of
+    [SerializeField] private TowerType towerType = TowerType.Angler;       //< The type of tower this is
+    [SerializeField] private TowerUI towerUI = null;           //< The UI functions this tower can take use of
     [SerializeField] private bool enabled;              //< Whether or not the tower's effects are currently active or not
-    [SerializeField] private float cost;                //< The cost of placing this tower
+    [SerializeField] private float cost = 0.0f;                //< The cost of placing this tower
 
     public TowerType TowerType => towerType;            //< Reference to the towerType for this singular tower
     

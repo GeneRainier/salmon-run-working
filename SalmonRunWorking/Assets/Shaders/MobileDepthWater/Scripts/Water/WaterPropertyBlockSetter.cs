@@ -10,30 +10,30 @@ namespace Assets.Scripts.Water
     [ExecuteInEditMode]
     public class WaterPropertyBlockSetter : MonoBehaviour
     {
-        [SerializeField] private Renderer[] waterRenderers;
+        [SerializeField] private Renderer[] waterRenderers = null;
 
         [Space]
-        [SerializeField] private Color waterColor;
-        [SerializeField] private Texture waterTex;
-        [SerializeField] private Vector2 waterTile;
-        [Range(0, 1)][SerializeField] private float textureVisibility;
+        [SerializeField] private Color waterColor = Color.blue;
+        [SerializeField] private Texture waterTex = null;
+        [SerializeField] private Vector2 waterTile = Vector2.zero;
+        [Range(0, 1)][SerializeField] private float textureVisibility = 1.0f;
 
         [Space]
-        [SerializeField] private Texture distortionTex;
-        [SerializeField] private Vector2 distortionTile;
+        [SerializeField] private Texture distortionTex = null;
+        [SerializeField] private Vector2 distortionTile = Vector2.zero;
 
         [Space]
-        [SerializeField] private float waterHeight;
-        [SerializeField] private float waterDeep;
-        [Range(0, 0.1f)][SerializeField] private float waterDepthParam;
-        [Range(0, 1)][SerializeField] private float waterMinAlpha;
+        [SerializeField] private float waterHeight = 1.0f;
+        [SerializeField] private float waterDeep = 1.0f;
+        [Range(0, 0.1f)][SerializeField] private float waterDepthParam = 1.0f;
+        [Range(0, 1)][SerializeField] private float waterMinAlpha = 0.0f;
 
         [Space]
-        [SerializeField] private Color borderColor;
-        [Range(0, 1)][SerializeField] private float borderWidth;
+        [SerializeField] private Color borderColor = Color.green;
+        [Range(0, 1)][SerializeField] private float borderWidth = 1.0f;
 
         [Space]
-        [SerializeField] private Vector2 moveDirection;
+        [SerializeField] private Vector2 moveDirection = Vector2.zero;
 
         private MaterialPropertyBlock materialPropertyBlock;
 

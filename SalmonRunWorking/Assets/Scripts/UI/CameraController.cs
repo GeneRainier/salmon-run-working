@@ -12,20 +12,20 @@ using UnityEngine;
 public class CameraController : MonoBehaviour {
 
     [Header("Pan Properties")]
-    [SerializeField] private bool panWithMouse;     //< Can the mouse be used to pan as well as the arrow keys?
+    [SerializeField] private bool panWithMouse = false;     //< Can the mouse be used to pan as well as the arrow keys?
 
-    [SerializeField] private float panSpeed;        //< How fast the camera pans
+    [SerializeField] private float panSpeed = 0.0f;        //< How fast the camera pans
 
-    [SerializeField] private float panBorderThickness;  //< Size of borders around edge of screen which will start panning when the mouse enters the area
+    [SerializeField] private float panBorderThickness = 1.0f;  //< Size of borders around edge of screen which will start panning when the mouse enters the area
 
     [Header("Camera Bounds")]
-    [SerializeField] private MinMax bounds;     //< Farthest / closest the camera can zoom out. Min and Max values for x and y
+    [SerializeField] private MinMax bounds = null;     //< Farthest / closest the camera can zoom out. Min and Max values for x and y
     public float height;                        //< The difference between the max and min y values of bounds for calculating rotational interpolation
 
     [Header("Speeds")]
-    [SerializeField] private float zoomSpeed;   //< The speed at which you can zoom in or out
+    [SerializeField] private float zoomSpeed = 2.0f;   //< The speed at which you can zoom in or out
 
-    [SerializeField] private float lerpSpeed;   //< The speed at which the camera pans
+    [SerializeField] private float lerpSpeed = 0.0f;   //< The speed at which the camera pans
 
     private Vector3 target;     //< The position the camera is aimed at
     private Vector3 targetRotation;   //< The rotation the camera is currently at
@@ -142,8 +142,8 @@ public class CameraController : MonoBehaviour {
 [Serializable]
 public class MinMax
 {
-    [SerializeField] private Vector3 min;       //< The minimum location
-    [SerializeField] private Vector3 max;       //< The maximum location
+    [SerializeField] private Vector3 min = Vector3.zero;       //< The minimum location
+    [SerializeField] private Vector3 max = Vector3.zero;       //< The maximum location
 
     public Vector3 Min => min;
 

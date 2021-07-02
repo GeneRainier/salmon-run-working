@@ -14,7 +14,7 @@ public class MoneyManager : MonoBehaviour
     [SerializeField] private float startingFunds = 30.0f;       //< The amount of money the player starts with
     
     [Header("UI Components")]
-    [SerializeField] private TextMeshProUGUI moneyText;         //< The text that shows how much money the player has
+    [SerializeField] private TextMeshProUGUI moneyText = null;         //< The text that shows how much money the player has
     
     [Header("Tax Rates")]
     [SerializeField] private float catchTaxRate = 1.0f;         //< The amount of tax each fish catch is subject to

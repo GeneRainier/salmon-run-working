@@ -4,9 +4,8 @@ namespace Assets.MobileOptimizedWater.Scripts
 
     public class TouchRotator : MonoBehaviour
     {
-        [SerializeField] private Transform cameraRoot;
-        [SerializeField] private float speed;
-        [SerializeField] private float mouseSpeed;
+        [SerializeField] private Transform cameraRoot = null;
+        [SerializeField] private float mouseSpeed = 10.0f;
 
         private Vector3 prevMousePos;
 

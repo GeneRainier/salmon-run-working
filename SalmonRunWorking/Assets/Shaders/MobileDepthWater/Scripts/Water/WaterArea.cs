@@ -10,7 +10,7 @@ namespace Assets.Scripts.Water
         /// <summary>
         /// Water shader properties of the water this area belong
         /// </summary>
-        [SerializeField] private WaterPropertyBlockSetter waterProperties;
+        [SerializeField] private WaterPropertyBlockSetter waterProperties = null;
 
         public MaterialPropertyBlock WaterPropertyBlock
         {

@@ -227,8 +227,8 @@ public class PostRunStatsPanelController : PanelController
 [Serializable]
 public class UIElement
 {
-    [SerializeField] private TextMeshProUGUI label;     //< The title label of the UI element
-    [SerializeField] private TextMeshProUGUI value;     //< The content of the UI element
+    [SerializeField] private TextMeshProUGUI label = null;     //< The title label of the UI element
+    [SerializeField] private TextMeshProUGUI value = null;     //< The content of the UI element
     
     public const string divider = ": ";         //< A simple text divider to separate values in the post run panel
 

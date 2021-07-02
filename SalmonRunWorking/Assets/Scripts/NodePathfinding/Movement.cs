@@ -10,13 +10,13 @@ using UnityEngine;
  */
 public class Movement : MonoBehaviour
 {
-    public Destination destination;     //< The destination this object is moving towards
-    public GenericSpawner spawner;      //< The spawner that created this object
-    private Quaternion destinationDirection;    //< The rotation the fish will begin to face over time
-    [SerializeField] private float moveSpeed;   //< The speed this object is moving
-    [SerializeField] private float turnSpeed;   //< The speed this object turns while moving
+    public Destination destination = null;     //< The destination this object is moving towards
+    public GenericSpawner spawner = null;      //< The spawner that created this object
+    private Quaternion destinationDirection = Quaternion.identity;    //< The rotation the fish will begin to face over time
+    [SerializeField] private float moveSpeed = 10.0f;   //< The speed this object is moving
+    [SerializeField] private float turnSpeed = 45.0f;   //< The speed this object turns while moving
 
-    [SerializeField] private List<Destination> path;    //< A list of destinations that the fish will follow
+    [SerializeField] private List<Destination> path = null;    //< A list of destinations that the fish will follow
     private bool craftingPath = true;                   //< Whether or not this fish is still making a path to the end
     private int currentIndex = 0;                       //< The index of the current node this fish is moving to
 

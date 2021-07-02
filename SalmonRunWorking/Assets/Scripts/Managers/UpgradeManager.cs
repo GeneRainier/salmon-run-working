@@ -48,7 +48,7 @@ public class UpgradeManager : MonoBehaviour
 
     private bool finalUpgrade => numberOfUpgrades >= 2;         //< Bool tracking if an upgrade has been purchased for a tower
 
-    private int numberOfUpgrades;           //< The number of upgrades that can be purchased for a tower
+    private int numberOfUpgrades = 1;           //< The number of upgrades that can be purchased for a tower
 
     // Check to see if you have already bought them
     public bool firstPurchase1 = true;
@@ -99,9 +99,9 @@ public class UpgradeManager : MonoBehaviour
 
     private GameObject firstLadder;         //< The initial ladder a player places into the game scene
     
-    [SerializeField] private List <Upgrade> upgrades;       //< List of Upgrades that can be purchased
+    [SerializeField] private List <Upgrade> upgrades = null;       //< List of Upgrades that can be purchased
 
-    [SerializeField] private TowerManager theTowerManager;  //< Reference to the TowerManager
+    [SerializeField] private TowerManager theTowerManager = null;  //< Reference to the TowerManager
 
     public TextMeshProUGUI purchaseText;        //< The text associated with purchasing an upgrade
 
@@ -509,10 +509,10 @@ public class UpgradeManager : MonoBehaviour
 [Serializable]
 public class Upgrade
 {
-    [SerializeField] private UpgradeType upgradeType;       //< What kind of Upgrade this is
-    [SerializeField] private UpgradeUI upgradeUI;           //< The UI associated with this singular upgrade
+    [SerializeField] private UpgradeType upgradeType = UpgradeType.SalmonLadderUp;       //< What kind of Upgrade this is
+    [SerializeField] private UpgradeUI upgradeUI = null;           //< The UI associated with this singular upgrade
     //[SerializeField] private bool enabled;
-    [SerializeField] private float cost;                    //< The cost of this upgrade
+    [SerializeField] private float cost = 0.0f;                    //< The cost of this upgrade
 
     public UpgradeType UpgradeType => upgradeType;          //< A reference to the upgradeType of this Upgrade
 

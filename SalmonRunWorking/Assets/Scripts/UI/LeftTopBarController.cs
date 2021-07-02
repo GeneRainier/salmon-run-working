@@ -18,7 +18,7 @@ public class LeftTopBarController : MonoBehaviour
 
     public SealionSpawner triggerSpawn;             //< To trigger the sealion spawning
 
-    [SerializeField] private TextMeshProUGUI timerText;     //< Text that lists the current time in the round
+    [SerializeField] private TextMeshProUGUI timerText = null;     //< Text that lists the current time in the round
     private int timer;                              //< The timer value of the current round
 
     /**

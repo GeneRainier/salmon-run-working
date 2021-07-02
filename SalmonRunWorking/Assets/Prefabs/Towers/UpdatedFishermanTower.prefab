@@ -882,6 +882,11 @@ PrefabInstance:
       propertyPath: renderer
       value: 
       objectReference: {fileID: 9128884193401272041}
+    - target: {fileID: 3767006080198460649, guid: 343d7c16392829a49881e029a9c0e196,
+        type: 3}
+      propertyPath: skinRenderer
+      value: 
+      objectReference: {fileID: 9128884193401272041}
     - target: {fileID: 3767006080852090153, guid: 343d7c16392829a49881e029a9c0e196,
         type: 3}
       propertyPath: m_Layer

@@ -8,7 +8,7 @@ using UnityEngine.UI;
  */ 
 public class TowerUI : MonoBehaviour
 {
-    [SerializeField] private TowerType towerType;             //< The type of tower this is UI for
+    [SerializeField] private TowerType towerType = TowerType.Angler;             //< The type of tower this is UI for
     [SerializeField] private Color enabledColor = new Color32(233, 233, 233, 255);      //< The color of an enabled UI element
     [SerializeField] private Color disabledColor = new Color32(108, 108, 108, 255);     //< The color of a disabled UI element
 

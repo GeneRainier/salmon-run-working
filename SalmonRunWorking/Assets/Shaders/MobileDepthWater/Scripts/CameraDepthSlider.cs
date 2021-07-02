@@ -5,16 +5,16 @@ namespace Assets.MobileOptimizedWater.Scripts
 
     public class CameraDepthSlider : MonoBehaviour
     {
-        [SerializeField] private Slider slider;
-        [SerializeField] private Transform cameraTransform;
+        [SerializeField] private Slider slider = null;
+        [SerializeField] private Transform cameraTransform = null;
 
         [Space]
-        [SerializeField] private float minDistance;
-        [SerializeField] private float maxDistance;
+        [SerializeField] private float minDistance = 0.0f;
+        [SerializeField] private float maxDistance = 1.0f;
 
         [Space]
-        [SerializeField] private float scrollDelta;
-        [SerializeField] private float scrollSpeed;
+        [SerializeField] private float scrollDelta = 0.5f;
+        [SerializeField] private float scrollSpeed = 1.0f;
 
         private Vector3 cameraDirectionToRoot;
 

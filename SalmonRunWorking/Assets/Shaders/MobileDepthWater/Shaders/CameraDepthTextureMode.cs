@@ -3,7 +3,7 @@ using UnityEngine;
 public class CameraDepthTextureMode : MonoBehaviour 
 {
     [SerializeField]
-    DepthTextureMode depthTextureMode;
+    DepthTextureMode depthTextureMode = DepthTextureMode.None;
 
     private void OnValidate()
     {

@@ -24,8 +24,6 @@ public class Dam : FilterBase, IDragAndDropObject
     [SerializeField] private float mediumCrossingRate;
     [SerializeField] private float largeCrossingRate;
 
-    private bool hasLadder;             //< Is there a ladder currently attached to the dam?
-
     private BoxCollider dropOffBox;     //< Box where fish will be dropped off if the successfully pass the dam
 
     /**
@@ -75,9 +73,6 @@ public class Dam : FilterBase, IDragAndDropObject
         //largeCrossingRate = defaultCrossingRate + 0.7F;
 
         Debug.Log("damLadder S=" + damLadder.smallCrossingRate + "; M=" + damLadder.mediumCrossingRate + "; L=" + damLadder.largeCrossingRate);
-
-        // Set flag so we know we have a ladder
-        hasLadder = true;
     }
 
     #endregion

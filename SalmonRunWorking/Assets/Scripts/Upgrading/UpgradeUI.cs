@@ -10,15 +10,15 @@ using UnityEngine.UI;
  */
 public class UpgradeUI : MonoBehaviour
 {
-    [SerializeField] private UpgradeType upgradeType;       //< The type of upgrade whose UI we are interacting with
+    [SerializeField] private UpgradeType upgradeType = UpgradeType.SalmonLadderUp;       //< The type of upgrade whose UI we are interacting with
     [SerializeField] private Button upgradeButton;          //< The button for this upgrade
     //[SerializeField] private Button originalLadderButton;
 
     //[SerializeField] private List<Button> button_list = new List<Button>();
     
     // The buttons for when each of the Salmon Ladders are active
-    [SerializeField] private Button LadderUp1;
-    [SerializeField] private Button LadderUp2;
+    [SerializeField] private Button LadderUp1 = null;
+    [SerializeField] private Button LadderUp2 = null;
 
     // Checks UpgradeManager to see if the ladders are bought
     public bool ladder1Bought;

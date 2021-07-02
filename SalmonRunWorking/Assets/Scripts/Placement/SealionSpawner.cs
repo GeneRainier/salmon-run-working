@@ -9,9 +9,9 @@ using UnityEngine;
  */
 public class SealionSpawner : MonoBehaviour
 {
-    [SerializeField] private Transform[] spawnLocations;        //< List of locations for the sealion to spawn at
-    [SerializeField] private GameObject sealionPrefab;          //< The prefab for the sealion tower
-    [SerializeField] private GameObject sealionClone;           //< GameObject sealion to instantiate
+    [SerializeField] private Transform[] spawnLocations = null;        //< List of locations for the sealion to spawn at
+    [SerializeField] private GameObject sealionPrefab = null;          //< The prefab for the sealion tower
+    [SerializeField] private GameObject sealionClone = null;           //< GameObject sealion to instantiate
 
     [SerializeField] private bool locationInUse;                //< Trait of each location sealions can spawn for whether it has spawned sealions or not
     

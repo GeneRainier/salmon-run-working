@@ -9,7 +9,7 @@ using UnityEngine;
  */
 public class ColorManager : MonoBehaviour
 {
-    [SerializeField] private List<ColorPreset> usablePresets;       //< List of presets for the fish to utilize
+    [SerializeField] private List<ColorPreset> usablePresets = null;       //< List of presets for the fish to utilize
 
     // TODO: Select at least one from each, deplete initial list before drawing random, or choose statistically
     

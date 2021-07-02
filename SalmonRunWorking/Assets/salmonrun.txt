@@ -36,4 +36,5 @@ ladder = Ladder Present on Dam
 slPres = Sealion Present
 
 turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
-0, 375, 750, 375, 750, 750, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+0, 75, 150, 75, 150, 150, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 89, 276, 94, 242, 217, 75, 150, 75, 150, 150, 75, 150, 75, 0, 0, 0, 0, 0, 0, 0, 0

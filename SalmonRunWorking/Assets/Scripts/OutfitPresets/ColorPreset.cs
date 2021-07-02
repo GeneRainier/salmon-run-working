@@ -10,10 +10,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SalmonRun/ColorPreset")]
 public class ColorPreset : ScriptableObject
 {
-    [SerializeField] private Color clothColor;      //< The clothing color a tower can choose
+    [SerializeField] private Color clothColor = Color.black;      //< The clothing color a tower can choose
     //[SerializeField] private Color hairColor;
     //[SerializeField] private Color skinColor;
-    [SerializeField] private Color hatColor;        //< The hat color a tower can choose
+    [SerializeField] private Color hatColor = Color.white;        //< The hat color a tower can choose
 
     public Color ClothColor => clothColor;
 

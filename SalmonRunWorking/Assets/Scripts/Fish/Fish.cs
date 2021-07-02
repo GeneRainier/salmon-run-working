@@ -29,7 +29,7 @@ public class Fish : MonoBehaviour
     //private float timer = 0.0f;                        //< The current time this fish has been travelling to a destination
     //private float travelTime = 0.0f;                   //< The amount of time it will take to lerp to the current destination
 
-    [SerializeField] private List<Destination> path;    //< A list of destinations that the fish will follow
+    [SerializeField] private List<Destination> path = null;    //< A list of destinations that the fish will follow
 
     private bool craftingPath = true;                   //< Whether or not this fish is still making a path to the end
     private int currentIndex = 0;                       //< The index of the current node this fish is moving to

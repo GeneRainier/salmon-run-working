@@ -18,15 +18,13 @@ public class Tooltip : MonoBehaviour
 
     public Vector2 offset;                  //< Offset of tooltip from mouse pos
 
-    [SerializeField] private Canvas canvas;     //< Canvas that the tooltip is on
+    [SerializeField] private Canvas canvas = null;     //< Canvas that the tooltip is on
 
-    [SerializeField] private Image backgroundImage;     //< Background image for tooltip
+    [SerializeField] private TextMeshProUGUI text = null;      //< Text for the tooltip
 
-    [SerializeField] private TextMeshProUGUI text;      //< Text for the tooltip
-
-    [SerializeField] private RectTransform rectTransform;       //< The transform information for the tooltip
+    [SerializeField] private RectTransform rectTransform = null;       //< The transform information for the tooltip
     
-    [SerializeField] private RectTransform childRectTransform;  //< The transform information of any children objects to this tooltip
+    [SerializeField] private RectTransform childRectTransform = null;  //< The transform information of any children objects to this tooltip
 
     #region Major Monobehaviour Functions
 

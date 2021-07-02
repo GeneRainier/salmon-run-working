@@ -11,7 +11,7 @@ using UnityEngine;
  */
 public class HorizontalBarGraph : MonoBehaviour
 {
-    [SerializeField] private List<GraphEntry> dataEntries;      //< The entries for each set of data (sex, size, state)
+    [SerializeField] private List<GraphEntry> dataEntries = null;      //< The entries for each set of data (sex, size, state)
 
     private float graphWidth;               //< How wide the entirety of the graph is
 
@@ -79,11 +79,11 @@ public class HorizontalBarGraph : MonoBehaviour
     [Serializable]
     public class GraphEntry
     {
-        [SerializeField] private string name;       //< Entry title
+        [SerializeField] private string name = null;       //< Entry title
 
-        [SerializeField] private RectTransform location;    //< Rect transform array for bars/images representing the category being displayed on the left, center, and right of the graph
+        [SerializeField] private RectTransform location = null;    //< Rect transform array for bars/images representing the category being displayed on the left, center, and right of the graph
 
-        [SerializeField] private TextMeshProUGUI text;      //< Text to display the numeric value of each bar
+        [SerializeField] private TextMeshProUGUI text = null;      //< Text to display the numeric value of each bar
 
         public string Title => name;
 

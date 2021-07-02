@@ -13,13 +13,13 @@ public class ManagerIndex : MonoBehaviour
     public static ManagerIndex MI;          //< Reference to the ManagerIndex
 
     // References to the other manager scripts
-    [SerializeField] private GameManager gameManager;
-    [SerializeField] private ColorManager colorManager;
-    [SerializeField] private TimeManager timeManager;
-    [SerializeField] private MoneyManager moneyManager;
-    [SerializeField] private MenuManager menuManager;
-    [SerializeField] private TowerManager towerManager;
-    [SerializeField] private UpgradeManager upgradeManager;
+    [SerializeField] private GameManager gameManager = null;
+    [SerializeField] private ColorManager colorManager = null;
+    [SerializeField] private TimeManager timeManager = null;
+    [SerializeField] private MoneyManager moneyManager = null;
+    [SerializeField] private MenuManager menuManager = null;
+    [SerializeField] private TowerManager towerManager = null;
+    [SerializeField] private UpgradeManager upgradeManager = null;
 
     // Variables meant as initializations on start up
     // Boolean tracking whether or not to make the output file

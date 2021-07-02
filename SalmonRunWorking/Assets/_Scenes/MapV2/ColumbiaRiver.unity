@@ -297,7 +297,7 @@ PrefabInstance:
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
       propertyPath: initialNumFish
-      value: 1500
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
@@ -22938,6 +22938,51 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: SwapLadderButtons
       objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 790a1a7b90cf1f142929deebbdac93e8,
+        type: 2}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_text
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2180264, guid: 790a1a7b90cf1f142929deebbdac93e8, type: 2}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4281479730
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_firstOverflowCharacterIndex
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_textInfo.characterCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_textInfo.wordCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_textInfo.lineCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 736066209, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_textInfo.pageCount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 828173680, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -23081,6 +23126,10 @@ PrefabInstance:
     - target: {fileID: 1957028128, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
       propertyPath: m_SortingOrder
       value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1957028128, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2001911180, guid: 75b4a9cd018f0ed44bf34999ba93aec8, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -24418,6 +24467,27 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3264285212821282111, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3264285212821282111, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 790a1a7b90cf1f142929deebbdac93e8,
+        type: 2}
+    - target: {fileID: 3264285212821282111, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3264285212821282111, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_padding
+      value: 6.756425
+      objectReference: {fileID: 0}
     - target: {fileID: 3373933442813321549, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}
       propertyPath: m_LocalScale.x
@@ -24697,6 +24767,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3777684973643788005, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
+        type: 3}
+      propertyPath: m_Name
+      value: TMP SubMeshUI [Exo-SemiBold SDF Material + LiberationSans SDF Atlas]
       objectReference: {fileID: 0}
     - target: {fileID: 3801546545601178192, guid: 75b4a9cd018f0ed44bf34999ba93aec8,
         type: 3}

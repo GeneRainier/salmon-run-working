@@ -12,13 +12,13 @@ public class MenuManager : MonoBehaviour
 {
     // The buttons along the tower panel in the UI
     [Header("Tower Buttons")] 
-    [SerializeField] private Button anglerButton;
-    [SerializeField] private Button rangerButton;
-    [SerializeField] private Button damButton;
-    [SerializeField] private Button salmonLadderButton;
-    [SerializeField] private Button seaLionButton;
-    [SerializeField] private Button truckButton;
-    [SerializeField] private Button tunnelButton;
+    [SerializeField] private Button anglerButton = null;
+    [SerializeField] private Button rangerButton = null;
+    [SerializeField] private Button damButton = null;
+    [SerializeField] private Button salmonLadderButton = null;
+    [SerializeField] private Button seaLionButton = null;
+    [SerializeField] private Button truckButton = null;
+    [SerializeField] private Button tunnelButton = null;
 
     /*
      * Enables the towers of a particular type

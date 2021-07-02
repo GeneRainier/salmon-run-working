@@ -6,7 +6,7 @@ namespace Assets.MobileOptimizedWater.Scripts
 
     public class FPSUI : MonoBehaviour
     {
-        [SerializeField] private Text fpsText;
+        [SerializeField] private Text fpsText = null;
 
         private FPSCounter fpsCounter;
 

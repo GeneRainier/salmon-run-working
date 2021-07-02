@@ -11,9 +11,9 @@ using UnityEngine;
 public class GenericSpawner : MonoBehaviour
 {
     public List<Destination> initialDestinations;   //< List of the initial destinations pathing object can move towards
-    [SerializeField] private GameObject moverPrefab;    //< A prefab that will be spawned in to path through the level
-    [SerializeField] private int numberOfSpawns;            //< Number of objects to spawn
-    [SerializeField] private float delay;                     //< The delay in seconds between spawns
+    [SerializeField] private GameObject moverPrefab = null;    //< A prefab that will be spawned in to path through the level
+    [SerializeField] private int numberOfSpawns = 100;            //< Number of objects to spawn
+    [SerializeField] private float delay = 2.0f;                     //< The delay in seconds between spawns
 
     /*
      * Start is called prior to the first frame update

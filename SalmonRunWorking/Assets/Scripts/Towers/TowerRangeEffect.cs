@@ -24,12 +24,12 @@ public class TowerRangeEffect : MonoBehaviour
     }
 
     // Materials to be applied for each non-off state
-    public Material neutralMaterial;
-    public Material invalidMaterial;
-    public Material validMaterial;
+    public Material neutralMaterial = null;
+    public Material invalidMaterial = null;
+    public Material validMaterial = null;
 
     [SerializeField]
-    private GameObject rangeVisualizationObj;       //< Object that actually holds the effect object/sprite
+    private GameObject rangeVisualizationObj = null;       //< Object that actually holds the effect object/sprite
 
     public EffectState State { get; private set; } = EffectState.Off;       //< The current state of this range effect
 
