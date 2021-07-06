@@ -18364,7 +18364,7 @@ BoxCollider:
   m_GameObject: {fileID: 841742295}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 16442.56, y: 3402.2034, z: 0.00081114843}
   m_Center: {x: -0.0024414062, y: -0.000061035098, z: -0.00017999668}
@@ -28516,6 +28516,21 @@ PrefabInstance:
         type: 3}
       propertyPath: initialPosition.y
       value: 310
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: panSpeed
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: zoomSpeed
+      value: 40
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: lerpSpeed
+      value: 250
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9bbd2b4f09bd08f448f24579485278e8, type: 3}
@@ -47806,7 +47821,7 @@ GameObject:
   - component: {fileID: 1877901084}
   - component: {fileID: 1877901086}
   - component: {fileID: 1877901085}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: UpperWaterPlane
   m_TagString: Untagged
   m_Icon: {fileID: 0}

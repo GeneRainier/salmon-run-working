@@ -48,12 +48,21 @@ public class CameraController : MonoBehaviour {
 }
 
     /**
-     * Update is called once per frame
+     * FixedUpdate is called potentially more than once per frame based on the fixed time step
      */
-    private void LateUpdate ()
+    private void FixedUpdate ()
     {
+        // We UpdateTarget here to make the movement of the camera consistent across all TimeScales
+        // Movement should generally be handled in FixedUpdate for consistency across all scripts
         UpdateTarget();
+    }
 
+    /*
+     * LateUpdate is called once per frame after Update (and FixedUpdate in this case) is complete
+     */
+    private void LateUpdate()
+    {
+        // We physically move the camera after the UI has been adjusted so that the tooltips do not flash when the camera moves
         UpdatePosition();
     }
 
@@ -69,7 +78,7 @@ public class CameraController : MonoBehaviour {
         }
 
         // Calculates the current speed of the game for movement and rotation adjustments
-        timeFactor = Time.deltaTime / Time.timeScale;
+        timeFactor = Time.fixedDeltaTime / Time.timeScale;
         
         // Get camera's current pos
         target = transform.position;
@@ -81,18 +90,14 @@ public class CameraController : MonoBehaviour {
         // Look for keyboard inputs as well
         if (Input.GetButton("Zoom")|| Input.GetButton("Zoom"))
         {
-            scroll = 0.1f * Input.GetAxisRaw("Zoom");
+            scroll = 0.1f * 100.0f * Input.GetAxisRaw("Zoom");
         }
 
-        target.y += scroll * zoomSpeed * 100f * timeFactor;
-
-        // Calculate the interpolation factor for the camera rotation
-        float interpolation = (transform.position.y - bounds.Min.y) / (height);
-        transform.rotation = Quaternion.Euler(Vector3.Slerp(zoomedRotation, initialRotation, interpolation));
+        target.y += scroll * zoomSpeed * timeFactor;
 
         // Figure out how much distance the pan should cover
         // Dividing by timeScale so we always appear to pan at the same speed regardless of gameplay speed
-        float panDistance = Mathf.Min(panSpeed * timeFactor, panSpeed * timeFactor);
+        float panDistance = panSpeed * timeFactor;
         
         // Pan depending on which keys have been pressed (or which borders the mouse is currently in)
         if (Input.GetButton("Vertical") || (panWithMouse && 
@@ -124,6 +129,11 @@ public class CameraController : MonoBehaviour {
             }
             transform.SmoothMoveTowards(target, lerpSpeed);
         }
+
+        // Calculate the interpolation factor for the camera rotation
+        // This is handle in UpdatePosition rather than UpdateTarget to keep the Slerp effect smooth
+        float interpolation = (transform.position.y - bounds.Min.y) / (height);
+        transform.rotation = Quaternion.Euler(Vector3.Slerp(zoomedRotation, initialRotation, interpolation));
     }
 
     /*

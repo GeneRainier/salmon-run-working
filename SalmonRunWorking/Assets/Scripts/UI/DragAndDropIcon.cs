@@ -229,10 +229,11 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             // Figure out the origin for a ray that originates on the camera's y plane
             // and goes through the center of the drag and drop object at a 90 degree angle
             float raycastOriginDepth = cameraPosition.y - primaryHitInfo.point.y;
-            
-            Vector3 raycastOrigin = mainCamera.ScreenToWorldPoint(new Vector3(data.position.x, data.position.y, raycastOriginDepth));
 
-            // Want to raycast from the camera y, so reset the y value
+            // The origin of the secondary raycasts are based on the position of the tower we are dragging around
+            Vector3 raycastOrigin = spawnedObject.transform.position;
+
+            // Want to raycast from the camera's y, so reset the y value
             raycastOrigin.y = cameraPosition.y;
 
             // Make modifications to this origin so that the new origins are at each corner of the drag and drop object's bounding box
