@@ -28537,7 +28537,9 @@ PrefabInstance:
       propertyPath: lerpSpeed
       value: 250
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5748035269415145323, guid: 9bbd2b4f09bd08f448f24579485278e8, type: 3}
+    - {fileID: 4508457487457632302, guid: 9bbd2b4f09bd08f448f24579485278e8, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 9bbd2b4f09bd08f448f24579485278e8, type: 3}
 --- !u!114 &1048559849 stripped
 MonoBehaviour:

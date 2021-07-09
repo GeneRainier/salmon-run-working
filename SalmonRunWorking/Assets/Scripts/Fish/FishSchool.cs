@@ -381,7 +381,6 @@ public class FishSchool : MonoBehaviour, IPausable {
                 // Wait between waves
                 yield return new WaitForSeconds(timeBetweenWaves); 
             }
-
         }
     }
 

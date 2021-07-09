@@ -120,7 +120,6 @@ public class CameraController : MonoBehaviour {
      */
     private void UpdatePosition()
     {
-        Debug.Log("Really Inside");
         if (moving)
         {
             if (transform.ComparePosition(target, 0.01f))

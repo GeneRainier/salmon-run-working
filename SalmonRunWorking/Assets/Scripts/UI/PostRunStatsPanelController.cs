@@ -177,27 +177,27 @@ public class PostRunStatsPanelController : PanelController
     private void CreateOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
         // Create a txt file for post run information
-        string infoText = "Angler Radius, " + initializationValues.anglerRadius + "\nAngler Small Catch Rate, " + initializationValues.anglerSmallCatchRate +
-            "\nAngler Medium Catch Rate, " + initializationValues.anglerMediumCatchRate + "\nAngler Large Catch Rate, " + initializationValues.anglerLargeCatchRate +
-            "\nRanger Radius, " + initializationValues.rangerRadius + "\nRanger Small Catch Modifier, " + initializationValues.rangerSmallModifier +
-            "\nRanger Medium Catch Modifier, " + initializationValues.rangerMediumModifier + "\nRanger Large Catch Modifier, " + initializationValues.rangerLargeModifier +
-            "\nDefault Dam Pass Rate, " + initializationValues.defaultDamPassRate + "\nLadder Small Pass Rate, " + initializationValues.ladderSmallPassRate +
-            "\nLadder Medium Pass Rate, " + initializationValues.ladderMediumPassRate + "\nLadder Large Pass Rate, " + initializationValues.ladderLargePassRate +
-            "\nRamp Small Pass Rate, " + initializationValues.rampSmallPassRate + "\nRamp Medium Pass Rate, " + initializationValues.rampMediumPassRate +
-            "\nRamp Large Pass Rate, " + initializationValues.rampLargePassRate + "\nLift Small Pass Rate, " + initializationValues.liftSmallPassRate +
-            "\nLift Medium Pass Rate, " + initializationValues.liftMediumPassRate + "\nLift Large Pass Rate, " + initializationValues.liftLargePassRate +
-            "\nStarting Money, " + initializationValues.startingMoney + "\nSealion Appearance Time, " + initializationValues.sealionAppearanceTime + 
-            "\nSealion Male Catch Rate, " + initializationValues.sealionMaleCatchRate + "\nSealion Female Catch Rate, " + initializationValues.sealionFemaleCatchRate +
-            "\nNesting Sites, " + initializationValues.nestingSites + "\n" +
-            "\n" + "turn = Turn number\noffSh / offMd / offLg = Short / Medium / Large offspring\noffMa / offFe = Male / Female Offspring\n" +
-            "parSh / parMd / parLg = Short / Medium / Large Parents\nsurMa / surFe = Male / Female Survivors\nsurSh / surMd / surLg = Short / Medium / Large Survivors\n" +
-            "angB_ / angU_ = Angler Count Down / Upstream\nangBR / ang UR = Angler count Down / Upstream affected by Rangers\nrang = Number of Rangers\n" +
-            "dam = Dam Present\nladder = Ladder Present on Dam\nslPres = Sealion Present\n" +
-            "\n" +
-            "turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres\n" +
-            previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
-            ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n";
-        System.IO.File.WriteAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+        //string infoText = "Angler Radius, " + initializationValues.anglerRadius + "\nAngler Small Catch Rate, " + initializationValues.anglerSmallCatchRate +
+        //    "\nAngler Medium Catch Rate, " + initializationValues.anglerMediumCatchRate + "\nAngler Large Catch Rate, " + initializationValues.anglerLargeCatchRate +
+        //    "\nRanger Radius, " + initializationValues.rangerRadius + "\nRanger Small Catch Modifier, " + initializationValues.rangerSmallModifier +
+        //    "\nRanger Medium Catch Modifier, " + initializationValues.rangerMediumModifier + "\nRanger Large Catch Modifier, " + initializationValues.rangerLargeModifier +
+        //    "\nDefault Dam Pass Rate, " + initializationValues.defaultDamPassRate + "\nLadder Small Pass Rate, " + initializationValues.ladderSmallPassRate +
+        //    "\nLadder Medium Pass Rate, " + initializationValues.ladderMediumPassRate + "\nLadder Large Pass Rate, " + initializationValues.ladderLargePassRate +
+        //    "\nRamp Small Pass Rate, " + initializationValues.rampSmallPassRate + "\nRamp Medium Pass Rate, " + initializationValues.rampMediumPassRate +
+        //    "\nRamp Large Pass Rate, " + initializationValues.rampLargePassRate + "\nLift Small Pass Rate, " + initializationValues.liftSmallPassRate +
+        //    "\nLift Medium Pass Rate, " + initializationValues.liftMediumPassRate + "\nLift Large Pass Rate, " + initializationValues.liftLargePassRate +
+        //    "\nStarting Money, " + initializationValues.startingMoney + "\nSealion Appearance Time, " + initializationValues.sealionAppearanceTime + 
+        //    "\nSealion Male Catch Rate, " + initializationValues.sealionMaleCatchRate + "\nSealion Female Catch Rate, " + initializationValues.sealionFemaleCatchRate +
+        //    "\nNesting Sites, " + initializationValues.nestingSites + "\n" +
+        //    "\n" + "turn = Turn number\noffSh / offMd / offLg = Short / Medium / Large offspring\noffMa / offFe = Male / Female Offspring\n" +
+        //    "parSh / parMd / parLg = Short / Medium / Large Parents\nsurMa / surFe = Male / Female Survivors\nsurSh / surMd / surLg = Short / Medium / Large Survivors\n" +
+        //    "angB_ / angU_ = Angler Count Down / Upstream\nangBR / ang UR = Angler count Down / Upstream affected by Rangers\nrang = Number of Rangers\n" +
+        //    "dam = Dam Present\nladder = Ladder Present on Dam\nslPres = Sealion Present\n" +
+        //    "\n" +
+        //    "turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres\n" +
+        //    previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
+        //    ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n";
+        //System.IO.File.WriteAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 
     /*
@@ -210,14 +210,14 @@ public class PostRunStatsPanelController : PanelController
     private void AppendOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
         // Create a txt file for post run information
-        string infoText = previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
-            ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", " + FindSmallGenomes(parentGenomes).Count + ", " + 
-            FindMediumGenomes(parentGenomes).Count + ", " + FindLargeGenomes(parentGenomes).Count + ", " + survivingMaleDescriptor + ", " +
-            survivingFemaleDescriptor + ", " + survivingSmallDescriptor + ", " + survivingMediumDescriptor + ", " + survivingLargeDescriptor + ", "
-            + initializationValues.lowerAnglerCount + ", " + initializationValues.upperAnglerCount + ", " + initializationValues.lowerManagedAnglerCount + ", " + 
-            initializationValues.upperManagedAnglerCount + ", " + initializationValues.rangerCount + ", " + initializationValues.damPresent + ", " + 
-            initializationValues.ladderCode + ", " + initializationValues.sealionPresent + "\n";
-        System.IO.File.AppendAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
+        //string infoText = previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
+        //    ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", " + FindSmallGenomes(parentGenomes).Count + ", " + 
+        //    FindMediumGenomes(parentGenomes).Count + ", " + FindLargeGenomes(parentGenomes).Count + ", " + survivingMaleDescriptor + ", " +
+        //    survivingFemaleDescriptor + ", " + survivingSmallDescriptor + ", " + survivingMediumDescriptor + ", " + survivingLargeDescriptor + ", "
+        //    + initializationValues.lowerAnglerCount + ", " + initializationValues.upperAnglerCount + ", " + initializationValues.lowerManagedAnglerCount + ", " + 
+        //    initializationValues.upperManagedAnglerCount + ", " + initializationValues.rangerCount + ", " + initializationValues.damPresent + ", " + 
+        //    initializationValues.ladderCode + ", " + initializationValues.sealionPresent + "\n";
+        //System.IO.File.AppendAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 }
 
