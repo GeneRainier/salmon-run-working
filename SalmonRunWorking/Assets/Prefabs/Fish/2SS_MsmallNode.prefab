@@ -610,7 +610,7 @@ GameObject:
   - component: {fileID: 132374569}
   - component: {fileID: 8000629761612973588}
   m_Layer: 8
-  m_Name: 2SS_MsmallNode
+  m_Name: 2SS_MSmallNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -665,7 +665,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 1
   m_Interpolate: 0
-  m_Constraints: 56
+  m_Constraints: 84
   m_CollisionDetection: 0
 --- !u!114 &132374569
 MonoBehaviour:
