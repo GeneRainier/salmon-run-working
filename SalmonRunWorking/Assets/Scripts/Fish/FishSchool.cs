@@ -216,9 +216,6 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     public void Pause()
     {
-        // Pause all the fish
-        fishList.ForEach(fish => fish.CacheAndPauseMotion());
-
         // Pause the school
         paused = true;
     }
@@ -228,9 +225,6 @@ public class FishSchool : MonoBehaviour, IPausable {
      */
     public void Resume()
     {
-        // Resume all the fish
-        fishList.ForEach(fish => fish.RestoreAndResumeMotion());
-
         // Resume the school
         paused = false;
     }

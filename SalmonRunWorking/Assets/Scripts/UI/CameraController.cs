@@ -78,7 +78,7 @@ public class CameraController : MonoBehaviour {
         }
 
         // Calculates the current speed of the game for movement and rotation adjustments
-        timeFactor = Time.fixedDeltaTime / Time.timeScale;
+        timeFactor = Time.fixedDeltaTime;
         
         // Get camera's current pos
         target = transform.position;
@@ -120,6 +120,7 @@ public class CameraController : MonoBehaviour {
      */
     private void UpdatePosition()
     {
+        Debug.Log("Really Inside");
         if (moving)
         {
             if (transform.ComparePosition(target, 0.01f))

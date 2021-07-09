@@ -72,6 +72,8 @@ public class TimeManager : MonoBehaviour
     {
         timeState = TimeState.Paused;
 
+        Time.timeScale = 0;
+
         foreach(IPausable p in pausableObjects)
         {
             p.Pause();

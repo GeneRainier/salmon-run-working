@@ -109,6 +109,15 @@ public class Fish : MonoBehaviour
      */
     private void Update()
     {
+        // If the game is paused, we do not want to handle any of this movement
+        // NOTE: If more elements are added to this Update function, they may need to be placed prior to this check to 
+        //       ensure that pausing does not break vital behaviors
+        if (Time.timeScale == 0)
+        {
+            return;
+        }
+
+        // If we are close to the current destination, then begin moving towards the next one in the path
         if (Vector3.Distance(transform.position, destination.destinationPosition) <= 10.0f)
         {
             if (destination.finalDestination != true)
@@ -274,34 +283,6 @@ public class Fish : MonoBehaviour
         // Have to go to the root because the fish component may not be on the outermost gameobject
         // and therefore disabling it might not disable the renderer or other fish parts
         transform.root.gameObject.SetActive(false);
-    }
-
-    #endregion
-
-    #region Pause and Resume
-
-    /**
-     * Pause fish motion, saving rigidbody data so it can be restored later
-     */
-    public void CacheAndPauseMotion()
-    {
-        cachedVelocity = rigid.velocity;
-        cachedAngularVelocity = rigid.angularVelocity;
-
-        rigid.isKinematic = true;
-    }
-
-    /**
-     * Resume fish motion from paused state, restoring cached rigidbody data
-     */
-    public void RestoreAndResumeMotion()
-    {
-        rigid.isKinematic = false;
-
-        rigid.velocity = cachedVelocity;
-        rigid.angularVelocity = cachedAngularVelocity;
-
-        rigid.WakeUp();
     }
 
     #endregion
