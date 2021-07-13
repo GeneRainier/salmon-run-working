@@ -20,7 +20,7 @@ public static class GameObjectFunctions
     public static void SmoothMoveTowards(this Transform transform, Vector3 destination, float moveSpeed)
     {
         transform.position = Vector3.Lerp(destination, transform.position,
-            Mathf.Pow(0.9f, Time.deltaTime * moveSpeed));
+            Mathf.Pow(0.9f, Time.unscaledDeltaTime * moveSpeed));
     }
 
     /*

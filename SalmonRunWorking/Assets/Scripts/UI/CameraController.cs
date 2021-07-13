@@ -34,7 +34,8 @@ public class CameraController : MonoBehaviour {
 
     [SerializeField] private Vector3 initialPosition;       //< The location the camera is at when the level begins
     [SerializeField] private Vector3 initialRotation;       //< The rotation the camera is at when the level begins
-    [SerializeField] private Vector3 zoomedRotation;        //< The rotation the camera has when it is fully zoomed in
+    [SerializeField] private float initialXRotation;       //< The x rotation when the camera is fully zoomed out
+    [SerializeField] private float zoomedXRotation;        //< The x rotation the camera has when it is fully zoomed in
 
     /*
      * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
@@ -43,14 +44,15 @@ public class CameraController : MonoBehaviour {
     {
         initialPosition = this.gameObject.transform.position;
         initialRotation = this.gameObject.transform.rotation.eulerAngles;
-        zoomedRotation = new Vector3(30.0f, 0.0f, 0.0f);
+        initialXRotation = this.gameObject.transform.rotation.eulerAngles.x;
+        zoomedXRotation = 30.0f;
         height = bounds.Max.y - bounds.Min.y;
 }
 
     /**
-     * FixedUpdate is called potentially more than once per frame based on the fixed time step
+     * Update is called once every frame update
      */
-    private void FixedUpdate ()
+    private void Update ()
     {
         // We UpdateTarget here to make the movement of the camera consistent across all TimeScales
         // Movement should generally be handled in FixedUpdate for consistency across all scripts
@@ -77,9 +79,6 @@ public class CameraController : MonoBehaviour {
             target = transform.position;
         }
 
-        // Calculates the current speed of the game for movement and rotation adjustments
-        timeFactor = Time.fixedDeltaTime;
-        
         // Get camera's current pos
         target = transform.position;
 
@@ -88,24 +87,24 @@ public class CameraController : MonoBehaviour {
         float scroll = 12f * Input.GetAxis("Mouse ScrollWheel");
 
         // Look for keyboard inputs as well
-        if (Input.GetButton("Zoom")|| Input.GetButton("Zoom"))
+        if (Input.GetButton("Zoom") || Input.GetButton("Zoom"))
         {
             scroll = 0.1f * 100.0f * Input.GetAxisRaw("Zoom");
         }
 
-        target.y += scroll * zoomSpeed * timeFactor;
+        target.y += scroll * zoomSpeed * Time.unscaledDeltaTime;
 
         // Figure out how much distance the pan should cover
-        // Dividing by timeScale so we always appear to pan at the same speed regardless of gameplay speed
-        float panDistance = panSpeed * timeFactor;
-        
+        // Multiplied by unscaledDeltaTime so pausing and fast forwarding does not affect camera movement
+        float panDistance = panSpeed * Time.unscaledDeltaTime;
+
         // Pan depending on which keys have been pressed (or which borders the mouse is currently in)
-        if (Input.GetButton("Vertical") || (panWithMouse && 
+        if (Input.GetButton("Vertical") || (panWithMouse &&
             (Input.mousePosition.y >= Screen.height - panBorderThickness || Input.mousePosition.y <= panBorderThickness)))
         {
             target.z += panDistance * Input.GetAxisRaw("Vertical");
         }
-        if (Input.GetButton("Horizontal") || (panWithMouse && 
+        if (Input.GetButton("Horizontal") || (panWithMouse &&
             (Input.mousePosition.x <= panBorderThickness || Input.mousePosition.x >= Screen.width - panBorderThickness)))
         {
             target.x += panDistance * Input.GetAxisRaw("Horizontal");
@@ -133,7 +132,8 @@ public class CameraController : MonoBehaviour {
         // Calculate the interpolation factor for the camera rotation
         // This is handle in UpdatePosition rather than UpdateTarget to keep the Slerp effect smooth
         float interpolation = (transform.position.y - bounds.Min.y) / (height);
-        transform.rotation = Quaternion.Euler(Vector3.Slerp(zoomedRotation, initialRotation, interpolation));
+        float xRotation = Mathf.Lerp(zoomedXRotation, initialXRotation, interpolation);
+        transform.rotation = Quaternion.Euler(xRotation, transform.rotation.y, transform.rotation.z);
     }
 
     /*
