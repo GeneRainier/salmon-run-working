@@ -75,8 +75,6 @@ public partial class GameManager : MonoBehaviour
                 school.KillAllActive();
                 break;
         }
-
-
     }
 
     #endregion

@@ -33,6 +33,7 @@ public class PostRunStatsPanelController : PanelController
     public int stuckFish = 0;                   //< Count for fish who died due to being stuck
 
     public TextMeshProUGUI titleText;           //< Panel's title, which displays the turn number
+    private LeftTopBarController turnTimer;     //< Reference to the turn and timer controlling script for resetting the timer
 
     // Text for parent data
     public UIElement parentSmallText;
@@ -47,6 +48,7 @@ public class PostRunStatsPanelController : PanelController
     public UIElement offspringMaleText;
 
     private bool noOffspring;               //< Flag for case where there are no offspring left and we have to do something different when leaving the panel
+    private bool firstTurn = true;          //< Flag for ensuring the first turn is represented correctly after first clicking the next run button
 
     /*
      * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization function
@@ -55,6 +57,8 @@ public class PostRunStatsPanelController : PanelController
     {
         // Get initialization values and set this towers basic values
         initializationValues = FindObjectOfType<ManagerIndex>();
+
+        turnTimer = FindObjectOfType<LeftTopBarController>();
     }
 
     /**
@@ -78,12 +82,23 @@ public class PostRunStatsPanelController : PanelController
         // Deactivate the panel
         Deactivate();
 
+        // Reset timer for next round
+        turnTimer.ResetTimer();
+
         Debug.Log("OnNextRunButton() noOffspring = " + noOffspring);
         // If there is fish in the next generation, just move on to place state
         if (!noOffspring) GameManager.Instance.SetState(new PlaceState());
 
         // Otherwise, go to end panel
         else GameManager.Instance.SetState(new EndState(EndGame.Reason.NoOffspring));
+
+        // Check if we are on the first round or not
+        // If we are, make sure the turn counter reflects that
+        if (firstTurn == true)
+        {
+            GameManager.Instance.Turn = 1;
+            firstTurn = false;
+        }
     }
 
     /**

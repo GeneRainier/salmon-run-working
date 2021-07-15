@@ -25,7 +25,8 @@ public class RunStatsState : GameState
      */
     public override void ExitState()
     {
-
+        // Increment turn
+        GameManager.Instance.Turn++;
     }
 
     /**

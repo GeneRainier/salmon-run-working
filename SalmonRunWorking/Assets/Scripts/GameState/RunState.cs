@@ -24,9 +24,6 @@ public class RunState : GameState
      */
     public override void ExitState()
     {
-        // Increment turn
-        GameManager.Instance.Turn++;
-
         // Fire event to inform that run has ended
         GameEvents.onEndRun.Invoke();
     }

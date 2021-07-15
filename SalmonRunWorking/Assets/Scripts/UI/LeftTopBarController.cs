@@ -61,6 +61,15 @@ public class LeftTopBarController : MonoBehaviour
     }
 
     /*
+     * Resets the timer for the next round
+     */
+    public void ResetTimer()
+    {
+        timer = 0;
+        timerText.text = $"Time: {timer / 60:D2}:{timer % 60:D2}";
+    }
+
+    /*
      * Stops the round timer
      */
     public void StopTimer()
