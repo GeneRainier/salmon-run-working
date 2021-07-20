@@ -86,7 +86,7 @@ public class CameraController : MonoBehaviour {
         // We only want to turn the camera if we are zoomed in
         if (Input.GetButton("Rotate"))
         {
-            transform.RotateAround(transform.position, Vector3.up, 1.0f * Input.GetAxisRaw("Rotate"));
+            transform.RotateAround(transform.position, Vector3.up, -1.0f * Input.GetAxisRaw("Rotate"));
         }
 
         // Store the current rotation for when we apply the XRotation Lerp
