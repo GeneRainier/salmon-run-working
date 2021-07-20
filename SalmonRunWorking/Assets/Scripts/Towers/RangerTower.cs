@@ -114,7 +114,7 @@ public class RangerTower : TowerBase
      */
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        transform.position = primaryHitInfo.point;
+        transform.parent.position = primaryHitInfo.point;
         initializationValues.rangerCount += 1;
     }
 

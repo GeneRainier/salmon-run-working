@@ -53,6 +53,8 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     private List<Fish> deadFishList = new List<Fish>();     //< Fish that have died
 
+    private PostRunStatsPanelController statsPanel;         //< The end of round stats panel controller
+
     private List<FishGenome> nextGenerationGenomes;         //< List of fish genomes that will be used in the next generation
 
     // Corners of the spawn area, for drawing and calculating locations
@@ -63,8 +65,16 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     #region Major Monobehaviour Functions
 
+    /*
+     * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
+     */
+    private void Awake()
+    {
+        statsPanel = FindObjectOfType<PostRunStatsPanelController>();
+    }
+
     /**
-     * Start is called prior to the first fram update. Initialization function
+     * Start is called prior to the first frame update. Initialization function
      */
     private void Start () {
         // Make sure the spawn area is set up
@@ -242,7 +252,7 @@ public class FishSchool : MonoBehaviour, IPausable {
         List<FishGenome> parentGenomes = null;
 
         // If it's the 0th turn, generate a full set of genomes from nothing
-        if (GameManager.Instance.Turn == 1)
+        if (GameManager.Instance.Turn == 1 && statsPanel.firstTurn == true)
         {
             nextGenerationGenomes = FishGenomeUtilities.MakeNewGeneration(initialNumFish, true, true);
         }

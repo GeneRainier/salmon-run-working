@@ -48,7 +48,7 @@ public class PostRunStatsPanelController : PanelController
     public UIElement offspringMaleText;
 
     private bool noOffspring;               //< Flag for case where there are no offspring left and we have to do something different when leaving the panel
-    private bool firstTurn = true;          //< Flag for ensuring the first turn is represented correctly after first clicking the next run button
+    public bool firstTurn = true;          //< Flag for ensuring the first turn is represented correctly after first clicking the next run button
 
     /*
      * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization function

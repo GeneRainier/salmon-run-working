@@ -56,7 +56,7 @@ public class SealionSpawner : MonoBehaviour
         // Pressing m spawns a sealion for testing purposes
         if (Input.GetKeyDown("m"))
         {
-            sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(270, 0, 0));
+            sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(0, 0, 0));
             locationInUse = true;
         }
     }
@@ -70,7 +70,7 @@ public class SealionSpawner : MonoBehaviour
         {
             if (!locationInUse)
             {
-                sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(270, 0, 0));
+                sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(0, 0, 0));
                 locationInUse = true;
             }
         }

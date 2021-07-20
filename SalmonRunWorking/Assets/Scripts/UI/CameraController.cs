@@ -4,8 +4,12 @@ using UnityEngine;
 /*
  * RTS-style camera controller script.
  * 
- * Based on tutorial by Brackeys: https://www.youtube.com/watch?v=cfjLQrMGEb4
- * NOTE: As of 2021, this has been adjusted substantially to better fit our new 2021 design documentation and direction
+ * Originally based on a tutorial by Brackeys: https://www.youtube.com/watch?v=cfjLQrMGEb4
+ * NOTE: As of 2021, this has been adjusted substantially to better fit our new 2021 design documentation and direction.
+ * The new controller removes the need for a camera target to follow and moves its operation to LateUpdate to accomodate tooltips
+ * not flashing when the camera moves. The input scheme is essentially the same, but directly modifies the camera's transform
+ * rather than adjusting the target and then moving the camera to match. The movement is also split between the WASD controls
+ * which move locally to the camera and the Arrow Keys which move north, south, east, west in the relative the to game scene.
  * 
  * Authors: Benjamin Person (Rewrite in 2021)
  */

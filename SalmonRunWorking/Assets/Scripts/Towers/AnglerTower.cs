@@ -160,7 +160,7 @@ public class AnglerTower : TowerBase
      */
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-        transform.position = primaryHitInfo.point;
+        transform.parent.position = primaryHitInfo.point;
         theTowerManager = FindObjectOfType<TowerManager>();
         theTowerManager.AddAngler(this);
         if (transform.position.x < 1115)

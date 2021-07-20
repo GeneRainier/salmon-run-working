@@ -221,7 +221,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
             #endif
 
             // Update the location of the spawned object to be at the point of the raycast hit
-            spawnedObject.transform.position = primaryHitInfo.point;
+            spawnedObject.transform.position = new Vector3(primaryHitInfo.point.x, 15.0f, primaryHitInfo.point.z);
 
             // Do some secondary raycasts to get more information
             // This gets a bit complicated...
@@ -290,7 +290,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
         // If we are in a valid place, spawn the object
         if (locationValid)
-        {
+        {   
             // Place the spawned object
             spawnedObjectDragAndDrop.Place(primaryHitInfo, secondaryHitInfo);
 
