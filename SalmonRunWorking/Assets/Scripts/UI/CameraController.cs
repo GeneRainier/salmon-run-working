@@ -100,12 +100,29 @@ public class CameraController : MonoBehaviour {
         if (Input.GetButton("Vertical") || (panWithMouse &&
             (Input.mousePosition.y >= Screen.height - panBorderThickness || Input.mousePosition.y <= panBorderThickness)))
         {
-            transform.Translate(Vector3.forward * panDistance * Input.GetAxisRaw("Vertical"), Space.World);
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.S))
+            {
+                // Calculate the perpendicular axis of travel for the camera based on its current rotation
+                Vector3 forward = Vector3.Cross(transform.right, Vector3.up);
+                transform.Translate(forward * Input.GetAxisRaw("Vertical") * panDistance, Space.World);
+            }
+            else
+            {
+                transform.Translate(Vector3.forward * panDistance * Input.GetAxisRaw("Vertical"), Space.World);
+            }
         }
         if (Input.GetButton("Horizontal") || (panWithMouse &&
             (Input.mousePosition.x <= panBorderThickness || Input.mousePosition.x >= Screen.width - panBorderThickness)))
         {
-            transform.Translate(Vector3.right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
+            {
+                Vector3 right = Vector3.Cross(Vector3.up, transform.up);
+                transform.Translate(right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
+            }
+            else
+            {
+                transform.Translate(Vector3.right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
+            }
         }
 
         // Calculate the interpolation factor for the camera rotation
