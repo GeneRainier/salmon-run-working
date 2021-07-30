@@ -268,6 +268,9 @@ public class AnglerTower : TowerBase
 
             float timeToWait = (float) timePerApplyEffect / numFlashesPerCatch / 2f;
 
+            // Trigger Water Splash effect on fish
+            fish.waterSplash.Play();
+
             // Make the fish flash  for a bit
             SkinnedMeshRenderer fishRenderer = fish.GetComponentInChildren<SkinnedMeshRenderer>();
             for (int i = 0; i < numFlashesPerCatch; i++)

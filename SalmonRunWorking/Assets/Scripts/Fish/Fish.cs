@@ -54,6 +54,8 @@ public class Fish : MonoBehaviour
 
     public int damPassCounter = 0;      //< Counter for attempts to pass the dam
 
+    public ParticleSystem waterSplash = null;     //< The water splash effect that will play when this fish is caught
+
     #region Major Monobehaviour Functions
 
     /**
