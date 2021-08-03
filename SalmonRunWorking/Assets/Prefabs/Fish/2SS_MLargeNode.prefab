@@ -5317,6 +5317,7 @@ MonoBehaviour:
   path: []
   damPassCounter: 0
   waterSplash: {fileID: 4367737913653381153}
+  fishRenderer: {fileID: 8703597801057401589}
 --- !u!65 &5511854102368377111
 BoxCollider:
   m_ObjectHideFlags: 0
