@@ -271,8 +271,9 @@ public class AnglerTower : TowerBase
             // Trigger Water Splash effect on fish
             fish.waterSplash.Play();
             fish.swimSpeed = 0;
+            yield return new WaitForSeconds(1);
             fish.fishRenderer.enabled = false;
-            yield return new WaitForSeconds(2);
+            yield return new WaitForSeconds(1);
 
             // Make the fish flash  for a bit
             //SkinnedMeshRenderer fishRenderer = fish.GetComponentInChildren<SkinnedMeshRenderer>();
