@@ -24,6 +24,8 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
 
     private TowerRangeEffect rangeEffect;       //< Tower range effect script
 
+    public int turnPlaced = 0;                  //< The turn this tower was placed in the level
+
     #region Major Monobehaviour Functions
 
     /**

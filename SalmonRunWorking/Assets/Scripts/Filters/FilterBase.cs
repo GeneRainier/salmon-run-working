@@ -14,6 +14,8 @@ public abstract class FilterBase : MonoBehaviour
 
     private Collider myCollider;        //< The collider on the filter object
 
+    public int turnPlaced = 0;          //< The turn this tower was placed in the level
+
     /**
      * Awake is called after all gameObjects in the scene are initialized prior to the game starting
      */

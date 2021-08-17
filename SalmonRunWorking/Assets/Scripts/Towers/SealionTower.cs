@@ -246,7 +246,8 @@ public class SealionTower : TowerBase
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         transform.position = primaryHitInfo.point;
-        theTowerManager = FindObjectOfType<TowerManager>();
-        //theTowerManager.AddAngler(this);
+        TowerManager theTowerManager = FindObjectOfType<TowerManager>();
+        theTowerManager.AddTower(this);
+        turnPlaced = GameManager.Instance.Turn;
     }
 }

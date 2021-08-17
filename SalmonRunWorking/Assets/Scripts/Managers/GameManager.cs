@@ -29,6 +29,8 @@ public partial class GameManager : MonoBehaviour
 
     private TimeManager timeManager;        //< Time manager script
 
+    public PauseMenu pauseMenu;            //< The pause menu in the level
+
     #region Major MonoBehavior Functions
 
     /**

@@ -131,6 +131,22 @@ public class DamPlacementLocation : MonoBehaviour
         placementTurn = GameManager.Instance.Turn;
     }
 
+    /*
+     * Removes the Dam by way of setting the inUse boolean to false
+     */
+    public void RemoveDam()
+    {
+        inUse = false;
+    }
+
+    /*
+     * Removes the Ladder by way of setting the HasLadder boolean to false
+     */
+    public void RemoveLadder()
+    {
+        HasLadder = false;
+    }
+
     #endregion
 
     #region Visualization (Static)
@@ -144,6 +160,7 @@ public class DamPlacementLocation : MonoBehaviour
     {
         foreach (DamPlacementLocation placementLocation in allLocations)
         {
+            Debug.Log(activate);
             // If the placement location is in use and we're trying to activate it, don't do so
             // because you shouldn't be able to place anything there
             if (!activate || !placementLocation.inUse)

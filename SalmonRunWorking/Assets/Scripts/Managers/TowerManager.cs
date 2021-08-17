@@ -23,6 +23,7 @@ public enum TowerType
 public class TowerManager : MonoBehaviour
 {
     [SerializeField] private List<Tower> towers = null;            //< A list of all the towers in the scene
+    [SerializeField] private List<TowerBase> placedTowers = null;   //< The towers the player has placed during the level
     [SerializeField] private List<AnglerTower> anglers = null;  //< A list of all the fishermen in the scene
 
     /*
@@ -73,6 +74,26 @@ public class TowerManager : MonoBehaviour
     public List<AnglerTower> GetAnglers()
     {
         return anglers;
+    }
+
+    /*
+     * Adds a tower to the list of existing towers for reverting to earlier turns
+     * 
+     * @param tower The tower that has just been placed in the scene which needs to be added to the list
+     */
+    public void AddTower(TowerBase tower)
+    {
+        placedTowers.Add(tower);
+    }
+
+    /*
+     * Obtains the list of existing, placed towers for reverting to earlier turns
+     * 
+     * @return List<FishermentTower> A list of scripts for each of the existing towers
+     */
+    public List<TowerBase> GetTowers()
+    {
+        return placedTowers;
     }
 }
 

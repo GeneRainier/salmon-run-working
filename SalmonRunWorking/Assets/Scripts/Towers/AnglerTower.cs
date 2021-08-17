@@ -51,8 +51,6 @@ public class AnglerTower : TowerBase
     public GameObject fisherman;
     private static readonly int Fishing = Animator.StringToHash("Fishing");
 
-    [SerializeField] private TowerManager theTowerManager;      // Reference to the Tower Manager
-
     public bool anglerCounted = false;      // Boolean for checking whether regulated angler has been counted yet or not
 
     /**
@@ -161,8 +159,9 @@ public class AnglerTower : TowerBase
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         transform.parent.position = primaryHitInfo.point;
-        theTowerManager = FindObjectOfType<TowerManager>();
-        theTowerManager.AddAngler(this);
+        TowerManager theTowerManager = FindObjectOfType<TowerManager>();
+        theTowerManager.AddTower(this);
+        turnPlaced = GameManager.Instance.Turn;
         if (transform.position.x < 1115)
         {
             initializationValues.lowerAnglerCount += 1;

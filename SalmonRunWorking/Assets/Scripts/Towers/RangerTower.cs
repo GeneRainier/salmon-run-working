@@ -116,6 +116,9 @@ public class RangerTower : TowerBase
     {
         transform.parent.position = primaryHitInfo.point;
         initializationValues.rangerCount += 1;
+        TowerManager theTowerManager = FindObjectOfType<TowerManager>();
+        theTowerManager.AddTower(this);
+        turnPlaced = GameManager.Instance.Turn;
     }
 
     /**

@@ -9,8 +9,9 @@ using UnityEngine;
  */
 public class DamLadder : MonoBehaviour, IDragAndDropObject
 {
-    // The ManagerIndex with initialization values for a given tower
-    public ManagerIndex initializationValues;
+    public ManagerIndex initializationValues;   //< The ManagerIndex with initialization values for a given tower
+
+    public int turnPlaced = 0;                  //< The turn this tower was placed in the level
 
     // Rates at which small, medium, and large fish should be able to pass a dam with a ladder installed
     [Range(0f, 1f)]
@@ -53,6 +54,7 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
             Debug.Log("DamLadder.cs primaryHitInfo S=" + smallCrossingRate + "; M=" + mediumCrossingRate + "; L=" + largeCrossingRate);
 
             initializationValues.ladderCode = 1;
+            turnPlaced = GameManager.Instance.Turn;
         }
     }
 

@@ -99,8 +99,8 @@ public class Dam : FilterBase, IDragAndDropObject
         {
             placementLocation.AttachDam(this);
             initializationValues.damPresent = 1;
+            turnPlaced = GameManager.Instance.Turn;
         }
-
     }
 
     /**

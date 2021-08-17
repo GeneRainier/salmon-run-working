@@ -174,6 +174,23 @@ public class FishSchool : MonoBehaviour, IPausable {
         }
     }
 
+    /*
+     * Destroys all of the fish that are still in the level for a Turn reset
+     * 
+     * This is unique from KillAllActive in that it does not trigger the GameEvent that triggers when all fish are dead or at spawning grounds
+     */
+    public void DestroyAllActive()
+    {
+        // Halt any additional fish spawning
+        StopCoroutine("SpawnOverTime");
+        
+        foreach (Fish fish in fishList)
+        {
+            Destroy(fish.transform.root.gameObject);
+        }
+        fishList.Clear();
+    }
+
     /**
      * Check if there are any more fish still trying to reach the goal -- if not, end the run
      */

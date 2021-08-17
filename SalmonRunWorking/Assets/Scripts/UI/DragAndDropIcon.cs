@@ -47,7 +47,7 @@ public class DragAndDropIcon : MonoBehaviour, IBeginDragHandler, IDragHandler, I
 
     // Boolean determinants for purchasing single purchase items like dams and ladders
     public bool isOneTimePurcahse;
-    private bool hasBeenPurchased;
+    public bool hasBeenPurchased;
 
     /**
      * Start is called prior to the first frame update
