@@ -107,7 +107,7 @@ public class Tower
 
     [SerializeField] private TowerType towerType = TowerType.Angler;       //< The type of tower this is
     [SerializeField] private TowerUI towerUI = null;           //< The UI functions this tower can take use of
-    [SerializeField] private bool enabled;              //< Whether or not the tower's effects are currently active or not
+    [SerializeField] private bool enabled;                     //< Whether or not the tower type is currently available
     [SerializeField] private float cost = 0.0f;                //< The cost of placing this tower
 
     public TowerType TowerType => towerType;            //< Reference to the towerType for this singular tower
@@ -117,7 +117,7 @@ public class Tower
     public float Cost => cost;                          //< Reference to the cost of this singular tower
 
     /*
-     * Sets the tower to be enabled
+     * Sets the tower type to be enabled and therefore placeable in the level
      */
     public void Enable()
     {
@@ -125,7 +125,7 @@ public class Tower
     }
 
     /*
-     * Sets the tower to be disabled
+     * Sets the tower type to be disabled and therefore not placeable in the level
      */
     public void Disable()
     {
