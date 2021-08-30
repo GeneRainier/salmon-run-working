@@ -71,50 +71,6 @@ public class PauseMenu : MonoBehaviour
      */
     public void RevertTurn()
     {
-        // For every tower, if the tower was placed after the selected turn, get rid of it
-        foreach (TowerBase tower in theTowerManager.GetTowers())
-        {
-            if (tower.turnPlaced > turnSlider.value)
-            {
-                Destroy(tower.transform.root.gameObject);
-            }
-        }
-
-        // Remove any active fish in the scene
-        school.DestroyAllActive();
-
-        // Remove the dam and ladder if they were not placed on the given turn
-        Dam theDam = FindObjectOfType<Dam>();
-        DamLadder theLadder = FindObjectOfType<DamLadder>();
-        if (theDam != null)
-        {
-            if (theDam.turnPlaced > turnSlider.value)
-            {
-                damIcon.hasBeenPurchased = false;
-                PlacementVisualizationManager.Instance.DisplayVisualization(theDam.GetType(), true);
-                placementLocation.RemoveDam();
-                Destroy(theDam.transform.gameObject);
-            }
-        }
-
-        if (theLadder != null)
-        {
-            if (theLadder.turnPlaced > turnSlider.value)
-            {
-                ladderIcon.hasBeenPurchased = false;
-                PlacementVisualizationManager.Instance.DisplayVisualization(theLadder.GetType(), true);
-                placementLocation.RemoveLadder();
-                Destroy(theLadder.transform.gameObject);
-            }
-        }
-
-        // Set the corresponding generation of salmon for the selected turn
-
-
-        // Set the turn counter to indicate the proper turn
-        theGameManager.Turn = (int) turnSlider.value;
-
-        // Set the GameState to the place state and reset the stats
-        theGameManager.SetState(new RunStatsState());
+        
     }
 }
