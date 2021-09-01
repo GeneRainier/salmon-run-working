@@ -10,6 +10,8 @@ using UnityEngine;
 [RequireComponent(typeof(Collider))]
 public abstract class FilterBase : MonoBehaviour
 {
+    public TowerManager towerManager;           //< The Tower Manager with lists of all the towers in the scene
+
     protected bool active = false;      //< Is this filter currently active
 
     private Collider myCollider;        //< The collider on the filter object
@@ -23,6 +25,8 @@ public abstract class FilterBase : MonoBehaviour
     {
         // Get component refs
         myCollider = GetComponent<Collider>();
+        // Get the Tower Manager
+        towerManager = FindObjectOfType<TowerManager>();
     }
 
     /**

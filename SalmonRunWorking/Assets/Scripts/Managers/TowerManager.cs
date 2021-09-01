@@ -24,7 +24,17 @@ public class TowerManager : MonoBehaviour
 {
     [SerializeField] private List<Tower> towers = null;            //< A list of all the towers in the scene
     [SerializeField] private List<TowerBase> placedTowers = null;   //< The towers the player has placed during the level
-    [SerializeField] private List<AnglerTower> anglers = null;  //< A list of all the fishermen in the scene
+    [SerializeField] private List<FilterBase> placedFilters = null;   //< The filters, such as dams, the player has placed during the level
+
+    [SerializeField] private GameManager gameManager = null;         //< The Game Manager for the level we are currently in
+
+    /**
+     * Awake is called after the initialization of the gameObjects prior to the game start. This is used as an Initialization function
+     */
+    private void Awake()
+    {
+        gameManager = FindObjectOfType<GameManager>();
+    }
 
     /*
      * Gets the first tower in the list of towers with a given type
@@ -54,26 +64,6 @@ public class TowerManager : MonoBehaviour
     public void UpdateColors()
     {
         towers.ForEach(tower => tower.TowerUI.UpdateColor());
-    }
-
-    /*
-     * Adds a fishermen to the list of fisherment for the purposes of applying upgrades
-     * 
-     * @param angler The fisherman that has just been placed in the scene which needs to be added to the list
-     */
-    public void AddAngler(AnglerTower angler)
-    {
-        anglers.Add(angler);
-    }
-
-    /*
-     * Obtains the list of existing fishermen
-     * 
-     * @return List<FishermentTower> A list of scripts for each of the existing fishermen
-     */
-    public List<AnglerTower> GetAnglers()
-    {
-        return anglers;
     }
 
     /*

@@ -6,7 +6,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /*
- * Class that describes a fisherman
+ * Class that describes an angler
  * 
  * Authors: Benjamin Person (Editor 2020)
  */

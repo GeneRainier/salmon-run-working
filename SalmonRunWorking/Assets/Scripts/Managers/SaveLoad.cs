@@ -64,7 +64,7 @@ public class SaveLoad : MonoBehaviour
         // The Dams position and type is already tracked in the General Tower Lists
 
         /* Ladder Data */
-        public float ladderType = 0;        //< The type of Salmon Ladder currently placed at the dam
+        public int ladderType = 0;        //< The type of Salmon Ladder currently placed at the dam
 
         /* Sealion Data */
         public List<float[]> sealionCatchRates = new List<float[]>();    //< The serialized list of each sealions' size catch rates

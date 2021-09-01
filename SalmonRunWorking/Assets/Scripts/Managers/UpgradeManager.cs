@@ -403,11 +403,6 @@ public class UpgradeManager : MonoBehaviour
                 {
                     smallRateMax = true;
                 }
-                foreach (AnglerTower towers in theTowerManager.GetAnglers())
-                {
-                    towers.SetSmallCatchRate(smallRate);
-                    Debug.Log("Set tower rate");
-                }
                 Debug.Log(smallRate);
             }
         }

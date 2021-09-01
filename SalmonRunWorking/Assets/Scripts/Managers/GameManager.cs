@@ -27,7 +27,9 @@ public partial class GameManager : MonoBehaviour
 
     public FishSchool school;               //< Fish school in the game
 
-    private TimeManager timeManager;        //< Time manager script
+    [SerializeField] private TimeManager timeManager;        //< Time manager script
+
+    [SerializeField] private TowerManager towerManager;      //< The Tower Manager script with lists of all the towers and filters in the scene
 
     public PauseMenu pauseMenu;            //< The pause menu in the level
 
@@ -54,6 +56,8 @@ public partial class GameManager : MonoBehaviour
     {
         // Get refs to other components
         timeManager = ManagerIndex.MI.TimeManager;
+
+        towerManager = FindObjectOfType<TowerManager>();
 
         // Set to initial state
         Turn = 1;
