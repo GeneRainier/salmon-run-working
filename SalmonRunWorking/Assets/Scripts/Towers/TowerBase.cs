@@ -12,18 +12,18 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
 {
     [SerializeField] protected int effectRadius;             //< Effect radius of the tower
 
-    public ManagerIndex initializationValues;   //< The ManagerIndex with initialization values for a given tower
-    public TowerManager towerManager;           //< The Tower Manager with lists of all the towers in the scene
+    public ManagerIndex initializationValues;                //< The ManagerIndex with initialization values for a given tower
+    public TowerManager towerManager;                        //< The Tower Manager with lists of all the towers in the scene
 
-    public bool TowerActive { get; set; } = false;      //< Whether the tower is currently activated or not
+    public bool TowerActive { get; set; } = false;           //< Whether the tower is currently activated or not
 
-    protected bool paused = true;               //< Whether the tower is paused or not
+    protected bool paused = true;                            //< Whether the tower is paused or not
 
-    [SerializeField] protected int timePerApplyEffect;           //< Time between each application of tower effects
+    [SerializeField] protected int timePerApplyEffect;       //< Time between each application of tower effects
 
-    private TowerRangeEffect rangeEffect;       //< Tower range effect script
+    private TowerRangeEffect rangeEffect;                    //< Tower range effect script
 
-    public int turnPlaced = 0;                  //< The turn this tower was placed in the level
+    public int turnPlaced = 0;                               //< The turn this tower was placed in the level
 
     #region Major Monobehaviour Functions
 

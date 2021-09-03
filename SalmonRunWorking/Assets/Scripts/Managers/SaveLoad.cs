@@ -50,24 +50,29 @@ public class SaveLoad : MonoBehaviour
         /* General Tower Info */
         public List<float[]> towerPositions = new List<float[]>();      //< The serialized list of where every tower is
         public List<float[]> towerRotations = new List<float[]>();      //< The serialized list of the rotations of every tower
-        public List<int> towerTypes = new List<int>();          //< The serialized list of what type of tower each tower is
+        public List<int> towerTypes = new List<int>();                  //< The serialized list of what type of tower each tower is
 
         /* Angler Data */
+        public int anglerPlaced = 0;                                    //< The turn the angler was placed into the level
+        public int caughtFish = 0;                                      //< The number of fish this angler has currently caught
         public List<float[]> anglerCatchRates = new List<float[]>();    //< The serialized list of each anglers' size catch rates
-        public List<float> anglerCatchReset = new List<float>();    //< The serialized list of each anglers' catch reset time
+        public List<float> anglerCatchReset = new List<float>();        //< The serialized list of each anglers' catch reset time
 
         /* Ranger Data */
+        public int rangerPlaced = 0;                                       //< The turn the ranger was placed into the level
         public List<float[]> rangerRegulateRates = new List<float[]>();    //< The serialized list of each rangers' regulation rates for each size fish
-        public List<float> rangerRegulateReset = new List<float>();    //< The serialized list of each rangers' regulation reset time
+        public List<float> rangerRegulateReset = new List<float>();        //< The serialized list of each rangers' regulation reset time
 
         /* Dam Data */
+        public int damPlaced = 0;                                          //< The turn the dam was placed into the level
         // The Dams position and type is already tracked in the General Tower Lists
 
         /* Ladder Data */
         public int ladderType = 0;        //< The type of Salmon Ladder currently placed at the dam
 
         /* Sealion Data */
+        public int sealionAppeared = 0;                                  //< The turn the sealion was placed into the level
         public List<float[]> sealionCatchRates = new List<float[]>();    //< The serialized list of each sealions' size catch rates
-        public List<float> sealionCatchReset = new List<float>();    //< The serialized list of each sealions' catch reset time
+        public List<float> sealionCatchReset = new List<float>();        //< The serialized list of each sealions' catch reset time
     }
 }
