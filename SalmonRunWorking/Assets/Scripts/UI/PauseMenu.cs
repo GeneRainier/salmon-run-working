@@ -71,6 +71,7 @@ public class PauseMenu : MonoBehaviour
      */
     public void RevertTurn()
     {
-        
+        // Call GameManager CreateSave function
+
     }
 }

@@ -12,6 +12,8 @@ public class RangerTower : TowerBase
 {
     /**
      * Modes that the ranger can be in
+     * Kill results in the Ranger destroying each Angler tower in range
+     * Slowdown results in the Ranger adjusting the Angler catch rates based on the Ranger's personal policies
      */
     public enum Mode
     {
@@ -21,13 +23,11 @@ public class RangerTower : TowerBase
 
     public Mode mode;           //< Current mode that the ranger is in
 
-    // Materials for lines that show what angler the ranger is affecting
-    public Material hitLineMaterial;
-    public Material missLineMaterial;
+    public Material hitLineMaterial;        //< Material for lines that show what angler the ranger is affecting
 
-    public Material flashMaterial;      //< Material for making an angler flash to show it is being affected
+    public Material flashMaterial;          //< Material for making an angler flash to show it is being affected
 
-    public GameObject lineRendererPrefab;   //< Prefab for line renderer
+    public GameObject lineRendererPrefab;   //< Prefab for line renderer 
 
     [Range(-1f, 1f)]
     public float slowdownEffectSmall;   //< Float representing how much of an effect the ranger should have if it regulates an angler in slowdown mode for small fish
@@ -51,6 +51,8 @@ public class RangerTower : TowerBase
 
     private List<Vector3> towerEffectPositions = new List<Vector3>();       //< List of linerenderer pos
 
+    private TowerManager theTowerManager = null;        //< The Tower Manager with the list of Towers in the scene
+
     /**
      * Start is called before the first frame update
      */
@@ -61,6 +63,9 @@ public class RangerTower : TowerBase
         slowdownEffectMedium = initializationValues.rangerMediumModifier;
         slowdownEffectLarge = initializationValues.rangerLargeModifier;
         regulationSuccessRate = initializationValues.rangerSuccessRate;
+
+        theTowerManager = FindObjectOfType<TowerManager>();
+
         base.Start();
     }
 
@@ -78,30 +83,16 @@ public class RangerTower : TowerBase
      */
     protected override void ApplyTowerEffect()
     {
+        // Creates a list of Angler colliders based on if the Anglers are in range (the Ranger's effect range dictates the size of the overlap sphere here)
         Collider[] anglerColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.PLACED_OBJECTS))
             .Where((collider) => {
                 return collider.GetComponentInChildren<AnglerTower>() != null && collider.GetComponentInChildren<AnglerTower>().TowerActive;
             }).ToArray();
 
-        
+        // Loop throught the Anglers we have, grab each script, and regulate them
         foreach (Collider anglerCollider in anglerColliders)
         {
             AnglerTower fishermanTower = anglerCollider.GetComponent<AnglerTower>();
-
-            if (fishermanTower.anglerCounted == false)
-            {
-                if (fishermanTower.transform.position.x < 1115)
-                {
-                    initializationValues.lowerManagedAnglerCount += 1;
-                    fishermanTower.anglerCounted = true;
-                }
-                else
-                {
-                    initializationValues.upperManagedAnglerCount += 1;
-                    fishermanTower.anglerCounted = true;
-                }
-            }
-
             RegulateFisherman(fishermanTower);
         }
     }
@@ -116,7 +107,6 @@ public class RangerTower : TowerBase
     {
         transform.parent.position = primaryHitInfo.point;
         initializationValues.rangerCount += 1;
-        TowerManager theTowerManager = FindObjectOfType<TowerManager>();
         theTowerManager.AddTower(this);
         turnPlaced = GameManager.Instance.Turn;
     }
@@ -165,94 +155,44 @@ public class RangerTower : TowerBase
      */
     private IEnumerator RegulateFishermanCoroutine(AnglerTower anglerTower)
     {
-        // Figure out whether the fisherman will be stopped or not
-        bool caught = Random.Range(0f, 1f) <= regulationSuccessRate;
+        GameObject linePrefab = Instantiate(lineRendererPrefab, transform);
+        LineRenderer lineRenderer = linePrefab.GetComponent<LineRenderer>();
 
-        GameObject g = Instantiate(lineRendererPrefab, transform);
-        LineRenderer lr = g.GetComponent<LineRenderer>();
+        lineRenderer.material = hitLineMaterial;
+        lineRenderer.enabled = true;
 
-        lr.material = caught ? hitLineMaterial : missLineMaterial;
-
-        lr.enabled = true;
-
-        towerEffectLineRenderers.Add(lr);
+        towerEffectLineRenderers.Add(lineRenderer);
 
         Vector3 towerEffectPosition = anglerTower.transform.position;
         towerEffectPositions.Add(towerEffectPosition);
 
-        // Handle fish being caught
-        if (caught)
+        // How we handle this depends on what mode the ranger is in
+        switch (mode)
         {
-            // Want this variable so we can make the fisherman flash, regardless of what mode we're in
-            MeshRenderer fishermanTowerRenderer = anglerTower.flashRenderer;
+            case Mode.Kill:
+                // Make the fisherman inactive
+                anglerTower.TowerActive = false;
 
-            // How we handle this depends on what mode the ranger is in
-            switch (mode)
-            {
-                case Mode.Kill:
-                    // Make the fisherman inactive
-                    anglerTower.TowerActive = false;
-
-                    // Make the fisherman flash for a bit
-                    for (int i = 0; i < numFlashesPerCatch; i++)
-                    {
-                        Material oldMaterial = null;
-                        if (fishermanTowerRenderer != null)
-                        {
-                             oldMaterial = fishermanTowerRenderer.material;
-                            fishermanTowerRenderer.material = flashMaterial;
-                        }
-                        yield return new WaitForSeconds((float)timePerApplyEffect / numFlashesPerCatch / 2f);
-
-                        if (fishermanTowerRenderer != null)
-                        {
-                            Destroy(fishermanTowerRenderer.material);
-                            fishermanTowerRenderer.material = oldMaterial;
-                        }
-                        yield return new WaitForSeconds((float)timePerApplyEffect / numFlashesPerCatch / 2f);
-                    }
-
-                    // Remove the fisherman tower
-                    if (anglerTower != null)
-                    {
-                        Destroy(anglerTower.transform.root.gameObject);
-                    }
-                    break;
-                case Mode.Slowdown:
-                    // Apply the affect to the angler
-                    anglerTower.AffectCatchRate(slowdownEffectSmall, slowdownEffectMedium, slowdownEffectLarge, timePerApplyEffect);
-
-                    // Make the fisherman flash  for a bit
-                    for (int i = 0; i < numFlashesPerCatch; i++)
-                    {
-                        Material oldMaterial = null;
-                        if (fishermanTowerRenderer != null)
-                        {
-                            oldMaterial = fishermanTowerRenderer.material;
-                            fishermanTowerRenderer.material = flashMaterial;
-                        }
-                        yield return new WaitForSeconds((float)timePerApplyEffect / numFlashesPerCatch / 2f);
-                        if (fishermanTowerRenderer != null)
-                        {
-                            Destroy(fishermanTowerRenderer.material);
-                            fishermanTowerRenderer.material = oldMaterial;
-                        }
-                        yield return new WaitForSeconds((float)timePerApplyEffect / numFlashesPerCatch / 2f);
-                    }
-                    break;
-            }
-        }
-        // Fish escaped -- just wait for end of action
-        else
-        {
-            yield return new WaitForSeconds(timePerApplyEffect);
+                // Remove the fisherman tower
+                if (anglerTower != null)
+                {
+                    Destroy(anglerTower.transform.root.gameObject);
+                }
+                break;
+            case Mode.Slowdown:
+                // Apply the affect to the angler
+                anglerTower.AffectCatchRate(slowdownEffectSmall, slowdownEffectMedium, slowdownEffectLarge, timePerApplyEffect);
+                yield return new WaitForSeconds((float) timePerApplyEffect / 2f);
+                break;
         }
 
         // End the catch attempt line
+        // NOTE: The yield return above suspends this coroutine for a few moments to allow the lines to render before this removal makes them disappear
         towerEffectPositions.Remove(towerEffectPosition);
-        towerEffectLineRenderers.Remove(lr);
-        Destroy(g);
-        
+        towerEffectLineRenderers.Remove(lineRenderer);
+        Destroy(linePrefab);
+
+        yield break;
     }
 
     /**
@@ -265,7 +205,7 @@ public class RangerTower : TowerBase
         for (int i = 0; i < towerEffectLineRenderers.Count; i++)
         {
             Vector3 endPos = towerEffectPositions[i];
-            endPos.y = startPos.y;
+            endPos.y = startPos.y + 10.0f;      //< The "+ 10.0f" is a dirty fix to prevent the lines from running into the terrain when the Ranger is on a low elevation
 
             towerEffectLineRenderers[i].SetPositions(new Vector3[] { startPos, endPos });
         }
