@@ -25,8 +25,6 @@ public class RangerTower : TowerBase
 
     public Material hitLineMaterial;        //< Material for lines that show what angler the ranger is affecting
 
-    public Material flashMaterial;          //< Material for making an angler flash to show it is being affected
-
     public GameObject lineRendererPrefab;   //< Prefab for line renderer 
 
     [Range(-1f, 1f)]
@@ -44,8 +42,6 @@ public class RangerTower : TowerBase
     // Project -> Assets -> Prefabs -> Towers -> RangerTower
     // then look at Hierarchy
     // Hierarchy -> RangerTower -> TokenBase
-
-    public int numFlashesPerCatch;      //< How many times the fish will flash in and out to show it is being caught
 
     private List<LineRenderer> towerEffectLineRenderers = new List<LineRenderer>();     //< List of linerenderers used to show effects
 

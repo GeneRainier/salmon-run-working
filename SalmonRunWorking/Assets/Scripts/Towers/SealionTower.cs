@@ -19,10 +19,6 @@ public class SealionTower : TowerBase
 
     private List<Fish> caughtFish;          //< Fish that have been caught by this sealion
 
-    public Material flashMaterial;          //< Material that will enable when a fish is caught by the sealion
-
-    [SerializeField] private TowerManager theTowerManager;      // Reference to the Tower Manager
-
     /*
      * Awake is called after the initialization of gameobjects prior to the start of the game
      */

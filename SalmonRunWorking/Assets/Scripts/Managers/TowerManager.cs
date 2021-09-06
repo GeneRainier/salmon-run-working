@@ -24,7 +24,6 @@ public class TowerManager : MonoBehaviour
 {
     [SerializeField] private List<Tower> towers = null;            //< A list of all the towers in the scene
     [SerializeField] private List<TowerBase> placedTowers = null;   //< The towers the player has placed during the level
-    [SerializeField] private List<FilterBase> placedFilters = null;   //< The filters, such as dams, the player has placed during the level
 
     [SerializeField] private GameManager gameManager = null;         //< The Game Manager for the level we are currently in
 

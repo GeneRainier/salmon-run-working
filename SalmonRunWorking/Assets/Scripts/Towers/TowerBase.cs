@@ -137,7 +137,7 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      * @param secondaryHitInfo The raycast info from the bounds of the tower
      * @return bool Whether or not the placement of the tower is valid
      */
-    public bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    public virtual bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         bool placementValid = TowerPlacementValid(primaryHitInfo, secondaryHitInfo);
 
@@ -165,7 +165,7 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
      * @param primaryHitInfo The raycast info from the main camera raycast
      * @param secondaryHitInfo The raycast info from the bounds of the tower
      */
-    public void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    public virtual void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         ManagerIndex.MI.TimeManager.RegisterPausable(this);
 

@@ -7,12 +7,8 @@ using UnityEngine;
  * 
  * Authors: Benjamin Person (Editor 2020)
  */
-public class DamLadder : MonoBehaviour, IDragAndDropObject
+public class DamLadder : TowerBase
 {
-    public ManagerIndex initializationValues;   //< The ManagerIndex with initialization values for a given tower
-
-    public int turnPlaced = 0;                  //< The turn this tower was placed in the level
-
     // Rates at which small, medium, and large fish should be able to pass a dam with a ladder installed
     [Range(0f, 1f)]
     public float smallCrossingRate = 0.3F;
@@ -28,18 +24,18 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
     /**
      * Awake is called after all gameObjects in the scene are initialized prior to the game starting
      */
-    private void Awake()
+    protected override void Awake()
     {
         // Get initialization values and set this towers basic values
         initializationValues = FindObjectOfType<ManagerIndex>();
     }
 
-    #region IDragAndDropObject Implementation
+    #region TowerBase (Base Class / IDragAndDropObject) Implementation
 
     /**
      * Place the dam onto the game map
      */
-    public void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    public override void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         // Can only place if we are there is a dam placement location somewhere in the hit object's hierarchy
         DamPlacementLocation placementLocation = primaryHitInfo.collider.transform.root.GetComponentInChildren<DamPlacementLocation>();
@@ -54,6 +50,7 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
             Debug.Log("DamLadder.cs primaryHitInfo S=" + smallCrossingRate + "; M=" + mediumCrossingRate + "; L=" + largeCrossingRate);
 
             initializationValues.ladderCode = 1;
+            towerManager.AddTower(this);
             turnPlaced = GameManager.Instance.Turn;
         }
     }
@@ -61,7 +58,7 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
     /**
      * Figure out if we can place the dam at the location of a given raycast
      */
-    public bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    public override bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         // Must have hit something
         if (primaryHitInfo.collider)
@@ -78,6 +75,42 @@ public class DamLadder : MonoBehaviour, IDragAndDropObject
         }
 
         return false;
+    }
+
+    /**
+     * Apply effects of this tower
+     * 
+     * The Dam has its own unique placement, but is a tower nonetheless
+     */
+    protected override void ApplyTowerEffect()
+    {
+        return;
+    }
+
+    /**
+     * Determines whether a tower placement is valid
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
+     * 
+     * The Dam has its own unique placement, but is a tower nonetheless
+     */
+    protected override bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    {
+        return true;
+    }
+
+    /**
+     * Places a tower into the environment   
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
+     * 
+     * The Dam has its own unique placement, but is a tower nonetheless
+     */
+    protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    {
+        return;
     }
 
     #endregion

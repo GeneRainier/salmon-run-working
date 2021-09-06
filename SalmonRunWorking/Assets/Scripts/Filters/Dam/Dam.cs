@@ -8,10 +8,8 @@ using UnityEngine.Serialization;
  * 
  * Authors: Benjamin Person (Editor 2020)
  */
-public class Dam : FilterBase, IDragAndDropObject
+public class Dam : TowerBase
 {
-    public ManagerIndex initializationValues;       //< The ManagerIndex with initialization values for a given tower
-
     // Default crossing rate for all fish
     [Range(0f, 1f)]
     public float defaultCrossingRate;
@@ -26,18 +24,37 @@ public class Dam : FilterBase, IDragAndDropObject
 
     private BoxCollider dropOffBox;     //< Box where fish will be dropped off if the successfully pass the dam
 
+    protected bool active = false;      //< Is this filter currently active
+
     /**
      * Start is called before the first frame update
      */
-    void Start()
+    protected override void Start()
     {
         // Get initialization values and set this towers basic values
         initializationValues = FindObjectOfType<ManagerIndex>();
-        //defaultCrossingRate = initializationValues.defaultDamPassRate;
 
         // Set all crossing rates to default rate on initialization
         smallCrossingRate = mediumCrossingRate = largeCrossingRate = defaultCrossingRate;
         Debug.Log("Dam Class: defaultCrossingRate=" + defaultCrossingRate);
+    }
+
+    /**
+     * Handle objects entering the collider
+     */
+    private void OnTriggerEnter(Collider other)
+    {
+        // Only care about triggers if the filter is active
+        if (active)
+        {
+            // Check what hit us
+            // Only care if it's a fish
+            Fish f = other.gameObject.GetComponentInChildren<Fish>();
+            if (f != null)
+            {
+                ApplyFilterEffect(f);
+            }
+        }
     }
 
     #region Dam Operation
@@ -61,23 +78,16 @@ public class Dam : FilterBase, IDragAndDropObject
     public void AddLadder(DamLadder damLadder)
     {
         // Set crossing rates for fish to ones supplied by the ladder
-
-        // If these lines are run then I get an error in UpgradeManager line 132
-        // try 2
         smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
         mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
         largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
-
-        //smallCrossingRate = defaultCrossingRate + 0.2F;
-        //mediumCrossingRate = defaultCrossingRate + 0.7F;
-        //largeCrossingRate = defaultCrossingRate + 0.7F;
 
         Debug.Log("damLadder S=" + damLadder.smallCrossingRate + "; M=" + damLadder.mediumCrossingRate + "; L=" + damLadder.largeCrossingRate);
     }
 
     #endregion
 
-    #region IDragAndDropObject Implementation
+    #region TowerBase (Base Class) Implementation
 
     /**
      * Place the dam onto the game map
@@ -85,7 +95,7 @@ public class Dam : FilterBase, IDragAndDropObject
      * @param primaryHitInfo The information from the raycast originating from the camera.
      * @param secondaryHitInfo The information from the raycasts surrounding the tower being placed.
      */
-    public void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    public override void Place(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         if (!ManagerIndex.MI.TowerManager.GetTower(TowerType.Dam).CanAfford())
         {
@@ -99,6 +109,7 @@ public class Dam : FilterBase, IDragAndDropObject
         {
             placementLocation.AttachDam(this);
             initializationValues.damPresent = 1;
+            towerManager.AddTower(this);
             turnPlaced = GameManager.Instance.Turn;
         }
     }
@@ -109,7 +120,7 @@ public class Dam : FilterBase, IDragAndDropObject
      * @param primaryHitInfo The information from the raycast originating from the camera.
      * @param secondaryHitInfo The information from the raycasts surrounding the tower being placed.
      */
-    public bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    public override bool PlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         // Must have hit something
         if (!primaryHitInfo.collider) return false;
@@ -126,9 +137,45 @@ public class Dam : FilterBase, IDragAndDropObject
         return false;
     }
 
+    /**
+     * Apply effects of this tower
+     * 
+     * The Dam has its own unique placement, but is a tower nonetheless
+     */
+    protected override void ApplyTowerEffect()
+    {
+        return;
+    }
+
+    /**
+     * Determines whether a tower placement is valid
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
+     * 
+     * The Dam has its own unique placement, but is a tower nonetheless
+     */
+    protected override bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    {
+        return true;
+    }
+
+    /**
+     * Places a tower into the environment   
+     * 
+     * @param primaryHitInfo The raycast info from the main camera raycast
+     * @param secondaryHitInfo The raycast info from the bounds of the tower
+     * 
+     * The Dam has its own unique placement, but is a tower nonetheless
+     */
+    protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
+    {
+        return;
+    }
+
     #endregion
 
-    #region Base Class (FilterBase) Implementation
+    #region Dam Functionality
 
     /**
      * Apply the effect of the dam
@@ -137,7 +184,7 @@ public class Dam : FilterBase, IDragAndDropObject
      * 
      * @param fish The fish trying to pass by the dam
      */
-    protected override void ApplyFilterEffect(Fish fish)
+    public void ApplyFilterEffect(Fish fish)
     {
         // Only let it through if it hasn't been flagged as stuck
         if (!fish.IsStuck())
@@ -151,17 +198,14 @@ public class Dam : FilterBase, IDragAndDropObject
             if (sizeGenePair.momGene == FishGenome.b && sizeGenePair.dadGene == FishGenome.b)
             {
                 crossingRate = smallCrossingRate;
-                // Debug.Log("bbCrossR=" + smallCrossingRate);
             }
             else if (sizeGenePair.momGene == FishGenome.B && sizeGenePair.dadGene == FishGenome.B)
             {
                 crossingRate = largeCrossingRate;
-                // Debug.Log("BBCrossR=" + largeCrossingRate);
             }
             else
             {
                 crossingRate = mediumCrossingRate;
-                // Debug.Log("BbCrossR=" + mediumCrossingRate);
             }
 
             while (!fish.IsStuck())
