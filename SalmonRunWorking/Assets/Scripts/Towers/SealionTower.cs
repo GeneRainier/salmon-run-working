@@ -13,22 +13,13 @@ using TMPro;
 [RequireComponent(typeof(LineRenderer))]
 public class SealionTower : TowerBase
 {
-    [Range(0f, 1f)]
-    public float defaultCatchRate;          //< Default rate of success of a fish catch attempt
-
     // Default rates of success of fish catch attempt for small, medium and large fish
-    public float defaultFemaleCatchRate = 0.1F;
-    public float defaultMaleCatchRate = 0.1F;
-
-    // Current rates of success of fish catch attempt for small, medium, and large fish
-    [SerializeField] private float currentFemaleCatchRate;
-    [SerializeField] private float currentMaleCatchRate;
+    public float femaleCatchRate = 0.1F;
+    public float maleCatchRate = 0.1F;
 
     private List<Fish> caughtFish;          //< Fish that have been caught by this sealion
 
     public Material flashMaterial;          //< Material that will enable when a fish is caught by the sealion
-
-    public int numFlashesPerCatch;          //< How many times the fish will flash in and out to show it is being caught
 
     [SerializeField] private TowerManager theTowerManager;      // Reference to the Tower Manager
 
@@ -40,16 +31,10 @@ public class SealionTower : TowerBase
         // Base class awake
         base.Awake();
 
-        defaultFemaleCatchRate = initializationValues.sealionFemaleCatchRate;
-        defaultMaleCatchRate = initializationValues.sealionMaleCatchRate;
-
-        // Set current catch rates
-        currentFemaleCatchRate = defaultCatchRate * defaultFemaleCatchRate;
-        currentMaleCatchRate = defaultCatchRate * defaultMaleCatchRate;
+        femaleCatchRate = initializationValues.sealionFemaleCatchRate;
+        maleCatchRate = initializationValues.sealionMaleCatchRate;
 
         initializationValues.sealionPresent = 1;
-
-        //Debug.Log("cScr=" + currentSmallCatchRate + "; cMcr=" + currentMediumCatchRate + "; cLcr=" + currentLargeCatchRate);
     }
 
     /*
@@ -63,9 +48,7 @@ public class SealionTower : TowerBase
         base.Start();
 
         caughtFish = new List<Fish>();
-
     }
-
 
     /*
      * Triggers the coroutine to alter the sealion catch rates
@@ -85,18 +68,12 @@ public class SealionTower : TowerBase
      */
     protected override void ApplyTowerEffect()
     {
-
-        //Debug.Log("do Sealion Stuff");
-
-        // Get all fish that aren't already being caught
+        // Get all fish that aren't already being caught (the Sealion's effect range dictates the size of the overlap sphere here)
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
             .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught ?? true).ToArray();
 
         // Select one of the fish
         if (fishColliders.Length <= 0) return;
-
-        //Fish fish = fishColliders[Random.Range(0, fishColliders.Length)].GetComponent<Fish>();
-
 
         foreach (Collider fishCollider in fishColliders)
         {
@@ -139,22 +116,21 @@ public class SealionTower : TowerBase
         switch (sizeGenePair.momGene)
         {
             case FishGenome.X when sizeGenePair.dadGene == FishGenome.X:
-                catchRate = currentFemaleCatchRate;
+                catchRate = femaleCatchRate;
                 weight = 2f;  //4
                 Debug.Log("bbCatchR=" + catchRate + "; weight=" + weight);
                 break;
             case FishGenome.X when sizeGenePair.dadGene == FishGenome.Y:
-                catchRate = currentMaleCatchRate;
+                catchRate = maleCatchRate;
                 weight = 9f;  //15
                 Debug.Log("BBCatchR=" + catchRate + "; weight=" + weight);
                 break;
             default:
-                catchRate = currentMaleCatchRate;
-                //weight = 6f;  //9
-                //Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
+                catchRate = maleCatchRate;
+                weight = 6f;  //9
                 break;
         }
-        Debug.Log("SeaLionCatch: MaleCR=" + currentMaleCatchRate + "FemCR=" + currentFemaleCatchRate);
+        Debug.Log("SeaLionCatch: MaleCR=" + maleCatchRate + "FemCR=" + femaleCatchRate);
 
         // Figure out whether the fish will be caught or not
         bool caught = Random.Range(0f, 1f) <= catchRate;
@@ -165,30 +141,15 @@ public class SealionTower : TowerBase
             // Tell the fish that it is being caught
             fish.StartCatch();
 
-            float timeToWait = (float)timePerApplyEffect / numFlashesPerCatch / 2f;
-
             // Trigger Water Splash effect on fish
             fish.waterSplash.Play();
             fish.swimSpeed = 0;
             fish.fishRenderer.enabled = false;
             yield return new WaitForSeconds(2);
 
-            // Make the fish flash  for a bit
-            //SkinnedMeshRenderer fishRenderer = fish.GetComponentInChildren<SkinnedMeshRenderer>();
-            //for (int i = 0; i < numFlashesPerCatch; i++)
-            //{
-            //    Material oldMaterial = fishRenderer.material;
-            //    fishRenderer.material = flashMaterial;
-            //    yield return new WaitForSeconds(timeToWait);
-            //    Destroy(fishRenderer.material);
-            //    fishRenderer.material = oldMaterial;
-            //    yield return new WaitForSeconds(timeToWait);
-            //}
-
             // Actually catch the fish
             fish.Catch();
             caughtFish.Add(fish);
-
         }
         // Fish escaped -- just wait for end of action
         else
@@ -207,18 +168,18 @@ public class SealionTower : TowerBase
      */
     private IEnumerator AffectCatchRateCoroutine(float femaleEffect, float maleEffect, float length)
     {
-        currentFemaleCatchRate += femaleEffect;
-        currentMaleCatchRate += maleEffect;
+        femaleCatchRate += femaleEffect;
+        maleCatchRate += maleEffect;
 
         yield return new WaitForSeconds(length);
 
-        currentFemaleCatchRate -= femaleEffect;
-        currentMaleCatchRate -= maleEffect;
+        femaleCatchRate -= femaleEffect;
+        maleCatchRate -= maleEffect;
     }
 
     /*
      * TowerBase abstract function implementation
-     * THIS IS ALL JUST HERE BECAUSE TOWERBASE REQUIRES IT, IT DOESN'T ACTUALLY DO ANYTHING
+     * THIS IS ALL JUST HERE BECAUSE TOWERBASE REQUIRES IT, IT (currently) DOESN'T ACTUALLY DO ANYTHING SINCE SEALIONS ARE SPAWNED NOT PLACED
      */
     protected override bool TowerPlacementValid(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
@@ -246,8 +207,7 @@ public class SealionTower : TowerBase
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         transform.position = primaryHitInfo.point;
-        TowerManager theTowerManager = FindObjectOfType<TowerManager>();
-        theTowerManager.AddTower(this);
+        towerManager.AddTower(this);
         turnPlaced = GameManager.Instance.Turn;
     }
 }

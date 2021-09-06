@@ -51,8 +51,6 @@ public class RangerTower : TowerBase
 
     private List<Vector3> towerEffectPositions = new List<Vector3>();       //< List of linerenderer pos
 
-    private TowerManager theTowerManager = null;        //< The Tower Manager with the list of Towers in the scene
-
     /**
      * Start is called before the first frame update
      */
@@ -63,8 +61,6 @@ public class RangerTower : TowerBase
         slowdownEffectMedium = initializationValues.rangerMediumModifier;
         slowdownEffectLarge = initializationValues.rangerLargeModifier;
         regulationSuccessRate = initializationValues.rangerSuccessRate;
-
-        theTowerManager = FindObjectOfType<TowerManager>();
 
         base.Start();
     }
@@ -107,7 +103,7 @@ public class RangerTower : TowerBase
     {
         transform.parent.position = primaryHitInfo.point;
         initializationValues.rangerCount += 1;
-        theTowerManager.AddTower(this);
+        towerManager.AddTower(this);
         turnPlaced = GameManager.Instance.Turn;
     }
 

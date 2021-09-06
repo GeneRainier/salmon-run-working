@@ -142,7 +142,7 @@ public class AnglerTower : TowerBase
      */
     protected override void ApplyTowerEffect()
     {
-        // Get all fish that aren't already being caught
+        // Get all fish that aren't already being caught (the Angler's effect range dictates the size of the overlap sphere here)
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
             .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught??true).ToArray();
 
