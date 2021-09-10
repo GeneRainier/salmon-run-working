@@ -498,7 +498,9 @@ MonoBehaviour:
     towerUI: {fileID: 5614493210049836169}
     enabled: 0
     cost: 10123
-  anglers: []
+  placedTowers: []
+  placedFilters: []
+  gameManager: {fileID: 0}
 --- !u!1 &297820837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1334,6 +1336,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 228973508}
     m_Modifications:
+    - target: {fileID: 8724541982033152564, guid: 9fc4c49399ecc4b46b633f284c524336,
+        type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: c7517eb065a52f54fac318bfd97e6a52, type: 2}
+    - target: {fileID: 8724541982033152564, guid: 9fc4c49399ecc4b46b633f284c524336,
+        type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: 648a90f0abec664409998db3d77dd05a, type: 2}
+    - target: {fileID: 8724541982033152564, guid: 9fc4c49399ecc4b46b633f284c524336,
+        type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1538be32589af2045adf6d2bbf005bb9, type: 2}
     - target: {fileID: 8724541982033152572, guid: 9fc4c49399ecc4b46b633f284c524336,
         type: 3}
       propertyPath: m_Materials.Array.data[2]
