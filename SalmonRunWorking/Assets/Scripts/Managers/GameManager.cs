@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 /**
@@ -230,6 +231,11 @@ public partial class GameManager : MonoBehaviour
         // Only make diff speed available during the run
         if (!CompareState(typeof(RunState))) return;
         timeManager.FastestTime();
+    }
+
+    public List<TowerBase> GetTowerList()
+    {
+        return towerManager.GetTowers();
     }
 
     #endregion
