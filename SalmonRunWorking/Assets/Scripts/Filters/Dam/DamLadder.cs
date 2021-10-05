@@ -28,10 +28,6 @@ public class DamLadder : TowerBase
     {
         // Get initialization values and set this towers basic values
         initializationValues = FindObjectOfType<ManagerIndex>();
-
-        // Get the Tower Manager
-        // NOTE: Due to how the Scene is set up, the Ladder needs to grab the Manager since it will not necessarily grab it from the base class
-        towerManager = FindObjectOfType<TowerManager>();
     }
 
     #region TowerBase (Base Class / IDragAndDropObject) Implementation

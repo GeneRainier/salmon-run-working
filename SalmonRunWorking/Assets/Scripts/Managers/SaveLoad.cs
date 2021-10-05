@@ -11,51 +11,13 @@ using UnityEngine;
 public class SaveLoad : MonoBehaviour
 {
     private List<Save> saves;           //< List of the game states of each turn that has happened so far (index 0 is turn 1)
-    private GameManager gameManager;    //< Reference to the gameManager which speaks with the TowerManager
-
-    private void Awake()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-    }
 
     /*
      * Creates a Save object and stores the object in the list of saves
      */
     public void SaveGame()
     {
-        Save currentTurn = new Save();
 
-        // Loop through every tower and save that data in the currentTurn's save
-        foreach (TowerBase tower in gameManager.GetTowerList())
-        {
-            // Determine the type of Tower we are saving and save its data accordingly to our Save structure
-            if (tower is AnglerTower)
-            {
-
-            }
-            else if (tower is RangerTower)
-            {
-
-            }
-            else if (tower is SealionTower)
-            {
-
-            }
-            else if (tower is Dam)
-            {
-
-            }
-            else if (tower is DamLadder)
-            {
-
-            }
-        }
-
-        // Save the current generation of salmon
-
-
-        //Push the currentTurn's data to the list of saves
-        saves.Add(currentTurn);
     }
 
     /*
@@ -91,13 +53,13 @@ public class SaveLoad : MonoBehaviour
         public List<int> towerTypes = new List<int>();                  //< The serialized list of what type of tower each tower is
 
         /* Angler Data */
-        public List<int> anglerPlaced = new List<int>();                                    //< The turn the angler was placed into the level
-        public List<int> caughtFish = new List<int>();                                      //< The number of fish this angler has currently caught
+        public int anglerPlaced = 0;                                    //< The turn the angler was placed into the level
+        public int caughtFish = 0;                                      //< The number of fish this angler has currently caught
         public List<float[]> anglerCatchRates = new List<float[]>();    //< The serialized list of each anglers' size catch rates
         public List<float> anglerCatchReset = new List<float>();        //< The serialized list of each anglers' catch reset time
 
         /* Ranger Data */
-        public List<int> rangerPlaced = new List<int>();                                       //< The turn the ranger was placed into the level
+        public int rangerPlaced = 0;                                       //< The turn the ranger was placed into the level
         public List<float[]> rangerRegulateRates = new List<float[]>();    //< The serialized list of each rangers' regulation rates for each size fish
         public List<float> rangerRegulateReset = new List<float>();        //< The serialized list of each rangers' regulation reset time
 
@@ -109,7 +71,7 @@ public class SaveLoad : MonoBehaviour
         public int ladderType = 0;        //< The type of Salmon Ladder currently placed at the dam
 
         /* Sealion Data */
-        public List<int> sealionAppeared = new List<int>();                                  //< The turn the sealion was placed into the level
+        public int sealionAppeared = 0;                                  //< The turn the sealion was placed into the level
         public List<float[]> sealionCatchRates = new List<float[]>();    //< The serialized list of each sealions' size catch rates
         public List<float> sealionCatchReset = new List<float>();        //< The serialized list of each sealions' catch reset time
     }

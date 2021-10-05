@@ -72,7 +72,7 @@ public class Fish : MonoBehaviour
         // Craft the path this fish will follow
         // While the fish is waiting to have its school assigned by the Fish School script, we wait
 
-        destination = school.initialDestinations[Random.Range(0, 1)];
+        destination = school.initialDestinations[Random.Range(0, 5)];
         Vector3 lookPosition = destination.destinationPosition - transform.position;
         destinationDirection = Quaternion.LookRotation(lookPosition);
 
@@ -84,7 +84,7 @@ public class Fish : MonoBehaviour
 
         while (craftingPath)
         {
-            Destination newNode = currentNode.destinations[Random.Range(0, 1)];
+            Destination newNode = currentNode.destinations[Random.Range(0, 5)];
             if (newNode.finalDestination == true)
             {
                 path.Add(newNode);
