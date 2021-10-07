@@ -28,31 +28,86 @@ public class SaveLoad : MonoBehaviour
         // Loop through every tower and save that data in the currentTurn's save
         foreach (TowerBase tower in gameManager.GetTowerList())
         {
+            // General Tower Info that all towers must save
+            float[] position = new float[3];
+            position[0] = tower.transform.position.x;
+            position[1] = tower.transform.position.y;
+            position[2] = tower.transform.position.z;
+
+            float[] rotation = new float[3];
+            rotation[0] = tower.transform.rotation.x;
+            rotation[1] = tower.transform.rotation.y;
+            rotation[2] = tower.transform.rotation.z;
+            currentTurn.towerPositions.Add(position);
+            currentTurn.towerRotations.Add(rotation);
+
             // Determine the type of Tower we are saving and save its data accordingly to our Save structure
             if (tower is AnglerTower)
             {
+                AnglerTower towerScript = tower.GetComponent<AnglerTower>();
 
+                currentTurn.towerTypes.Add(0);
+                currentTurn.anglerPlaced.Add(tower.turnPlaced);
+                currentTurn.caughtFish.Add(towerScript.fishCaught);
+                
+                float[] catchRates = new float[3];
+                catchRates[0] = towerScript.smallCatchRate;
+                catchRates[1] = towerScript.mediumCatchRate;
+                catchRates[2] = towerScript.largeCatchRate;
+                currentTurn.anglerCatchRates.Add(catchRates);
             }
             else if (tower is RangerTower)
             {
+                RangerTower towerScript = tower.GetComponent<RangerTower>();
 
+                currentTurn.towerTypes.Add(1);
+                currentTurn.rangerPlaced.Add(tower.turnPlaced);
+
+                float[] regulationRates = new float[3];
+                regulationRates[0] = towerScript.slowdownEffectSmall;
+                regulationRates[1] = towerScript.slowdownEffectMedium;
+                regulationRates[2] = towerScript.slowdownEffectLarge;
+                currentTurn.rangerRegulateRates.Add(regulationRates);
             }
             else if (tower is SealionTower)
             {
+                SealionTower towerScript = tower.GetComponent<SealionTower>();
 
+                currentTurn.towerTypes.Add(4);
+                currentTurn.sealionAppeared.Add(tower.turnPlaced);
+
+                float[] catchRates = new float[2];
+                catchRates[0] = towerScript.maleCatchRate;
+                catchRates[1] = towerScript.femaleCatchRate;
+                currentTurn.sealionCatchRates.Add(catchRates);
             }
             else if (tower is Dam)
             {
+                currentTurn.towerTypes.Add(2);
 
+                currentTurn.damPlaced = 1;
             }
             else if (tower is DamLadder)
             {
+                currentTurn.towerTypes.Add(3);
 
+                currentTurn.ladderType = 0;
             }
         }
 
         // Save the current generation of salmon
+        List<FishGenome> allFish = gameManager.school.GetFish();
+        // Find all the male and female fish
+        List<FishGenome> females = FishGenomeUtilities.FindFemaleGenomes(allFish);
+        List<FishGenome> males = FishGenomeUtilities.FindMaleGenomes(allFish);
 
+        // Count and save each size / gender pair
+        currentTurn.smallMale = FishGenomeUtilities.FindSmallGenomes(males).Count;
+        currentTurn.mediumMale = FishGenomeUtilities.FindMediumGenomes(males).Count;
+        currentTurn.largeMale = FishGenomeUtilities.FindLargeGenomes(males).Count;
+        currentTurn.smallFemale = FishGenomeUtilities.FindSmallGenomes(females).Count;
+        currentTurn.mediumFemale = FishGenomeUtilities.FindMediumGenomes(females).Count;
+        currentTurn.largeFemale = FishGenomeUtilities.FindLargeGenomes(females).Count;
 
         //Push the currentTurn's data to the list of saves
         saves.Add(currentTurn);
@@ -94,12 +149,12 @@ public class SaveLoad : MonoBehaviour
         public List<int> anglerPlaced = new List<int>();                                    //< The turn the angler was placed into the level
         public List<int> caughtFish = new List<int>();                                      //< The number of fish this angler has currently caught
         public List<float[]> anglerCatchRates = new List<float[]>();    //< The serialized list of each anglers' size catch rates
-        public List<float> anglerCatchReset = new List<float>();        //< The serialized list of each anglers' catch reset time
+        //public List<float> anglerCatchReset = new List<float>();        //< The serialized list of each anglers' catch reset time
 
         /* Ranger Data */
         public List<int> rangerPlaced = new List<int>();                                       //< The turn the ranger was placed into the level
         public List<float[]> rangerRegulateRates = new List<float[]>();    //< The serialized list of each rangers' regulation rates for each size fish
-        public List<float> rangerRegulateReset = new List<float>();        //< The serialized list of each rangers' regulation reset time
+        //public List<float> rangerRegulateReset = new List<float>();        //< The serialized list of each rangers' regulation reset time
 
         /* Dam Data */
         public int damPlaced = 0;                                          //< The turn the dam was placed into the level
@@ -111,6 +166,6 @@ public class SaveLoad : MonoBehaviour
         /* Sealion Data */
         public List<int> sealionAppeared = new List<int>();                                  //< The turn the sealion was placed into the level
         public List<float[]> sealionCatchRates = new List<float[]>();    //< The serialized list of each sealions' size catch rates
-        public List<float> sealionCatchReset = new List<float>();        //< The serialized list of each sealions' catch reset time
+        //public List<float> sealionCatchReset = new List<float>();        //< The serialized list of each sealions' catch reset time
     }
 }

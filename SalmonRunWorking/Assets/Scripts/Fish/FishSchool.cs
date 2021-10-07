@@ -234,6 +234,15 @@ public class FishSchool : MonoBehaviour, IPausable {
         GameEvents.onFishPopulationChanged.Invoke(activeGenomes, successfulGenomes, deadGenomes);
     }
 
+    /*
+     * Get the list of fish from the upcoming generation. This is mainly used for saving the state of each turn in SaveLoad
+     * \return List<FishGenome> The list of fish that will be spawned when the player begins the next turn
+     */
+    public List<FishGenome> GetFish()
+    {
+        return nextGenerationGenomes;
+    }
+
     #endregion
 
     #region IPausable Implementation
