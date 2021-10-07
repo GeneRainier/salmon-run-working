@@ -22,7 +22,7 @@ public class AnglerTower : TowerBase
     public Material flashMaterial;      //< Material that will 
 
     // Default rates of success of fish catch attempt for small, medium and large fish
-    public float smallCatchRate = 0.7F;   
+    public float smallCatchRate = 0.7F;
     public float mediumCatchRate = 0.4F;
     public float largeCatchRate = 0.1F;
     public int fishCaught = 0;          //< The number of fish this angler has caught
@@ -39,6 +39,10 @@ public class AnglerTower : TowerBase
     private static readonly int Fishing = Animator.StringToHash("Fishing");
 
     public bool anglerCounted = false;      // Boolean for checking whether regulated angler has been counted yet or not
+
+    private static Vector3 fishermanPointLeft = new Vector3(-140.0f, 12.0f, 16.0f);  // point that all fisherman toward the left side of the map are initially pointed towards
+    private static Vector3 fishermanPointRight = new Vector3(15.0f, 12.0f, -16.0f);  // point that all fisherman toward the right side of the map are initially pointed towards
+
 
     /**
      * Start is called on object initialization
@@ -59,6 +63,7 @@ public class AnglerTower : TowerBase
         ManagerIndex.MI.UpgradeManager.MediumRate = mediumCatchRate;
         ManagerIndex.MI.UpgradeManager.LargeRate = largeCatchRate;
 
+
         Debug.Log("Awake cScr=" + smallCatchRate + "; cMcr=" + mediumCatchRate + "; cLcr=" + largeCatchRate);
     }
 
@@ -74,6 +79,7 @@ public class AnglerTower : TowerBase
         catchAttemptLine.enabled = false;
 
         fishing = fisherman.GetComponent<Animator>();
+
     }
 
     /**
@@ -81,6 +87,7 @@ public class AnglerTower : TowerBase
      */
     private void Update()
     {
+
         // Update fish line position
         if (catchAttemptLine.enabled)
         {
@@ -132,7 +139,26 @@ public class AnglerTower : TowerBase
      */
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
+
+        float tempX = 0.0f;
+        float tempZ = 0.0f;
+
+        if (fisherman.transform.position.x < -50.0f)
+        {
+            tempX = fishermanPointLeft.x - fisherman.transform.position.x;
+            tempZ = fishermanPointLeft.z - fisherman.transform.position.z;
+        }
+        else
+        {
+            tempX = fishermanPointRight.x - fisherman.transform.position.x;
+            tempZ = fishermanPointRight.z - fisherman.transform.position.z;
+        }
+
+        float angle = Mathf.Atan2(tempX, tempZ) * Mathf.Rad2Deg;
+        fisherman.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+
         transform.parent.position = primaryHitInfo.point;
+
         towerManager.AddTower(this);
         turnPlaced = GameManager.Instance.Turn;
     }
@@ -144,11 +170,11 @@ public class AnglerTower : TowerBase
     {
         // Get all fish that aren't already being caught (the Angler's effect range dictates the size of the overlap sphere here)
         Collider[] fishColliders = Physics.OverlapSphere(transform.position, GetEffectRadius(), LayerMask.GetMask(Layers.FISH_LAYER_NAME))
-            .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught??true).ToArray();
+            .Where(fishCollider => !fishCollider.GetComponent<Fish>()?.beingCaught ?? true).ToArray();
 
         // Select one of the fish
         if (fishColliders.Length <= 0) return;
-        
+
         Fish fish = fishColliders[Random.Range(0, fishColliders.Length)].GetComponent<Fish>();
 
         if (fish)
@@ -190,17 +216,17 @@ public class AnglerTower : TowerBase
             case FishGenome.b when sizeGenePair.dadGene == FishGenome.b:
                 catchRate = smallCatchRate;
                 weight = 2f;  //4
-                 //Debug.Log("bbCatchR=" + catchRate + "; weight=" + weight);
+                              //Debug.Log("bbCatchR=" + catchRate + "; weight=" + weight);
                 break;
             case FishGenome.B when sizeGenePair.dadGene == FishGenome.B:
                 catchRate = largeCatchRate;
                 weight = 9f;  //15
-                 //Debug.Log("BBCatchR=" + catchRate + "; weight=" + weight);
+                              //Debug.Log("BBCatchR=" + catchRate + "; weight=" + weight);
                 break;
             default:
                 catchRate = mediumCatchRate;
                 weight = 6f;  //9
-                 //Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
+                              //Debug.Log("BbCatchR=" + catchRate + "; weight=" + weight);
                 break;
         }
         Debug.Log("TryCatchFishCoroutine: cScr=" + smallCatchRate + "; cMcr=" + mediumCatchRate + "; cLcr=" + largeCatchRate);
@@ -233,7 +259,7 @@ public class AnglerTower : TowerBase
             // Actually catch the fish
             fish.Catch();
             caughtFish.Add(fish);
-            
+
             // Add Appropriate Funds to Bank
             ManagerIndex.MI.MoneyManager.AddCatch(weight);
 
@@ -294,6 +320,6 @@ public class AnglerTower : TowerBase
         Vector3 fishPos = catchAttemptFish.transform.position;
         fishPos.y = startPos.y;
 
-        catchAttemptLine.SetPositions(new []{ startPos, fishPos});
+        catchAttemptLine.SetPositions(new[] { startPos, fishPos });
     }
 }
