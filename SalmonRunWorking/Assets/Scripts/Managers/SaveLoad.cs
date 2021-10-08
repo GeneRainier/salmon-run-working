@@ -120,7 +120,84 @@ public class SaveLoad : MonoBehaviour
      */
     public void LoadGame(int turn)
     {
+        // List counters for each kind of tower we are loading in
+        int currentAngler = 0;
+        int currentRanger = 0;
+        int currentSealion = 0;
+        int currentTower = 0;
 
+        // Clear all the existing towers
+
+        // Grab the save from turn - 1 as we start at turn 0, but the pause menu slider starts at 1
+        Save loadSave = saves[turn - 1];
+
+        // Loop through each saved tower and load them back into the scene appropriately
+        foreach (int towerType in loadSave.towerTypes)
+        {
+            // NOTE: This can also be accomplished with a Swicth statement, but this seems more readable for little loss of performance
+            // Angler
+            if (towerType == 0)
+            {
+                GameObject angler = Instantiate(gameManager.GetTowerPrefabs()[0]);
+                AnglerTower towerScript = angler.GetComponent<AnglerTower>();
+                angler.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
+                angler.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
+                towerScript.turnPlaced = loadSave.anglerPlaced[currentAngler];
+                towerScript.fishCaught = loadSave.caughtFish[currentAngler];
+                towerScript.smallCatchRate = loadSave.anglerCatchRates[currentAngler][0];
+                towerScript.mediumCatchRate = loadSave.anglerCatchRates[currentAngler][1];
+                towerScript.largeCatchRate = loadSave.anglerCatchRates[currentAngler][2];
+                currentTower++;
+                currentAngler++;
+            }
+            // Ranger
+            else if (towerType == 1)
+            {
+                GameObject ranger = Instantiate(gameManager.GetTowerPrefabs()[1]);
+                RangerTower towerScript = ranger.GetComponent<RangerTower>();
+                ranger.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
+                ranger.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
+                towerScript.turnPlaced = loadSave.rangerPlaced[currentRanger];
+                towerScript.slowdownEffectSmall = loadSave.rangerRegulateRates[currentRanger][0];
+                towerScript.slowdownEffectMedium = loadSave.rangerRegulateRates[currentRanger][1];
+                towerScript.slowdownEffectLarge = loadSave.rangerRegulateRates[currentRanger][2];
+                currentTower++;
+                currentRanger++;
+            }
+            // Sealion
+            else if (towerType == 4)
+            {
+                GameObject sealion = Instantiate(gameManager.GetTowerPrefabs()[4]);
+                SealionTower towerScript = sealion.GetComponent<SealionTower>();
+                sealion.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
+                sealion.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
+                towerScript.turnPlaced = loadSave.sealionAppeared[currentSealion];
+                towerScript.maleCatchRate = loadSave.sealionCatchRates[currentSealion][0];
+                towerScript.femaleCatchRate = loadSave.sealionCatchRates[currentSealion][1];
+                currentTower++;
+                currentSealion++;
+            }
+            // Dam
+            else if (towerType == 2)
+            {
+                GameObject dam = Instantiate(gameManager.GetTowerPrefabs()[2]);
+                Dam towerScript = dam.GetComponent<Dam>();
+                dam.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
+                dam.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
+                towerScript.turnPlaced = loadSave.damPlaced;
+                currentTower++;
+            }
+            // Ladder
+            else if (towerType == 3)
+            {
+                GameObject ladder = Instantiate(gameManager.GetTowerPrefabs()[3]);
+                DamLadder towerScript = ladder.GetComponent<DamLadder>();
+                ladder.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
+                ladder.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
+                towerScript.turnPlaced = loadSave.ladderType;
+                currentTower++;
+            }
+        }
     }
 
     /*

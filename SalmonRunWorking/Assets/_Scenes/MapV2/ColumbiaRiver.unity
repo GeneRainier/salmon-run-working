@@ -37635,6 +37635,12 @@ MonoBehaviour:
     cost: 10123
   placedTowers: []
   gameManager: {fileID: 0}
+  towerPrefabs:
+  - {fileID: 8396285094676340492, guid: 954226dedecb8b84e9248df5f6da4a8e, type: 3}
+  - {fileID: 2955766015034391748, guid: 23a21f9b0e418a4429bf3977fa576830, type: 3}
+  - {fileID: 2502241671651778950, guid: 921868e4fa2c8cf4a8fa7856990be9a6, type: 3}
+  - {fileID: 342922673586302204, guid: 9c900182f751eb44f8af8a1ba22157ca, type: 3}
+  - {fileID: 1886008069404566216, guid: a624934351081bf4e87bfdbf42e34ff5, type: 3}
 --- !u!4 &1397721659
 Transform:
   m_ObjectHideFlags: 0
