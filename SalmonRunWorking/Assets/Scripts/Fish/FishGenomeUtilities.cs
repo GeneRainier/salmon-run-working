@@ -13,6 +13,7 @@ public class FishGenomeUtilities : MonoBehaviour
     public static int smallParent = 0;
     public static int mediumParent = 0;
     public static int largeParent = 0;
+    public static int smallestSex = 0;
 
     /**
      * Create a new, random generation of fish for the initial group of salmon
@@ -113,7 +114,7 @@ public class FishGenomeUtilities : MonoBehaviour
         List<FishGenome> males = FindMaleGenomes(potentialParents);
 
         // Determine which list is shorter
-        int shortestLength = Mathf.Min(females.Count, males.Count);
+        smallestSex = Mathf.Min(females.Count, males.Count);
 
         // Referencable gene pairs for the male and female parent fish for the sake of counting at the end of a round
         List<FishGenome> smallMalePairs = FindSmallGenomes(males);
@@ -126,7 +127,7 @@ public class FishGenomeUtilities : MonoBehaviour
         // Loop (shortest list of males and females) times
         // Each time, generate a certain number of offspring from the ith male and ith female
         Debug.Log("Before Repro Loop: minOffspring=" + minOffspring + ";  maxOffspring=" + maxOffspring);
-        for (int i = 0; i < shortestLength; i++)
+        for (int i = 0; i < smallestSex; i++)
         {
             // Determine how many offspring this pairing will make
             int numOffspring = Random.Range(minOffspring, maxOffspring + 1);

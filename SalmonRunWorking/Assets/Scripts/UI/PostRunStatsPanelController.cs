@@ -22,12 +22,18 @@ public class PostRunStatsPanelController : PanelController
     public string femaleDescriptor;
     public string maleDescriptor;
 
+    public string survivedDescriptor;
+    public string reproducedDescriptor;
+
     // Counts for the surviving fish for the output file
     public int survivingSmallDescriptor = 0;
     public int survivingMediumDescriptor = 0;
     public int survivingLargeDescriptor = 0;
     public int survivingFemaleDescriptor = 0;
     public int survivingMaleDescriptor = 0;
+
+    public int survivngTotalDescriptor = 0;
+    public int reproducedTotalDescriptor = 0;
 
     // TO DO: Connect SetStuck Function in Fish to this
     public int stuckFish = 0;                   //< Count for fish who died due to being stuck
@@ -39,6 +45,9 @@ public class PostRunStatsPanelController : PanelController
     public UIElement parentSmallText;
     public UIElement parentMediumText;
     public UIElement parentLargeText;
+
+    public UIElement survivedText;
+    public UIElement reproducedText;
 
     // Text for offspring data
     public UIElement offspringSmallText;
@@ -139,6 +148,8 @@ public class PostRunStatsPanelController : PanelController
                 parentSmallText.SetText(smallDescriptor, FishGenomeUtilities.smallParent);
                 parentMediumText.SetText(mediumDescriptor, FishGenomeUtilities.mediumParent);
                 parentLargeText.SetText(largeDescriptor, FishGenomeUtilities.largeParent);
+                survivedText.SetText(survivedDescriptor, FishGenomeUtilities.largeParent + FishGenomeUtilities.mediumParent + FishGenomeUtilities.smallParent);
+                reproducedText.SetText(reproducedDescriptor, FishGenomeUtilities.smallestSex * 2);
             }
             else
             {
@@ -161,6 +172,8 @@ public class PostRunStatsPanelController : PanelController
             parentSmallText.SetText();
             parentMediumText.SetText();
             parentLargeText.SetText();
+            survivedText.SetText();
+            reproducedText.SetText();
 
             offspringSmallText.SetText(smallDescriptor, FindSmallGenomes(offspringGenomes).Count);
             offspringMediumText.SetText(mediumDescriptor, FindMediumGenomes(offspringGenomes).Count);
