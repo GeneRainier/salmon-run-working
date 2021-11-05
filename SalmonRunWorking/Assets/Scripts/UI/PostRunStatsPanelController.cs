@@ -22,8 +22,7 @@ public class PostRunStatsPanelController : PanelController
     public string femaleDescriptor;
     public string maleDescriptor;
 
-    public string survivedDescriptor;
-    public string reproducedDescriptor;
+    public string totalDescriptor;
 
     // Counts for the surviving fish for the output file
     public int survivingSmallDescriptor = 0;
@@ -32,8 +31,7 @@ public class PostRunStatsPanelController : PanelController
     public int survivingFemaleDescriptor = 0;
     public int survivingMaleDescriptor = 0;
 
-    public int survivngTotalDescriptor = 0;
-    public int reproducedTotalDescriptor = 0;
+    //public int totalDescriptor = 0;
 
     // TO DO: Connect SetStuck Function in Fish to this
     public int stuckFish = 0;                   //< Count for fish who died due to being stuck
@@ -45,9 +43,16 @@ public class PostRunStatsPanelController : PanelController
     public UIElement parentSmallText;
     public UIElement parentMediumText;
     public UIElement parentLargeText;
+    public UIElement parentMaleText;
+    public UIElement parentFemaleText;
+    public UIElement parentTotalText;
 
     public UIElement survivedText;
-    public UIElement reproducedText;
+    public UIElement survivedMaleText;
+    public UIElement survivedFemaleText;
+    public UIElement survivedSmallText;
+    public UIElement survivedMediumText;
+    public UIElement survivedLargeText;
 
     // Text for offspring data
     public UIElement offspringSmallText;
@@ -55,6 +60,8 @@ public class PostRunStatsPanelController : PanelController
     public UIElement offspringLargeText;
     public UIElement offspringFemaleText;
     public UIElement offspringMaleText;
+    public UIElement offspringTotalText;
+
 
     private bool noOffspring;               //< Flag for case where there are no offspring left and we have to do something different when leaving the panel
     public bool firstTurn = true;          //< Flag for ensuring the first turn is represented correctly after first clicking the next run button
@@ -148,8 +155,11 @@ public class PostRunStatsPanelController : PanelController
                 parentSmallText.SetText(smallDescriptor, FishGenomeUtilities.smallParent);
                 parentMediumText.SetText(mediumDescriptor, FishGenomeUtilities.mediumParent);
                 parentLargeText.SetText(largeDescriptor, FishGenomeUtilities.largeParent);
-                survivedText.SetText(survivedDescriptor, FishGenomeUtilities.largeParent + FishGenomeUtilities.mediumParent + FishGenomeUtilities.smallParent);
-                reproducedText.SetText(reproducedDescriptor, FishGenomeUtilities.smallestSex * 2);
+                parentFemaleText.SetText();
+                parentMaleText.SetText();
+                parentFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.femaleParent);
+                parentMaleText.SetText(maleDescriptor, FishGenomeUtilities.maleParent);
+                parentTotalText.SetText(totalDescriptor, FishGenomeUtilities.smallestSex * 2);
             }
             else
             {
@@ -161,6 +171,15 @@ public class PostRunStatsPanelController : PanelController
             offspringLargeText.SetText(largeDescriptor, FindLargeGenomes(offspringGenomes).Count);
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
+            offspringTotalText.SetText(totalDescriptor, FindMaleGenomes(offspringGenomes).Count + FindFemaleGenomes(offspringGenomes).Count);
+
+            survivedText.SetText(totalDescriptor, FishSchool.survivedFish);
+            survivedFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.survivingFemale);
+            survivedMaleText.SetText(maleDescriptor, FishGenomeUtilities.survivingMale);
+            survivedSmallText.SetText(smallDescriptor, FishGenomeUtilities.survivingSmall);
+            survivedMediumText.SetText(mediumDescriptor, FishGenomeUtilities.survivingMedium);
+            survivedLargeText.SetText(largeDescriptor, FishGenomeUtilities.survivingLarge);
+
 
             // Comment out the line below before webGL build
             // Update data file based on population data
@@ -172,14 +191,26 @@ public class PostRunStatsPanelController : PanelController
             parentSmallText.SetText();
             parentMediumText.SetText();
             parentLargeText.SetText();
-            survivedText.SetText();
-            reproducedText.SetText();
+            parentFemaleText.SetText();
+            parentMaleText.SetText();
+            parentTotalText.SetText();
+
+
+            survivedText.SetText(totalDescriptor, FishSchool.survivedFish);
+            survivedFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.survivingFemale);
+            survivedMaleText.SetText(maleDescriptor, FishGenomeUtilities.survivingMale);
+            survivedSmallText.SetText(smallDescriptor, FishGenomeUtilities.survivingSmall);
+            survivedMediumText.SetText(mediumDescriptor, FishGenomeUtilities.survivingMedium);
+            survivedLargeText.SetText(largeDescriptor, FishGenomeUtilities.survivingLarge);
 
             offspringSmallText.SetText(smallDescriptor, FindSmallGenomes(offspringGenomes).Count);
             offspringMediumText.SetText(mediumDescriptor, FindMediumGenomes(offspringGenomes).Count);
             offspringLargeText.SetText(largeDescriptor, FindLargeGenomes(offspringGenomes).Count);
             offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
             offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
+            offspringTotalText.SetText(totalDescriptor, FindMaleGenomes(offspringGenomes).Count + FindFemaleGenomes(offspringGenomes).Count);
+
+
 
             // Comment out the line below before webGL build  
             // Creates data file based on game parameters 
