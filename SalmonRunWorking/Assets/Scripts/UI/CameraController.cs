@@ -25,9 +25,12 @@ public class CameraController : MonoBehaviour {
     [Header("Camera Bounds")]
     [SerializeField] private MinMax bounds = null;     //< Farthest / closest the camera can zoom out. Min and Max values for x and y
     public float height;                               //< The difference between the max and min y values of bounds for calculating rotational interpolation
+    [SerializeField] private float xRotateMin = 20f;                     //< Minimum rotation set for the camera when rotating on the x axis
+    [SerializeField] private float xRotateMax = 89f;                   //< Maximum rotation set for the camera when rotating on the x axis
 
     [Header("Speeds")]
     [SerializeField] private float zoomSpeed = 2.0f;   //< The speed at which you can zoom in or out
+    [SerializeField] private float xRotateSpeed = 50f;
 
     private Vector3 target;           //< The position the camera is aimed at
     private Vector3 targetRotation;   //< The rotation the camera is currently at
@@ -75,13 +78,6 @@ public class CameraController : MonoBehaviour {
         // Figure out new zoom
         float scroll = 12f * Input.GetAxis("Mouse ScrollWheel");
 
-        // Look for keyboard inputs as well
-        if (Input.GetButton("Zoom") || Input.GetButton("Zoom"))
-        {
-            scroll = 0.1f * 100.0f * Input.GetAxisRaw("Zoom");
-            transform.Translate(Vector3.down * scroll * zoomSpeed, Space.World);
-        }
-
         // Search for rotation input
         // We only want to turn the camera if we are zoomed in
         if (Input.GetButton("Rotate"))
@@ -125,14 +121,75 @@ public class CameraController : MonoBehaviour {
             }
         }
 
-        // Calculate the interpolation factor for the camera rotation
-        // This is handled in UpdatePosition rather than UpdateTarget to keep the Lerp effect smooth
-        interpolation = (transform.position.y - bounds.Min.y) / (height);
-        float xRotation = Mathf.Lerp(zoomedXRotation, initialXRotation, interpolation);
-        transform.rotation = Quaternion.Euler(xRotation, currentRotation.y, currentRotation.z);
+        //Search for the zoom buttons (Q and E)
+        if(Input.GetButton("Zoom"))
+        {
+            //Use the axis of zoom to determine which way to zoom
+            scroll = 0.1f * 100.0f * Input.GetAxisRaw("Zoom");
+            transform.Translate(Vector3.down * scroll * zoomSpeed, Space.World);
+        }
+
+        //Rotate on the x axis based on keyboard input.
+        if(Input.GetKey(KeyCode.C) && currentRotation.x > xRotateMin)
+        {
+            /*
+             * Fancier camera movement, not finished yet!
+            RaycastHit hit;
+            if(Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 10000))
+            {
+                transform.RotateAround(hit.point, Vector3.right, -xRotateSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                Debug.LogError("Camera X rotation raycast didn't find an object!");
+            }
+            */
+            //Change rotation based on time between frames 
+
+            float rx =currentRotation.x - xRotateSpeed * Time.unscaledDeltaTime;
+            if (rx < xRotateMin)
+            {
+                rx = xRotateMin;
+            }
+            transform.rotation = Quaternion.Euler(rx, currentRotation.y, currentRotation.z);
+            if (currentRotation.x < xRotateMin)
+            {
+                transform.rotation = Quaternion.Euler(xRotateMin, currentRotation.y, currentRotation.z);
+            }
+            
+        }
+        else if (Input.GetKey(KeyCode.V) && currentRotation.x < xRotateMax)
+        {
+            /* 
+             * Fancier camera movement, not finished yet!
+            RaycastHit hit;
+            if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 10000))
+            {
+                transform.RotateAround(hit.point, Vector3.left, -xRotateSpeed * Time.fixedDeltaTime);
+            }
+            else
+            {
+                Debug.LogError("Camera X rotation raycast didn't find an object!");
+            }
+            */
+            //Change rotation based on time between frames 
+            
+            float rx = currentRotation.x + xRotateSpeed * Time.unscaledDeltaTime;
+            if (rx > xRotateMax)
+            {
+                rx = xRotateMax;
+            }
+            transform.rotation = Quaternion.Euler(rx, currentRotation.y, currentRotation.z);
+            if (currentRotation.x > xRotateMax)
+            {
+                transform.rotation = Quaternion.Euler(xRotateMax, currentRotation.y, currentRotation.z);
+            }
+            
+        }
 
         // Clamp Pan (XZ) / Zoom (Y) within boundaries
         transform.position = bounds.Clamp(transform.position);
+
     }
 
     /*
