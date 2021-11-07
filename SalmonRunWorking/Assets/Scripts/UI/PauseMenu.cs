@@ -68,10 +68,12 @@ public class PauseMenu : MonoBehaviour
 
     /*
      * Revert the level to the turn set in the turn slider
+     * 
+     * @param turn The turn we want to revert the game back to
      */
-    public void RevertTurn()
+    public void RevertTurn(int turn)
     {
-        // Call GameManager CreateSave function
-
+        // Call LoadSave function
+        SaveLoad.LoadGame(turn);
     }
 }

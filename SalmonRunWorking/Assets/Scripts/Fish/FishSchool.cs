@@ -55,7 +55,7 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     private PostRunStatsPanelController statsPanel;         //< The end of round stats panel controller
 
-    private List<FishGenome> nextGenerationGenomes;         //< List of fish genomes that will be used in the next generation
+    public List<FishGenome> nextGenerationGenomes;         //< List of fish genomes that will be used in the next generation
 
     // Corners of the spawn area, for drawing and calculating locations
     private Vector3 bottomLeft;

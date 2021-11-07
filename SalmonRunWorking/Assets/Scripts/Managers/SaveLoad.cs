@@ -10,23 +10,18 @@ using UnityEngine;
  */
 public class SaveLoad : MonoBehaviour
 {
-    private List<Save> saves;           //< List of the game states of each turn that has happened so far (index 0 is turn 1)
-    private GameManager gameManager;    //< Reference to the gameManager which speaks with the TowerManager
-
-    private void Awake()
-    {
-        gameManager = FindObjectOfType<GameManager>();
-    }
+    private static List<Save> saves = new List<Save>();           //< List of the game states of each turn that has happened so far (index 0 is turn 1)
+    //private static GameManager gameManager;    //< Reference to the gameManager which speaks with the TowerManager
 
     /*
      * Creates a Save object and stores the object in the list of saves
      */
-    public void SaveGame()
+    public static void SaveGame()
     {
         Save currentTurn = new Save();
 
         // Loop through every tower and save that data in the currentTurn's save
-        foreach (TowerBase tower in gameManager.GetTowerList())
+        foreach (TowerBase tower in GameManager.Instance.GetTowerList())
         {
             // General Tower Info that all towers must save
             float[] position = new float[3];
@@ -96,7 +91,7 @@ public class SaveLoad : MonoBehaviour
         }
 
         // Save the current generation of salmon
-        List<FishGenome> allFish = gameManager.school.GetFish();
+        List<FishGenome> allFish = GameManager.Instance.school.GetFish();
         // Find all the male and female fish
         List<FishGenome> females = FishGenomeUtilities.FindFemaleGenomes(allFish);
         List<FishGenome> males = FishGenomeUtilities.FindMaleGenomes(allFish);
@@ -118,7 +113,7 @@ public class SaveLoad : MonoBehaviour
      * 
      * @param turn The turn number from the Pause Menu UI slider that we want to revert the game to
      */
-    public void LoadGame(int turn)
+    public static void LoadGame(int turn)
     {
         // List counters for each kind of tower we are loading in
         int currentAngler = 0;
@@ -127,6 +122,7 @@ public class SaveLoad : MonoBehaviour
         int currentTower = 0;
 
         // Clear all the existing towers
+
 
         // Grab the save from turn - 1 as we start at turn 0, but the pause menu slider starts at 1
         Save loadSave = saves[turn - 1];
@@ -138,7 +134,7 @@ public class SaveLoad : MonoBehaviour
             // Angler
             if (towerType == 0)
             {
-                GameObject angler = Instantiate(gameManager.GetTowerPrefabs()[0]);
+                GameObject angler = Instantiate(GameManager.Instance.GetTowerPrefabs()[0]);
                 AnglerTower towerScript = angler.GetComponent<AnglerTower>();
                 angler.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
                 angler.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
@@ -153,7 +149,7 @@ public class SaveLoad : MonoBehaviour
             // Ranger
             else if (towerType == 1)
             {
-                GameObject ranger = Instantiate(gameManager.GetTowerPrefabs()[1]);
+                GameObject ranger = Instantiate(GameManager.Instance.GetTowerPrefabs()[1]);
                 RangerTower towerScript = ranger.GetComponent<RangerTower>();
                 ranger.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
                 ranger.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
@@ -167,7 +163,7 @@ public class SaveLoad : MonoBehaviour
             // Sealion
             else if (towerType == 4)
             {
-                GameObject sealion = Instantiate(gameManager.GetTowerPrefabs()[4]);
+                GameObject sealion = Instantiate(GameManager.Instance.GetTowerPrefabs()[4]);
                 SealionTower towerScript = sealion.GetComponent<SealionTower>();
                 sealion.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
                 sealion.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
@@ -180,7 +176,7 @@ public class SaveLoad : MonoBehaviour
             // Dam
             else if (towerType == 2)
             {
-                GameObject dam = Instantiate(gameManager.GetTowerPrefabs()[2]);
+                GameObject dam = Instantiate(GameManager.Instance.GetTowerPrefabs()[2]);
                 Dam towerScript = dam.GetComponent<Dam>();
                 dam.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
                 dam.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
@@ -190,7 +186,7 @@ public class SaveLoad : MonoBehaviour
             // Ladder
             else if (towerType == 3)
             {
-                GameObject ladder = Instantiate(gameManager.GetTowerPrefabs()[3]);
+                GameObject ladder = Instantiate(GameManager.Instance.GetTowerPrefabs()[3]);
                 DamLadder towerScript = ladder.GetComponent<DamLadder>();
                 ladder.transform.position = new Vector3(loadSave.towerPositions[currentTower][0], loadSave.towerPositions[currentTower][1], loadSave.towerPositions[currentTower][2]);
                 ladder.transform.rotation = Quaternion.Euler(loadSave.towerRotations[currentTower][0], loadSave.towerRotations[currentTower][1], loadSave.towerRotations[currentTower][2]);
@@ -198,6 +194,88 @@ public class SaveLoad : MonoBehaviour
                 currentTower++;
             }
         }
+
+        // Load in the generation of fish from this turn
+        List<FishGenome> revertGeneration = new List<FishGenome>();
+
+        /*
+         * This is lengthy. The gist is we COULD just grab the list via GetFish in FishSchool, but then the save
+         * would not be potentially serializable if we want that in the future. So instead, we are reconstructing the 
+         * appropriate generation based on the counts of small, medium, and large fish (both male and female) we saved
+         * at the place stage of that turn.
+         */
+        FishGenePair[] genes = new FishGenePair[FishGenome.Length];
+
+        // Small Male Fish
+        FishGenePair sexPair;
+        sexPair.momGene = FishGenome.X;
+        sexPair.dadGene = FishGenome.Y;
+        FishGenePair sizePair;
+        sizePair.momGene = FishGenome.b;
+        sizePair.dadGene = FishGenome.b;
+        genes[(int)FishGenome.GeneType.Sex] = sexPair;
+        genes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome smallGenome = new FishGenome(genes);
+        for (int i = 0; i < loadSave.smallMale; i++)
+        {
+            revertGeneration.Add(smallGenome);
+        }
+
+        // Medium Male Fish
+        sizePair.momGene = FishGenome.b;
+        sizePair.dadGene = FishGenome.B;
+        genes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome mediumGenome = new FishGenome(genes);
+        for (int i = 0; i < loadSave.mediumMale; i++)
+        {
+            revertGeneration.Add(mediumGenome);
+        }
+
+        // Large Male Fish
+        sizePair.momGene = FishGenome.B;
+        sizePair.dadGene = FishGenome.B;
+        genes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome largeGenome = new FishGenome(genes);
+        for (int i = 0; i < loadSave.largeMale; i++)
+        {
+            revertGeneration.Add(largeGenome);
+        }
+
+        // Small Female Fish
+        sexPair.dadGene = FishGenome.X;
+        genes[(int)FishGenome.GeneType.Sex] = sexPair;
+        sizePair.momGene = FishGenome.b;
+        sizePair.dadGene = FishGenome.b;
+        genes[(int)FishGenome.GeneType.Size] = sizePair;
+        smallGenome = new FishGenome(genes);
+        for (int i = 0; i < loadSave.smallFemale; i++)
+        {
+            revertGeneration.Add(smallGenome);
+        }
+
+        // Medium Female Fish
+        sizePair.momGene = FishGenome.B;
+        sizePair.dadGene = FishGenome.b;
+        genes[(int)FishGenome.GeneType.Size] = sizePair;
+        mediumGenome = new FishGenome(genes);
+        for (int i = 0; i < loadSave.mediumFemale; i++)
+        {
+            revertGeneration.Add(mediumGenome);
+        }
+
+        // Large Female Fish
+        sizePair.momGene = FishGenome.B;
+        sizePair.dadGene = FishGenome.B;
+        genes[(int)FishGenome.GeneType.Size] = sizePair;
+        largeGenome = new FishGenome(genes);
+        for (int i = 0; i < loadSave.largeFemale; i++)
+        {
+            revertGeneration.Add(largeGenome);
+        }
+        GameManager.Instance.school.nextGenerationGenomes = revertGeneration;
+
+        // Remove future turns we reverted over and set the UI slider in the pause menu appropriately
+
     }
 
     /*
