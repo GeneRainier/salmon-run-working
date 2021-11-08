@@ -57,6 +57,8 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     public List<FishGenome> nextGenerationGenomes;         //< List of fish genomes that will be used in the next generation
 
+    public static int survivedFish = 0;
+
     // Corners of the spawn area, for drawing and calculating locations
     private Vector3 bottomLeft;
     private Vector3 bottomRight;
@@ -198,6 +200,7 @@ public class FishSchool : MonoBehaviour, IPausable {
     {
         if (fishList.Count <= 0)
         {
+            survivedFish = successfulFishList.Count;
             GameManager.Instance.SetState(new RunStatsState());
         }
     }
