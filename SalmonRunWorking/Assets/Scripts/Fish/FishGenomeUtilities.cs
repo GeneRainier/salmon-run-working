@@ -186,7 +186,6 @@ public class FishGenomeUtilities : MonoBehaviour
                 femaleParent++;
             }
         }
-
         return newGeneration;
     }
 
@@ -261,5 +260,24 @@ public class FishGenomeUtilities : MonoBehaviour
 
             return sizeGenePair.momGene == FishGenome.B && sizeGenePair.dadGene == FishGenome.B;
         }).ToList();
+    }
+
+    /*
+     * A shuffling algorithm based on Fisher-Yates to be used when reloading a prior generation
+     * Without this function, the loaded generation will be in a sorted order (Small Male to Large Female)
+     * 
+     * @param list The list we are shuffling
+     */
+    public static void Shuffle(List<FishGenome> list)
+    {
+        var count = list.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i)
+        {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = list[i];
+            list[i] = list[r];
+            list[r] = tmp;
+        }
     }
 }

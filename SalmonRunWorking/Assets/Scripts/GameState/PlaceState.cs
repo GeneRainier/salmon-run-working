@@ -18,7 +18,7 @@ public class PlaceState : GameState
     {
         // Pause the game
         GameManager.Instance.PauseButton();
-        //SaveLoad.SaveGame();
+        SaveLoad.SaveGame();
     }
 
     /**

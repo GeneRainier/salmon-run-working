@@ -26,7 +26,7 @@ public class TowerManager : MonoBehaviour
     [SerializeField] private List<TowerBase> placedTowers = null;   //< The towers the player has placed during the level
 
     [SerializeField] private GameManager gameManager = null;         //< The Game Manager for the level we are currently in
-    [SerializeField] private List<GameObject> towerPrefabs;         //< List if all the tower prefabs that exist in the game
+    [SerializeField] private List<GameObject> towerPrefabs;         //< List of all the tower prefabs that exist in the game
 
     /**
      * Awake is called after the initialization of the gameObjects prior to the game start. This is used as an Initialization function

@@ -11,6 +11,7 @@ using UnityEngine;
 public class SaveLoad : MonoBehaviour
 {
     private static List<Save> saves = new List<Save>();           //< List of the game states of each turn that has happened so far (index 0 is turn 1)
+    private static int currentSaveIndex = 0;               //< The current index in the Saves list to save games to
     //private static GameManager gameManager;    //< Reference to the gameManager which speaks with the TowerManager
 
     /*
@@ -105,16 +106,18 @@ public class SaveLoad : MonoBehaviour
         currentTurn.largeFemale = FishGenomeUtilities.FindLargeGenomes(females).Count;
 
         //Push the currentTurn's data to the list of saves
-        saves.Add(currentTurn);
+        saves.Insert(currentSaveIndex, currentTurn);
+        currentSaveIndex++;
     }
 
     /*
      * Loads the game state of the turn in the list of saves to revert the game to
-     * 
-     * @param turn The turn number from the Pause Menu UI slider that we want to revert the game to
      */
-    public static void LoadGame(int turn)
+    public static void LoadGame()
     {
+        // The turn number from the Pause Menu UI slider that we want to revert the game to
+        int turn = (int)GameManager.Instance.pauseMenu.turnSlider.value;
+
         // List counters for each kind of tower we are loading in
         int currentAngler = 0;
         int currentRanger = 0;
@@ -122,7 +125,10 @@ public class SaveLoad : MonoBehaviour
         int currentTower = 0;
 
         // Clear all the existing towers
-
+        foreach (TowerBase tower in GameManager.Instance.GetTowerList())
+        {
+            Destroy(tower.transform.parent.gameObject);
+        }
 
         // Grab the save from turn - 1 as we start at turn 0, but the pause menu slider starts at 1
         Save loadSave = saves[turn - 1];
@@ -204,78 +210,92 @@ public class SaveLoad : MonoBehaviour
          * appropriate generation based on the counts of small, medium, and large fish (both male and female) we saved
          * at the place stage of that turn.
          */
-        FishGenePair[] genes = new FishGenePair[FishGenome.Length];
 
         // Small Male Fish
+        FishGenePair[] SMgenes = new FishGenePair[FishGenome.Length];
         FishGenePair sexPair;
         sexPair.momGene = FishGenome.X;
         sexPair.dadGene = FishGenome.Y;
         FishGenePair sizePair;
         sizePair.momGene = FishGenome.b;
         sizePair.dadGene = FishGenome.b;
-        genes[(int)FishGenome.GeneType.Sex] = sexPair;
-        genes[(int)FishGenome.GeneType.Size] = sizePair;
-        FishGenome smallGenome = new FishGenome(genes);
+        SMgenes[(int)FishGenome.GeneType.Sex] = sexPair;
+        SMgenes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome smallMGenome = new FishGenome(SMgenes);
         for (int i = 0; i < loadSave.smallMale; i++)
         {
-            revertGeneration.Add(smallGenome);
+            revertGeneration.Add(smallMGenome);
         }
 
         // Medium Male Fish
+        FishGenePair[] MMgenes = new FishGenePair[FishGenome.Length];
         sizePair.momGene = FishGenome.b;
         sizePair.dadGene = FishGenome.B;
-        genes[(int)FishGenome.GeneType.Size] = sizePair;
-        FishGenome mediumGenome = new FishGenome(genes);
+        MMgenes[(int)FishGenome.GeneType.Sex] = sexPair;
+        MMgenes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome mediumMGenome = new FishGenome(MMgenes);
         for (int i = 0; i < loadSave.mediumMale; i++)
         {
-            revertGeneration.Add(mediumGenome);
+            revertGeneration.Add(mediumMGenome);
         }
 
         // Large Male Fish
+        FishGenePair[] LMgenes = new FishGenePair[FishGenome.Length];
         sizePair.momGene = FishGenome.B;
         sizePair.dadGene = FishGenome.B;
-        genes[(int)FishGenome.GeneType.Size] = sizePair;
-        FishGenome largeGenome = new FishGenome(genes);
+        LMgenes[(int)FishGenome.GeneType.Sex] = sexPair;
+        LMgenes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome largeMGenome = new FishGenome(LMgenes);
         for (int i = 0; i < loadSave.largeMale; i++)
         {
-            revertGeneration.Add(largeGenome);
+            revertGeneration.Add(largeMGenome);
         }
 
         // Small Female Fish
+        FishGenePair[] SFgenes = new FishGenePair[FishGenome.Length];
         sexPair.dadGene = FishGenome.X;
-        genes[(int)FishGenome.GeneType.Sex] = sexPair;
+        SFgenes[(int)FishGenome.GeneType.Sex] = sexPair;
         sizePair.momGene = FishGenome.b;
         sizePair.dadGene = FishGenome.b;
-        genes[(int)FishGenome.GeneType.Size] = sizePair;
-        smallGenome = new FishGenome(genes);
+        SFgenes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome smallFGenome = new FishGenome(SFgenes);
         for (int i = 0; i < loadSave.smallFemale; i++)
         {
-            revertGeneration.Add(smallGenome);
+            revertGeneration.Add(smallFGenome);
         }
 
         // Medium Female Fish
+        FishGenePair[] MFgenes = new FishGenePair[FishGenome.Length];
         sizePair.momGene = FishGenome.B;
         sizePair.dadGene = FishGenome.b;
-        genes[(int)FishGenome.GeneType.Size] = sizePair;
-        mediumGenome = new FishGenome(genes);
+        MFgenes[(int)FishGenome.GeneType.Sex] = sexPair;
+        MFgenes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome mediumFGenome = new FishGenome(MFgenes);
         for (int i = 0; i < loadSave.mediumFemale; i++)
         {
-            revertGeneration.Add(mediumGenome);
+            revertGeneration.Add(mediumFGenome);
         }
 
         // Large Female Fish
+        FishGenePair[] LFgenes = new FishGenePair[FishGenome.Length];
         sizePair.momGene = FishGenome.B;
         sizePair.dadGene = FishGenome.B;
-        genes[(int)FishGenome.GeneType.Size] = sizePair;
-        largeGenome = new FishGenome(genes);
+        LFgenes[(int)FishGenome.GeneType.Sex] = sexPair;
+        LFgenes[(int)FishGenome.GeneType.Size] = sizePair;
+        FishGenome largeFGenome = new FishGenome(LFgenes);
         for (int i = 0; i < loadSave.largeFemale; i++)
         {
-            revertGeneration.Add(largeGenome);
+            revertGeneration.Add(largeFGenome);
         }
+        FishGenomeUtilities.Shuffle(revertGeneration);
         GameManager.Instance.school.nextGenerationGenomes = revertGeneration;
 
         // Remove future turns we reverted over and set the UI slider in the pause menu appropriately
-
+        GameManager.Instance.pauseMenu.turnSlider.maxValue = turn;
+        GameManager.Instance.pauseMenu.turnSlider.value = turn;
+        GameManager.Instance.Turn = turn;
+        GameManager.Instance.SetState(new PlaceState());
+        currentSaveIndex = turn;
     }
 
     /*

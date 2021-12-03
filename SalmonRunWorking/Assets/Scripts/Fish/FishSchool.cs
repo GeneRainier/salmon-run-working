@@ -298,7 +298,7 @@ public class FishSchool : MonoBehaviour, IPausable {
             // Clean out old fish
             DeleteOldFish();
         }
-
+ 
         // Send out notice that new generation has been created
         GameEvents.onNewGeneration.Invoke(parentGenomes, nextGenerationGenomes);
     }

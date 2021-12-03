@@ -29,6 +29,7 @@ public class RunStatsState : GameState
         GameManager.Instance.Turn++;
         // Increment max Pause Menu slider option
         GameManager.Instance.pauseMenu.turnSlider.maxValue++;
+        GameManager.Instance.pauseMenu.turnSlider.minValue = 1;
         GameManager.Instance.pauseMenu.turnSlider.value = GameManager.Instance.pauseMenu.turnSlider.maxValue;
     }
 

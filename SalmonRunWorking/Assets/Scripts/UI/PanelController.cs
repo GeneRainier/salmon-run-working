@@ -14,7 +14,6 @@ public abstract class PanelController : MonoBehaviour
      */
     public void Activate()
     {
-        Debug.Log("Activate");
         gameObject.SetActive(true);
     }
 

@@ -41,6 +41,9 @@ public class SealionTower : TowerBase
         TowerActive = true;
         paused = false;
 
+        turnPlaced = GameManager.Instance.Turn;
+        towerManager.AddTower(this);
+
         base.Start();
 
         caughtFish = new List<Fish>();
