@@ -140,7 +140,7 @@ public class PostRunStatsPanelController : PanelController
      */
     private void UpdatePanelData(List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
-        int previousTurn = GameManager.Instance.Turn - 1;
+        int previousTurn = GameManager.Instance.Turn;
         
         // Display the previous turn (because that's what
         titleText.text = $"Turn {previousTurn} Summary";
@@ -155,8 +155,6 @@ public class PostRunStatsPanelController : PanelController
                 parentSmallText.SetText(smallDescriptor, FishGenomeUtilities.smallParent);
                 parentMediumText.SetText(mediumDescriptor, FishGenomeUtilities.mediumParent);
                 parentLargeText.SetText(largeDescriptor, FishGenomeUtilities.largeParent);
-                parentFemaleText.SetText();
-                parentMaleText.SetText();
                 parentFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.femaleParent);
                 parentMaleText.SetText(maleDescriptor, FishGenomeUtilities.maleParent);
                 parentTotalText.SetText(totalDescriptor, FishGenomeUtilities.smallestSex * 2);
@@ -188,12 +186,12 @@ public class PostRunStatsPanelController : PanelController
         // Otherwise, do the first-turn specific update
         else if (previousTurn == 0)
         {
-            parentSmallText.SetText();
-            parentMediumText.SetText();
-            parentLargeText.SetText();
-            parentFemaleText.SetText();
-            parentMaleText.SetText();
-            parentTotalText.SetText();
+            parentSmallText.SetText(smallDescriptor, FishGenomeUtilities.smallParent);
+            parentMediumText.SetText(mediumDescriptor, FishGenomeUtilities.mediumParent);
+            parentLargeText.SetText(largeDescriptor, FishGenomeUtilities.largeParent);
+            parentFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.femaleParent);
+            parentMaleText.SetText(maleDescriptor, FishGenomeUtilities.maleParent);
+            parentTotalText.SetText(totalDescriptor, FishGenomeUtilities.smallestSex * 2);
 
 
             survivedText.SetText(totalDescriptor, FishSchool.survivedFish);

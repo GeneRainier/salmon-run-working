@@ -74,6 +74,9 @@ public class AnglerTower : TowerBase
         catchAttemptLine.enabled = false;
 
         fishing = fisherman.GetComponent<Animator>();
+        GameEvents.onStartRun.AddListener(turnOnAnim);
+
+        GameEvents.onEndRun.AddListener(turnOffAnim);
     }
 
     /**
@@ -155,7 +158,8 @@ public class AnglerTower : TowerBase
         {
             transform.parent.LookAt(fish.transform, Vector3.up);
             TryCatchFish(fish);
-            fishing.SetBool(Fishing, true);
+            //fishing.SetBool(Fishing, true);
+
         }
         else
         {
@@ -243,6 +247,7 @@ public class AnglerTower : TowerBase
         // Fish escaped -- just wait for end of action
         else
         {
+
             yield return new WaitForSeconds(timePerApplyEffect);
         }
 
@@ -295,5 +300,15 @@ public class AnglerTower : TowerBase
         fishPos.y = startPos.y;
 
         catchAttemptLine.SetPositions(new []{ startPos, fishPos});
+    }
+
+    private void turnOffAnim()
+    {
+        fishing.SetBool(Fishing, false);
+    }
+
+    private void turnOnAnim()
+    {
+        fishing.SetBool(Fishing, true);
     }
 }
