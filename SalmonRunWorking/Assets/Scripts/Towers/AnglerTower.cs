@@ -74,9 +74,6 @@ public class AnglerTower : TowerBase
         catchAttemptLine.enabled = false;
 
         fishing = fisherman.GetComponent<Animator>();
-        GameEvents.onStartRun.AddListener(turnOnAnim);
-
-        GameEvents.onEndRun.AddListener(turnOffAnim);
     }
 
     /**
@@ -158,7 +155,6 @@ public class AnglerTower : TowerBase
         {
             transform.parent.LookAt(fish.transform, Vector3.up);
             TryCatchFish(fish);
-            //fishing.SetBool(Fishing, true);
 
         }
         else
@@ -174,6 +170,7 @@ public class AnglerTower : TowerBase
      */
     private void TryCatchFish(Fish f)
     {
+        fishing.SetBool(Fishing, true);
         StartCoroutine(TryCatchFishCoroutine(f));
     }
 
@@ -253,6 +250,8 @@ public class AnglerTower : TowerBase
 
         // End the catch attempt line
         catchAttemptLine.enabled = false;
+        fishing.SetBool(Fishing, false);
+
     }
 
     /**
@@ -300,15 +299,5 @@ public class AnglerTower : TowerBase
         fishPos.y = startPos.y;
 
         catchAttemptLine.SetPositions(new []{ startPos, fishPos});
-    }
-
-    private void turnOffAnim()
-    {
-        fishing.SetBool(Fishing, false);
-    }
-
-    private void turnOnAnim()
-    {
-        fishing.SetBool(Fishing, true);
     }
 }
