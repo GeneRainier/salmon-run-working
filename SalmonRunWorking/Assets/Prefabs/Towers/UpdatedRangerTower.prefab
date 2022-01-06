@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2955766015034391748}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.23, y: 0.06, z: 0}
   m_LocalScale: {x: 0.4, y: 0.4, z: 0.4}
   m_Children:
   - {fileID: 8133440569980070217}
@@ -225,7 +225,7 @@ MonoBehaviour:
   timePerApplyEffect: 5
   turnPlaced: 0
   mode: 1
-  hitLineMaterial: {fileID: 2100000, guid: babc363db094c014497dd0ee086de570, type: 2}
+  hitLineMaterial: {fileID: 2100000, guid: 74f405b26ef98a945a2ae4e0a10cb7c9, type: 2}
   lineRendererPrefab: {fileID: 5809081453534374998, guid: 3e15e3a67a4137545b1b79ab4d3a401e,
     type: 3}
   slowdownEffectSmall: -0.5

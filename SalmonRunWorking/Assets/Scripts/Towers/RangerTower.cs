@@ -197,7 +197,7 @@ public class RangerTower : TowerBase
         for (int i = 0; i < towerEffectLineRenderers.Count; i++)
         {
             Vector3 endPos = towerEffectPositions[i];
-            endPos.y = startPos.y + 10.0f;      //< The "+ 10.0f" is a dirty fix to prevent the lines from running into the terrain when the Ranger is on a low elevation
+            //endPos.y = startPos.y + 10.0f;      //< The "+ 10.0f" is a dirty fix to prevent the lines from running into the terrain when the Ranger is on a low elevation
 
             towerEffectLineRenderers[i].SetPositions(new Vector3[] { startPos, endPos });
         }
