@@ -6,16 +6,16 @@ public class RandomHatColor : MonoBehaviour
 {
 
     public List<Color> ColorList = new List<Color>() {
-        Color.red,
-        Color.black,
-        Color.cyan,
-        Color.gray,
-        Color.green,
-        Color.magenta,
-        Color.white,
-        Color.yellow,
-        Color.blue,
-        new Color(0.3f, 0.4f, 0.6f, 0.3f)};
+        new Color(0.6037736f, 0.2274741f, 0.1281595f, 1f),
+        new Color(0.509434f, 0.1417764f, 0.2814927f, 1f),
+        new Color(0.5660378f, 0.1895693f, 0.4840343f, 1f),
+        new Color(0.3825291f, 0.1882353f, 0.5647059f, 1f),
+        new Color(0.08365966f, 0.3773585f, 0.1815592f, 1f),
+        new Color(0.08365966f, 0.3773585f, 0.1815592f, 1f),
+        new Color(0.08365966f, 0.3773585f, 0.1815592f, 1f),
+        new Color(0.08365966f, 0.3773585f, 0.1815592f, 1f),
+        new Color(0.08365966f, 0.3773585f, 0.1815592f, 1f),
+        new Color(0.08365966f, 0.3773585f, 0.1815592f, 1f)};
 
     void Start()
     {
