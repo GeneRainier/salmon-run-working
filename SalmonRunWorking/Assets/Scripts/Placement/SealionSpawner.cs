@@ -19,7 +19,7 @@ public class SealionSpawner : MonoBehaviour
 
     private DamPlacementLocation damPlacementLocation;          //< The location a dam can be placed in the level
 
-    public ManagerIndex initializationValues;                   //< The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initValues;                   //< The ManagerIndex with initialization values for a given tower
 
     /*
     private void Update()
@@ -42,10 +42,10 @@ public class SealionSpawner : MonoBehaviour
     private void Awake()
     {
         // Get initialization values and set this towers basic values
-        initializationValues = FindObjectOfType<ManagerIndex>();
+        initValues = FindObjectOfType<ManagerIndex>();
         GameEvents.onTurnUpdated.AddListener(SpawnSealion);
         damPlacementLocation = GetComponent<DamPlacementLocation>();
-        turnsBeforeShowing = initializationValues.sealionAppearanceTime;
+        turnsBeforeShowing = initValues.initSets[initValues.setToUse].sealionAppearanceTime;
     }
 
     /*
