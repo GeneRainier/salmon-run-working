@@ -225,7 +225,7 @@ MonoBehaviour:
   timePerApplyEffect: 5
   turnPlaced: 0
   mode: 1
-  hitLineMaterial: {fileID: 2100000, guid: babc363db094c014497dd0ee086de570, type: 2}
+  hitLineMaterial: {fileID: 2100000, guid: 74f405b26ef98a945a2ae4e0a10cb7c9, type: 2}
   lineRendererPrefab: {fileID: 5809081453534374998, guid: 3e15e3a67a4137545b1b79ab4d3a401e,
     type: 3}
   slowdownEffectSmall: -0.5
