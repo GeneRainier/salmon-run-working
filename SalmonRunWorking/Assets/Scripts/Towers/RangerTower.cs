@@ -52,11 +52,11 @@ public class RangerTower : TowerBase
      */
     protected override void Start()
     {
-        effectRadius = initializationValues.rangerRadius;
-        slowdownEffectSmall = initializationValues.rangerSmallModifier;
-        slowdownEffectMedium = initializationValues.rangerMediumModifier;
-        slowdownEffectLarge = initializationValues.rangerLargeModifier;
-        regulationSuccessRate = initializationValues.rangerSuccessRate;
+        effectRadius = initValues.initSets[initValues.setToUse].rangerRadius;
+        slowdownEffectSmall = initValues.initSets[initValues.setToUse].rangerSmallModifier;
+        slowdownEffectMedium = initValues.initSets[initValues.setToUse].rangerMediumModifier;
+        slowdownEffectLarge = initValues.initSets[initValues.setToUse].rangerLargeModifier;
+        regulationSuccessRate = initValues.initSets[initValues.setToUse].rangerSuccessRate;
 
         base.Start();
     }
@@ -98,7 +98,7 @@ public class RangerTower : TowerBase
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         transform.parent.position = primaryHitInfo.point;
-        initializationValues.rangerCount += 1;
+        initValues.rangerCount += 1;
         towerManager.AddTower(this);
         turnPlaced = GameManager.Instance.Turn;
     }
