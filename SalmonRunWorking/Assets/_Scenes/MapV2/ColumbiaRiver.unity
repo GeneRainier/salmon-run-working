@@ -43692,7 +43692,7 @@ MonoBehaviour:
   menuManager: {fileID: 7393412122464449028}
   towerManager: {fileID: 1397721658}
   upgradeManager: {fileID: 1195333500}
-  makeOutputFile: 1
+  makeOutputFile: 0
   upperAnglerCount: 0
   lowerAnglerCount: 0
   upperManagedAnglerCount: 0
@@ -70699,8 +70699,6 @@ GameObject:
   - component: {fileID: 2405586304851200288}
   - component: {fileID: 2405586304851200289}
   - component: {fileID: 136612758}
-  - component: {fileID: 4369584352153188106}
-  - component: {fileID: 8596659424041738955}
   m_Layer: 5
   m_Name: Start
   m_TagString: Untagged
@@ -80024,18 +80022,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1155594929607758673}
   m_CullTransparentMesh: 0
---- !u!114 &4369584352153188106
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2405586304851200295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64b2a1a546a994448861f268224ba7c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &4379235194403285434
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -98302,18 +98288,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 281.01, y: 44.69}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &8596659424041738955
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2405586304851200295}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 64b2a1a546a994448861f268224ba7c0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!222 &8617571300401616387
 CanvasRenderer:
   m_ObjectHideFlags: 0
