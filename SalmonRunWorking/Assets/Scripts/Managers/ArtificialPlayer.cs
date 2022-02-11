@@ -19,6 +19,11 @@ public class ArtificialPlayer : MonoBehaviour
     [SerializeField] private GameObject startPanel;
     [SerializeField] private GameObject instructionPanel;
 
+    public GameObject anglerPrefab;       //< The prefab for an angler tower
+    public GameObject rangerPrefab;       //< The prefab for the ranger tower
+    [SerializeField] private GameObject damPrefab;          //< The prefab for the dam
+    [SerializeField] private GameObject ladderPrefab;       //< The prefab for the salmon ladder
+
     [SerializeField] private List<Vector3> anglerPositions;     //< The positions the anglers may be placed by the artifical player
     [SerializeField] private List<Vector3> rangerPositions;     //< The positions the rangers may be placed by the artifical player
     [SerializeField] private Vector3 damLadderPosition;         //< The position the dam and ladder may be placed by the artifical player
@@ -41,12 +46,23 @@ public class ArtificialPlayer : MonoBehaviour
             // If the round is running, all we want to do is set the speed to max and wait for the round to change
             if (GameManager.Instance.CompareState(typeof(RunState)))
             {
-
+                GameManager.Instance.FastestSpeed();
             }
             // If we are in the place state, we want to place our next batch of towers
             else if (GameManager.Instance.CompareState(typeof(PlaceState)))
             {
-                
+                if (GameManager.Instance.Turn == 2)
+                {
+                    GameObject angler = Instantiate(anglerPrefab, anglerPositions[0], Quaternion.identity) as GameObject;
+                    AnglerTower anglerScript = angler.GetComponentInChildren<AnglerTower>();
+                    anglerScript.TowerActive = true;
+                    anglerScript.Resume();
+                    GameObject ranger = Instantiate(rangerPrefab, rangerPositions[0], Quaternion.identity) as GameObject;
+                    RangerTower rangerScript = ranger.GetComponentInChildren<RangerTower>();
+                    rangerScript.TowerActive = true;
+                    rangerScript.Resume();
+                }
+                GameManager.Instance.PlayButton();
             }
             // If the round has ended, we want to click through the UI screens via our coroutine
             else if (GameManager.Instance.CompareState(typeof(RunStatsState)))
@@ -82,7 +98,8 @@ public class ArtificialPlayer : MonoBehaviour
      */
     private void EndOfRound()
     {
-        
+        // Exit the stats panel and enter the placement state
+        statsScript.OnNextRunButton();
     }
 
     /*

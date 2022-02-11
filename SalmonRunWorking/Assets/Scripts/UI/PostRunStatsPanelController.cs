@@ -184,7 +184,10 @@ public class PostRunStatsPanelController : PanelController
 
             // Comment out the line below before webGL build
             // Update data file based on population data
-            AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
+            if (ManagerIndex.MI.makeOutputFile == true)
+            {
+                AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
+            }
         }
         // Otherwise, do the first-turn specific update
         else if (previousTurn == 0)
@@ -215,7 +218,10 @@ public class PostRunStatsPanelController : PanelController
 
             // Comment out the line below before webGL build  
             // Creates data file based on game parameters 
-            CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
+            if (ManagerIndex.MI.makeOutputFile == true)
+            {
+                CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
+            }
         }
     }
 
