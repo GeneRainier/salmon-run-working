@@ -139,7 +139,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectRadius: 150
-  initializationValues: {fileID: 0}
+  initValues: {fileID: 0}
   towerManager: {fileID: 0}
   timePerApplyEffect: 3
   turnPlaced: 0

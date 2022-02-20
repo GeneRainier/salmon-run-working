@@ -26,6 +26,7 @@ public class FogShift : MonoBehaviour
         {
             fog.Stop();
         }
+
         //if (Input.GetKeyDown(KeyCode.L))
         //{
         //    StopCoroutine("MoveOverSeconds");
