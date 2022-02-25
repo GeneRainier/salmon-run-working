@@ -53099,13 +53099,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   runArtificialPlayer: 0
-  statsScript: {fileID: 0}
-  startPanel: {fileID: 0}
-  instructionPanel: {fileID: 0}
-  anglerPrefab: {fileID: 0}
-  rangerPrefab: {fileID: 0}
-  damPrefab: {fileID: 0}
-  ladderPrefab: {fileID: 0}
+  statsScript: {fileID: 516363252}
+  startPanel: {fileID: 3868911946635152256}
+  instructionPanel: {fileID: 3227381716018550302}
+  anglerPrefab: {fileID: 207007072404874065, guid: b2f7836afc741f2419cbb57ca7410f7a,
+    type: 3}
+  rangerPrefab: {fileID: 5228235056163249766, guid: f2f026b624d20bc4a880d6d6940cc439,
+    type: 3}
+  damPrefab: {fileID: 2502241671651778950, guid: 921868e4fa2c8cf4a8fa7856990be9a6,
+    type: 3}
+  ladderPrefab: {fileID: 342922673586302204, guid: 9c900182f751eb44f8af8a1ba22157ca,
+    type: 3}
   anglerPositions:
   - position: {x: 0, y: 0, z: 0}
     occupied: 0
