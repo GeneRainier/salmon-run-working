@@ -1,5 +1,8 @@
 ﻿using System;
 using UnityEngine;
+using Cinemachine;
+using UnityEngine.Playables;
+using System.Collections;
 
 /*
  * RTS-style camera controller script.
@@ -23,14 +26,12 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float panBorderThickness = 1.0f;  //< Size of borders around edge of screen which will start panning when the mouse enters the area
 
     [Header("Camera Bounds")]
-    [SerializeField] private MinMax bounds = null;     //< Farthest / closest the camera can zoom out. Min and Max values for x and y
     public float height;                               //< The difference between the max and min y values of bounds for calculating rotational interpolation
-    [SerializeField] private float xRotateMin = 20f;                     //< Minimum rotation set for the camera when rotating on the x axis
-    [SerializeField] private float xRotateMax = 89f;                   //< Maximum rotation set for the camera when rotating on the x axis
 
     [Header("Speeds")]
     [SerializeField] private float zoomSpeed = 2.0f;   //< The speed at which you can zoom in or out
-    [SerializeField] private float xRotateSpeed = 50f;
+    [SerializeField] private float xRotateSpeed = 3f;
+    [SerializeField] private float towerOrbitSpeed = 3f;
 
     private Vector3 target;           //< The position the camera is aimed at
     private Vector3 targetRotation;   //< The rotation the camera is currently at
@@ -43,6 +44,29 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float zoomedXRotation;        //< The x rotation the camera has when it is fully zoomed in
     private float interpolation = 1.0f;                     //< The percentage value we are at in the xAxis rotation Lerp
 
+    [SerializeField] private Camera cameraMain;
+    [SerializeField] private Camera cameraTower;
+    [SerializeField] private Camera cameraFish;
+
+    [SerializeField] private CinemachineVirtualCamera virtualCameraTower;
+    [SerializeField] private CinemachineVirtualCamera virtualCameraFish;
+
+    private GameObject selectedTower;
+
+    [SerializeField] private PlayableDirector mainTowerTransition;
+    [SerializeField] private PlayableDirector towerMainTransition;
+    [SerializeField] private PlayableDirector mainFishTransition;
+    [SerializeField] private PlayableDirector fishMainTransition;
+
+    public enum CamState
+    {
+        camMain,
+        camTower,
+        camFish
+    }
+
+    public CamState camState = CamState.camMain;
+
     /*
      * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization Function
      */
@@ -52,7 +76,6 @@ public class CameraController : MonoBehaviour {
         initialRotation = this.gameObject.transform.rotation.eulerAngles;
         initialXRotation = this.gameObject.transform.rotation.eulerAngles.x;
         zoomedXRotation = 30.0f;
-        height = bounds.Max.y - bounds.Min.y;
     }
 
     /*
@@ -70,23 +93,80 @@ public class CameraController : MonoBehaviour {
         }
     }
 
+    private void Start()
+    {
+        cameraMain.tag = "MainCamera";
+    }
+
     /*
      * Updates the position of the camera
      */
     private void UpdatePosition()
     {
-        // Figure out new zoom
-        float scroll = 12f * Input.GetAxis("Mouse ScrollWheel");
+        if (Input.GetKeyDown(KeyCode.Mouse0) && camState == CamState.camMain)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
 
+            if (hit.collider)
+            {
+                if (hit.collider.gameObject.tag == "Tower")
+                {
+                    selectedTower = hit.collider.gameObject;
+                    camState = CamState.camTower;
+                    StartCoroutine("MainToTowerRoutine");
+                }
+            }
+        }
+
+        else if (Input.GetKeyDown(KeyCode.P) && camState == CamState.camTower)
+        {
+            camState = CamState.camMain;
+            StartCoroutine("TowerToMainRoutine");
+        }
+
+        /*
+        else if (Input.GetKeyDown(KeyCode.O) && camState == CamState.camMain)
+        {
+            camState = CamState.camFish;
+            StartCoroutine("MainToFishRoutine");
+        }
+        
+        else if (Input.GetKeyDown(KeyCode.O) && camState == CamState.camFish)
+        {
+            camState = CamState.camMain;
+            StartCoroutine("FishToMainRoutine");
+        }
+        */
+
+        if (camState == CamState.camMain)
+        {
+            CamMainUpdate();
+        }
+        else if (camState == CamState.camTower)
+        {
+            CamTowerUpdate();
+        }
+        /*
+        else if (camState == CamState.camFish)
+        {
+            CamFishUpdate();
+        }
+        */
+    }
+
+    public void CamMainUpdate()
+    {
         // Search for rotation input
         // We only want to turn the camera if we are zoomed in
         if (Input.GetButton("Rotate"))
         {
-            transform.RotateAround(transform.position, Vector3.up, -1.0f * Input.GetAxisRaw("Rotate"));
+            cameraMain.transform.RotateAround(cameraMain.transform.position, Vector3.up, xRotateSpeed * Input.GetAxisRaw("Rotate"));
         }
 
         // Store the current rotation for when we apply the XRotation Lerp
-        Vector3 currentRotation = transform.rotation.eulerAngles;
+        Vector3 currentRotation = cameraMain.transform.rotation.eulerAngles;
 
         // Figure out how much distance the pan should cover
         // Multiplied by unscaledDeltaTime so pausing and fast forwarding does not affect camera movement
@@ -100,7 +180,7 @@ public class CameraController : MonoBehaviour {
             {
                 // Calculate the perpendicular axis of travel for the camera based on its current rotation
                 Vector3 forward = Vector3.Cross(transform.right, Vector3.up);
-                transform.Translate(forward * Input.GetAxisRaw("Vertical") * panDistance, Space.World);
+                cameraMain.transform.Translate(forward * Input.GetAxisRaw("Vertical") * panDistance, Space.World);
             }
             else
             {
@@ -113,92 +193,23 @@ public class CameraController : MonoBehaviour {
             if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.D))
             {
                 Vector3 right = Vector3.Cross(Vector3.up, transform.up);
-                transform.Translate(right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
+                cameraMain.transform.Translate(right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
             }
             else
             {
-                transform.Translate(Vector3.right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
+                cameraMain.transform.Translate(Vector3.right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
             }
         }
-
-        //Search for the zoom buttons (Q and E)
-        if(Input.GetButton("Zoom"))
-        {
-            //Use the axis of zoom to determine which way to zoom
-            scroll = 0.1f * 100.0f * Input.GetAxisRaw("Zoom");
-            transform.Translate(Vector3.down * scroll * zoomSpeed, Space.World);
-        }
-
-        //Rotate on the x axis based on keyboard input.
-        if(Input.GetKey(KeyCode.C) && currentRotation.x > xRotateMin)
-        {
-            /*
-             * Fancier camera movement, not finished yet!
-            RaycastHit hit;
-            if(Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 10000))
-            {
-                transform.RotateAround(hit.point, Vector3.right, -xRotateSpeed * Time.fixedDeltaTime);
-            }
-            else
-            {
-                Debug.LogError("Camera X rotation raycast didn't find an object!");
-            }
-            */
-            //Change rotation based on time between frames 
-
-            float rx =currentRotation.x - xRotateSpeed * Time.unscaledDeltaTime;
-            if (rx < xRotateMin)
-            {
-                rx = xRotateMin;
-            }
-            transform.rotation = Quaternion.Euler(rx, currentRotation.y, currentRotation.z);
-            if (currentRotation.x < xRotateMin)
-            {
-                transform.rotation = Quaternion.Euler(xRotateMin, currentRotation.y, currentRotation.z);
-            }
-            
-        }
-        else if (Input.GetKey(KeyCode.V) && currentRotation.x < xRotateMax)
-        {
-            /* 
-             * Fancier camera movement, not finished yet!
-            RaycastHit hit;
-            if (Physics.Raycast(gameObject.transform.position, gameObject.transform.forward, out hit, 10000))
-            {
-                transform.RotateAround(hit.point, Vector3.left, -xRotateSpeed * Time.fixedDeltaTime);
-            }
-            else
-            {
-                Debug.LogError("Camera X rotation raycast didn't find an object!");
-            }
-            */
-            //Change rotation based on time between frames 
-            
-            float rx = currentRotation.x + xRotateSpeed * Time.unscaledDeltaTime;
-            if (rx > xRotateMax)
-            {
-                rx = xRotateMax;
-            }
-            transform.rotation = Quaternion.Euler(rx, currentRotation.y, currentRotation.z);
-            if (currentRotation.x > xRotateMax)
-            {
-                transform.rotation = Quaternion.Euler(xRotateMax, currentRotation.y, currentRotation.z);
-            }
-            
-        }
-
-        // Clamp Pan (XZ) / Zoom (Y) within boundaries
-        transform.position = bounds.Clamp(transform.position);
-
     }
 
-    /*
-     * Set the camera position and rotation back to the start of the level when the end of round button is clicked
-     */
-    public void ResetCamera()
+    public void CamTowerUpdate()
     {
-        this.gameObject.transform.position = initialPosition;
-        this.gameObject.transform.rotation = Quaternion.Euler(initialRotation);
+        virtualCameraTower.transform.RotateAround(selectedTower.transform.position, Vector3.up, Input.GetAxisRaw("Rotate") * -towerOrbitSpeed);
+    }
+
+    public void CamFishUpdate()
+    {
+
     }
 
     /*
@@ -210,31 +221,38 @@ public class CameraController : MonoBehaviour {
         this.gameObject.transform.position = new Vector3(transform.position.x, initialPosition.y, transform.position.z);
         this.gameObject.transform.rotation = Quaternion.Euler(initialRotation);
     }
-}
 
-/*
- * The minimum and maximum values the camera may utilize in zooming and panning
- */
-[Serializable]
-public class MinMax
-{
-    [SerializeField] private Vector3 min = Vector3.zero;       //< The minimum location
-    [SerializeField] private Vector3 max = Vector3.zero;       //< The maximum location
-
-    public Vector3 Min => min;
-
-    public Vector3 Max => max;
-
-    /*
-     * Clamps the given value between the given minimum float and maximum float values.
-     * 
-     * @param target The location value to clamp values from
-     */
-    public Vector3 Clamp(Vector3 target)
+    public IEnumerator MainToTowerRoutine()
     {
-        float x = Mathf.Clamp(target.x, min.x, max.x);
-        float y = Mathf.Clamp(target.y, min.y, max.y);
-        float z = Mathf.Clamp(target.z, min.z, max.z);
-        return new Vector3(x, y, z);
+        virtualCameraTower.transform.position = selectedTower.transform.position + new Vector3(35, 20, 0);
+        virtualCameraTower.transform.LookAt(selectedTower.transform.position + new Vector3(0, 10, 0));
+        mainTowerTransition.Play();
+        yield return new WaitForSeconds(1);
+        yield break;
+    }
+
+    public IEnumerator TowerToMainRoutine()
+    {
+        mainTowerTransition.Stop();
+        towerMainTransition.Play();
+        yield return new WaitForSeconds(1);
+        yield break;
+    }
+
+    public IEnumerator MainToFishRoutine()
+    {
+        virtualCameraFish.transform.position = new Vector3(-285, 147, 0);
+        //virtualCameraFish.transform.LookAt(selectedFish.transform.position + new Vector3(0, 10, 0));
+        mainFishTransition.Play();
+        yield return new WaitForSeconds(1);
+        yield break;
+    }
+
+    public IEnumerator FishToMainRoutine()
+    {
+        mainFishTransition.Stop();
+        fishMainTransition.Play();
+        yield return new WaitForSeconds(1);
+        yield break;
     }
 }

@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 1886008069404566219}
   m_Layer: 11
   m_Name: SealionTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -128,7 +128,7 @@ GameObject:
   - component: {fileID: 2029395405}
   m_Layer: 11
   m_Name: TokenBase (3)
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -335,15 +335,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectRadius: 150
   initializationValues: {fileID: 0}
+  towerManager: {fileID: 0}
   timePerApplyEffect: 3
-  defaultCatchRate: 1
-  defaultFemaleCatchRate: 0.1
-  defaultMaleCatchRate: 0.1
-  currentFemaleCatchRate: 0
-  currentMaleCatchRate: 0
-  flashMaterial: {fileID: 2100000, guid: 36889215b5455d44b91ee75ab2279392, type: 2}
-  numFlashesPerCatch: 3
-  theTowerManager: {fileID: 0}
+  turnPlaced: 0
+  femaleCatchRate: 0.1
+  maleCatchRate: 0.1
 --- !u!1001 &1886008068489973526
 PrefabInstance:
   m_ObjectHideFlags: 0

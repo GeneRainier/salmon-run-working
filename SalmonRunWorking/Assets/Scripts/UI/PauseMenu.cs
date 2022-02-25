@@ -19,11 +19,6 @@ public class PauseMenu : MonoBehaviour
 
     [SerializeField] private FishSchool school = null;          //< The fish school present in the level
 
-    [SerializeField] private DragAndDropIcon damIcon = null;    //< The UI Icon representing the dam tower option
-    [SerializeField] private DragAndDropIcon ladderIcon = null;    //< The UI Icon representing the ladder tower option
-
-    [SerializeField] private DamPlacementLocation placementLocation = null;       //< The placement location for the dam and ladder to manipulate placement visualizations
-
     public Slider turnSlider = null;      //< Reference to the slider to select a turn to revert back to
     [SerializeField] private Text sliderText = null;        //< The text next to the slider showing what value the slider is set to
 
@@ -68,10 +63,12 @@ public class PauseMenu : MonoBehaviour
 
     /*
      * Revert the level to the turn set in the turn slider
+     * 
+     * @param turn The turn we want to revert the game back to
      */
-    public void RevertTurn()
+    public void RevertTurn(int turn)
     {
-        // Call GameManager CreateSave function
-
+        // Call LoadSave function
+        SaveLoad.LoadGame();
     }
 }

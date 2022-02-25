@@ -55,7 +55,9 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     private PostRunStatsPanelController statsPanel;         //< The end of round stats panel controller
 
-    private List<FishGenome> nextGenerationGenomes;         //< List of fish genomes that will be used in the next generation
+    public List<FishGenome> nextGenerationGenomes;         //< List of fish genomes that will be used in the next generation
+
+    public static int survivedFish = 0;
 
     // Corners of the spawn area, for drawing and calculating locations
     private Vector3 bottomLeft;
@@ -198,6 +200,7 @@ public class FishSchool : MonoBehaviour, IPausable {
     {
         if (fishList.Count <= 0)
         {
+            survivedFish = successfulFishList.Count;
             GameManager.Instance.SetState(new RunStatsState());
         }
     }
@@ -232,6 +235,15 @@ public class FishSchool : MonoBehaviour, IPausable {
         List<FishGenome> successfulGenomes = successfulFishList.Select(fish => fish.GetGenome()).ToList();
         List<FishGenome> deadGenomes = deadFishList.Select(fish => fish.GetGenome()).ToList();
         GameEvents.onFishPopulationChanged.Invoke(activeGenomes, successfulGenomes, deadGenomes);
+    }
+
+    /*
+     * Get the list of fish from the upcoming generation. This is mainly used for saving the state of each turn in SaveLoad
+     * \return List<FishGenome> The list of fish that will be spawned when the player begins the next turn
+     */
+    public List<FishGenome> GetFish()
+    {
+        return nextGenerationGenomes;
     }
 
     #endregion
@@ -286,7 +298,7 @@ public class FishSchool : MonoBehaviour, IPausable {
             // Clean out old fish
             DeleteOldFish();
         }
-
+ 
         // Send out notice that new generation has been created
         GameEvents.onNewGeneration.Invoke(parentGenomes, nextGenerationGenomes);
     }

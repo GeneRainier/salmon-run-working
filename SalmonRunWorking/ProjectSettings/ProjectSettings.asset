@@ -587,7 +587,7 @@ PlayerSettings:
       daydreamIconForeground: {fileID: 0}
       daydreamIconBackground: {fileID: 0}
   cloudServicesEnabled:
-    Collab: 0
+    Collab: 1
     UNet: 1
   luminIcon:
     m_Name: 
@@ -601,10 +601,10 @@ PlayerSettings:
     m_VersionCode: 1
     m_VersionName: 
   apiCompatibilityLevel: 6
-  cloudProjectId: 9b1b3e1e-873a-45c2-acd2-94533fb26e48
+  cloudProjectId: cd32aa25-5880-45ff-b752-34dd1edb2ddc
   framebufferDepthMemorylessMode: 0
-  projectName: SalmonRunWorking
-  organizationId: salmonrun
+  projectName: Salmon Run
+  organizationId: elimcardle2001
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

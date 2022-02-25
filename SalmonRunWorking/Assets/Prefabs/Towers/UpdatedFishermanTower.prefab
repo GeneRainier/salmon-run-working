@@ -140,20 +140,42 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   effectRadius: 150
   initializationValues: {fileID: 0}
+  towerManager: {fileID: 0}
   timePerApplyEffect: 3
+  turnPlaced: 0
   flashRenderer: {fileID: 4057969269304214608}
   hitLineMaterial: {fileID: 2100000, guid: babc363db094c014497dd0ee086de570, type: 2}
   missLineMaterial: {fileID: 2100000, guid: b26876ed0e685894a9b964eb35acb642, type: 2}
   flashMaterial: {fileID: 2100000, guid: 15a1b3c7cd9cfcf4abef70e065f15150, type: 2}
-  defaultCatchRate: 1
-  numFlashesPerCatch: 3
-  defaultSmallCatchRate: 0.5
-  defaultMediumCatchRate: 0.3
-  defaultLargeCatchRate: 0.1
-  currentSmallCatchRate: 0
+  smallCatchRate: 0.7
+  mediumCatchRate: 0.4
+  largeCatchRate: 0.1
+  fishCaught: 0
   fisherman: {fileID: 9128884193404451771}
-  theTowerManager: {fileID: 0}
   anglerCounted: 0
+--- !u!114 &1255578138663736439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8269790810689016814}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb72287382ac6f64791571cc65705f2f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ColorList:
+  - {r: 1, g: 0, b: 0, a: 1}
+  - {r: 0, g: 0, b: 0, a: 1}
+  - {r: 0, g: 1, b: 1, a: 1}
+  - {r: 0.5, g: 0.5, b: 0.5, a: 1}
+  - {r: 0, g: 1, b: 0, a: 1}
+  - {r: 1, g: 0, b: 1, a: 1}
+  - {r: 1, g: 1, b: 1, a: 1}
+  - {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  - {r: 0, g: 0, b: 1, a: 1}
+  - {r: 0.3, g: 0.4, b: 0.6, a: 0.3}
 --- !u!1 &8396285094676340492
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,7 +187,7 @@ GameObject:
   - component: {fileID: 6812348690384963619}
   m_Layer: 11
   m_Name: UpdatedFishermanTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -279,6 +301,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: de47d924a080a8143a2ed7030a4dcebb, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: de47d924a080a8143a2ed7030a4dcebb, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: de47d924a080a8143a2ed7030a4dcebb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -901,6 +927,11 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 11
       objectReference: {fileID: 0}
+    - target: {fileID: 4516880449789708276, guid: 343d7c16392829a49881e029a9c0e196,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 3fad518e82fadc74fa460bb6bef8da02, type: 2}
     - target: {fileID: 4516880449791711542, guid: 343d7c16392829a49881e029a9c0e196,
         type: 3}
       propertyPath: m_Layer
@@ -928,6 +959,12 @@ Transform:
 --- !u!137 &9128884193401272041 stripped
 SkinnedMeshRenderer:
   m_CorrespondingSourceObject: {fileID: 3664615036414409777, guid: 343d7c16392829a49881e029a9c0e196,
+    type: 3}
+  m_PrefabInstance: {fileID: 5506526010114656984}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8269790810689016814 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4516880449791711542, guid: 343d7c16392829a49881e029a9c0e196,
     type: 3}
   m_PrefabInstance: {fileID: 5506526010114656984}
   m_PrefabAsset: {fileID: 0}

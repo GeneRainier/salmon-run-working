@@ -10,9 +10,19 @@ using UnityEngine;
 public class FishGenomeUtilities : MonoBehaviour
 {
     // End of Round Parent Size Counters
+    public static int maleParent = 0;
+    public static int femaleParent = 0;
     public static int smallParent = 0;
     public static int mediumParent = 0;
     public static int largeParent = 0;
+    public static int smallestSex = 0;
+
+    public static int survivingFemale = 0;
+    public static int survivingMale = 0;
+    public static int survivingSmall = 0;
+    public static int survivingMedium = 0;
+    public static int survivingLarge = 0;
+
 
     /**
      * Create a new, random generation of fish for the initial group of salmon
@@ -103,17 +113,20 @@ public class FishGenomeUtilities : MonoBehaviour
         smallParent = 0;
         mediumParent = 0;
         largeParent = 0;
-        
+        maleParent = 0;
+        femaleParent = 0;
+
         // Create a list to put the new generation in
         List<FishGenome> newGeneration = new List<FishGenome>();
 
         // Find all the females
         List<FishGenome> females = FindFemaleGenomes(potentialParents);
+        survivingFemale = females.Count;
         // Find all the males
         List<FishGenome> males = FindMaleGenomes(potentialParents);
-
+        survivingMale = males.Count;
         // Determine which list is shorter
-        int shortestLength = Mathf.Min(females.Count, males.Count);
+        smallestSex = Mathf.Min(females.Count, males.Count);
 
         // Referencable gene pairs for the male and female parent fish for the sake of counting at the end of a round
         List<FishGenome> smallMalePairs = FindSmallGenomes(males);
@@ -123,10 +136,14 @@ public class FishGenomeUtilities : MonoBehaviour
         List<FishGenome> mediumFemalePairs = FindMediumGenomes(females);
         List<FishGenome> largeFemalePairs = FindLargeGenomes(females);
 
+        survivingSmall = smallMalePairs.Count + smallFemalePairs.Count;
+        survivingMedium = mediumMalePairs.Count + mediumFemalePairs.Count;
+        survivingLarge = largeMalePairs.Count + largeFemalePairs.Count;
+
         // Loop (shortest list of males and females) times
         // Each time, generate a certain number of offspring from the ith male and ith female
         Debug.Log("Before Repro Loop: minOffspring=" + minOffspring + ";  maxOffspring=" + maxOffspring);
-        for (int i = 0; i < shortestLength; i++)
+        for (int i = 0; i < smallestSex; i++)
         {
             // Determine how many offspring this pairing will make
             int numOffspring = Random.Range(minOffspring, maxOffspring + 1);
@@ -140,30 +157,35 @@ public class FishGenomeUtilities : MonoBehaviour
             if (smallMalePairs.Contains(males[i]))
             {
                 smallParent++;
+                maleParent++;
             }
             else if (mediumMalePairs.Contains(males[i]))
             {
                 mediumParent++;
+                maleParent++;
             }
             else
             {
                 largeParent++;
+                maleParent++;
             }
 
             if (smallFemalePairs.Contains(females[i]))
             {
                 smallParent++;
+                femaleParent++;
             }
             else if (mediumFemalePairs.Contains(females[i]))
             {
                 mediumParent++;
+                femaleParent++;
             }
             else
             {
                 largeParent++;
+                femaleParent++;
             }
         }
-
         return newGeneration;
     }
 
@@ -238,5 +260,24 @@ public class FishGenomeUtilities : MonoBehaviour
 
             return sizeGenePair.momGene == FishGenome.B && sizeGenePair.dadGene == FishGenome.B;
         }).ToList();
+    }
+
+    /*
+     * A shuffling algorithm based on Fisher-Yates to be used when reloading a prior generation
+     * Without this function, the loaded generation will be in a sorted order (Small Male to Large Female)
+     * 
+     * @param list The list we are shuffling
+     */
+    public static void Shuffle(List<FishGenome> list)
+    {
+        var count = list.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i)
+        {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = list[i];
+            list[i] = list[r];
+            list[r] = tmp;
+        }
     }
 }

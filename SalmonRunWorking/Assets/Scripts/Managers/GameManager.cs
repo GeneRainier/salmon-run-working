@@ -233,9 +233,24 @@ public partial class GameManager : MonoBehaviour
         timeManager.FastestTime();
     }
 
+    /*
+     * Gets the list of towers currently placed in the scene from the Tower Manager
+     * 
+     * @return List<TowerBase> The list of towers placed in the scene
+     */
     public List<TowerBase> GetTowerList()
     {
         return towerManager.GetTowers();
+    }
+
+    /*
+     * Gets the list of tower prefabs that exist in the game
+     * 
+     * @return List<GameObject> The list of tower prefabs that exist
+     */
+    public List<GameObject> GetTowerPrefabs()
+    {
+        return towerManager.GetTowerPrefabs();
     }
 
     #endregion
