@@ -32,7 +32,7 @@ public class Dam : TowerBase
     protected override void Start()
     {
         // Get initialization values and set this towers basic values
-        initValues = FindObjectOfType<ManagerIndex>();
+        initializationValues = FindObjectOfType<ManagerIndex>();
 
         // Set all crossing rates to default rate on initialization
         smallCrossingRate = mediumCrossingRate = largeCrossingRate = defaultCrossingRate;
@@ -108,7 +108,7 @@ public class Dam : TowerBase
         if (placementLocation != null)
         {
             placementLocation.AttachDam(this);
-            initValues.damPresent = 1;
+            initializationValues.damPresent = 1;
             towerManager.AddTower(this);
             turnPlaced = GameManager.Instance.Turn;
         }

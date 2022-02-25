@@ -27,10 +27,10 @@ public class SealionTower : TowerBase
         // Base class awake
         base.Awake();
 
-        femaleCatchRate = initValues.initSets[initValues.setToUse].sealionFemaleCatchRate;
-        maleCatchRate = initValues.initSets[initValues.setToUse].sealionMaleCatchRate;
+        femaleCatchRate = initializationValues.sealionFemaleCatchRate;
+        maleCatchRate = initializationValues.sealionMaleCatchRate;
 
-        initValues.sealionPresent = 1;
+        initializationValues.sealionPresent = 1;
     }
 
     /*

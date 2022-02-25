@@ -25,47 +25,6 @@ public class ManagerIndex : MonoBehaviour
     // Boolean tracking whether or not to make the output file
     public bool makeOutputFile = false;
 
-    [Header("Output File Tracker Values")]
-    // Miscellaneous Output File Counters
-    public int upperAnglerCount = 0;
-    public int lowerAnglerCount = 0;
-    public int upperManagedAnglerCount = 0;
-    public int lowerManagedAnglerCount = 0;
-
-    public int rangerCount = 0;
-
-    public int damPresent = 0;
-    public int ladderCode = 0;
-
-    public int sealionPresent = 0;
-
-    [SerializeField] public List<initialValues> initSets;  //< The list of all the potential initialization settings we have created
-    public int setToUse = 0;                               //< The index of the initialization set we are going to use for this round of the game
-
-    public GameManager GameManager => gameManager;
-
-    public ColorManager ColorManager => colorManager;
-
-    public TimeManager TimeManager => timeManager;
-
-    public MoneyManager MoneyManager => moneyManager;
-
-    public MenuManager MenuManager => menuManager;
-
-    public TowerManager TowerManager => towerManager;
-
-    public UpgradeManager UpgradeManager => upgradeManager;
-
-    private void Awake()
-    {
-        if (!MI) MI = this;
-        else Destroy(gameObject);
-    }
-}
-
-[System.Serializable]
-public struct initialValues
-{
     // Angler
     public int anglerRadius;
     public float anglerSmallCatchRate;
@@ -102,6 +61,19 @@ public struct initialValues
 
     public int nestingSites;    //< The number of nesting sites available at the fish destination
 
+    // Miscellaneous Output File Counters
+    public int upperAnglerCount = 0;
+    public int lowerAnglerCount = 0;
+    public int upperManagedAnglerCount = 0;
+    public int lowerManagedAnglerCount = 0;
+    
+    public int rangerCount = 0;
+
+    public int damPresent = 0;
+    public int ladderCode = 0;
+
+    public int sealionPresent = 0;
+
     // Costs
     //public float anglerCost;
     //public float rangerCost;
@@ -109,4 +81,24 @@ public struct initialValues
     //public float streamLadderCost;
     //public float elevatorLadderCost;
     //public float ladderChangeCost;
+
+    public GameManager GameManager => gameManager;
+
+    public ColorManager ColorManager => colorManager;
+
+    public TimeManager TimeManager => timeManager;
+
+    public MoneyManager MoneyManager => moneyManager;
+
+    public MenuManager MenuManager => menuManager;
+
+    public TowerManager TowerManager => towerManager;
+
+    public UpgradeManager UpgradeManager => upgradeManager;
+
+    private void Awake()
+    {
+        if (!MI) MI = this;
+        else Destroy(gameObject);
+    }
 }

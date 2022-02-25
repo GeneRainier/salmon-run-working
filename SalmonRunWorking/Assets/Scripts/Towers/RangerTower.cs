@@ -52,11 +52,11 @@ public class RangerTower : TowerBase
      */
     protected override void Start()
     {
-        effectRadius = initValues.initSets[initValues.setToUse].rangerRadius;
-        slowdownEffectSmall = initValues.initSets[initValues.setToUse].rangerSmallModifier;
-        slowdownEffectMedium = initValues.initSets[initValues.setToUse].rangerMediumModifier;
-        slowdownEffectLarge = initValues.initSets[initValues.setToUse].rangerLargeModifier;
-        regulationSuccessRate = initValues.initSets[initValues.setToUse].rangerSuccessRate;
+        effectRadius = initializationValues.rangerRadius;
+        slowdownEffectSmall = initializationValues.rangerSmallModifier;
+        slowdownEffectMedium = initializationValues.rangerMediumModifier;
+        slowdownEffectLarge = initializationValues.rangerLargeModifier;
+        regulationSuccessRate = initializationValues.rangerSuccessRate;
 
         base.Start();
     }
@@ -98,7 +98,7 @@ public class RangerTower : TowerBase
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
         transform.parent.position = primaryHitInfo.point;
-        initValues.rangerCount += 1;
+        initializationValues.rangerCount += 1;
         towerManager.AddTower(this);
         turnPlaced = GameManager.Instance.Turn;
     }
@@ -197,8 +197,8 @@ public class RangerTower : TowerBase
         for (int i = 0; i < towerEffectLineRenderers.Count; i++)
         {
             Vector3 endPos = towerEffectPositions[i];
-            endPos.y = startPos.y + 7.5f;      //< The "+ 10.0f" is a dirty fix to prevent the lines from running into the terrain when the Ranger is on a low elevation
-            startPos.y = startPos.y + 7.5f;
+            endPos.y = startPos.y + 10.0f;      //< The "+ 10.0f" is a dirty fix to prevent the lines from running into the terrain when the Ranger is on a low elevation
+
             towerEffectLineRenderers[i].SetPositions(new Vector3[] { startPos, endPos });
         }
     }

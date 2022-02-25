@@ -49,10 +49,10 @@ public class AnglerTower : TowerBase
         base.Awake();
 
         // Set catch rates and radius based on Initialization values
-        effectRadius = initValues.initSets[initValues.setToUse].anglerRadius;
-        smallCatchRate = initValues.initSets[initValues.setToUse].anglerSmallCatchRate;
-        mediumCatchRate = initValues.initSets[initValues.setToUse].anglerMediumCatchRate;
-        largeCatchRate = initValues.initSets[initValues.setToUse].anglerLargeCatchRate;
+        effectRadius = initializationValues.anglerRadius;
+        smallCatchRate = initializationValues.anglerSmallCatchRate;
+        mediumCatchRate = initializationValues.anglerMediumCatchRate;
+        largeCatchRate = initializationValues.anglerLargeCatchRate;
 
         // This tells the upgrade manager what the small, medium, and large rates are that can be upgraded.
         ManagerIndex.MI.UpgradeManager.SmallRate = smallCatchRate;
