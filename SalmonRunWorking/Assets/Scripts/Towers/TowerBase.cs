@@ -12,7 +12,7 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
 {
     [SerializeField] protected int effectRadius;             //< Effect radius of the tower
 
-    public ManagerIndex initializationValues;                //< The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initValues;                //< The ManagerIndex with initialization values for a given tower
     public TowerManager towerManager;                        //< The Tower Manager with lists of all the towers in the scene
 
     public bool TowerActive { get; set; } = false;           //< Whether the tower is currently activated or not
@@ -33,7 +33,7 @@ public abstract class TowerBase: MonoBehaviour, IDragAndDropObject, IPausable
     protected virtual void Awake()
     {
         // Get initialization values and set this towers basic values
-        initializationValues = FindObjectOfType<ManagerIndex>();
+        initValues = FindObjectOfType<ManagerIndex>();
         // Get the Tower Manager
         towerManager = FindObjectOfType<TowerManager>();
         // Get component references
