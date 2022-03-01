@@ -21,7 +21,7 @@ public class MoneyManager : MonoBehaviour
     
     static private float bank;          //< Reference to the amount of money the player has "in the bank"
 
-    public ManagerIndex initializationValues;       //< The ManagerIndex with initialization values for a given tower
+    public ManagerIndex initValues;       //< The ManagerIndex with initialization values for a given tower
 
     // TODO: Buffer Transactions, Afford Calculations
     private bool transacting;           //< Is the purchase still being processed
@@ -32,8 +32,8 @@ public class MoneyManager : MonoBehaviour
     private void Start()
     {
         // Get initialization values and set this towers basic values
-        initializationValues = FindObjectOfType<ManagerIndex>();
-        startingFunds = initializationValues.startingMoney;
+        initValues = FindObjectOfType<ManagerIndex>();
+        startingFunds = initValues.initSets[initValues.setToUse].startingMoney;
         bank = startingFunds;
         UpdateText();
     }

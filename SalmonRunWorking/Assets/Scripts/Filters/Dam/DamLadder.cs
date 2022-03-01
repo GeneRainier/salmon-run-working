@@ -27,7 +27,7 @@ public class DamLadder : TowerBase
     protected override void Awake()
     {
         // Get initialization values and set this towers basic values
-        initializationValues = FindObjectOfType<ManagerIndex>();
+        initValues = FindObjectOfType<ManagerIndex>();
 
         // Get the Tower Manager
         // NOTE: Due to how the Scene is set up, the Ladder needs to grab the Manager since it will not necessarily grab it from the base class
@@ -48,12 +48,12 @@ public class DamLadder : TowerBase
             placementLocation.AttachLadder(this);
 
             // Initialize the pass rates
-            smallCrossingRate = initializationValues.ladderSmallPassRate;
-            mediumCrossingRate = initializationValues.ladderMediumPassRate;
-            largeCrossingRate = initializationValues.ladderLargePassRate;
+            smallCrossingRate = initValues.initSets[initValues.setToUse].ladderSmallPassRate;
+            mediumCrossingRate = initValues.initSets[initValues.setToUse].ladderMediumPassRate;
+            largeCrossingRate = initValues.initSets[initValues.setToUse].ladderLargePassRate;
             Debug.Log("DamLadder.cs primaryHitInfo S=" + smallCrossingRate + "; M=" + mediumCrossingRate + "; L=" + largeCrossingRate);
 
-            initializationValues.ladderCode = 1;
+            initValues.ladderCode = 1;
             towerManager.AddTower(this);
             turnPlaced = GameManager.Instance.Turn;
         }
