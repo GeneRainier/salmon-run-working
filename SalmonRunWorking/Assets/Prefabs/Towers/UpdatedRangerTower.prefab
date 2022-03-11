@@ -220,7 +220,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectRadius: 450
-  initializationValues: {fileID: 0}
+  initValues: {fileID: 0}
   towerManager: {fileID: 0}
   timePerApplyEffect: 5
   turnPlaced: 0
@@ -589,6 +589,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 6474826737666505058, guid: f0694b95d7ae38d46badb6c101adf7e0,
+        type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 6474826737666505060, guid: f0694b95d7ae38d46badb6c101adf7e0,
         type: 3}

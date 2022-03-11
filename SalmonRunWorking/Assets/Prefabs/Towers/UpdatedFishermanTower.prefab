@@ -187,7 +187,7 @@ GameObject:
   - component: {fileID: 6812348690384963619}
   m_Layer: 11
   m_Name: UpdatedFishermanTower
-  m_TagString: Untagged
+  m_TagString: Tower
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -301,6 +301,10 @@ PrefabInstance:
     - target: {fileID: 100000, guid: de47d924a080a8143a2ed7030a4dcebb, type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: de47d924a080a8143a2ed7030a4dcebb, type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: de47d924a080a8143a2ed7030a4dcebb, type: 3}
       propertyPath: m_LocalPosition.x
@@ -727,6 +731,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Layer
       value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 3664615036428071267, guid: 343d7c16392829a49881e029a9c0e196,
+        type: 3}
+      propertyPath: m_TagString
+      value: Tower
       objectReference: {fileID: 0}
     - target: {fileID: 3664615036428071269, guid: 343d7c16392829a49881e029a9c0e196,
         type: 3}

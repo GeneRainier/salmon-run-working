@@ -89,7 +89,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: CamFish
+    m_DisplayName: MainCamera
   - m_Version: 1
     m_Start: 0.16666666666666666
     m_ClipIn: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
     m_PreExtrapolationMode: 0
     m_PostExtrapolationTime: 0
     m_PreExtrapolationTime: 0
-    m_DisplayName: MainCamera
+    m_DisplayName: CamTower
   m_Markers:
     m_Objects: []
 --- !u!114 &-4773633039956318793
