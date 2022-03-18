@@ -103,7 +103,6 @@ public class PostRunStatsPanelController : PanelController
         // Reset timer for next round
         turnTimer.ResetTimer();
 
-        Debug.Log("OnNextRunButton() noOffspring = " + noOffspring);
         // If there is fish in the next generation, just move on to place state
         if (!noOffspring) GameManager.Instance.SetState(new PlaceState());
 

@@ -58,8 +58,6 @@ public class AnglerTower : TowerBase
         ManagerIndex.MI.UpgradeManager.SmallRate = smallCatchRate;
         ManagerIndex.MI.UpgradeManager.MediumRate = mediumCatchRate;
         ManagerIndex.MI.UpgradeManager.LargeRate = largeCatchRate;
-
-        Debug.Log("Awake cScr=" + smallCatchRate + "; cMcr=" + mediumCatchRate + "; cLcr=" + largeCatchRate);
     }
 
     /**

@@ -51,7 +51,6 @@ public class DamLadder : TowerBase
             smallCrossingRate = initValues.initSets[initValues.setToUse].ladderSmallPassRate;
             mediumCrossingRate = initValues.initSets[initValues.setToUse].ladderMediumPassRate;
             largeCrossingRate = initValues.initSets[initValues.setToUse].ladderLargePassRate;
-            Debug.Log("DamLadder.cs primaryHitInfo S=" + smallCrossingRate + "; M=" + mediumCrossingRate + "; L=" + largeCrossingRate);
 
             initValues.ladderCode = 1;
             towerManager.AddTower(this);

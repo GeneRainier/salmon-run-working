@@ -327,6 +327,9 @@ public class UpgradeManager : MonoBehaviour
                 upgradeLadderTwoButton.interactable = true;
                 upgradeLadderOneButton.interactable = false;
                 originalLadderButton.interactable = true;
+
+                Dam dam = FindObjectOfType<Dam>();
+                dam.AddLadder(upgradeLadderOne.GetComponent<DamLadder>());
             }
             else if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderTwoButton.name && ManagerIndex.MI.GameManager.PlaceState)
             {
@@ -343,6 +346,9 @@ public class UpgradeManager : MonoBehaviour
                 upgradeLadderOneButton.interactable = true;
                 upgradeLadderTwoButton.interactable = false;
                 originalLadderButton.interactable = true;
+
+                Dam dam = FindObjectOfType<Dam>();
+                dam.AddLadder(upgradeLadderTwo.GetComponent<DamLadder>());
             }
             else if (EventSystem.current.currentSelectedGameObject.name == originalLadderButton.name && ManagerIndex.MI.GameManager.PlaceState)
             {
@@ -359,6 +365,9 @@ public class UpgradeManager : MonoBehaviour
                 upgradeLadderOneButton.interactable = true;
                 upgradeLadderTwoButton.interactable = true;
                 originalLadderButton.interactable = false;
+
+                Dam dam = FindObjectOfType<Dam>();
+                dam.AddLadder(originalLadder.GetComponent<DamLadder>());
             }
         }
     }

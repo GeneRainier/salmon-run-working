@@ -36,7 +36,6 @@ public class Dam : TowerBase
 
         // Set all crossing rates to default rate on initialization
         smallCrossingRate = mediumCrossingRate = largeCrossingRate = defaultCrossingRate;
-        Debug.Log("Dam Class: defaultCrossingRate=" + defaultCrossingRate);
     }
 
     /**
@@ -81,8 +80,6 @@ public class Dam : TowerBase
         smallCrossingRate = defaultCrossingRate + damLadder.smallCrossingRate;
         mediumCrossingRate = defaultCrossingRate + damLadder.mediumCrossingRate;
         largeCrossingRate = defaultCrossingRate + damLadder.largeCrossingRate;
-
-        Debug.Log("damLadder S=" + damLadder.smallCrossingRate + "; M=" + damLadder.mediumCrossingRate + "; L=" + damLadder.largeCrossingRate);
     }
 
     #endregion

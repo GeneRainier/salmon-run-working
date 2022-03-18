@@ -106,8 +106,6 @@ public partial class GameManager : MonoBehaviour
 
         // Enter the new state
         currentState.Enter(prevState);
-
-        Debug.Log($"Game State -> {currentState.GetType().Name}");
     }
 
     /**

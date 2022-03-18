@@ -93,7 +93,7 @@ public class SaveLoad : MonoBehaviour
 
         // Save the current generation of salmon
         List<FishGenome> allFish = GameManager.Instance.school.GetFish();
-        Debug.Log(allFish);
+
         // Find all the male and female fish
         List<FishGenome> females = FishGenomeUtilities.FindFemaleGenomes(allFish);
         List<FishGenome> males = FishGenomeUtilities.FindMaleGenomes(allFish);
