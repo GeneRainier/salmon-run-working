@@ -13,8 +13,7 @@ public class PostRunStatsPanelController : PanelController
 {
     [SerializeField] private GameManager gameManager;       //< The Game Manager
 
-    public ManagerIndex initValues;               //< The ManagerIndex with initialization values for a given tower
-    string filename;                              //< The filename of the current output file
+    public ManagerIndex initializationValues;               //< The ManagerIndex with initialization values for a given tower
 
     // Descriptor text for each field on the panel
     public string smallDescriptor;
@@ -67,13 +66,15 @@ public class PostRunStatsPanelController : PanelController
     private bool noOffspring;               //< Flag for case where there are no offspring left and we have to do something different when leaving the panel
     public bool firstTurn = true;          //< Flag for ensuring the first turn is represented correctly after first clicking the next run button
 
+    public bool firstPopUpFlag = false;
+
     /*
      * Awake is called after the initialization of gameobjects prior to the start of the game. This is used as an Initialization function
      */
     private void Awake()
     {
         // Get initialization values and set this towers basic values
-        initValues = FindObjectOfType<ManagerIndex>();
+        initializationValues = FindObjectOfType<ManagerIndex>();
 
         turnTimer = FindObjectOfType<LeftTopBarController>();
     }
@@ -141,39 +142,29 @@ public class PostRunStatsPanelController : PanelController
      */
     private void UpdatePanelData(List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
-        int previousTurn = GameManager.Instance.Turn - 1;
+        int previousTurn = 0;
+        if (firstPopUpFlag)
+        {
+            previousTurn = GameManager.Instance.Turn - 1;
+        }
 
         // Display the previous turn (because that's what
         titleText.text = $"Turn {previousTurn} Summary";
 
+
+
+        offspringSmallText.SetText(smallDescriptor, FindSmallGenomes(offspringGenomes).Count);
+        offspringMediumText.SetText(mediumDescriptor, FindMediumGenomes(offspringGenomes).Count);
+        offspringLargeText.SetText(largeDescriptor, FindLargeGenomes(offspringGenomes).Count);
+        offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
+        offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
+        offspringTotalText.SetText(totalDescriptor, FindMaleGenomes(offspringGenomes).Count + FindFemaleGenomes(offspringGenomes).Count);
+
+
+
         // If a full turn has been done, do the typical update
-        if (previousTurn > 0)
+        if (firstPopUpFlag)
         {
-            // Parent genome can be null if this is the initial generation and there are no parents
-            // Have to treat these two cases differently
-            if (parentGenomes != null)
-            {
-                parentSmallText.SetText(smallDescriptor, FishGenomeUtilities.smallParent);
-                parentMediumText.SetText(mediumDescriptor, FishGenomeUtilities.mediumParent);
-                parentLargeText.SetText(largeDescriptor, FishGenomeUtilities.largeParent);
-                parentFemaleText.SetText();
-                parentMaleText.SetText();
-                parentFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.femaleParent);
-                parentMaleText.SetText(maleDescriptor, FishGenomeUtilities.maleParent);
-                parentTotalText.SetText(totalDescriptor, FishGenomeUtilities.smallestSex * 2);
-            }
-            else
-            {
-                Debug.LogError("Error -- no parent genomes! should not happen!");
-            }
-
-            offspringSmallText.SetText(smallDescriptor, FindSmallGenomes(offspringGenomes).Count);
-            offspringMediumText.SetText(mediumDescriptor, FindMediumGenomes(offspringGenomes).Count);
-            offspringLargeText.SetText(largeDescriptor, FindLargeGenomes(offspringGenomes).Count);
-            offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
-            offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
-            offspringTotalText.SetText(totalDescriptor, FindMaleGenomes(offspringGenomes).Count + FindFemaleGenomes(offspringGenomes).Count);
-
             survivedText.SetText(totalDescriptor, FishSchool.survivedFish);
             survivedFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.survivingFemale);
             survivedMaleText.SetText(maleDescriptor, FishGenomeUtilities.survivingMale);
@@ -181,48 +172,39 @@ public class PostRunStatsPanelController : PanelController
             survivedMediumText.SetText(mediumDescriptor, FishGenomeUtilities.survivingMedium);
             survivedLargeText.SetText(largeDescriptor, FishGenomeUtilities.survivingLarge);
 
-
+            parentSmallText.SetText(smallDescriptor, FishGenomeUtilities.smallParent);
+            parentMediumText.SetText(mediumDescriptor, FishGenomeUtilities.mediumParent);
+            parentLargeText.SetText(largeDescriptor, FishGenomeUtilities.largeParent);
+            parentFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.femaleParent);
+            parentMaleText.SetText(maleDescriptor, FishGenomeUtilities.maleParent);
+            parentTotalText.SetText(totalDescriptor, FishGenomeUtilities.smallestSex * 2);
             // Comment out the line below before webGL build
             // Update data file based on population data
-            if (ManagerIndex.MI.makeOutputFile == true)
-            {
-                AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
-            }
+            AppendOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
         // Otherwise, do the first-turn specific update
-        else if (previousTurn == 0)
+        else if (!firstPopUpFlag)
         {
-            parentSmallText.SetText();
-            parentMediumText.SetText();
-            parentLargeText.SetText();
-            parentFemaleText.SetText();
-            parentMaleText.SetText();
-            parentTotalText.SetText();
 
+            parentSmallText.SetText(smallDescriptor, -1);
+            parentMediumText.SetText(mediumDescriptor, -1);
+            parentLargeText.SetText(largeDescriptor, -1);
+            parentFemaleText.SetText(femaleDescriptor, -1);
+            parentMaleText.SetText(maleDescriptor, -1);
+            parentTotalText.SetText(totalDescriptor, -1);
 
-            survivedText.SetText(totalDescriptor, FishSchool.survivedFish);
-            survivedFemaleText.SetText(femaleDescriptor, FishGenomeUtilities.survivingFemale);
-            survivedMaleText.SetText(maleDescriptor, FishGenomeUtilities.survivingMale);
-            survivedSmallText.SetText(smallDescriptor, FishGenomeUtilities.survivingSmall);
-            survivedMediumText.SetText(mediumDescriptor, FishGenomeUtilities.survivingMedium);
-            survivedLargeText.SetText(largeDescriptor, FishGenomeUtilities.survivingLarge);
-
-            offspringSmallText.SetText(smallDescriptor, FindSmallGenomes(offspringGenomes).Count);
-            offspringMediumText.SetText(mediumDescriptor, FindMediumGenomes(offspringGenomes).Count);
-            offspringLargeText.SetText(largeDescriptor, FindLargeGenomes(offspringGenomes).Count);
-            offspringFemaleText.SetText(femaleDescriptor, FindFemaleGenomes(offspringGenomes).Count);
-            offspringMaleText.SetText(maleDescriptor, FindMaleGenomes(offspringGenomes).Count);
-            offspringTotalText.SetText(totalDescriptor, FindMaleGenomes(offspringGenomes).Count + FindFemaleGenomes(offspringGenomes).Count);
-
-
-
+            survivedText.SetText(totalDescriptor, -1);
+            survivedFemaleText.SetText(femaleDescriptor, -1);
+            survivedMaleText.SetText(maleDescriptor, -1);
+            survivedSmallText.SetText(smallDescriptor, -1);
+            survivedMediumText.SetText(mediumDescriptor, -1);
+            survivedLargeText.SetText(largeDescriptor, -1);
             // Comment out the line below before webGL build  
             // Creates data file based on game parameters 
-            if (ManagerIndex.MI.makeOutputFile == true)
-            {
-                CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
-            }
+            CreateOutputFile(previousTurn, parentGenomes, offspringGenomes);
         }
+
+        firstPopUpFlag = true;
     }
 
     /**
@@ -243,28 +225,27 @@ public class PostRunStatsPanelController : PanelController
     private void CreateOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
         // Create a txt file for post run information
-        string infoText = "Angler Radius, " + initValues.initSets[initValues.setToUse].anglerRadius + "\nAngler Small Catch Rate, " + initValues.initSets[initValues.setToUse].anglerSmallCatchRate +
-            "\nAngler Medium Catch Rate, " + initValues.initSets[initValues.setToUse].anglerMediumCatchRate + "\nAngler Large Catch Rate, " + initValues.initSets[initValues.setToUse].anglerLargeCatchRate +
-            "\nRanger Radius, " + initValues.initSets[initValues.setToUse].rangerRadius + "\nRanger Small Catch Modifier, " + initValues.initSets[initValues.setToUse].rangerSmallModifier +
-            "\nRanger Medium Catch Modifier, " + initValues.initSets[initValues.setToUse].rangerMediumModifier + "\nRanger Large Catch Modifier, " + initValues.initSets[initValues.setToUse].rangerLargeModifier +
-            "\nDefault Dam Pass Rate, " + initValues.initSets[initValues.setToUse].defaultDamPassRate + "\nLadder Small Pass Rate, " + initValues.initSets[initValues.setToUse].ladderSmallPassRate +
-            "\nLadder Medium Pass Rate, " + initValues.initSets[initValues.setToUse].ladderMediumPassRate + "\nLadder Large Pass Rate, " + initValues.initSets[initValues.setToUse].ladderLargePassRate +
-            "\nRamp Small Pass Rate, " + initValues.initSets[initValues.setToUse].rampSmallPassRate + "\nRamp Medium Pass Rate, " + initValues.initSets[initValues.setToUse].rampMediumPassRate +
-            "\nRamp Large Pass Rate, " + initValues.initSets[initValues.setToUse].rampLargePassRate + "\nLift Small Pass Rate, " + initValues.initSets[initValues.setToUse].liftSmallPassRate +
-            "\nLift Medium Pass Rate, " + initValues.initSets[initValues.setToUse].liftMediumPassRate + "\nLift Large Pass Rate, " + initValues.initSets[initValues.setToUse].liftLargePassRate +
-            "\nStarting Money, " + initValues.initSets[initValues.setToUse].startingMoney + "\nSealion Appearance Time, " + initValues.initSets[initValues.setToUse].sealionAppearanceTime +
-            "\nSealion Male Catch Rate, " + initValues.initSets[initValues.setToUse].sealionMaleCatchRate + "\nSealion Female Catch Rate, " + initValues.initSets[initValues.setToUse].sealionFemaleCatchRate +
-            "\nNesting Sites, " + initValues.initSets[initValues.setToUse].nestingSites + "\n" +
-            "\n" + "turn = Turn number\noffSh / offMd / offLg = Short / Medium / Large offspring\noffMa / offFe = Male / Female Offspring\n" +
-            "parSh / parMd / parLg = Short / Medium / Large Parents\nsurMa / surFe = Male / Female Survivors\nsurSh / surMd / surLg = Short / Medium / Large Survivors\n" +
-            "angB_ / angU_ = Angler Count Down / Upstream\nangBR / ang UR = Angler count Down / Upstream affected by Rangers\nrang = Number of Rangers\n" +
-            "dam = Dam Present\nladder = Ladder Present on Dam\nslPres = Sealion Present\n" +
-            "\n" +
-            "turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres\n" +
-            previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
-            ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n";
-        filename = DateTime.Now.ToString("yyyy_M_dd_HHMM") + ".txt";
-        System.IO.File.WriteAllText(Application.dataPath + "/" + filename, infoText);
+        //string infoText = "Angler Radius, " + initializationValues.anglerRadius + "\nAngler Small Catch Rate, " + initializationValues.anglerSmallCatchRate +
+        //    "\nAngler Medium Catch Rate, " + initializationValues.anglerMediumCatchRate + "\nAngler Large Catch Rate, " + initializationValues.anglerLargeCatchRate +
+        //    "\nRanger Radius, " + initializationValues.rangerRadius + "\nRanger Small Catch Modifier, " + initializationValues.rangerSmallModifier +
+        //    "\nRanger Medium Catch Modifier, " + initializationValues.rangerMediumModifier + "\nRanger Large Catch Modifier, " + initializationValues.rangerLargeModifier +
+        //    "\nDefault Dam Pass Rate, " + initializationValues.defaultDamPassRate + "\nLadder Small Pass Rate, " + initializationValues.ladderSmallPassRate +
+        //    "\nLadder Medium Pass Rate, " + initializationValues.ladderMediumPassRate + "\nLadder Large Pass Rate, " + initializationValues.ladderLargePassRate +
+        //    "\nRamp Small Pass Rate, " + initializationValues.rampSmallPassRate + "\nRamp Medium Pass Rate, " + initializationValues.rampMediumPassRate +
+        //    "\nRamp Large Pass Rate, " + initializationValues.rampLargePassRate + "\nLift Small Pass Rate, " + initializationValues.liftSmallPassRate +
+        //    "\nLift Medium Pass Rate, " + initializationValues.liftMediumPassRate + "\nLift Large Pass Rate, " + initializationValues.liftLargePassRate +
+        //    "\nStarting Money, " + initializationValues.startingMoney + "\nSealion Appearance Time, " + initializationValues.sealionAppearanceTime + 
+        //    "\nSealion Male Catch Rate, " + initializationValues.sealionMaleCatchRate + "\nSealion Female Catch Rate, " + initializationValues.sealionFemaleCatchRate +
+        //    "\nNesting Sites, " + initializationValues.nestingSites + "\n" +
+        //    "\n" + "turn = Turn number\noffSh / offMd / offLg = Short / Medium / Large offspring\noffMa / offFe = Male / Female Offspring\n" +
+        //    "parSh / parMd / parLg = Short / Medium / Large Parents\nsurMa / surFe = Male / Female Survivors\nsurSh / surMd / surLg = Short / Medium / Large Survivors\n" +
+        //    "angB_ / angU_ = Angler Count Down / Upstream\nangBR / ang UR = Angler count Down / Upstream affected by Rangers\nrang = Number of Rangers\n" +
+        //    "dam = Dam Present\nladder = Ladder Present on Dam\nslPres = Sealion Present\n" +
+        //    "\n" +
+        //    "turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres\n" +
+        //    previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
+        //    ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0\n";
+        //System.IO.File.WriteAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 
     /*
@@ -277,14 +258,14 @@ public class PostRunStatsPanelController : PanelController
     private void AppendOutputFile(int previousTurn, List<FishGenome> parentGenomes, List<FishGenome> offspringGenomes)
     {
         // Create a txt file for post run information
-        string infoText = previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
-            ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", " + FindSmallGenomes(parentGenomes).Count + ", " +
-            FindMediumGenomes(parentGenomes).Count + ", " + FindLargeGenomes(parentGenomes).Count + ", " + survivingMaleDescriptor + ", " +
-            survivingFemaleDescriptor + ", " + survivingSmallDescriptor + ", " + survivingMediumDescriptor + ", " + survivingLargeDescriptor + ", "
-            + initValues.lowerAnglerCount + ", " + initValues.upperAnglerCount + ", " + initValues.lowerManagedAnglerCount + ", " +
-            initValues.upperManagedAnglerCount + ", " + initValues.rangerCount + ", " + initValues.damPresent + ", " +
-            initValues.ladderCode + ", " + initValues.sealionPresent + "\n";
-        System.IO.File.AppendAllText(Application.dataPath + "/" + filename, infoText);
+        //string infoText = previousTurn + ", " + FindSmallGenomes(offspringGenomes).Count + ", " + FindMediumGenomes(offspringGenomes).Count + ", " + FindLargeGenomes(offspringGenomes).Count +
+        //    ", " + FindMaleGenomes(offspringGenomes).Count + ", " + FindFemaleGenomes(offspringGenomes).Count + ", " + FindSmallGenomes(parentGenomes).Count + ", " + 
+        //    FindMediumGenomes(parentGenomes).Count + ", " + FindLargeGenomes(parentGenomes).Count + ", " + survivingMaleDescriptor + ", " +
+        //    survivingFemaleDescriptor + ", " + survivingSmallDescriptor + ", " + survivingMediumDescriptor + ", " + survivingLargeDescriptor + ", "
+        //    + initializationValues.lowerAnglerCount + ", " + initializationValues.upperAnglerCount + ", " + initializationValues.lowerManagedAnglerCount + ", " + 
+        //    initializationValues.upperManagedAnglerCount + ", " + initializationValues.rangerCount + ", " + initializationValues.damPresent + ", " + 
+        //    initializationValues.ladderCode + ", " + initializationValues.sealionPresent + "\n";
+        //System.IO.File.AppendAllText(string.Format(Application.dataPath + "/salmonrun.txt", DateTime.Now.ToString("YYYY_MDD_HHMM")), infoText);
     }
 }
 
@@ -309,6 +290,13 @@ public class UIElement
     {
         if (label != "N/A") label += divider;
         this.label.text = label;
-        this.value.text = value == -1 ? "" : value.ToString();
+        if (value == -1)
+        {
+            this.value.text = "N/A";
+        }
+        else
+        {
+            this.value.text = value == -1 ? "" : value.ToString();
+        }
     }
 }
