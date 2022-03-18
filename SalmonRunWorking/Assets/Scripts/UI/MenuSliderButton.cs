@@ -16,8 +16,6 @@ public class MenuSliderButton : MonoBehaviour
      */
     public void OnButtonPress()
     {
-        Debug.Log("buttonPressed");
-
         if(LadderSlider != null)
         {
             Animator animator = LadderSlider.GetComponent<Animator>();
@@ -28,6 +26,5 @@ public class MenuSliderButton : MonoBehaviour
                 animator.SetBool("SlideOut", !isOpen);
             }
         }
-
     }
 }

@@ -57,7 +57,7 @@ public class UpgradeManager : MonoBehaviour
     public UpgradeUI upgradeUI;         //< Reference to the UpgradeUI script
 
     // Upgrade prefabs
-    private GameObject originalLadder;
+    public GameObject originalLadder;
     public GameObject upgradeLadderOne;
     public GameObject upgradeLadderTwo;
 
@@ -118,9 +118,9 @@ public class UpgradeManager : MonoBehaviour
         upgradeLadderOne.SetActive(false);
         upgradeLadderTwo.SetActive(false);
 
-        originalLadderButton.interactable = false;
-        upgradeLadderOneButton.interactable = false;
-        upgradeLadderTwoButton.interactable = false;
+        //originalLadderButton.interactable = false;
+        //upgradeLadderOneButton.interactable = false;
+        //upgradeLadderTwoButton.interactable = false;
 
         ladderUp1Button.interactable = false;
         ladderUp2Button.interactable = false;
@@ -310,66 +310,56 @@ public class UpgradeManager : MonoBehaviour
      */
     public void SwapLadderButtons()
     {
-        if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderOneButton.name && ManagerIndex.MI.GameManager.PlaceState)
+        if (originalLadder != null)
         {
-            originalLadder.SetActive(false);
-            upgradeLadderTwo.SetActive(false);
-            upgradeLadderOne.SetActive(true);
-
-            salmonRamp.enabled = true;
-            salmonElevator.enabled = false;
-            salmonLadder.enabled = false;
-
-            initializationValues.ladderCode = 10;
-
-            if (!firstPurchase2)
+            if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderOneButton.name && ManagerIndex.MI.GameManager.PlaceState)
             {
+                originalLadder.SetActive(false);
+                upgradeLadderTwo.SetActive(false);
+                upgradeLadderOne.SetActive(true);
+
+                //salmonRamp.enabled = true;
+                //salmonElevator.enabled = false;
+                //salmonLadder.enabled = false;
+
+                initializationValues.ladderCode = 10;
+
                 upgradeLadderTwoButton.interactable = true;
+                upgradeLadderOneButton.interactable = false;
+                originalLadderButton.interactable = true;
             }
-            upgradeLadderOneButton.interactable = false;
-            originalLadderButton.interactable = true;
-        }
-        else if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderTwoButton.name && ManagerIndex.MI.GameManager.PlaceState)
-        {
-            originalLadder.SetActive(false);
-            upgradeLadderTwo.SetActive(true);
-            upgradeLadderOne.SetActive(false);
-
-            salmonRamp.enabled = false;
-            salmonElevator.enabled = true;
-            salmonLadder.enabled = false;
-
-            initializationValues.ladderCode = 100;
-
-            if (!firstPurchase1)
+            else if (EventSystem.current.currentSelectedGameObject.name == upgradeLadderTwoButton.name && ManagerIndex.MI.GameManager.PlaceState)
             {
+                originalLadder.SetActive(false);
+                upgradeLadderTwo.SetActive(true);
+                upgradeLadderOne.SetActive(false);
+
+                //salmonRamp.enabled = false;
+                //salmonElevator.enabled = true;
+                //salmonLadder.enabled = false;
+
+                initializationValues.ladderCode = 100;
+
                 upgradeLadderOneButton.interactable = true;
+                upgradeLadderTwoButton.interactable = false;
+                originalLadderButton.interactable = true;
             }
-            upgradeLadderTwoButton.interactable = false;
-            originalLadderButton.interactable = true;
-        }
-        else if (EventSystem.current.currentSelectedGameObject.name == originalLadderButton.name && ManagerIndex.MI.GameManager.PlaceState)
-        {
-            originalLadder.SetActive(true);
-            upgradeLadderTwo.SetActive(false);
-            upgradeLadderOne.SetActive(false);
-
-            salmonRamp.enabled = false;
-            salmonElevator.enabled = false;
-            salmonLadder.enabled = true;
-
-            initializationValues.ladderCode = 1;
-
-            if (!firstPurchase1)
+            else if (EventSystem.current.currentSelectedGameObject.name == originalLadderButton.name && ManagerIndex.MI.GameManager.PlaceState)
             {
+                originalLadder.SetActive(true);
+                upgradeLadderTwo.SetActive(false);
+                upgradeLadderOne.SetActive(false);
+
+                //salmonRamp.enabled = false;
+                //salmonElevator.enabled = false;
+                //salmonLadder.enabled = true;
+
+                initializationValues.ladderCode = 1;
+
                 upgradeLadderOneButton.interactable = true;
-            }
-            
-            if (!firstPurchase2)
-            {
                 upgradeLadderTwoButton.interactable = true;
+                originalLadderButton.interactable = false;
             }
-            originalLadderButton.interactable = false;
         }
     }
 
