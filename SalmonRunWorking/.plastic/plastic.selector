@@ -1,0 +1,3 @@
+rep "Salmon Run@Eli_Mcardle@cloud"
+  path "/"
+    smartbranch "/main"

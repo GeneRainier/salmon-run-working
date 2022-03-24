@@ -13,6 +13,7 @@ public class FishSchool : MonoBehaviour, IPausable {
 
     [Header("References")]
     public FishPrefabConfig fishPrefabConfig;   //< Fish prefab config gameobject
+    public CameraController camControl;
 
     [Header("School Info")]
     public int initialNumFish;      //< How big this school is
@@ -369,7 +370,13 @@ public class FishSchool : MonoBehaviour, IPausable {
                     Vector3 spawnPos = new Vector3(Random.Range(topLeft.x, topRight.x), spawnY, Random.Range(bottomLeft.z, topLeft.z));
 
                     // Create the fish at the given position and tell it what school it belongs to
-                    fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>()); 
+                    fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>());
+
+                    if (spawnedThisWave == 0)
+                    {
+                        camControl.firstFish = fishList[0].gameObject;
+                    }
+
                     //fishList[fishList.Count - 1].SetSchool(this); 
                     fishList[fishList.Count - 1].SetGenome(genomes[fishList.Count - 1]);
  

@@ -348,6 +348,11 @@ PrefabInstance:
       propertyPath: timeBetweenWaves
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
+        type: 3}
+      propertyPath: camControl
+      value: 
+      objectReference: {fileID: 33924303}
     - target: {fileID: 2321721658432575646, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -905,6 +910,18 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 656885618}
+--- !u!114 &33924303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+    type: 3}
+  m_PrefabInstance: {fileID: 313631170}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33924301}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 042ae88db3cb4124d8e07e4103a7c815, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!20 &33924306 stripped
 Camera:
   m_CorrespondingSourceObject: {fileID: 20311128057921880, guid: 9bbd2b4f09bd08f448f24579485278e8,
@@ -9986,6 +10003,36 @@ PrefabInstance:
       propertyPath: fishMainTransition
       value: 
       objectReference: {fileID: 1823001768}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: xLimitMax
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: xLimitMin
+      value: -300
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: yLimitMax
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: yLimitMin
+      value: -200
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: zLimitMax
+      value: 120
+      objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: zLimitMin
+      value: -200
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}

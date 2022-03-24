@@ -24,6 +24,10 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float panSpeed = 0.0f;        //< How fast the camera pans
 
     [SerializeField] private float panBorderThickness = 1.0f;  //< Size of borders around edge of screen which will start panning when the mouse enters the area
+    [SerializeField] private float xLimitMax;
+    [SerializeField] private float xLimitMin;
+    [SerializeField] private float zLimitMax;
+    [SerializeField] private float zLimitMin;
 
     [Header("Camera Bounds")]
     public float height;                               //< The difference between the max and min y values of bounds for calculating rotational interpolation
@@ -38,12 +42,14 @@ public class CameraController : MonoBehaviour {
     private bool moving;              //< Is the camera moving?
     private float timeFactor;         //< What time scale is the game in?
 
+    [Header("Rotations")]
     [SerializeField] private Vector3 initialPosition;       //< The location the camera is at when the level begins
     [SerializeField] private Vector3 initialRotation;       //< The rotation the camera is at when the level begins
     [SerializeField] private float initialXRotation;       //< The x rotation when the camera is fully zoomed out
     [SerializeField] private float zoomedXRotation;        //< The x rotation the camera has when it is fully zoomed in
     private float interpolation = 1.0f;                     //< The percentage value we are at in the xAxis rotation Lerp
 
+    [Header("Cameras")]
     [SerializeField] private Camera cameraMain;
     [SerializeField] private Camera cameraTower;
     [SerializeField] private Camera cameraFish;
@@ -51,8 +57,12 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private CinemachineVirtualCamera virtualCameraTower;
     [SerializeField] private CinemachineVirtualCamera virtualCameraFish;
 
+    [Header("Focused Objects")]
     private GameObject selectedTower;
+    public GameObject firstFish;
+    public GameObject lastFish;
 
+    [Header("Transitions")]
     [SerializeField] private PlayableDirector mainTowerTransition;
     [SerializeField] private PlayableDirector towerMainTransition;
     [SerializeField] private PlayableDirector mainFishTransition;
@@ -148,12 +158,12 @@ public class CameraController : MonoBehaviour {
         {
             CamTowerUpdate();
         }
-        /*
+        
         else if (camState == CamState.camFish)
         {
             CamFishUpdate();
         }
-        */
+        
     }
 
     public void CamMainUpdate()
@@ -199,6 +209,23 @@ public class CameraController : MonoBehaviour {
             {
                 cameraMain.transform.Translate(Vector3.right * panDistance * Input.GetAxisRaw("Horizontal"), Space.World);
             }
+        }
+
+        if(cameraMain.transform.position.x > xLimitMax)
+        {
+            cameraMain.transform.position = new Vector3(xLimitMax, cameraMain.transform.position.y, cameraMain.transform.position.z);
+        }
+        if (cameraMain.transform.position.x < xLimitMin)
+        {
+            cameraMain.transform.position = new Vector3(xLimitMin, cameraMain.transform.position.y, cameraMain.transform.position.z);
+        }
+        if (cameraMain.transform.position.z > zLimitMax)
+        {
+            cameraMain.transform.position = new Vector3(cameraMain.transform.position.x, cameraMain.transform.position.y, zLimitMax);
+        }
+        if (cameraMain.transform.position.z < zLimitMin)
+        {
+            cameraMain.transform.position = new Vector3(cameraMain.transform.position.x, cameraMain.transform.position.y, zLimitMin);
         }
     }
 
