@@ -200,6 +200,7 @@ public class RangerTower : TowerBase
             endPos.y = startPos.y + 7.5f;      //< The "+ 10.0f" is a dirty fix to prevent the lines from running into the terrain when the Ranger is on a low elevation
             startPos.y = startPos.y + 7.5f;
             towerEffectLineRenderers[i].SetPositions(new Vector3[] { startPos, endPos });
+            startPos.y = startPos.y - 7.5f;
         }
     }
 }
