@@ -18874,7 +18874,7 @@ MonoBehaviour:
     value: {fileID: 1669749277}
   parentFemaleText:
     label: {fileID: 1554156387}
-    value: {fileID: 1231218661}
+    value: {fileID: 996404254}
   parentTotalText:
     label: {fileID: 942477277}
     value: {fileID: 277902780}
@@ -34745,7 +34745,7 @@ GameObject:
   - component: {fileID: 996404254}
   - component: {fileID: 996404253}
   m_Layer: 5
-  m_Name: FemaleValue
+  m_Name: PFemaleValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -81810,7 +81810,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 794959649099759240}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
