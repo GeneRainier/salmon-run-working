@@ -18874,7 +18874,7 @@ MonoBehaviour:
     value: {fileID: 1669749277}
   parentFemaleText:
     label: {fileID: 1554156387}
-    value: {fileID: 996404254}
+    value: {fileID: 1231218661}
   parentTotalText:
     label: {fileID: 942477277}
     value: {fileID: 277902780}
@@ -34745,7 +34745,7 @@ GameObject:
   - component: {fileID: 996404254}
   - component: {fileID: 996404253}
   m_Layer: 5
-  m_Name: PFemaleValue
+  m_Name: FemaleValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
