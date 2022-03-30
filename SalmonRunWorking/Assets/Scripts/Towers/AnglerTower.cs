@@ -40,6 +40,9 @@ public class AnglerTower : TowerBase
 
     public bool anglerCounted = false;      // Boolean for checking whether regulated angler has been counted yet or not
 
+    public static Vector3 fishermanPointLeft = new Vector3(-140.0f, 12.0f, 16.0f);  // point that all fisherman toward the left side of the map are initially pointed towards
+    public static Vector3 fishermanPointRight = new Vector3(800.0f, 12.0f, -16.0f);  // point that all fisherman toward the right side of the map are initially pointed towards
+
     /**
      * Start is called on object initialization
      */
@@ -134,6 +137,23 @@ public class AnglerTower : TowerBase
      */
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
+        float tempX = 0.0f;
+        float tempZ = 0.0f;
+
+        if (fisherman.transform.position.x < 500.0f)
+        {
+            tempX = fishermanPointLeft.x - fisherman.transform.position.x;
+            tempZ = fishermanPointLeft.z - fisherman.transform.position.z;
+        }
+        else
+        {
+            tempX = fishermanPointRight.x - fisherman.transform.position.x;
+            tempZ = fishermanPointRight.z - fisherman.transform.position.z;
+        }
+
+        float angle = Mathf.Atan2(tempX, tempZ) * Mathf.Rad2Deg;
+        fisherman.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+
         transform.parent.position = primaryHitInfo.point;
         towerManager.AddTower(this);
         turnPlaced = GameManager.Instance.Turn;
