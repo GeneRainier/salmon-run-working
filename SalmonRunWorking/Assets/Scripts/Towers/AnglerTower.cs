@@ -84,6 +84,10 @@ public class AnglerTower : TowerBase
         {
             SetLinePos();
         }
+        else
+        {
+            fishing.SetBool(Fishing, false);
+        }
     }
 
     /**
