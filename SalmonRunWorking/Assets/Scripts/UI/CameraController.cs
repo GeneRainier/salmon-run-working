@@ -29,6 +29,10 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private float zLimitMax;
     [SerializeField] private float zLimitMin;
 
+    [SerializeField] private float maxZoom;
+
+    [SerializeField] private Vector3 startPosition;
+
     [Header("Camera Bounds")]
     public float height;                               //< The difference between the max and min y values of bounds for calculating rotational interpolation
 
@@ -95,12 +99,6 @@ public class CameraController : MonoBehaviour {
     {
         // We physically move the camera after the UI has been adjusted so that the tooltips do not flash when the camera moves
         UpdatePosition();
-
-        // Pressing the F key will reset the camera to it's original y position and Vector3 rotation
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            ResetCameraRotation();
-        }
     }
 
     private void Start()
@@ -211,7 +209,16 @@ public class CameraController : MonoBehaviour {
             }
         }
 
-        if(cameraMain.transform.position.x > xLimitMax)
+        if(Input.GetButton("Zoom"))
+        {
+            transform.Translate(Vector3.down * Input.GetAxisRaw("Zoom") * zoomSpeed, Space.World);
+        }
+
+        interpolation = (cameraMain.transform.position.y - maxZoom) / (initialPosition.y - maxZoom);
+        float xRotation = Mathf.Lerp(zoomedXRotation, initialXRotation, interpolation);
+        transform.rotation = Quaternion.Euler(xRotation, currentRotation.y, currentRotation.z);
+
+        if (cameraMain.transform.position.x > xLimitMax)
         {
             cameraMain.transform.position = new Vector3(xLimitMax, cameraMain.transform.position.y, cameraMain.transform.position.z);
         }
@@ -226,6 +233,19 @@ public class CameraController : MonoBehaviour {
         if (cameraMain.transform.position.z < zLimitMin)
         {
             cameraMain.transform.position = new Vector3(cameraMain.transform.position.x, cameraMain.transform.position.y, zLimitMin);
+        }
+        if (cameraMain.transform.position.y > initialPosition.y)
+        {
+            cameraMain.transform.position = new Vector3(cameraMain.transform.position.x, initialPosition.y, cameraMain.transform.position.z);
+        }
+        if (cameraMain.transform.position.y < maxZoom)
+        {
+            cameraMain.transform.position = new Vector3(cameraMain.transform.position.x, maxZoom, cameraMain.transform.position.z);
+        }
+
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            ResetCamera();
         }
     }
 
@@ -243,10 +263,10 @@ public class CameraController : MonoBehaviour {
      * Set the camera position and rotation back to their initial values during a round.
      * This will set the position back to its maximum y and its rotation back to its initial values
      */
-    public void ResetCameraRotation()
+    public void ResetCamera()
     {
-        this.gameObject.transform.position = new Vector3(transform.position.x, initialPosition.y, transform.position.z);
-        this.gameObject.transform.rotation = Quaternion.Euler(initialRotation);
+        cameraMain.transform.position = startPosition;
+        cameraMain.transform.rotation = Quaternion.Euler(90, 0, 0);
     }
 
     public IEnumerator MainToTowerRoutine()
