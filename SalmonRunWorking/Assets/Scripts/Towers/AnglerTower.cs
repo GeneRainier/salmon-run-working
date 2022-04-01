@@ -139,20 +139,19 @@ public class AnglerTower : TowerBase
     {
         float tempX = 0.0f;
         float tempZ = 0.0f;
-
-        if (fisherman.transform.position.x < 500.0f)
+        if (transform.parent.position.x < 500.0f)
         {
-            tempX = fishermanPointLeft.x - fisherman.transform.position.x;
-            tempZ = fishermanPointLeft.z - fisherman.transform.position.z;
+            tempX = fishermanPointLeft.x - transform.parent.position.x;
+            tempZ = fishermanPointLeft.z - transform.parent.position.z;
         }
         else
         {
-            tempX = fishermanPointRight.x - fisherman.transform.position.x;
-            tempZ = fishermanPointRight.z - fisherman.transform.position.z;
+            tempX = fishermanPointRight.x - transform.parent.position.x;
+            tempZ = fishermanPointRight.z - transform.parent.position.z;
         }
 
         float angle = Mathf.Atan2(tempX, tempZ) * Mathf.Rad2Deg;
-        fisherman.transform.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        transform.parent.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
 
         transform.parent.position = primaryHitInfo.point;
         towerManager.AddTower(this);
