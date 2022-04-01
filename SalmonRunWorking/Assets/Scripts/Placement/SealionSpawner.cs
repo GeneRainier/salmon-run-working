@@ -12,6 +12,7 @@ public class SealionSpawner : MonoBehaviour
     [SerializeField] private Transform[] spawnLocations = null;        //< List of locations for the sealion to spawn at
     [SerializeField] private GameObject sealionPrefab = null;          //< The prefab for the sealion tower
     [SerializeField] private GameObject sealionClone = null;           //< GameObject sealion to instantiate
+    [SerializeField] private bool debugSpawner = false;
 
     [SerializeField] private bool locationInUse;                //< Trait of each location sealions can spawn for whether it has spawned sealions or not
     
@@ -53,11 +54,14 @@ public class SealionSpawner : MonoBehaviour
      */
     public void Update()
     {
-        // Pressing m spawns a sealion for testing purposes
-        if (Input.GetKeyDown("m"))
+        // Pressing n spawns a sealion for testing purposes
+        if(debugSpawner)
         {
-            sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(0, 0, 0));
-            locationInUse = true;
+            if (Input.GetKeyDown("n"))
+            {
+                sealionClone = Instantiate(sealionPrefab, spawnLocations[0].transform.position, Quaternion.Euler(0, 0, 0));
+                locationInUse = true;
+            }
         }
     }
 
