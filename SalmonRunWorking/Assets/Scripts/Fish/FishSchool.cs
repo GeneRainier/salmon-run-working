@@ -372,11 +372,6 @@ public class FishSchool : MonoBehaviour, IPausable {
                     // Create the fish at the given position and tell it what school it belongs to
                     fishList.Add(Instantiate(fishPrefabConfig.GetFishPrefab(genomes[fishList.Count]), spawnPos, Quaternion.identity).GetComponentInChildren<Fish>());
 
-                    if (spawnedThisWave == 0)
-                    {
-                        camControl.firstFish = fishList[0].gameObject;
-                    }
-
                     //fishList[fishList.Count - 1].SetSchool(this); 
                     fishList[fishList.Count - 1].SetGenome(genomes[fishList.Count - 1]);
  

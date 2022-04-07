@@ -422,7 +422,7 @@ GameObject:
   - component: {fileID: 8748070752899717970}
   m_Layer: 8
   m_Name: 2SS_FMedNode
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

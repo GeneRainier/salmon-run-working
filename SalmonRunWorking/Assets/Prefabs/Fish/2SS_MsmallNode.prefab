@@ -5393,7 +5393,7 @@ GameObject:
   - component: {fileID: 8000629761612973588}
   m_Layer: 8
   m_Name: 2SS_MsmallNode
-  m_TagString: Untagged
+  m_TagString: Fish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

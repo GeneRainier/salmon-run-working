@@ -63,6 +63,7 @@ public class CameraController : MonoBehaviour {
 
     [Header("Focused Objects")]
     private GameObject selectedTower;
+    [SerializeField] private GameObject selectedFish;
     public GameObject firstFish;
     public GameObject lastFish;
 
@@ -123,6 +124,12 @@ public class CameraController : MonoBehaviour {
                     selectedTower = hit.collider.gameObject;
                     camState = CamState.camTower;
                     StartCoroutine("MainToTowerRoutine");
+                }
+                if (hit.collider.gameObject.tag == "Fish")
+                {
+                    selectedFish = hit.collider.gameObject;
+                    camState = CamState.camFish;
+                    StartCoroutine("MainToFishRoutine");
                 }
             }
         }
