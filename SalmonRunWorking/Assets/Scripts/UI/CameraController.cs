@@ -89,7 +89,6 @@ public class CameraController : MonoBehaviour {
         initialPosition = this.gameObject.transform.position;
         initialRotation = this.gameObject.transform.rotation.eulerAngles;
         initialXRotation = this.gameObject.transform.rotation.eulerAngles.x;
-        zoomedXRotation = 30.0f;
     }
 
     /*
