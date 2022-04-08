@@ -39,6 +39,8 @@ public class PostRunStatsPanelController : PanelController
     public TextMeshProUGUI titleText;           //< Panel's title, which displays the turn number
     private LeftTopBarController turnTimer;     //< Reference to the turn and timer controlling script for resetting the timer
 
+    public PastRunsController pastRuns;
+
     // Text for parent data
     public UIElement parentSmallText;
     public UIElement parentMediumText;
@@ -77,6 +79,8 @@ public class PostRunStatsPanelController : PanelController
         initializationValues = FindObjectOfType<ManagerIndex>();
 
         turnTimer = FindObjectOfType<LeftTopBarController>();
+
+        pastRuns = FindObjectOfType<PastRunsController>();
     }
 
     /**
@@ -119,6 +123,33 @@ public class PostRunStatsPanelController : PanelController
     }
 
     /**
+    * Handle pressing of Next Run button
+    */
+    public void OnPastRunsButton()
+    {
+        // Deactivate the panel
+        //Deactivate();
+
+        // Reset timer for next round
+        //turnTimer.ResetTimer();
+
+        // If there is fish in the next generation, just move on to place state
+        //if (!noOffspring) GameManager.Instance.SetState(new PlaceState());
+
+        // Otherwise, go to end panel
+        //else GameManager.Instance.SetState(new EndState(EndGame.Reason.NoOffspring));
+
+        // Check if we are on the first round or not
+        // If we are, make sure the turn counter reflects that
+        //if (firstTurn == true)
+        //{
+        //    GameManager.Instance.Turn = 1;
+        //    firstTurn = false;
+        //}
+        pastRuns.ShowPanel();
+    }
+
+    /**
      * Handle event of a new generation
      * 
      * @param parentGenomes The list of genomes associated with the parent generation of salmon
@@ -144,7 +175,7 @@ public class PostRunStatsPanelController : PanelController
         int previousTurn = 0;
         if (firstPopUpFlag)
         {
-            previousTurn = GameManager.Instance.Turn - 1;
+            previousTurn = GameManager.Instance.Turn;
         }
 
         // Display the previous turn (because that's what
