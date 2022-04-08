@@ -128,8 +128,8 @@ public class CameraController : MonoBehaviour {
                 if (hit.collider.gameObject.tag == "Fish")
                 {
                     selectedFish = hit.collider.gameObject;
-                    camState = CamState.camFish;
-                    StartCoroutine("MainToFishRoutine");
+                    //camState = CamState.camFish;
+                    //StartCoroutine("MainToFishRoutine");
                 }
             }
         }

@@ -9,6 +9,7 @@ TagManager:
   - CameraTower
   - CameraFish
   - Tower
+  - Fish
   layers:
   - Default
   - TransparentFX
