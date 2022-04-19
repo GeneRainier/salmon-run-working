@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /**
  * Script that controls the overall game flow.
@@ -33,6 +34,13 @@ public partial class GameManager : MonoBehaviour
     [SerializeField] private TowerManager towerManager;      //< The Tower Manager script with lists of all the towers and filters in the scene
 
     public PauseMenu pauseMenu;            //< The pause menu in the level
+
+    [SerializeField] private Image playButton;      //< The button image we want to switch sprites on
+    [SerializeField] private Image fasterButton;    //< The button for moving faster than normal speed
+    [SerializeField] private Image fastestButton;    //< The button for moving the fastest speed possible
+    [SerializeField] private Sprite play;     //< The sprite for the play button
+    [SerializeField] private Sprite pause;    //< The sprite for the pause button
+    private bool gamePaused = false;                 //< Whether or not the game is paused
 
     #region Major MonoBehavior Functions
 
@@ -176,11 +184,29 @@ public partial class GameManager : MonoBehaviour
         {
             case nameof(PlaceState):
                 SetState(new RunState());
+                playButton.sprite = pause;
                 break;
             case nameof(RunState):
             default:
-                NormalSpeed();
-                break;
+                if (gamePaused == true)
+                {
+                    NormalSpeed();
+                    playButton.sprite = pause;
+                    gamePaused = false;
+                    fasterButton.color = fasterButton.gameObject.GetComponent<Button>().colors.normalColor;
+                    fastestButton.color = fastestButton.gameObject.GetComponent<Button>().colors.normalColor;
+                    break;
+                }
+                else
+                {
+                    // Pause the game
+                    Pause();
+                    playButton.sprite = play;
+                    gamePaused = true;
+                    fasterButton.color = fasterButton.gameObject.GetComponent<Button>().colors.normalColor;
+                    fastestButton.color = fastestButton.gameObject.GetComponent<Button>().colors.normalColor;
+                    break;
+                }
         }
 
     }
@@ -209,6 +235,10 @@ public partial class GameManager : MonoBehaviour
     public void NormalSpeed()
     {
         timeManager.NormalTime();
+        playButton.sprite = pause;
+        fasterButton.color = fasterButton.gameObject.GetComponent<Button>().colors.normalColor;
+        fastestButton.color = fastestButton.gameObject.GetComponent<Button>().colors.normalColor;
+        gamePaused = false;
     }
 
     /**
@@ -219,6 +249,10 @@ public partial class GameManager : MonoBehaviour
         // Only make diff speed available during the run
         if (!CompareState(typeof(RunState))) return;
         timeManager.FasterTime();
+        playButton.sprite = pause;
+        fasterButton.color = fasterButton.gameObject.GetComponent<Button>().colors.selectedColor;
+        fastestButton.color = fastestButton.gameObject.GetComponent<Button>().colors.normalColor;
+        gamePaused = false;
     }
 
     /**
@@ -229,6 +263,10 @@ public partial class GameManager : MonoBehaviour
         // Only make diff speed available during the run
         if (!CompareState(typeof(RunState))) return;
         timeManager.FastestTime();
+        playButton.sprite = pause;
+        fasterButton.color = fasterButton.gameObject.GetComponent<Button>().colors.normalColor;
+        fastestButton.color = fastestButton.gameObject.GetComponent<Button>().colors.selectedColor;
+        gamePaused = false;
     }
 
     /*
