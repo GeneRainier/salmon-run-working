@@ -10131,6 +10131,11 @@ PrefabInstance:
       propertyPath: initialXRotation
       value: 90
       objectReference: {fileID: 0}
+    - target: {fileID: 114091981109369916, guid: 9bbd2b4f09bd08f448f24579485278e8,
+        type: 3}
+      propertyPath: fishCamHeight
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 0}
     - {fileID: 0}

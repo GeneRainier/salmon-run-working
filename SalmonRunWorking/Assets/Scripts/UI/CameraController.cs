@@ -35,6 +35,7 @@ public class CameraController : MonoBehaviour {
 
     [Header("Camera Bounds")]
     public float height;                               //< The difference between the max and min y values of bounds for calculating rotational interpolation
+    [SerializeField] private float fishCamHeight = 1f;
 
     [Header("Speeds")]
     [SerializeField] private float zoomSpeed = 2.0f;   //< The speed at which you can zoom in or out
@@ -128,8 +129,8 @@ public class CameraController : MonoBehaviour {
                 if (hit.collider.gameObject.tag == "Fish")
                 {
                     selectedFish = hit.collider.gameObject;
-                    //camState = CamState.camFish;
-                    //StartCoroutine("MainToFishRoutine");
+                    camState = CamState.camFish;
+                    StartCoroutine("MainToFishRoutine");
                 }
             }
         }
@@ -138,6 +139,12 @@ public class CameraController : MonoBehaviour {
         {
             camState = CamState.camMain;
             StartCoroutine("TowerToMainRoutine");
+        }
+
+        else if (Input.GetKeyDown(KeyCode.P) && camState == CamState.camFish)
+        {
+            camState = CamState.camMain;
+            StartCoroutine("FishToMainRoutine");
         }
 
         /*
@@ -294,7 +301,9 @@ public class CameraController : MonoBehaviour {
 
     public IEnumerator MainToFishRoutine()
     {
-        virtualCameraFish.transform.position = new Vector3(-285, 147, 0);
+        virtualCameraFish.transform.SetParent(selectedFish.transform);
+        virtualCameraFish.transform.position = selectedFish.transform.position + (fishCamHeight * Vector3.up);
+        virtualCameraFish.transform.eulerAngles = selectedFish.transform.eulerAngles;
         //virtualCameraFish.transform.LookAt(selectedFish.transform.position + new Vector3(0, 10, 0));
         mainFishTransition.Play();
         yield return new WaitForSeconds(1);
