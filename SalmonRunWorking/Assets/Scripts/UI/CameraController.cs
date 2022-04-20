@@ -36,6 +36,7 @@ public class CameraController : MonoBehaviour {
     [Header("Camera Bounds")]
     public float height;                               //< The difference between the max and min y values of bounds for calculating rotational interpolation
     [SerializeField] private float fishCamHeight = 1f;
+    [SerializeField] private float fishCamDistance = 1f;
 
     [Header("Speeds")]
     [SerializeField] private float zoomSpeed = 2.0f;   //< The speed at which you can zoom in or out
@@ -73,6 +74,13 @@ public class CameraController : MonoBehaviour {
     [SerializeField] private PlayableDirector towerMainTransition;
     [SerializeField] private PlayableDirector mainFishTransition;
     [SerializeField] private PlayableDirector fishMainTransition;
+
+    private float firstClickTime;
+    private bool singleClick = false;
+    private bool successfulDoubleClick = false;
+
+    [Tooltip("Time between clicks to recognize a double click")]
+    [SerializeField] private float doubleClickTime;
 
     public enum CamState
     {
@@ -112,27 +120,43 @@ public class CameraController : MonoBehaviour {
      */
     private void UpdatePosition()
     {
+        Debug.Log(firstClickTime);
+        if (Input.GetKeyDown(KeyCode.Mouse0) && camState == CamState.camMain && Time.unscaledTime - firstClickTime <= doubleClickTime && singleClick)
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+            Physics.Raycast(ray, out hit);
+            successfulDoubleClick = true;
+            if (hit.collider.gameObject.tag == "Tower")
+            {
+                selectedTower = hit.collider.gameObject;
+                camState = CamState.camTower;
+                StartCoroutine("MainToTowerRoutine");
+            }
+            if (hit.collider.gameObject.tag == "Fish")
+            {
+                selectedFish = hit.collider.gameObject;
+                camState = CamState.camFish;
+                StartCoroutine("MainToFishRoutine");
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.Mouse0) && camState == CamState.camMain)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
-
-            if (hit.collider)
+            if(hit.collider.gameObject.tag == "Tower" || hit.collider.gameObject.tag == "Fish")
             {
-                if (hit.collider.gameObject.tag == "Tower")
-                {
-                    selectedTower = hit.collider.gameObject;
-                    camState = CamState.camTower;
-                    StartCoroutine("MainToTowerRoutine");
-                }
-                if (hit.collider.gameObject.tag == "Fish")
-                {
-                    selectedFish = hit.collider.gameObject;
-                    camState = CamState.camFish;
-                    StartCoroutine("MainToFishRoutine");
-                }
+                firstClickTime = Time.unscaledTime;
+                singleClick = true;
             }
+        }
+
+        if(successfulDoubleClick)
+        {
+            successfulDoubleClick = false;
+            singleClick = false;
         }
 
         else if (Input.GetKeyDown(KeyCode.P) && camState == CamState.camTower)
@@ -302,8 +326,10 @@ public class CameraController : MonoBehaviour {
     public IEnumerator MainToFishRoutine()
     {
         virtualCameraFish.transform.SetParent(selectedFish.transform);
+        Vector3 fishVector = selectedFish.transform.eulerAngles;
         virtualCameraFish.transform.position = selectedFish.transform.position + (fishCamHeight * Vector3.up);
-        virtualCameraFish.transform.eulerAngles = selectedFish.transform.eulerAngles;
+        virtualCameraFish.transform.eulerAngles = fishVector;
+        virtualCameraFish.transform.position -= fishCamDistance * selectedFish.transform.forward;
         //virtualCameraFish.transform.LookAt(selectedFish.transform.position + new Vector3(0, 10, 0));
         mainFishTransition.Play();
         yield return new WaitForSeconds(1);

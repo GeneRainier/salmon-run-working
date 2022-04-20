@@ -11,6 +11,7 @@ using UnityEngine;
 public class TowerRangeEffect : MonoBehaviour
 {
     public static TowerRangeEffect currentlySelectedRangeEffect { get; private set; }       //< Currently selected tower effect
+    public GameObject camControl; //Used to disable camera range indicator when zoomed in
 
     /**
      * Enum representing states the range effect can be in
@@ -40,9 +41,9 @@ public class TowerRangeEffect : MonoBehaviour
      */
     private void Start()
     {
+        camControl = GameObject.Find("MainCamera");
         // Get component reference
         tower = GetComponent<TowerBase>();
-
         UpdateRadius();
         UpdateEffect(EffectState.Off);
     }
@@ -127,5 +128,20 @@ public class TowerRangeEffect : MonoBehaviour
         rangeVisualizationObj.transform.parent = null;
         rangeVisualizationObj.transform.localScale = new Vector3(radius * 2, rangeVisualizationObj.transform.localScale.y, radius * 2);
         rangeVisualizationObj.transform.parent = transform;
+    }
+
+    /**
+    * Disable the range indicator of towers when zoomed in
+    */
+    private void Update()
+    {
+        if(camControl.GetComponent<CameraController>().camState != CameraController.CamState.camMain || camControl.transform.eulerAngles != new Vector3(90, 0, 0))
+        {
+            if(currentlySelectedRangeEffect != null)
+            {
+                currentlySelectedRangeEffect.UpdateEffect(EffectState.Off);
+                currentlySelectedRangeEffect = null;
+            }
+        }
     }
 }
