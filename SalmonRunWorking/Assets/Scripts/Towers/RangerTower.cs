@@ -47,6 +47,10 @@ public class RangerTower : TowerBase
 
     private List<Vector3> towerEffectPositions = new List<Vector3>();       //< List of linerenderer pos
 
+
+    public static Vector3 fishermanPointLeft = new Vector3(-140.0f, 12.0f, 16.0f);  // point that all fisherman toward the left side of the map are initially pointed towards
+    public static Vector3 fishermanPointRight = new Vector3(800.0f, 12.0f, -16.0f);  // point that all fisherman toward the right side of the map are initially pointed towards
+
     /**
      * Start is called before the first frame update
      */
@@ -97,6 +101,23 @@ public class RangerTower : TowerBase
      */
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
+
+        float tempX = 0.0f;
+        float tempZ = 0.0f;
+        if (transform.parent.position.x < 500.0f)
+        {
+            tempX = fishermanPointLeft.x - transform.parent.position.x;
+            tempZ = fishermanPointLeft.z - transform.parent.position.z;
+        }
+        else
+        {
+            tempX = fishermanPointRight.x - transform.parent.position.x;
+            tempZ = fishermanPointRight.z - transform.parent.position.z;
+        }
+
+        float angle = Mathf.Atan2(tempX, tempZ) * Mathf.Rad2Deg;
+        transform.parent.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+
         transform.parent.position = primaryHitInfo.point;
         initValues.rangerCount += 1;
         towerManager.AddTower(this);

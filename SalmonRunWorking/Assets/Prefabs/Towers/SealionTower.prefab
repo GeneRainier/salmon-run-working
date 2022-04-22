@@ -220,7 +220,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea71618828e0e974d8127212a5311645, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  neutralMaterial: {fileID: 2100000, guid: 84c9e65b35c6bfb4abe42bdf4ecb3a74, type: 2}
+  camControl: {fileID: 0}
+  neutralMaterial: {fileID: 2100000, guid: 44d5c01808126074292c107b9e46f4de, type: 2}
   invalidMaterial: {fileID: 2100000, guid: 6bfe255608bd7fb4284bd4a923670ac1, type: 2}
   validMaterial: {fileID: 2100000, guid: 5ea3e753624b18f4386dea8e01f27dc5, type: 2}
   rangeVisualizationObj: {fileID: 1886008068939518222}
@@ -334,7 +335,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   effectRadius: 150
-  initializationValues: {fileID: 0}
+  initValues: {fileID: 0}
   towerManager: {fileID: 0}
   timePerApplyEffect: 3
   turnPlaced: 0
@@ -439,6 +440,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8806780706591136773, guid: 5717708b76ff1194d90852c2492e2063,
         type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8806780706591136773, guid: 5717708b76ff1194d90852c2492e2063,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
@@ -454,6 +460,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8806780706591136773, guid: 5717708b76ff1194d90852c2492e2063,
         type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8806780706591136773, guid: 5717708b76ff1194d90852c2492e2063,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
@@ -466,16 +477,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8806780706591136773, guid: 5717708b76ff1194d90852c2492e2063,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8806780706591136773, guid: 5717708b76ff1194d90852c2492e2063,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8806780706591136773, guid: 5717708b76ff1194d90852c2492e2063,
         type: 3}
