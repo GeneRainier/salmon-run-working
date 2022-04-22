@@ -145,10 +145,13 @@ public class CameraController : MonoBehaviour {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
             Physics.Raycast(ray, out hit);
-            if(hit.collider.gameObject.tag == "Tower" || hit.collider.gameObject.tag == "Fish")
+            if(hit.collider != null)
             {
-                firstClickTime = Time.unscaledTime;
-                singleClick = true;
+                if (hit.collider.gameObject.tag == "Tower" || hit.collider.gameObject.tag == "Fish")
+                {
+                    firstClickTime = Time.unscaledTime;
+                    singleClick = true;
+                }
             }
         }
 
