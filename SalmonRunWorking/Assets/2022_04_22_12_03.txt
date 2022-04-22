@@ -1,0 +1,41 @@
+Angler Radius, 40
+Angler Small Catch Rate, 0.9
+Angler Medium Catch Rate, 0.7
+Angler Large Catch Rate, 0.3
+Ranger Radius, 120
+Ranger Small Catch Modifier, -0.8
+Ranger Medium Catch Modifier, -0.3
+Ranger Large Catch Modifier, 0.6
+Default Dam Pass Rate, 0.25
+Ladder Small Pass Rate, 0.2
+Ladder Medium Pass Rate, 0.5
+Ladder Large Pass Rate, 0.7
+Ramp Small Pass Rate, 0.1
+Ramp Medium Pass Rate, 0.7
+Ramp Large Pass Rate, 0.1
+Lift Small Pass Rate, 0.5
+Lift Medium Pass Rate, 0.5
+Lift Large Pass Rate, 0.5
+Starting Money, 10000
+Sealion Appearance Time, 3
+Sealion Male Catch Rate, 0.05
+Sealion Female Catch Rate, 0.5
+Nesting Sites, 200
+
+turn = Turn number
+offSh / offMd / offLg = Short / Medium / Large offspring
+offMa / offFe = Male / Female Offspring
+parSh / parMd / parLg = Short / Medium / Large Parents
+surMa / surFe = Male / Female Survivors
+surSh / surMd / surLg = Short / Medium / Large Survivors
+angB_ / angU_ = Angler Count Down / Upstream
+angBR / ang UR = Angler count Down / Upstream affected by Rangers
+rang = Number of Rangers
+dam = Dam Present
+ladder = Ladder Present on Dam
+slPres = Sealion Present
+
+turn, offSh, offMd, offLg, offMa, offFe, parSh, parMd, parLg, surMa, surFe, surSh, surMd, surLg, angB_, angU_, angBR, angUR, rang, dam, ladder, slPres
+0, 25, 50, 25, 50, 50, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+1, 27, 98, 30, 90, 65, 25, 50, 25, 50, 50, 25, 50, 25, 0, 0, 0, 0, 0, 0, 0, 0
+2, 48, 107, 50, 98, 107, 27, 98, 30, 90, 65, 27, 98, 30, 0, 0, 0, 0, 0, 0, 0, 0

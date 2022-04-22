@@ -54811,7 +54811,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5d60f8226b34d243bcacc1117954f3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  runArtificialPlayer: 0
+  runArtificialPlayer: 1
   statsScript: {fileID: 516363252}
   startPanel: {fileID: 3868911946635152256}
   instructionPanel: {fileID: 3227381716018550302}
@@ -54824,44 +54824,44 @@ MonoBehaviour:
   ladderPrefab: {fileID: 342922673586302204, guid: 9c900182f751eb44f8af8a1ba22157ca,
     type: 3}
   anglerPositions:
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -184, y: 11, z: 10}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -114, y: 7, z: 34}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -47, y: 7, z: 54.5}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -1.5, y: 11, z: 29}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: 85, y: 9, z: 26}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -219, y: 7, z: -46}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -145, y: 9, z: -57}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -72, y: 7, z: -59}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -15, y: 7, z: -65.5}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: 65, y: 7, z: -29}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: 143, y: 11, z: -40}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -13, y: 8, z: -29.5}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -48.5, y: 7.5, z: 4}
     occupied: 0
   rangerPositions:
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -151, y: 11, z: 38}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -29.5, y: 7, z: 60}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: 129, y: 11, z: 36}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: 110, y: 9, z: -49.5}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -28, y: 9, z: -73.5}
     occupied: 0
-  - position: {x: 0, y: 0, z: 0}
+  - position: {x: -202, y: 7, z: -59.5}
     occupied: 0
   damLadderPosition: {x: 0, y: 0, z: 0}
   anglerNum: 3
