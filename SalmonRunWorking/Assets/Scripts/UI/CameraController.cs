@@ -120,7 +120,6 @@ public class CameraController : MonoBehaviour {
      */
     private void UpdatePosition()
     {
-        Debug.Log(firstClickTime);
         if (Input.GetKeyDown(KeyCode.Mouse0) && camState == CamState.camMain && Time.unscaledTime - firstClickTime <= doubleClickTime && singleClick)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
