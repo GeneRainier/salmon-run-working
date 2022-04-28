@@ -81,6 +81,8 @@ public class CameraController : MonoBehaviour {
 
     [Tooltip("Time between clicks to recognize a double click")]
     [SerializeField] private float doubleClickTime;
+    [Tooltip("Angle at which tower ranges are disabled")]
+    public float camAngleTowerRangeCutoff;
 
     public enum CamState
     {

@@ -135,7 +135,7 @@ public class TowerRangeEffect : MonoBehaviour
     */
     private void Update()
     {
-        if(camControl.GetComponent<CameraController>().camState != CameraController.CamState.camMain || camControl.transform.eulerAngles != new Vector3(90, 0, 0))
+        if(camControl.GetComponent<CameraController>().camState != CameraController.CamState.camMain || camControl.transform.eulerAngles.x <= camControl.GetComponent<CameraController>().camAngleTowerRangeCutoff)
         {
             if(currentlySelectedRangeEffect != null)
             {
