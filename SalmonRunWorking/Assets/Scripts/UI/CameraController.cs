@@ -306,8 +306,17 @@ public class CameraController : MonoBehaviour {
      */
     public void ResetCamera()
     {
+        if (camState == CamState.camTower)
+        {
+            StartCoroutine("TowerToMainRoutine");
+        }
+        if (camState == CamState.camFish)
+        {
+            StartCoroutine("FishToMainRoutine");
+        }
         cameraMain.transform.position = startPosition;
         cameraMain.transform.rotation = Quaternion.Euler(90, 0, 0);
+        camState = CamState.camMain;
     }
 
     public IEnumerator MainToTowerRoutine()
