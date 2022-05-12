@@ -5379,6 +5379,7 @@ MonoBehaviour:
   damPassCounter: 0
   waterSplash: {fileID: 2655936992531430593}
   fishRenderer: {fileID: 5472292593614307613}
+  isSelectedFish: 0
 --- !u!65 &448720191415233904
 BoxCollider:
   m_ObjectHideFlags: 0

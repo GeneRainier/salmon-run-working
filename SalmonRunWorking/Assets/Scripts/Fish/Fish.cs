@@ -57,6 +57,8 @@ public class Fish : MonoBehaviour
     public ParticleSystem waterSplash = null;     //< The water splash effect that will play when this fish is caught
     public SkinnedMeshRenderer fishRenderer = null;      //< The Mesh Renderer that displays this fish
 
+    public bool isSelectedFish = false;
+
     #region Major Monobehaviour Functions
 
     /**
@@ -118,6 +120,15 @@ public class Fish : MonoBehaviour
         if (Time.timeScale == 0)
         {
             return;
+        }
+
+        if(isSelectedFish)
+        {
+            //Turn on fish glow
+        }
+        else
+        {
+            //ensure that fish glow is turned off
         }
 
         // If we are close to the current destination, then begin moving towards the next one in the path

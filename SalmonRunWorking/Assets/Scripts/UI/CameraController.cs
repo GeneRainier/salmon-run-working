@@ -66,8 +66,6 @@ public class CameraController : MonoBehaviour {
     [Header("Focused Objects")]
     private GameObject selectedTower;
     [SerializeField] private GameObject selectedFish;
-    public GameObject firstFish;
-    public GameObject lastFish;
 
     [Header("Transitions")]
     [SerializeField] private PlayableDirector mainTowerTransition;
@@ -136,7 +134,17 @@ public class CameraController : MonoBehaviour {
             }
             if (hit.collider.gameObject.tag == "Fish")
             {
-                selectedFish = hit.collider.gameObject;
+                if(!selectedFish)
+                {
+                    selectedFish = hit.collider.gameObject;
+                    selectedFish.GetComponent<Fish>().isSelectedFish = true;
+                }
+                else
+                {
+                    selectedFish.GetComponent<Fish>().isSelectedFish = false;
+                    selectedFish = hit.collider.gameObject;
+                    selectedFish.GetComponent<Fish>().isSelectedFish = true;
+                }
                 camState = CamState.camFish;
                 StartCoroutine("MainToFishRoutine");
             }

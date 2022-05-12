@@ -682,8 +682,14 @@ MonoBehaviour:
   startingEnergy: 15000
   baselineEnergyUsageRate: 1
   motionEnergyUsageRate: 1
-  maxSwimSpeed: 100
+  swimSpeed: 0
   rotateSpeed: 1
+  destination: {fileID: 0}
+  path: []
+  damPassCounter: 0
+  waterSplash: {fileID: 0}
+  fishRenderer: {fileID: 0}
+  isSelectedFish: 0
 --- !u!136 &132374571
 CapsuleCollider:
   m_ObjectHideFlags: 0

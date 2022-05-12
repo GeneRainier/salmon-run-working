@@ -275,11 +275,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
-      propertyPath: initialDestinations.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
-        type: 3}
       propertyPath: spawnY
       value: 0
       objectReference: {fileID: 0}
@@ -327,6 +322,11 @@ PrefabInstance:
         type: 3}
       propertyPath: timeBetweenWaves
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
+        type: 3}
+      propertyPath: initialDestinations.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 2321721658432575645, guid: a5e01420cd1b09347905952248a95496,
         type: 3}
@@ -53220,13 +53220,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1856687625261624963, guid: 5389825bb5fd6db45a8c178239a30315,
         type: 3}
-      propertyPath: destinations.Array.size
-      value: 5
+      propertyPath: finalDestination
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1856687625261624963, guid: 5389825bb5fd6db45a8c178239a30315,
         type: 3}
-      propertyPath: finalDestination
-      value: 0
+      propertyPath: destinations.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1856687625261624963, guid: 5389825bb5fd6db45a8c178239a30315,
         type: 3}
@@ -58439,13 +58439,13 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1856687625261624963, guid: 5389825bb5fd6db45a8c178239a30315,
         type: 3}
-      propertyPath: destinations.Array.size
-      value: 5
+      propertyPath: finalDestination
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1856687625261624963, guid: 5389825bb5fd6db45a8c178239a30315,
         type: 3}
-      propertyPath: finalDestination
-      value: 0
+      propertyPath: destinations.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1856687625261624963, guid: 5389825bb5fd6db45a8c178239a30315,
         type: 3}
