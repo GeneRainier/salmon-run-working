@@ -51,6 +51,8 @@ public class RangerTower : TowerBase
     public static Vector3 fishermanPointLeft = new Vector3(-140.0f, 12.0f, 16.0f);  // point that all fisherman toward the left side of the map are initially pointed towards
     public static Vector3 fishermanPointRight = new Vector3(800.0f, 12.0f, -16.0f);  // point that all fisherman toward the right side of the map are initially pointed towards
 
+    [SerializeField] private Transform lookingPoint;
+
     /**
      * Start is called before the first frame update
      */
@@ -101,7 +103,7 @@ public class RangerTower : TowerBase
      */
     protected override void PlaceTower(RaycastHit primaryHitInfo, List<RaycastHit> secondaryHitInfo)
     {
-
+        /*
         float tempX = 0.0f;
         float tempZ = 0.0f;
         if (transform.parent.position.x < 500.0f)
@@ -114,9 +116,29 @@ public class RangerTower : TowerBase
             tempX = fishermanPointRight.x - transform.parent.position.x;
             tempZ = fishermanPointRight.z - transform.parent.position.z;
         }
+        */
 
+        GameObject pointList = GameObject.Find("RiverPoints");
+        float distance = 9999999999f;
+        Vector3 closestPoint = Vector3.zero;
+
+        foreach(Transform point in pointList.GetComponentsInChildren<Transform>())
+        {
+            if(distance > Vector3.Distance(gameObject.transform.position, point.transform.position))
+            {
+                distance = Vector3.Distance(gameObject.transform.position, point.transform.position);
+                lookingPoint = point;
+                closestPoint = point.transform.position;
+            }
+        }
+
+        transform.parent.LookAt(closestPoint);
+        transform.parent.eulerAngles = new Vector3(0, transform.parent.eulerAngles.y, transform.parent.eulerAngles.z);
+
+        /*
         float angle = Mathf.Atan2(tempX, tempZ) * Mathf.Rad2Deg;
         transform.parent.rotation = Quaternion.Euler(new Vector3(0, angle, 0));
+        */
 
         transform.parent.position = primaryHitInfo.point;
         initValues.rangerCount += 1;
